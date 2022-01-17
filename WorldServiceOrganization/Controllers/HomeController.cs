@@ -328,6 +328,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.Name = Product.Name;
                         Data.ProductTypeId = Product.ProductTypeId;
                         Data.Code = Product.Code;
+                        Data.Price = Product.Price;
                         Data.isActive = true;
                         Data.EditDate = DateTime.Now;
                         DB.Entry(Data);

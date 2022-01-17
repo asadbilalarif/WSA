@@ -219,8 +219,8 @@ UPDATE tblProduct
 SET ProductTypeId = 1
 WHERE ProductId=2;
 
-ALTER TABLE tblMenu
-ADD Name int;
+ALTER TABLE tblProduct
+ADD Price double(5,2);
 
 	ALTER TABLE tblAccessLevel
 ADD isActive bit;

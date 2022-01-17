@@ -62,8 +62,9 @@
                                         <th style="display:none;">User ID</th>
                                         <th>Code</th>
                                         <th>Name</th>
-                                        <th>Product Type ID</th>
+                                        <th style="display:none;">Product Type ID</th>
                                         <th>Product Type</th>
+                                        <th>Price</th>
                                         <th>Active</th>
                                         <th>Action</th>
                                     </tr>
@@ -75,8 +76,9 @@
                                             <td style="display:none;">@Product.ProductId</td>
                                             <td>@Product.Code</td>
                                             <td>@Product.Name</td>
-                                            <td>@Product.ProductTypeId</td>
+                                            <td style="display:none;">@Product.ProductTypeId</td>
                                             <td>@Product.tblProductType.Name</td>
+                                            <td>@Product.Price</td>
                                             @if (@Product.isActive == true)
                                             {
                                                 <td>
@@ -133,16 +135,17 @@
                                         <input class="form-control" type="text" id="ECode">
                                         <label>Name <small id="LblProductNameError" style="display:none; color:red;">Name Must be filled!!!</small></label>
                                         <input class="form-control" type="text" id="EName">
-                                        
+                                        <label>Price <small id="LblPriceError" style="display:none; color:red;">Price Must be filled!!!</small></label>
+                                        <input class="form-control" type="text" id="EPrice">
                                         <label>Product Types <small id="LblProductTypeError" style="display:none; color:red;">Product Type Must be selected!!!</small></label>
                                         <select class="form-control" id="ProductTypeD">
                                             <option value="0">Select Product Type</option>
                                             @foreach (var item in @ViewBag.ProductType)
                                             {
-                                            <option value="@item.ProductTypeId">@item.Name</option>
+                                                <option value="@item.ProductTypeId">@item.Name</option>
                                             }
                                         </select>
-                                       
+
 
 
                                     </div>
@@ -202,10 +205,12 @@
         $("#ProductID").val('');
         $("#ECode").val('');
         $("#EName").val('');
+        $("#EPrice").val('');
         $("#ProductTypeD").val(0).change();
         $("#LblProductCodeError").fadeOut();
         $("#LblProductNameError").fadeOut();
         $("#LblProductTypeError").fadeOut();
+        $("#LblPriceError").fadeOut();
     });
 
     $("body").on("click", "#EditProduct", function () {
@@ -218,10 +223,12 @@
         $("#ECode").val(currentRow.find("td:eq(1)").text());
         $("#EName").val(currentRow.find("td:eq(2)").text());
         $("#ProductTypeD").val(currentRow.find("td:eq(3)").text()).change();
+        $("#EPrice").val(currentRow.find("td:eq(5)").text());
 
         $("#LblProductCodeError").fadeOut();
         $("#LblProductNameError").fadeOut();
         $("#LblProductTypeError").fadeOut();
+        $("#LblPriceError").fadeOut();
 
         //alert($("#ProductID").val());
     });
@@ -230,7 +237,7 @@
     $("#ProductSubmit").on("click", function () {
 
         var error = $("#Producterror");
-        if ($("#ECode").val() != "" && $("#EName").val() != "" && $("#ProductTypeD").val() != "0") {
+        if ($("#ECode").val() != "" && $("#EName").val() != "" && $("#ProductTypeD").val() != "0"&& $("#EPrice").val() != "") {
             error.text('');
             $("#ProductSubmit").attr("disabled", true);
             $("#Productloading").show();
@@ -239,6 +246,7 @@
             var UId = $("#ProductID").val();
             var UCode = $("#ECode").val();
             var UName = $("#EName").val();
+            var UPrice = $("#EPrice").val();
             var UProductTypeId = $("#ProductTypeD").val();
 
 
@@ -247,6 +255,7 @@
                     ProductId: UId,
                     Name: UName,
                     Code: UCode,
+                    Price: UPrice,
                     ProductTypeId: UProductTypeId,
                 };
             }
@@ -255,6 +264,7 @@
 
                     Name: UName,
                     Code: UCode,
+                    Price: UPrice,
                     ProductTypeId: UProductTypeId,
                 };
             }
@@ -304,6 +314,13 @@
             }
             else {
                 $("#LblProductNameError").fadeOut();
+            }
+            if ($("#EPrice").val() == "") {
+                //text = error.append('  *Email must be filled!!!  ');
+                $("#LblPriceError").fadeIn();
+            }
+            else {
+                $("#LblPriceError").fadeOut();
             }
             if ($("#ProductTypeD").val() == "0") {
                 //text = error.append('  *Email must be filled!!!  ');

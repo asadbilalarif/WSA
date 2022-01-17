@@ -103,6 +103,7 @@
           <Property Name="DeletedDate" Type="datetime" />
           <Property Name="isActive" Type="bit" />
           <Property Name="ProductTypeId" Type="int" />
+          <Property Name="Price" Type="float" />
         </EntityType>
         <EntityType Name="tblProductPackage">
           <Key>
@@ -615,6 +616,7 @@
           <Property Name="ProductTypeId" Type="Int32" />
           <NavigationProperty Name="tblProductType" Relationship="WorldServiceOrganizationModel.FK_ProductProductType" FromRole="tblProduct" ToRole="tblProductType" />
           <NavigationProperty Name="tblProductPackageProducts" Relationship="WorldServiceOrganizationModel.FK_ManyProduct" FromRole="tblProduct" ToRole="tblProductPackageProduct" />
+          <Property Name="Price" Type="Double" />
         </EntityType>
         <EntityType Name="tblProductType">
           <Key>
@@ -892,6 +894,7 @@
           <EntitySetMapping Name="tblProducts">
             <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblProduct">
               <MappingFragment StoreEntitySet="tblProduct">
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
