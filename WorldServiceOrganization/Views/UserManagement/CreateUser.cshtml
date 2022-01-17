@@ -1,0 +1,331 @@
+﻿@model  WorldServiceOrganization.Models.tblUser
+@{
+    int UserId = 0;
+    string username = "";
+    string FirstName = "";
+    string LastName = "";
+    string Organization = "";
+    string Title = "";
+    string Address1 = "";
+    string Address2 = "";
+    string City = "";
+    string StateProvince = "";
+    string Country = "";
+    string PostalCode = "";
+    string PhoneNumber = "";
+    string Email = "";
+    int? RoleId = 0;
+
+    if(Model != null)
+    {
+        UserId = Model.UserId;
+        username = Model.username;
+        FirstName = Model.FirstName;
+        LastName = Model.LastName;
+        Organization = Model.Organization;
+        Title = Model.Title;
+        Address1 = Model.Address1;
+        Address2 = Model.Address2;
+        City = Model.City;
+        StateProvince = Model.StateProvince;
+        Country = Model.Country;
+        PostalCode = Model.PostalCode;
+        PhoneNumber = Model.PhoneNumber;
+        Email = Model.Email;
+        RoleId = Model.RoleId;
+    }
+
+
+
+}
+
+<!-- Page Wrapper -->
+    <div class="content container-fluid">
+
+        <!-- Page Header -->
+
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="breadcrumb-bar">
+                        <div class="container-fluid">
+                            <div class="row align-items-center">
+                                <div class="col-md-6 col-6">
+                                    @if (Model == null)
+                                    {
+                                        <h2 class="breadcrumb-title">Create User</h2>
+                                    }
+                                    else
+                                    {
+                                        <h2 class="breadcrumb-title">Edit User</h2>
+                                    }
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <div class="col-md-6 col-6 text-right m-b-30" id="CreateUserB">
+                <a href="@Url.Action("Users","UserManagement")" class="btn btn-primary"><i class="fa fa-list"></i> Back</a>
+            </div>
+        </div><br />
+
+        @*<div class="breadcrumb-bar" style="background-color:#009efb !important;">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 col-6">
+                            @if (Model == null)
+                            {
+                                <h2 class="breadcrumb-title">Create Config</h2>
+                            }
+                            else
+                            {
+                                <h2 class="breadcrumb-title">Edit Config</h2>
+                            }
+                        </div>
+                        <div class="col-md-6 col-6 text-right m-b-30" id="CreateUserB">
+                            <a href="@Url.Action("Config","Home")" class="btn btn-primary "><i class="fa fa-list"></i> Back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+
+        @*<div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h3 class="page-title">Config</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="@Url.Action("Config","Home")">Config</a></li>
+                            @if (Model == null)
+                            {
+                                <li class="breadcrumb-item active">Create Config</li>
+                            }
+                            else
+                            {
+                                <li class="breadcrumb-item active">Edit Config</li>
+                            }
+                        </ul>
+                    </div>
+                    <div class="col-sm-6 text-right m-b-30" id="CreateUserB">
+
+                    </div>
+                </div>
+            </div>*@
+        <!-- /Page Header -->
+
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="tab-content profile-tab-cont">
+                    <div id="password_tab" class="tab-pane fade show active">
+
+                        @using (Html.BeginForm("CreateUser", "UserManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {@Html.AntiForgeryToken()
+                        <div class="card">
+
+                            <div class="card-body">
+                                <span style="color:red;">@ViewBag.Error</span>
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <h6 class="card-title" style="background:#009efb; color:white;padding:9px !important"> User information</h6>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" style="display:none;" name="UserId" value="@UserId" required>
+                                            <label>username</label>
+                                            <input type="text" class="form-control" name="username" value="@username" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" id="FirstName" name="FirstName" value="@FirstName" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control" id="LastName" name="LastName" value="@LastName" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <h6 class="card-title" style="background:#009efb; color:white;padding:9px !important">Device Number of Stages</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Organization</label>
+                                                    <input type="text" class="form-control" id="Organization" name="Organization" value="@Organization" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Title</label>
+                                                    &nbsp;&nbsp;
+                                                    <input type="text" class="form-control" id="Title" name="Title" value="@Title" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6 class="card-title" style="background:#009efb; color:white;padding:9px !important">Keypad Lock</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Address1</label>
+                                                    &nbsp;&nbsp;
+                                                    <input type="text" class="form-control" id="Address1" name="Address1" value="@Address1" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Address2</label>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <input type="text" class="form-control" id="Address2" name="Address2" value="@Address2" required>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <h6 class="card-title" style="background:#009efb; color:white;padding:9px !important">Temperature Limits</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>City</label>
+                                                    <div>
+                                                        <input type="text" class="form-control" id="City" name="City" value="@City" required>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label>State Province</label>
+                                                    <div>
+                                                        <input type="text" class="form-control" id="StateProvince" name="StateProvince" value="@StateProvince" required>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <h6 class="card-title" style="background:#009efb; color:white;padding:9px !important">Deadband Settings (Degrees)</h6>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                    &nbsp;&nbsp;
+                                                    <input type="text" class="form-control" id="Country" name="Country" value="@Country" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Postal Code</label>&nbsp;&nbsp;
+                                                    <input type="text" class="form-control" id="PostalCode" name="PostalCode" value="@PostalCode" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <h6 class="card-title" style="background:#009efb; color:white;padding:9px !important">Temp Increments</h6>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Phone Number</label>
+                                            <input type="text" class="form-control" id="PhoneNumber" name="PhoneNumber" value="@PhoneNumber" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="text" class="form-control" id="Email" name="Email" value="@Email" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            @if (Model == null)
+                                            {
+                                                <label>Password</label>
+                                                <input type="password" class="form-control" id="PIN" name="PIN" value="" required>
+                                            }
+                                            else
+                                            {
+                                                <label>Password</label>
+                                                <input type="password" class="form-control" id="PIN" name="PIN" value="" >
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Role <small id="LblRoleError" style="display:none; color:red;">Role Must be selected!!!</small></label><br />
+                                            <select class="form-control" id="Role" name="RoleId" required>
+                                                <option value="0">Select Role</option>
+                                                @foreach (WorldServiceOrganization.Models.tblRole Role in @ViewBag.Roles)
+                                                {
+                                                    if(@Role.RoleId==RoleId)
+                                                    {
+                                                        <option value="@Role.RoleId" selected>@Role.Role</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Role.RoleId">@Role.Role</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        @*<div class="form-group">
+                                            <label>Total Cycle Delay</label>
+                                            <input type="text" class="form-control" id="totalcycledelay" name="totalcycledelay" value="@totalcycledelay" required>
+                                        </div>*@
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label></label>
+                                            <button class="btn btn-primary" type="submit" id="SaveChanges" style="margin-top:10%;">Save Changes</button>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<!-- /Page Wrapper -->
+<script src="~/Theme/template/admin/assets/js/jquery-3.2.1.min.js"></script>

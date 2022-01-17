@@ -1,0 +1,374 @@
+﻿@model IEnumerable<WorldServiceOrganization.Models.tblProductPackage>
+
+@{
+    ViewData["Title"] = "ProductPackages";
+}
+
+
+<head>
+
+    <style>
+
+
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+
+
+</head>
+
+
+
+
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="breadcrumb-bar">
+                <div class="container-fluid">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 col-6">
+                            <h2 class="breadcrumb-title">ProductPackage LIST</h2>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-6 col-6 text-right m-b-30" id="CreateProductPackageB">
+
+            </div>*@
+    </div>
+
+
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-body">
+                    <a href="@Url.Action("CreateProductPackage","Home")" class="btn btn-primary " style="float:right;"><i class="fa fa-plus"></i> Create New ProductPackage</a>
+                    <br /><br />
+                    <div class="table-responsive">
+                        <div class="table-responsive">
+                            <table class="cell-border table table-hover table-center  mb-0 " id="ProductPackageTable">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none;">ProductPackage ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Active</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (WorldServiceOrganization.Models.tblProductPackage ProductPackage in Model)
+                                    {
+                                        <tr>
+                                            <td style="display:none;">@ProductPackage.ProductPackageId</td>
+                                            <td>@ProductPackage.Name</td>
+                                            <td>@ProductPackage.Code</td>
+                                            @if (ProductPackage.isActive == true)
+                                            {
+                                                <td>
+                                                    <span class="badge badge-primary">Active</span>
+                                                </td>
+                                                /**/
+
+                                            }
+                                            else
+                                            {
+                                                <td>
+                                                    <span class="badge badge-danger">In-Active</span>
+                                                </td>
+                                            }
+
+                                            <td>
+                                                <a href="@Url.Action("CreateProductPackage","Home",new {id=ProductPackage.ProductPackageId })" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditProductPackage"></i></a>
+                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#ProductPackageDelete"><i class="fa fa-trash" id="DeleteProductPackage"></i> </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="ProductPackageDelete" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
+                <input class="form-control" type="text" id="DeleteProductPackageID" style="display:none;">
+                <h5>Are you sure want to delete this device Information?</h5>
+                <div class="m-t-20">
+                    <p id="ConfigDerror" style="color:red;"></p>
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <input type="button" class="btn btn-danger" id="CDeleteProductPackage" value="Delete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /Page Wrapper -->
+<!-- jQuery -->
+<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>
+@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+<script>
+
+
+    $("body").on("click", "#DeleteProductPackage", function () {
+        $("#ConfigDerror").text("");
+        $("#CDeleteProductPackage").attr("disabled", false);
+        var currentRow = $(this).closest("tr");
+        $("#DeleteProductPackageID").val(currentRow.find("td:eq(0)").text());
+        //alert($("#DeleteDeviceInfoID").val());
+    });
+
+    $("#CDeleteProductPackage").on("click", function () {
+
+
+        $("#CDeleteProductPackage").attr("disabled", true);
+
+        var ID = $("#DeleteProductPackageID").val();
+
+        var model = {
+            ProductPackageId: ID,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Home/DeleteProductPackage",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                location.reload();
+                //if (r == 1) {
+                //    $("#ConfigDerror").text("Device Already schedule!!!");
+                //}
+                //else {
+                //    location.reload();
+                //}
+                //alert(r + " record(s) inserted.");
+            }
+        });
+
+    });
+
+            //$("body").on("click", "#DeleteUser", function () {
+            //    var currentRow = $(this).closest("tr");
+            //    $("#DeleteUserID").val(currentRow.find("td:eq(0)").text());
+            //    //alert($("#DeleteUserID").val());
+            //});
+
+            //$("#CDeleteUser").on("click", function () {
+
+
+            //    $("#CDeleteUser").attr("disabled", true);
+
+            //    var ID = $("#DeleteUserID").val();
+
+            //    var model = {
+            //        userid: ID,
+            //    };
+            //    console.log(model);
+
+
+            //    //Send the JSON array to Controller using AJAX.
+            //    $.ajax({
+            //        type: "POST",
+            //        url: "/Home/DeleteUser",
+            //        data: JSON.stringify(model),
+            //        contentType: "application/json; charset=utf-8",
+            //        dataType: "json",
+            //        success: function (r) {
+            //            //alert(r + " record(s) inserted.");
+            //            location.reload();
+            //        }
+            //    });
+
+            //});
+
+            //$("body").on("click", "#EditUser", function () {
+            //    var error = $("#Usererror");
+            //    error.text('');
+            //    var currentRow = $(this).closest("tr");
+            //    $("#EHeading").show();
+            //    $("#CHeading").hide();
+            //    $("#isEditCat").val(0);
+            //    $("#UserID").val(currentRow.find("td:eq(0)").text());
+            //    $("#UName").val(currentRow.find("td:eq(1)").text());
+            //    $("#Email").val(currentRow.find("td:eq(2)").text());
+            //    //$("#Password").val(currentRow.find("td:eq(3)").text());
+            //    $("#Role").val(currentRow.find("td:eq(5)").text()).change();
+            //    if (currentRow.find("span").text() == "Active") {
+            //        $("#UserStatus").val("true").change();
+            //    }
+            //    else {
+            //        $("#UserStatus").val("false").change();
+            //    }
+            //    //$("#UserStatus").val(currentRow.find("td:eq(5)").text()).change();
+            //    $("#LblNameError").fadeOut();
+            //    $("#LblEmailError").fadeOut();
+            //    $("#LblPasswordError").fadeOut();
+            //    $("#LblRoleError").fadeOut();
+            //    //alert($("#ID").val());
+            //});
+
+            //$("body").on("click", "#CreateUserB", function () {
+            //    var error = $("#Usererror");
+            //    error.text('');
+            //    $("#EHeading").hide();
+            //    $("#CHeading").show();
+            //    $("#UserID").val('');
+            //    $("#UName").val('');
+            //    $("#Email").val('');
+            //    $("#Password").val('');
+            //    //$("#Role").val(0).change();
+            //    $("#LblNameError").fadeOut();
+            //    $("#LblEmailError").fadeOut();
+            //    $("#LblPasswordError").fadeOut();
+            //    $("#LblRoleError").fadeOut();
+            //    $("#LblUserStatusError").fadeOut();
+
+            //});
+
+            //$("#UserSubmit").on("click", function () {
+
+            //    var error = $("#Usererror");
+            //    if ($("#UName").val() != "" && $("#Email").val() != "" && $("#Role").find(":selected").val() != 0&& $("#UserStatus").find(":selected").val() != 0) {
+            //        error.text('');
+            //        $("#UserSubmit").attr("disabled", true);
+            //        $("#Userloading").show();
+
+
+            //        var UId = $("#UserID").val();
+            //        var UName = $("#UName").val();
+            //        var UEmail = $("#Email").val();
+            //        var UPassword = $("#Password").val();
+            //        var URole = $("#Role").val();
+            //        var UStatus = $("#UserStatus").val();
+
+            //        if (UId != 0) {
+            //            var model = {
+            //                userid: UId,
+            //                name: UName,
+            //                email: UEmail,
+            //                password: UPassword,
+            //                roleid: URole,
+            //                isactive: UStatus,
+            //            };
+            //        }
+            //        else {
+            //            var model = {
+
+            //                name: UName,
+            //                email: UEmail,
+            //                password: UPassword,
+            //                roleid: URole,
+            //                isactive: UStatus,
+            //            };
+            //        }
+
+
+
+            //        console.log(model);
+
+
+            //        //Send the JSON array to Controller using AJAX.
+
+            //        $.ajax({
+            //            type: "POST",
+            //            url: "/Home/CreateUser",
+            //            data: JSON.stringify(model),
+            //            contentType: "application/json; charset=utf-8",
+            //            dataType: "json",
+            //            success: function (r) {
+            //                if (r.id == 1) {
+            //                    error.text('  *User Already Exsist!!!  ');
+            //                    $("#UserSubmit").attr("disabled", false);
+            //                    error.css('color', 'red');
+            //                    $("#Userloading").hide();
+            //                }
+            //                else {
+            //                    location.reload();
+            //                }
+            //            }
+            //        });
+
+            //    }
+            //    else {
+            //        error.text('');
+            //        error.css('color', 'red');
+            //        if ($("#UName").val() == "") {
+
+            //            //text = error.text('  *Name must be filled!!!  ');
+            //            $("#LblNameError").fadeIn();
+
+            //        }
+            //        else {
+            //            $("#LblNameError").fadeOut();
+            //        }
+            //        if ($("#Email").val() == "") {
+            //            //text = error.append('  *Email must be filled!!!  ');
+            //            $("#LblEmailError").fadeIn();
+            //        }
+            //        else {
+            //            $("#LblEmailError").fadeOut();
+            //        }
+            //        //if ($("#Password").val() == "") {
+            //        //    //text = error.append('  *Password must be filled!!!  ');
+            //        //    $("#LblPasswordError").fadeIn();
+            //        //}
+            //        //else {
+            //        //    $("#LblPasswordError").fadeOut();
+            //        //}
+            //        if ($("#Role").find(":selected").val() == 0) {
+            //            //text = error.append('  *Role must be filled!!!  ');
+            //            $("#LblRoleError").fadeIn();
+            //        }
+            //        else {
+            //            $("#LblRoleError").fadeOut();
+            //        }
+            //    }
+
+            //});
+
+            $(document).ready(function () {
+
+                //$("#Role").select2({
+                //    dropdownCssClass: 'bigdrop'
+
+
+                //});
+                //var table=$('#ProductPackageTable').DataTable({
+
+                //    searching: false, paging: false
+                //});
+
+
+
+                $(".nav li").removeClass("active");
+                $('#ProductPackages').addClass('active');
+
+            });
+
+
+
+
+</script>

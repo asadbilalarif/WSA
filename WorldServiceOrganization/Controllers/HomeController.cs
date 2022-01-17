@@ -1,0 +1,951 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+using WorldServiceOrganization.Models;
+
+namespace WorldServiceOrganization.Controllers
+{
+    public class HomeController : Controller
+    {
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Countries()
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            
+            var Data = DB.tblCountries.Where(x => x.isActive == true).ToList() ;
+            return View(Data);
+        }
+
+        [HttpPost]
+        public ActionResult CreateCountry(tblCountry Country)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblCountry Data = new tblCountry();
+            tblCountry check = new tblCountry();
+
+            try
+            {
+                if (Country.CountryId != 0)
+                {
+
+                    check = DB.tblCountries.Select(r => r).Where(x => x.Code == Country.Code).FirstOrDefault();
+                    if (check == null || check.CountryId == Country.CountryId)
+                    {
+                        Data = DB.tblCountries.Select(r => r).Where(x => x.CountryId == Country.CountryId).FirstOrDefault();
+                        
+                        Data.Name = Country.Name;
+                        Data.Code = Country.Code;
+                        Data.isActive = true;
+                        Data.EditDate = DateTime.Now;
+                        DB.Entry(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+
+                }
+                else
+                {
+                    
+                    if (DB.tblCountries.Select(r => r).Where(x => x.Code== Country.Code).FirstOrDefault() == null)
+                    {
+                        Data= Country;
+                        Data.CreatedDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.tblCountries.Add(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+
+
+
+            return Json(0);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteCountry( tblCountry Country)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblCountry Data = new tblCountry();
+
+            try
+            {
+                Data = DB.tblCountries.Select(r => r).Where(x => x.CountryId == Country.CountryId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
+        }
+
+
+        public ActionResult Eyes()
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            var Data = DB.tblEyes.Where(x => x.isActive == true).ToList();
+            return View(Data);
+        }
+
+        [HttpPost]
+        public ActionResult CreateEye(tblEye Eye)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblEye Data = new tblEye();
+            tblEye check = new tblEye();
+
+            try
+            {
+                if (Eye.EyeId != 0)
+                {
+
+                    check = DB.tblEyes.Select(r => r).Where(x => x.Code == Eye.Code).FirstOrDefault();
+                    if (check == null || check.EyeId == Eye.EyeId)
+                    {
+                        Data = DB.tblEyes.Select(r => r).Where(x => x.EyeId == Eye.EyeId).FirstOrDefault();
+
+                        Data.Name = Eye.Name;
+                        Data.Code = Eye.Code;
+                        Data.isActive = true;
+                        Data.EditDate = DateTime.Now;
+                        DB.Entry(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+
+                }
+                else
+                {
+
+                    if (DB.tblEyes.Select(r => r).Where(x => x.Code == Eye.Code).FirstOrDefault() == null)
+                    {
+                        Data = Eye;
+                        Data.CreatedDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.tblEyes.Add(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+
+
+
+            return Json(0);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteEye(tblEye Eye)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblEye Data = new tblEye();
+
+            try
+            {
+                Data = DB.tblEyes.Select(r => r).Where(x => x.EyeId == Eye.EyeId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
+        }
+
+
+        public ActionResult Occupations()
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            var Data = DB.tblOccupations.Where(x => x.isActive == true).ToList();
+            return View(Data);
+        }
+
+        [HttpPost]
+        public ActionResult CreateOccupation(tblOccupation Occupation)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblOccupation Data = new tblOccupation();
+            tblOccupation check = new tblOccupation();
+
+            try
+            {
+                if (Occupation.OccupationId != 0)
+                {
+
+                    check = DB.tblOccupations.Select(r => r).Where(x => x.Code == Occupation.Code).FirstOrDefault();
+                    if (check == null || check.OccupationId == Occupation.OccupationId)
+                    {
+                        Data = DB.tblOccupations.Select(r => r).Where(x => x.OccupationId == Occupation.OccupationId).FirstOrDefault();
+
+                        Data.Name = Occupation.Name;
+                        Data.Code = Occupation.Code;
+                        Data.isActive = true;
+                        Data.EditDate = DateTime.Now;
+                        DB.Entry(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+
+                }
+                else
+                {
+
+                    if (DB.tblOccupations.Select(r => r).Where(x => x.Code == Occupation.Code).FirstOrDefault() == null)
+                    {
+                        Data = Occupation;
+                        Data.CreatedDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.tblOccupations.Add(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+
+
+
+            return Json(0);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteOccupation(tblOccupation Occupation)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblOccupation Data = new tblOccupation();
+
+            try
+            {
+                Data = DB.tblOccupations.Select(r => r).Where(x => x.OccupationId == Occupation.OccupationId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
+        }
+
+
+        public ActionResult Products()
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            ViewBag.ProductType= DB.tblProductTypes.Where(x => x.isActive == true).ToList();
+            var Data = DB.tblProducts.Where(x => x.isActive == true).ToList();
+            return View(Data);
+        }
+
+        [HttpPost]
+        public ActionResult CreateProduct(tblProduct Product)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblProduct Data = new tblProduct();
+            tblProduct check = new tblProduct();
+
+            try
+            {
+                if (Product.ProductId != 0)
+                {
+
+                    check = DB.tblProducts.Select(r => r).Where(x => x.Code == Product.Code).FirstOrDefault();
+                    if (check == null || check.ProductId == Product.ProductId)
+                    {
+                        Data = DB.tblProducts.Select(r => r).Where(x => x.ProductId == Product.ProductId).FirstOrDefault();
+
+                        Data.Name = Product.Name;
+                        Data.ProductTypeId = Product.ProductTypeId;
+                        Data.Code = Product.Code;
+                        Data.isActive = true;
+                        Data.EditDate = DateTime.Now;
+                        DB.Entry(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+
+                }
+                else
+                {
+
+                    if (DB.tblProducts.Select(r => r).Where(x => x.Code == Product.Code).FirstOrDefault() == null)
+                    {
+                        Data = Product;
+                        Data.CreatedDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.tblProducts.Add(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+
+
+
+            return Json(0);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteProduct(tblProduct Product)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblProduct Data = new tblProduct();
+
+            try
+            {
+                Data = DB.tblProducts.Select(r => r).Where(x => x.ProductId == Product.ProductId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
+        }
+
+
+        public ActionResult ProductTypes()
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            var Data = DB.tblProductTypes.Where(x => x.isActive == true).ToList();
+            return View(Data);
+        }
+
+        [HttpPost]
+        public ActionResult CreateProductType(tblProductType ProductType)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblProductType Data = new tblProductType();
+            tblProductType check = new tblProductType();
+
+            try
+            {
+                if (ProductType.ProductTypeId != 0)
+                {
+
+                    check = DB.tblProductTypes.Select(r => r).Where(x => x.Code == ProductType.Code).FirstOrDefault();
+                    if (check == null || check.ProductTypeId == ProductType.ProductTypeId)
+                    {
+                        Data = DB.tblProductTypes.Select(r => r).Where(x => x.ProductTypeId == ProductType.ProductTypeId).FirstOrDefault();
+
+                        Data.Name = ProductType.Name;
+                        Data.Code = ProductType.Code;
+                        Data.isActive = true;
+                        Data.EditDate = DateTime.Now;
+                        DB.Entry(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+
+                }
+                else
+                {
+
+                    if (DB.tblProductTypes.Select(r => r).Where(x => x.Code == ProductType.Code).FirstOrDefault() == null)
+                    {
+                        Data = ProductType;
+                        Data.CreatedDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.tblProductTypes.Add(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+
+
+
+            return Json(0);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteProductType(tblProductType ProductType)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblProductType Data = new tblProductType();
+
+            try
+            {
+                Data = DB.tblProductTypes.Select(r => r).Where(x => x.ProductTypeId == ProductType.ProductTypeId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
+        }
+
+
+        public ActionResult Status()
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            var Data = DB.tblStatus.Where(x => x.isActive == true).ToList();
+            return View(Data);
+        }
+
+        [HttpPost]
+        public ActionResult CreateStatus(tblStatus Status)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblStatus Data = new tblStatus();
+            tblStatus check = new tblStatus();
+
+            try
+            {
+                if (Status.StatusId != 0)
+                {
+
+                    check = DB.tblStatus.Select(r => r).Where(x => x.Code == Status.Code).FirstOrDefault();
+                    if (check == null || check.StatusId == Status.StatusId)
+                    {
+                        Data = DB.tblStatus.Select(r => r).Where(x => x.StatusId == Status.StatusId).FirstOrDefault();
+
+                        Data.Name = Status.Name;
+                        Data.Code = Status.Code;
+                        Data.isActive = true;
+                        Data.EditDate = DateTime.Now;
+                        DB.Entry(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+
+                }
+                else
+                {
+
+                    if (DB.tblStatus.Select(r => r).Where(x => x.Code == Status.Code).FirstOrDefault() == null)
+                    {
+                        Data = Status;
+                        Data.CreatedDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.tblStatus.Add(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+
+
+
+            return Json(0);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteStatus(tblStatus Status)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblStatus Data = new tblStatus();
+
+            try
+            {
+                Data = DB.tblStatus.Select(r => r).Where(x => x.StatusId == Status.StatusId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
+        }
+
+
+        public ActionResult Sex()
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            var Data = DB.tblSex.Where(x => x.isActive == true).ToList();
+            return View(Data);
+        }
+
+        [HttpPost]
+        public ActionResult CreateSex(tblSex Sex)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblSex Data = new tblSex();
+            tblSex check = new tblSex();
+
+            try
+            {
+                if (Sex.SexId != 0)
+                {
+
+                    check = DB.tblSex.Select(r => r).Where(x => x.Code == Sex.Code).FirstOrDefault();
+                    if (check == null || check.SexId == Sex.SexId)
+                    {
+                        Data = DB.tblSex.Select(r => r).Where(x => x.SexId == Sex.SexId).FirstOrDefault();
+
+                        Data.Name = Sex.Name;
+                        Data.Code = Sex.Code;
+                        Data.isActive = true;
+                        Data.EditDate = DateTime.Now;
+                        DB.Entry(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+
+                }
+                else
+                {
+
+                    if (DB.tblSex.Select(r => r).Where(x => x.Code == Sex.Code).FirstOrDefault() == null)
+                    {
+                        Data = Sex;
+                        Data.CreatedDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.tblSex.Add(Data);
+                        DB.SaveChanges();
+
+                    }
+                    else
+                    {
+                        return Json(1);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+
+
+
+            return Json(0);
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteSex(tblSex Sex)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblSex Data = new tblSex();
+
+            try
+            {
+                Data = DB.tblSex.Select(r => r).Where(x => x.SexId == Sex.SexId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
+        }
+
+
+        public ActionResult Productpackages()
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            var Data = DB.tblProductPackages.Where(x => x.isActive == true).ToList();
+            return View(Data);
+        }
+
+        public ActionResult CreateProductPackage(int? id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            //tblProductPackage ProductPackage = null;  
+            List<ProductProductPackage> ProductPackage = null ;
+            
+            ViewBag.Products = DB.tblProducts.Where(x => x.isActive == true).ToList();
+            if (id != null && id != 0)
+            {
+                
+                ProductPackage = (from PP in DB.tblProductPackages
+                                              join PPP in DB.tblProductPackageProducts on PP.ProductPackageId equals PPP.ProductPackageId
+                                              join P in DB.tblProducts on PPP.ProductId equals P.ProductId
+                                              where PP.ProductPackageId == id
+                                              select new ProductProductPackage
+                                              {
+                                                  ProductPackage = PP,
+                                                  ProductPackageProduct=PPP,
+                                                  Product=P
+
+
+                                              }).ToList();
+
+                
+
+                //ProductPackage = DB.tblProductPackages.Where(x => x.ProductPackageId == id).FirstOrDefault();
+
+                //ViewBag.ProductPackageProduct = DB.tblProductPackageProducts.Where(x => x.ProductPackageId == id).ToList();
+                return View(ProductPackage);
+            }
+            else
+            {
+                return View(ProductPackage);
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult CreateProductPackage(List<tblProduct> TailData, List<tblProductPackage> HeadData)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            tblProductPackage Data = new tblProductPackage();
+            tblProductPackage Check = new tblProductPackage();
+            List<tblProductPackageProduct> Data2 = new List<tblProductPackageProduct>();
+
+            var CheckCode = HeadData[0].Code;
+            var CheckProductPackageId = HeadData[0].ProductPackageId;
+
+            Check = DB.tblProductPackages.Select(r => r).Where(x => x.Code == CheckCode).FirstOrDefault();
+            try
+            {
+                if(HeadData[0].ProductPackageId!=0)
+                {
+                    if (Check == null ||Check.ProductPackageId== HeadData[0].ProductPackageId)
+                    {
+                        Data = DB.tblProductPackages.Where(x => x.ProductPackageId == CheckProductPackageId).FirstOrDefault();
+                        Data.Code = HeadData[0].Code;
+                        Data.Name = HeadData[0].Name;
+                        Data.EditDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.Entry(Data);
+                        DB.SaveChanges();
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Package Already Exist!!!";
+                    }
+
+                    Data2 = DB.tblProductPackageProducts.Select(r => r).Where(x => x.ProductPackageId == CheckProductPackageId).ToList();
+                    foreach (var item in Data2)
+                    {
+                        DB.Entry(item).State = EntityState.Deleted; ;
+                    }
+                    DB.SaveChanges();
+
+                    if (TailData == null)
+                    {
+                        TailData = new List<tblProduct>();
+                    }
+
+
+                    //Loop and insert records.
+
+                    int count = 0;
+                    foreach (tblProduct Item in TailData)
+                    {
+                        tblProductPackageProduct Data1 = new tblProductPackageProduct();
+                        if (count != TailData.Count)
+                        {
+                            Data1.ProductPackageId = DB.tblProductPackages.Where(x => x.Code == CheckCode).Select(r => r.ProductPackageId).FirstOrDefault();
+                            Data1.ProductId = Item.ProductId;
+                            DB.tblProductPackageProducts.Add(Data1);
+                        }
+
+
+                        count++;
+
+
+                    }
+                    DB.SaveChanges();
+                    var RedirectUrl = new UrlHelper(Request.RequestContext).Action("ProductPackages", "Home");
+                    return Json(new { Url = RedirectUrl });
+                }
+                else
+                {
+                    if (Check == null)
+                    {
+                        Data.Code = HeadData[0].Code;
+                        Data.Name = HeadData[0].Name;
+                        Data.CreatedDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.tblProductPackages.Add(Data);
+                        DB.SaveChanges();
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Package Already Exist!!!";
+                    }
+
+
+
+                    if (TailData == null)
+                    {
+                        TailData = new List<tblProduct>();
+                    }
+
+
+                    //Loop and insert records.
+
+                    int count = 0;
+                    foreach (tblProduct Item in TailData)
+                    {
+                        tblProductPackageProduct Data1 = new tblProductPackageProduct();
+                        if (count != TailData.Count)
+                        {
+                            Data1.ProductPackageId = DB.tblProductPackages.Where(x => x.Code == CheckCode).Select(r => r.ProductPackageId).FirstOrDefault();
+                            Data1.ProductId = Item.ProductId;
+                            DB.tblProductPackageProducts.Add(Data1);
+                        }
+
+
+                        count++;
+
+
+                    }
+                    DB.SaveChanges();
+                }
+                
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("ProductPackages", "Home");
+            return Json(new { Url = redirectUrl });
+        }
+
+    
+
+        [HttpPost]
+        public ActionResult DeleteProductPackage(tblProductPackage ProductPackage)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblProductPackage Data = new tblProductPackage();
+            List<tblProductPackageProduct> Data1 = new List<tblProductPackageProduct>();
+
+            try
+            {
+
+                
+                    Data1 = DB.tblProductPackageProducts.Select(r => r).Where(x => x.ProductPackageId == ProductPackage.ProductPackageId).ToList();
+                    foreach (var item in Data1)
+                    {
+                        DB.Entry(item).State = EntityState.Deleted; ;
+                    }
+                DB.SaveChanges();
+
+                Data = DB.tblProductPackages.Select(r => r).Where(x => x.ProductPackageId == ProductPackage.ProductPackageId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
+        }
+
+
+
+        public ActionResult Settings(int? isSuccess)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            var Data = DB.tblSettings.Where(x => x.isActive==true).FirstOrDefault();
+            if(isSuccess==1)
+            {
+                ViewBag.Error = "Record Successfully Updated!!!";
+            }
+            return View(Data);
+        }
+
+        [HttpPost]
+        public ActionResult CreateSetting(tblSetting Setting)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            tblSetting Data = new tblSetting();
+            tblRole Foreign = new tblRole();
+            try
+            {
+                //Foreign = DB.tblRoles.Where(x => x.RoleId == Setting.RoleId).FirstOrDefault();
+                //Data.tblRole = Foreign;
+                Data = DB.tblSettings.Select(r => r).Where(x => x.SettingId == Setting.SettingId).FirstOrDefault();
+                Data.SettingId = Setting.SettingId;
+                Data.DateFormat = Setting.DateFormat;
+                Data.NextWSA = Setting.NextWSA;
+                Data.NextPassport = Setting.NextPassport;
+                Data.NumberOfRetrieves = Setting.NumberOfRetrieves;
+                Data.LetterCase = Setting.LetterCase;
+                Data.FontStyle = Setting.FontStyle;
+                Data.FontSize = Setting.FontSize;
+                DB.Entry(Data);
+                DB.SaveChanges();
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return RedirectToAction("Settings", new { isSuccess = 1 });
+        }
+
+
+        
+
+
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your application description page.";
+
+            return View();
+        }
+
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+
+            return View();
+        }
+    }
+}

@@ -1,0 +1,1033 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WorldServiceOrganizationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblAccessLevel">
+          <Key>
+            <PropertyRef Name="AccessId" />
+          </Key>
+          <Property Name="AccessId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EditAccess" Type="bit" />
+          <Property Name="DeleteAccess" Type="bit" />
+          <Property Name="CreateAccess" Type="bit" />
+          <Property Name="MenuId" Type="int" />
+          <Property Name="RoleId" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblCountry">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblEye">
+          <Key>
+            <PropertyRef Name="EyeId" />
+          </Key>
+          <Property Name="EyeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblMenu">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="ControllerName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ActionName" Type="nvarchar" MaxLength="50" />
+          <Property Name="isParent" Type="bit" />
+          <Property Name="ParentId" Type="int" />
+          <Property Name="FontAwesome" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="ElementId" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblOccupation">
+          <Key>
+            <PropertyRef Name="OccupationId" />
+          </Key>
+          <Property Name="OccupationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblProduct">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="ProductTypeId" Type="int" />
+        </EntityType>
+        <EntityType Name="tblProductPackage">
+          <Key>
+            <PropertyRef Name="ProductPackageId" />
+          </Key>
+          <Property Name="ProductPackageId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblProductPackageProduct">
+          <Key>
+            <PropertyRef Name="ProductPackageProductId" />
+          </Key>
+          <Property Name="ProductPackageProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" />
+          <Property Name="ProductPackageId" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Role" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblSetting">
+          <Key>
+            <PropertyRef Name="SettingId" />
+          </Key>
+          <Property Name="SettingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateFormat" Type="nvarchar" MaxLength="50" />
+          <Property Name="NumberOfRetrieves" Type="nvarchar" MaxLength="50" />
+          <Property Name="NextWSA" Type="nvarchar" MaxLength="50" />
+          <Property Name="NextPassport" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="FontStyle" Type="nvarchar" MaxLength="50" />
+          <Property Name="FontSize" Type="nvarchar" MaxLength="50" />
+          <Property Name="LetterCase" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblSex">
+          <Key>
+            <PropertyRef Name="SexId" />
+          </Key>
+          <Property Name="SexId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblUsers">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Organization" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address2" Type="nvarchar" MaxLength="50" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateProvince" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="PIN" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeteledBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="RoleId" Type="int" />
+        </EntityType>
+        <Association Name="FK_AccessManu">
+          <End Role="tblMenu" Type="Self.tblMenu" Multiplicity="0..1" />
+          <End Role="tblAccessLevel" Type="Self.tblAccessLevel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMenu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="tblAccessLevel">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccessRole">
+          <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
+          <End Role="tblAccessLevel" Type="Self.tblAccessLevel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="tblAccessLevel">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManyProduct">
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="0..1" />
+          <End Role="tblProductPackageProduct" Type="Self.tblProductPackageProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProduct">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="tblProductPackageProduct">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManyProductPackage">
+          <End Role="tblProductPackage" Type="Self.tblProductPackage" Multiplicity="0..1" />
+          <End Role="tblProductPackageProduct" Type="Self.tblProductPackageProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProductPackage">
+              <PropertyRef Name="ProductPackageId" />
+            </Principal>
+            <Dependent Role="tblProductPackageProduct">
+              <PropertyRef Name="ProductPackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuTable">
+          <End Role="tblMenu" Type="Self.tblMenu" Multiplicity="0..1" />
+          <End Role="tblMenu1" Type="Self.tblMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMenu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="tblMenu1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductProductType">
+          <End Role="tblProductType" Type="Self.tblProductType" Multiplicity="0..1" />
+          <End Role="tblProduct" Type="Self.tblProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="tblProduct">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersRole">
+          <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="tblUsers">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WorldServiceOrganizationModelStoreContainer">
+          <EntitySet Name="tblAccessLevel" EntityType="Self.tblAccessLevel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCountry" EntityType="Self.tblCountry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblEye" EntityType="Self.tblEye" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMenu" EntityType="Self.tblMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOccupation" EntityType="Self.tblOccupation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProduct" EntityType="Self.tblProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProductPackage" EntityType="Self.tblProductPackage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProductPackageProduct" EntityType="Self.tblProductPackageProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblProductType" EntityType="Self.tblProductType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblRole" EntityType="Self.tblRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSetting" EntityType="Self.tblSetting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSex" EntityType="Self.tblSex" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStatus" EntityType="Self.tblStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AccessManu" Association="Self.FK_AccessManu">
+            <End Role="tblMenu" EntitySet="tblMenu" />
+            <End Role="tblAccessLevel" EntitySet="tblAccessLevel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccessRole" Association="Self.FK_AccessRole">
+            <End Role="tblRole" EntitySet="tblRole" />
+            <End Role="tblAccessLevel" EntitySet="tblAccessLevel" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManyProduct" Association="Self.FK_ManyProduct">
+            <End Role="tblProduct" EntitySet="tblProduct" />
+            <End Role="tblProductPackageProduct" EntitySet="tblProductPackageProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManyProductPackage" Association="Self.FK_ManyProductPackage">
+            <End Role="tblProductPackage" EntitySet="tblProductPackage" />
+            <End Role="tblProductPackageProduct" EntitySet="tblProductPackageProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuTable" Association="Self.FK_MenuTable">
+            <End Role="tblMenu" EntitySet="tblMenu" />
+            <End Role="tblMenu1" EntitySet="tblMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductProductType" Association="Self.FK_ProductProductType">
+            <End Role="tblProductType" EntitySet="tblProductType" />
+            <End Role="tblProduct" EntitySet="tblProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersRole" Association="Self.FK_UsersRole">
+            <End Role="tblRole" EntitySet="tblRole" />
+            <End Role="tblUsers" EntitySet="tblUsers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WorldServiceOrganizationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblUser">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Organization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateProvince" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeteledBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="RoleId" Type="Int32" />
+          <NavigationProperty Name="tblRole" Relationship="WorldServiceOrganizationModel.FK__tblUsers__RoleId__1367E606" FromRole="tblUser" ToRole="tblRole" />
+        </EntityType>
+        <EntityContainer Name="WorldServiceOrganizationEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+          <EntitySet Name="tblRoles" EntityType="WorldServiceOrganizationModel.tblRole" />
+          <AssociationSet Name="FK__tblUsers__RoleId__1367E606" Association="WorldServiceOrganizationModel.FK__tblUsers__RoleId__1367E606">
+            <End Role="tblRole" EntitySet="tblRoles" />
+            <End Role="tblUser" EntitySet="tblUsers" />
+          </AssociationSet>
+          <EntitySet Name="tblAccessLevels" EntityType="WorldServiceOrganizationModel.tblAccessLevel" />
+          <AssociationSet Name="FK_AccessRole" Association="WorldServiceOrganizationModel.FK_AccessRole">
+            <End EntitySet="tblRoles" Role="tblRole" />
+            <End EntitySet="tblAccessLevels" Role="tblAccessLevel" />
+          </AssociationSet>
+          <EntitySet Name="tblMenus" EntityType="WorldServiceOrganizationModel.tblMenu" />
+          <AssociationSet Name="FK_AccessManu" Association="WorldServiceOrganizationModel.FK_AccessManu">
+            <End Role="tblMenu" EntitySet="tblMenus" />
+            <End Role="tblAccessLevel" EntitySet="tblAccessLevels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuTable" Association="WorldServiceOrganizationModel.FK_MenuTable">
+            <End Role="tblMenu" EntitySet="tblMenus" />
+            <End Role="tblMenu1" EntitySet="tblMenus" />
+          </AssociationSet>
+          <EntitySet Name="tblCountries" EntityType="WorldServiceOrganizationModel.tblCountry" />
+          <EntitySet Name="tblEyes" EntityType="WorldServiceOrganizationModel.tblEye" />
+          <EntitySet Name="tblOccupations" EntityType="WorldServiceOrganizationModel.tblOccupation" />
+          <EntitySet Name="tblProducts" EntityType="WorldServiceOrganizationModel.tblProduct" />
+          <EntitySet Name="tblProductTypes" EntityType="WorldServiceOrganizationModel.tblProductType" />
+          <EntitySet Name="tblStatus" EntityType="WorldServiceOrganizationModel.tblStatus" />
+          <EntitySet Name="tblSex" EntityType="WorldServiceOrganizationModel.tblSex" />
+          <AssociationSet Name="FK_ProductProductType" Association="WorldServiceOrganizationModel.FK_ProductProductType">
+            <End Role="tblProductType" EntitySet="tblProductTypes" />
+            <End Role="tblProduct" EntitySet="tblProducts" />
+          </AssociationSet>
+          <EntitySet Name="tblProductPackages" EntityType="WorldServiceOrganizationModel.tblProductPackage" />
+          <EntitySet Name="tblProductPackageProducts" EntityType="WorldServiceOrganizationModel.tblProductPackageProduct" />
+          <AssociationSet Name="FK_ManyProduct" Association="WorldServiceOrganizationModel.FK_ManyProduct">
+            <End Role="tblProduct" EntitySet="tblProducts" />
+            <End Role="tblProductPackageProduct" EntitySet="tblProductPackageProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ManyProductPackage" Association="WorldServiceOrganizationModel.FK_ManyProductPackage">
+            <End Role="tblProductPackage" EntitySet="tblProductPackages" />
+            <End Role="tblProductPackageProduct" EntitySet="tblProductPackageProducts" />
+          </AssociationSet>
+          <EntitySet Name="tblSettings" EntityType="WorldServiceOrganizationModel.tblSetting" />
+        </EntityContainer>
+        <EntityType Name="tblRole">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblUsers" Relationship="WorldServiceOrganizationModel.FK__tblUsers__RoleId__1367E606" FromRole="tblRole" ToRole="tblUser" />
+          <NavigationProperty Name="tblAccessLevels" Relationship="WorldServiceOrganizationModel.FK_AccessRole" FromRole="tblRole" ToRole="tblAccessLevel" />
+        </EntityType>
+        <Association Name="FK__tblUsers__RoleId__1367E606">
+          <End Type="WorldServiceOrganizationModel.tblRole" Role="tblRole" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="tblUser">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblAccessLevel">
+          <Key>
+            <PropertyRef Name="AccessId" />
+          </Key>
+          <Property Name="AccessId" Nullable="false" Type="Int32" />
+          <Property Name="EditAccess" Type="Boolean" />
+          <Property Name="DeleteAccess" Type="Boolean" />
+          <Property Name="CreateAccess" Type="Boolean" />
+          <Property Name="MenuId" Type="Int32" />
+          <Property Name="RoleId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Precision="3" Type="DateTime" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Precision="3" Type="DateTime" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Precision="3" Type="DateTime" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblRole" Relationship="WorldServiceOrganizationModel.FK_AccessRole" FromRole="tblAccessLevel" ToRole="tblRole" />
+          <NavigationProperty Name="tblMenu" Relationship="WorldServiceOrganizationModel.FK_AccessManu" FromRole="tblAccessLevel" ToRole="tblMenu" />
+        </EntityType>
+        <Association Name="FK_AccessRole">
+          <End Type="WorldServiceOrganizationModel.tblRole" Multiplicity="0..1" Role="tblRole" />
+          <End Type="WorldServiceOrganizationModel.tblAccessLevel" Multiplicity="*" Role="tblAccessLevel" />
+          <ReferentialConstraint>
+            <Principal Role="tblRole">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="tblAccessLevel">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblMenu">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ControllerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="isParent" Type="Boolean" />
+          <Property Name="ParentId" Type="Int32" />
+          <Property Name="FontAwesome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblAccessLevels" Relationship="WorldServiceOrganizationModel.FK_AccessManu" FromRole="tblMenu" ToRole="tblAccessLevel" />
+          <NavigationProperty Name="tblMenu1" Relationship="WorldServiceOrganizationModel.FK_MenuTable" FromRole="tblMenu" ToRole="tblMenu1" />
+          <NavigationProperty Name="tblMenu2" Relationship="WorldServiceOrganizationModel.FK_MenuTable" FromRole="tblMenu1" ToRole="tblMenu" />
+          <Property Name="ElementId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_AccessManu">
+          <End Type="WorldServiceOrganizationModel.tblMenu" Role="tblMenu" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblAccessLevel" Role="tblAccessLevel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMenu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="tblAccessLevel">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MenuTable">
+          <End Type="WorldServiceOrganizationModel.tblMenu" Role="tblMenu" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblMenu" Role="tblMenu1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMenu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="tblMenu1">
+              <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblCountry">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblEye">
+          <Key>
+            <PropertyRef Name="EyeId" />
+          </Key>
+          <Property Name="EyeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblOccupation">
+          <Key>
+            <PropertyRef Name="OccupationId" />
+          </Key>
+          <Property Name="OccupationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblProduct">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="ProductTypeId" Type="Int32" />
+          <NavigationProperty Name="tblProductType" Relationship="WorldServiceOrganizationModel.FK_ProductProductType" FromRole="tblProduct" ToRole="tblProductType" />
+          <NavigationProperty Name="tblProductPackageProducts" Relationship="WorldServiceOrganizationModel.FK_ManyProduct" FromRole="tblProduct" ToRole="tblProductPackageProduct" />
+        </EntityType>
+        <EntityType Name="tblProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblProduct" Relationship="WorldServiceOrganizationModel.FK_ProductProductType" FromRole="tblProductType" ToRole="tblProduct" />
+        </EntityType>
+        <EntityType Name="tblStatus">
+          <Key>
+            <PropertyRef Name="StatusId" />
+          </Key>
+          <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="tblSex">
+          <Key>
+            <PropertyRef Name="SexId" />
+          </Key>
+          <Property Name="SexId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_ProductProductType">
+          <End Type="WorldServiceOrganizationModel.tblProductType" Role="tblProductType" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblProduct" Role="tblProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="tblProduct">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblProductPackage">
+          <Key>
+            <PropertyRef Name="ProductPackageId" />
+          </Key>
+          <Property Name="ProductPackageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblProductPackageProducts" Relationship="WorldServiceOrganizationModel.FK_ManyProductPackage" FromRole="tblProductPackage" ToRole="tblProductPackageProduct" />
+        </EntityType>
+        <EntityType Name="tblProductPackageProduct">
+          <Key>
+            <PropertyRef Name="ProductPackageProductId" />
+          </Key>
+          <Property Name="ProductPackageProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int32" />
+          <Property Name="ProductPackageId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblProduct" Relationship="WorldServiceOrganizationModel.FK_ManyProduct" FromRole="tblProductPackageProduct" ToRole="tblProduct" />
+          <NavigationProperty Name="tblProductPackage" Relationship="WorldServiceOrganizationModel.FK_ManyProductPackage" FromRole="tblProductPackageProduct" ToRole="tblProductPackage" />
+        </EntityType>
+        <Association Name="FK_ManyProduct">
+          <End Type="WorldServiceOrganizationModel.tblProduct" Role="tblProduct" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblProductPackageProduct" Role="tblProductPackageProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProduct">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="tblProductPackageProduct">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ManyProductPackage">
+          <End Type="WorldServiceOrganizationModel.tblProductPackage" Role="tblProductPackage" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblProductPackageProduct" Role="tblProductPackageProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblProductPackage">
+              <PropertyRef Name="ProductPackageId" />
+            </Principal>
+            <Dependent Role="tblProductPackageProduct">
+              <PropertyRef Name="ProductPackageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblSetting">
+          <Key>
+            <PropertyRef Name="SettingId" />
+          </Key>
+          <Property Name="SettingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NumberOfRetrieves" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NextWSA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NextPassport" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <Property Name="FontStyle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FontSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LetterCase" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="WorldServiceOrganizationModelStoreContainer" CdmEntityContainer="WorldServiceOrganizationEntities">
+          <EntitySetMapping Name="tblUsers">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblUser">
+              <MappingFragment StoreEntitySet="tblUsers">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Organization" ColumnName="Organization" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="StateProvince" ColumnName="StateProvince" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PIN" ColumnName="PIN" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="DeteledBy" ColumnName="DeteledBy" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRoles">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblRole">
+              <MappingFragment StoreEntitySet="tblRole">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAccessLevels">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblAccessLevel">
+              <MappingFragment StoreEntitySet="tblAccessLevel">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="CreateAccess" ColumnName="CreateAccess" />
+                <ScalarProperty Name="DeleteAccess" ColumnName="DeleteAccess" />
+                <ScalarProperty Name="EditAccess" ColumnName="EditAccess" />
+                <ScalarProperty Name="AccessId" ColumnName="AccessId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMenus">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblMenu">
+              <MappingFragment StoreEntitySet="tblMenu">
+                <ScalarProperty Name="ElementId" ColumnName="ElementId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="FontAwesome" ColumnName="FontAwesome" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="isParent" ColumnName="isParent" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCountries">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblCountry">
+              <MappingFragment StoreEntitySet="tblCountry">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEyes">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblEye">
+              <MappingFragment StoreEntitySet="tblEye">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="EyeId" ColumnName="EyeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOccupations">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblOccupation">
+              <MappingFragment StoreEntitySet="tblOccupation">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="OccupationId" ColumnName="OccupationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProducts">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblProduct">
+              <MappingFragment StoreEntitySet="tblProduct">
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProductTypes">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblProductType">
+              <MappingFragment StoreEntitySet="tblProductType">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStatus">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblStatus">
+              <MappingFragment StoreEntitySet="tblStatus">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSex">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblSex">
+              <MappingFragment StoreEntitySet="tblSex">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="SexId" ColumnName="SexId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProductPackages">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblProductPackage">
+              <MappingFragment StoreEntitySet="tblProductPackage">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ProductPackageId" ColumnName="ProductPackageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblProductPackageProducts">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblProductPackageProduct">
+              <MappingFragment StoreEntitySet="tblProductPackageProduct">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ProductPackageId" ColumnName="ProductPackageId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ProductPackageProductId" ColumnName="ProductPackageProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSettings">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblSetting">
+              <MappingFragment StoreEntitySet="tblSetting">
+                <ScalarProperty Name="LetterCase" ColumnName="LetterCase" />
+                <ScalarProperty Name="FontSize" ColumnName="FontSize" />
+                <ScalarProperty Name="FontStyle" ColumnName="FontStyle" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="NextPassport" ColumnName="NextPassport" />
+                <ScalarProperty Name="NextWSA" ColumnName="NextWSA" />
+                <ScalarProperty Name="NumberOfRetrieves" ColumnName="NumberOfRetrieves" />
+                <ScalarProperty Name="DateFormat" ColumnName="DateFormat" />
+                <ScalarProperty Name="SettingId" ColumnName="SettingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

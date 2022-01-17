@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e9663d3bd04c4f22a61fcebb4991345a" Name="Diagram1">
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblUser" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblRole" Width="1.5" PointX="3.375" PointY="0.75" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK__tblUsers__RoleId__1367E606" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblAccessLevel" PointX="8.125" PointY="1.5" Width="1.5" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_AccessRole" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblMenu" Width="1.5" PointX="3.375" PointY="5" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_AccessManu" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_MenuTable" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblCountry" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblEye" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblOccupation" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblProduct" Width="1.5" PointX="7.375" PointY="6.75" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblProductType" Width="1.5" PointX="9.375" PointY="6.75" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblStatus" Width="1.5" PointX="10.375" PointY="0.75" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblSex" Width="1.5" PointX="3.375" PointY="10.75" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_ProductProductType" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblProductPackage" Width="1.5" PointX="9.375" PointY="12" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblProductPackageProduct" Width="1.5" PointX="11.625" PointY="6.875" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_ManyProduct" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_ManyProductPackage" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblSetting" Width="1.5" PointX="0.75" PointY="11.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
