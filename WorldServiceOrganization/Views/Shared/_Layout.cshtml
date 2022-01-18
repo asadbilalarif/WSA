@@ -3,6 +3,7 @@
 @{ 
     ViewBag.Access = Session["Access"];
     ViewBag.User = Session["User"];
+    int PID= 0;
 
 }
 <!DOCTYPE html>
@@ -12,7 +13,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>Doccure - Dashboard</title>
+    <title>WSO - Dashboard</title>
 
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="~/Content/assets/img/favicon.png">
@@ -27,14 +28,45 @@
     <link rel="stylesheet" href="~/Content/assets/css/feathericon.min.css">
 
     <link rel="stylesheet" href="~/Content/assets/plugins/morris/morris.css">
-
+    @*<link href="~/Content/assets/css/datatables.min.css" rel="stylesheet" />*@
     <!-- Main CSS -->
     <link rel="stylesheet" href="~/Content/assets/css/style.css">
+
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.5/css/buttons.dataTables.min.css" />
 
     <!--[if lt IE 9]>
         <script src="~/Content/assets/js/html5shiv.min.js"></script>
         <script src="~/Content/assets/js/respond.min.js"></script>
     <![endif]-->
+
+    <style>
+
+        .dataTables_filter {
+            float: right !important;
+        }
+
+        .dataTables_paginate {
+            float: right !important;
+        }
+        .modal-header {
+            background-color: #1b5a90 !important;
+            color: white !important;
+        }
+        .container-fluid {
+            padding-top: 9px;
+            padding-bottom: 9px;
+        }
+        .breadcrumb-title {
+            margin-top: 5px;
+        }
+        .breadcrumb-bar {
+            background-color: #1b5a90 !important;
+            color: white !important;
+        }
+    </style>
+
 </head>
 <body>
 
@@ -49,10 +81,12 @@
             <!-- Logo -->
             <div class="header-left">
                 <a href="index.html" class="logo">
-                    <img src="~/Content/assets/img/logo.png" alt="Logo">
+                    <h4>World Service Organization</h4>
+                    @*<img src="~/Content/assets/img/logo.png" alt="Logo">*@
                 </a>
                 <a href="index.html" class="logo logo-small">
-                    <img src="~/Content/assets/img/logo-small.png" alt="Logo" width="30" height="30">
+                    <h4>World Service Organization</h4>
+                    @*<img src="~/Content/assets/img/logo-small.png" alt="Logo" width="30" height="30">*@
                 </a>
             </div>
             <!-- /Logo -->
@@ -61,12 +95,12 @@
                 <i class="fe fe-text-align-left"></i>
             </a>
 
-            <div class="top-nav-search">
+            @*<div class="top-nav-search">
                 <form>
                     <input type="text" class="form-control" placeholder="Search here">
                     <button class="btn" type="submit"><i class="fa fa-search"></i></button>
                 </form>
-            </div>
+            </div>*@
 
             <!-- Mobile Menu Toggle -->
             <a class="mobile_btn" id="mobile_btn">
@@ -77,7 +111,8 @@
             <ul class="nav user-menu">
 
                 <!-- Notifications -->
-                <li class="nav-item dropdown noti-dropdown">
+
+                @*<li class="nav-item dropdown noti-dropdown">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                         <i class="fe fe-bell"></i> <span class="badge badge-pill">3</span>
                     </a>
@@ -146,18 +181,19 @@
                             <a href="#">View all Notifications</a>
                         </div>
                     </div>
-                </li>
+                </li>*@
+
                 <!-- /Notifications -->
                 <!-- User Menu -->
                 <li class="nav-item dropdown has-arrow">
                     <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                        <span class="user-img"><img class="rounded-circle" src="~/Content/assets/img/profiles/avatar-01.jpg" width="31" alt="Ryan Taylor"></span>
+                        <span class="user-img"><img class="rounded-circle" src="~/Content/assets/img/user-image.png" width="31" alt="Ryan Taylor"></span>
                     </a>
                     <div class="dropdown-menu">
                         <div class="user-header">
                             <div class="avatar avatar-sm">
-                                <img src="~/Content/assets/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle">
-                            </div>
+                                        <img src="~/Content/assets/img/user-image.png" alt="User Image" class="avatar-img rounded-circle">
+                                    </div>
                             <div class="user-text">
                                 <h6>@ViewBag.User.username</h6>
                                 <p class="text-muted mb-0">@ViewBag.User.tblRole.Role</p>
@@ -184,28 +220,90 @@
 
 
                         @*<li class="menu-title">
-                            <span>Main</span>
-                        </li>*@
+                                <span>Main</span>
+                            </li>*@
                         @*<li class="active">
-                            <a href="index.html"><i class="fe fe-home"></i> <span>Dashboard</span></a>
-                        </li>*@
+                                <a href="index.html"><i class="fe fe-home"></i> <span>Dashboard</span></a>
+                            </li>*@
+
+                        @*@foreach (var AccessLevel in @ViewBag.Access)
+                            {
+                                if (@AccessLevel.tblMenu.Name == "Roles & Permissions")
+                                {
+                                    <li id="@AccessLevel.tblMenu.ElementId">
+                                        <a href="@Url.Action(@AccessLevel.tblMenu.ActionName, @AccessLevel.tblMenu.ControllerName,new {id=0 })"><i class="@AccessLevel.tblMenu.FontAwesome"></i> <span>@AccessLevel.tblMenu.Name </span></a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li id="@AccessLevel.tblMenu.ElementId">
+                                        <a href="@Url.Action(@AccessLevel.tblMenu.ActionName, @AccessLevel.tblMenu.ControllerName)"><i class="@AccessLevel.tblMenu.FontAwesome"></i> <span>@AccessLevel.tblMenu.Name </span></a>
+                                    </li>
+                                }
+
+                            }*@
+
+
 
                         @foreach (var AccessLevel in @ViewBag.Access)
                         {
-                            if (@AccessLevel.tblMenu.Name == "Roles & Permissions")
+
+
+                            if (@AccessLevel.tblMenu.ParentId == 0)
                             {
-                                <li id="@AccessLevel.tblMenu.ElementId">
-                                    <a href="@Url.Action(@AccessLevel.tblMenu.ActionName, @AccessLevel.tblMenu.ControllerName,new {id=0 })"><i class="@AccessLevel.tblMenu.FontAwesome"></i> <span>@AccessLevel.tblMenu.Name </span></a>
+                                {
+
+                                    PID = @AccessLevel.tblMenu.MenuId;
+
+
+                                }
+                                <li class="submenu">
+                                    <a href="#" id="@AccessLevel.tblMenu.ElementId"><i class="@AccessLevel.tblMenu.FontAwesome"></i> <span>@AccessLevel.tblMenu.Name</span> <span class="menu-arrow"></span></a>
+
+                                    <ul style="display: none;">
+                                        @foreach (var AccessLevel1 in @ViewBag.Access)
+                                        {
+                                            if (@AccessLevel1.tblMenu.ParentId == @PID)
+                                            {
+                                                if (@AccessLevel1.tblMenu.Name == "Roles & Permissions")
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action(@AccessLevel1.tblMenu.ActionName, @AccessLevel1.tblMenu.ControllerName,new {id=0 })" id="@AccessLevel1.tblMenu.ElementId"><i class="@AccessLevel1.tblMenu.FontAwesome"></i> <span>@AccessLevel1.tblMenu.Name </span></a>
+                                                    </li>
+                                                }
+                                                else
+                                                {
+                                                    <li>
+                                                        <a href="@Url.Action(@AccessLevel1.tblMenu.ActionName, @AccessLevel1.tblMenu.ControllerName)" id="@AccessLevel1.tblMenu.ElementId"><i class="@AccessLevel1.tblMenu.FontAwesome"></i> <span>@AccessLevel1.tblMenu.Name </span></a>
+                                                    </li>
+                                                }
+                                            }
+                                        }
+                                    </ul>
                                 </li>
                             }
-                            else
-                            {
-                                <li id="@AccessLevel.tblMenu.ElementId">
-                                    <a href="@Url.Action(@AccessLevel.tblMenu.ActionName, @AccessLevel.tblMenu.ControllerName)"><i class="@AccessLevel.tblMenu.FontAwesome"></i> <span>@AccessLevel.tblMenu.Name </span></a>
-                                </li>
-                            }
+                            @*else
+                                {
+                                    if (@AccessLevel.tblMenu.Name == "Roles & Permissions")
+                                    {
+                                        <li id="@AccessLevel.tblMenu.ElementId">
+                                            <a href="@Url.Action(@AccessLevel.tblMenu.ActionName, @AccessLevel.tblMenu.ControllerName,new {id=0 })"><i class="@AccessLevel.tblMenu.FontAwesome"></i> <span>@AccessLevel.tblMenu.Name </span></a>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li id="@AccessLevel.tblMenu.ElementId">
+                                            <a href="@Url.Action(@AccessLevel.tblMenu.ActionName, @AccessLevel.tblMenu.ControllerName)"><i class="@AccessLevel.tblMenu.FontAwesome"></i> <span>@AccessLevel.tblMenu.Name </span></a>
+                                        </li>
+                                    }
+                                }*@
+
+
+
 
                         }
+
+
 
                         @*<li>
                                 <a href="@Url.Action("Users","UserManagement")"><i class="fe fe-user"></i> <span>Users</span></a>
@@ -334,7 +432,8 @@
     </div>
     <!-- /Main Wrapper -->
     <!-- jQuery -->
-    <script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>
+    @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
     <!-- Bootstrap Core JS -->
     <script src="~/Content/assets/js/popper.min.js"></script>
@@ -344,11 +443,22 @@
     <script src="~/Content/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <script src="~/Content/assets/plugins/raphael/raphael.min.js"></script>
-    <script src="~/Content/assets/plugins/morris/morris.min.js"></script>
-    <script src="~/Content/assets/js/chart.morris.js"></script>
+    @*<script src="~/Content/assets/plugins/morris/morris.min.js"></script>
+        <script src="~/Content/assets/js/chart.morris.js"></script*@>
 
     <!-- Custom JS -->
     <script src="~/Content/assets/js/script.js"></script>
+    @*<script src="~/Content/assets/js/jquery.dataTables.min.js"></script>
+        <script src="~/Content/assets/js/datatables.min.js"></script>*@
+
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.html5.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.6.5/js/buttons.print.min.js"></script>
+
 
 </body>
 

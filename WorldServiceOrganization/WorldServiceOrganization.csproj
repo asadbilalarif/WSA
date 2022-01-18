@@ -260,10 +260,14 @@
     <Content Include="Content\assets\img\specialities\specialities-03.png" />
     <Content Include="Content\assets\img\specialities\specialities-04.png" />
     <Content Include="Content\assets\img\specialities\specialities-05.png" />
+    <Content Include="Content\assets\img\user-image.png" />
     <Content Include="Content\assets\js\bootstrap.min.js" />
     <Content Include="Content\assets\js\chart.morris.js" />
+    <Content Include="Content\assets\css\datatables.min.css" />
+    <Content Include="Content\assets\js\datatables.min.js" />
     <Content Include="Content\assets\js\form-validation.js" />
     <Content Include="Content\assets\js\jquery-3.2.1.min.js" />
+    <Content Include="Content\assets\js\jquery.dataTables.min.js" />
     <Content Include="Content\assets\js\jquery.maskedinput.min.js" />
     <Content Include="Content\assets\js\mask.js" />
     <Content Include="Content\assets\js\popper.min.js" />

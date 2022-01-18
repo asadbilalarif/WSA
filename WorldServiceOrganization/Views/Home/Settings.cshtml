@@ -19,72 +19,9 @@
     <!-- Page Header -->
 
 
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="breadcrumb-bar">
-                <div class="container-fluid">
-                    <div class="row align-items-center">
-                        <div class="col-md-6 col-6">
-                            @if (Model == null)
-                            {
-                                <h2 class="breadcrumb-title">Create Setting</h2>
-                            }
-                            else
-                            {
-                                <h2 class="breadcrumb-title">Edit Setting</h2>
-                            }
-                        </div>
+   
 
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-6 text-right m-b-30" id="CreateSettingB">
-        </div>
-    </div><br />
-
-    @*<div class="breadcrumb-bar" style="background-color:#009efb !important;">
-            <div class="container-fluid">
-                <div class="row align-items-center">
-                    <div class="col-md-6 col-6">
-                        @if (Model == null)
-                        {
-                            <h2 class="breadcrumb-title">Create Config</h2>
-                        }
-                        else
-                        {
-                            <h2 class="breadcrumb-title">Edit Config</h2>
-                        }
-                    </div>
-                    <div class="col-md-6 col-6 text-right m-b-30" id="CreateUserB">
-                        <a href="@Url.Action("Config","Home")" class="btn btn-primary "><i class="fa fa-list"></i> Back</a>
-                    </div>
-                </div>
-            </div>
-        </div>*@
-
-    @*<div class="page-header">
-            <div class="row">
-                <div class="col-sm-6">
-                    <h3 class="page-title">Config</h3>
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="@Url.Action("Index","Home")">Dashboard</a></li>
-                        <li class="breadcrumb-item"><a href="@Url.Action("Config","Home")">Config</a></li>
-                        @if (Model == null)
-                        {
-                            <li class="breadcrumb-item active">Create Config</li>
-                        }
-                        else
-                        {
-                            <li class="breadcrumb-item active">Edit Config</li>
-                        }
-                    </ul>
-                </div>
-                <div class="col-sm-6 text-right m-b-30" id="CreateUserB">
-
-                </div>
-            </div>
-        </div>*@
+   
     <!-- /Page Header -->
 
     <div class="row">
@@ -96,15 +33,31 @@
                     @using (Html.BeginForm("CreateSetting", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {@Html.AntiForgeryToken()
                     <div class="card">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="breadcrumb-bar">
+                                    <div class="container-fluid">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-6 col-6">
+                                                @if (Model == null)
+                                                {
+                                                    <h5 class="breadcrumb-title">Create Setting</h5>
+                                                }
+                                                else
+                                                {
+                                                    <h5 class="breadcrumb-title">Edit Setting</h5>
+                                                }
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <h2 style="color:green;">@ViewBag.Error</h2>
                         <div class="card-body">
 
-                            <div class="row">
-                                <div class="col-sm-9">
-                                    <h6 class="card-title" style="background:#009efb; color:white;padding:9px !important"> Setting information</h6>
-                                </div>
 
-                            </div>
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="form-group">
@@ -133,23 +86,8 @@
                                 </div>
 
                             </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="card">
-                        <div class="card-body">
-
                             <div class="row">
-                                <div class="col-sm-10">
-                                    <h6 class="card-title" style="background:#009efb; color:white;padding:9px !important">Products</h6>
-                                </div>
 
-                            </div>
-
-                            <div class="row">
-                                
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Letter Case</label>
@@ -172,7 +110,7 @@
                                                 <option value="Lower case">Lower case</option>
                                             }
 
-                                            
+
                                         </select>
                                     </div>
                                 </div>
@@ -194,9 +132,10 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
+                    
                              } 
                 </div>
             </div>

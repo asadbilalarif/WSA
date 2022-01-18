@@ -209,8 +209,8 @@ CREATE TABLE tblSetting(
 );
 
 
-INSERT INTO tblMenu (Name, ControllerName, ActionName,isParent,isActive,ElementId)
-VALUES ('Setting/Configuration', 'Home', 'Settings',0,1,'Setting');
+INSERT INTO tblMenu (Name, ControllerName, ActionName,isParent,ParentId,isActive,ElementId)
+VALUES ('User Management', '', '',0,0,1,''),('Users', 'UserManagement', 'Users',1,1,1,'Users'),('Roles & Permissions', 'UserManagement', 'RolesPermission',1,1,1,'Roles'),('Reference Codes', '', '',0,0,1,''),('Countries', 'Home', 'Countries',1,4,1,'Country'),('Eyes', 'Home', 'Eyes',1,4,1,'Eye'),('Occupations', 'Home', 'Occupations',1,4,1,'Occupation'),('Products', 'Home', 'Products',1,4,1,'Product'),('Product types', 'Home', 'ProductTypes',1,4,1,'ProductType'),('Status', 'Home', 'Status',1,4,1,'Status'),('Sex', 'Home', 'Sex',1,4,1,'Sex'),('Product packages', 'Home', 'Productpackages',1,4,1,'Productpackage'),('Settings', '', '',0,0,1,''),('Setting/Configuration', 'Home', 'Settings',1,14,1,'Setting');
 
 INSERT INTO tblMenu (ElementId)
 VALUES ('Users') where MenuId=1;
@@ -228,4 +228,6 @@ ADD isActive bit;
 ALTER TABLE tblMenu
 ADD ElementId nvarchar(50);
 
-delete from tblMenu where MenuId=2;
+delete from tblMenu where MenuId=29;
+TRUNCATE TABLE tblAccessLevel;
+TRUNCATE TABLE tblMenu;

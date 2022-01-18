@@ -25,23 +25,7 @@
 <div class="content container-fluid">
 
     <!-- Page Header -->
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="breadcrumb-bar">
-                <div class="container-fluid">
-                    <div class="row align-items-center">
-                        <div class="col-md-6 col-6">
-                            <h2 class="breadcrumb-title">ProductPackage LIST</h2>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        @*<div class="col-md-6 col-6 text-right m-b-30" id="CreateProductPackageB">
-
-            </div>*@
-    </div>
+    
 
 
     <!-- /Page Header -->
@@ -49,9 +33,24 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">ProductPackage LIST</h5>
+                                    </div>
+                                    <div class="col-md-6 col-6 text-right" id="CreateProductPackageB">
+                                        <a href="@Url.Action("CreateProductPackage","Home")" class="btn btn-primary " style="float:right;"><i class="fa fa-plus"></i> Create New ProductPackage</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="card-body">
-                    <a href="@Url.Action("CreateProductPackage","Home")" class="btn btn-primary " style="float:right;"><i class="fa fa-plus"></i> Create New ProductPackage</a>
-                    <br /><br />
                     <div class="table-responsive">
                         <div class="table-responsive">
                             <table class="cell-border table table-hover table-center  mb-0 " id="ProductPackageTable">
@@ -361,10 +360,17 @@
                 //    searching: false, paging: false
                 //});
 
-
+                $('#ProductPackageTable').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'excel'
+                    ],
+                    searching: true, paging: true
+                });
 
                 $(".nav li").removeClass("active");
                 $('#ProductPackages').addClass('active');
+                $('#RC').addClass('active subdrop');
 
             });
 

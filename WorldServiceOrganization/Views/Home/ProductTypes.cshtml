@@ -24,26 +24,9 @@
 
 
 
-<div class="container-fluid">
+<div class="content container-fluid">
 
     <!-- Page Header -->
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="breadcrumb-bar">
-                <div class="container-fluid">
-                    <div class="row align-items-center">
-                        <div class="col-md-6 col-6">
-                            <h2 class="breadcrumb-title">ProductType List</h2>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-6 text-right m-b-30">
-
-        </div>
-    </div><br />
 
 
     <!-- /Page Header -->
@@ -51,12 +34,26 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">ProductType List</h5>
+                                    </div>
+                                    <div class="col-md-6 col-6 text-right">
+                                        <a href="@Url.Action("CreateProductType","Home")" class="btn btn-primary " data-toggle="modal" data-target="#ProductTypeModal" style="float:right;" id="CreateProductTypeB"><i class="fa fa-plus"></i> Create New ProductType</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
-                    <a href="@Url.Action("CreateProductType","Home")" class="btn btn-primary " data-toggle="modal" data-target="#ProductTypeModal" style="float:right;" id="CreateProductTypeB"><i class="fa fa-plus"></i> Create New ProductType</a>
-                    <br /><br />
                     <div class="table-responsive">
                         <div class="table-responsive">
-                            <table class="cell-border table table-hover table-center  mb-0 " id="UserTable">
+                            <table class="cell-border table table-hover table-center  mb-0 " id="ProductTypeTable">
                                 <thead>
                                     <tr>
                                         <th style="display:none;">User ID</th>
@@ -336,15 +333,22 @@
 
 
                 //    });
-                //    var table=$('#UserTable').DataTable({
+                //    var table=$('#ProductTypeTable').DataTable({
 
                 //        searching: false, paging: false
                 //    });
 
-
+                $('#ProductTypeTable').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'excel'
+                    ],
+                    searching: true, paging: true
+                });
 
               $(".nav li").removeClass("active");
                 $('#ProductType').addClass('active');
+                $('#RC').addClass('active subdrop');
 
             });
 
