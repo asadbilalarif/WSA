@@ -347,7 +347,13 @@
                 $('#EyeTable').DataTable({
                     dom: 'Bfrtip',
                     buttons: [
-                        'excel'
+                        {
+                            extend: 'excel',
+                            exportOptions: {
+                                columns: [1, 2]
+                            }
+
+                        }
                     ],
                     searching: true, paging: true
                 });

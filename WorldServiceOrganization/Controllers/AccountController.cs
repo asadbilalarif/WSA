@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using WorldServiceOrganization.Models;
 
 namespace WorldServiceOrganization.Controllers
@@ -13,6 +14,7 @@ namespace WorldServiceOrganization.Controllers
         // GET: Account
         public ActionResult Login()
         {
+            FormsAuthentication.SignOut();
             return View();
         }
 
@@ -38,6 +40,8 @@ namespace WorldServiceOrganization.Controllers
                     
                     Session["User"] = DB.tblUsers.Select(r => r).Where(x => x.Email == Email).FirstOrDefault();
                     Session["Access"] = DB.tblAccessLevels.Select(r => r).Where(x => x.RoleId == User.RoleId).ToList();
+
+                    FormsAuthentication.SetAuthCookie(Email, false);
 
                     return RedirectToAction("Index", "Home");
                 }

@@ -8,13 +8,17 @@ using WorldServiceOrganization.Models;
 
 namespace WorldServiceOrganization.Controllers
 {
+    [Authorize]
     public class UserManagementController : Controller
     {
         // GET: UserManagement
-        public ActionResult Users()
+        public ActionResult Users(string Success,string Update, string Delete)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             List<tblUser> UserList = DB.tblUsers.Where(x=>x.isActive==true).ToList();
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
             return View(UserList);
         }
 
@@ -58,7 +62,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.isActive = true;
                         DB.tblUsers.Add(Data);
                         DB.SaveChanges();
-
+                        return RedirectToAction("Users",new {Success= "User has been add successfully." });
                     }
                     else
                     {
@@ -96,6 +100,7 @@ namespace WorldServiceOrganization.Controllers
                         }
                         DB.Entry(Data);
                         DB.SaveChanges();
+                        return RedirectToAction("Users", new { Update = "User has been Update successfully." });
                     }
                     else
                     {
@@ -127,6 +132,7 @@ namespace WorldServiceOrganization.Controllers
                 Data = DB.tblUsers.Select(r => r).Where(x => x.UserId == UserId).FirstOrDefault();
                 DB.Entry(Data).State = EntityState.Deleted;
                 DB.SaveChanges();
+                return Json(1);
             }
             catch (Exception ex)
             {

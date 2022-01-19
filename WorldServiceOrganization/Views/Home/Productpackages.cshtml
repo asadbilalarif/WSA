@@ -57,8 +57,8 @@
                                 <thead>
                                     <tr>
                                         <th style="display:none;">ProductPackage ID</th>
+                                        <th>Code</th>
                                         <th>Name</th>
-                                        <th>Email</th>
                                         <th>Active</th>
                                         <th>Action</th>
                                     </tr>
@@ -68,8 +68,8 @@
                                     {
                                         <tr>
                                             <td style="display:none;">@ProductPackage.ProductPackageId</td>
-                                            <td>@ProductPackage.Name</td>
                                             <td>@ProductPackage.Code</td>
+                                            <td>@ProductPackage.Name</td>
                                             @if (ProductPackage.isActive == true)
                                             {
                                                 <td>
@@ -363,7 +363,13 @@
                 $('#ProductPackageTable').DataTable({
                     dom: 'Bfrtip',
                     buttons: [
-                        'excel'
+                        {
+                            extend: 'excel',
+                            exportOptions: {
+                                columns: [1, 2]
+                            }
+
+                        }
                     ],
                     searching: true, paging: true
                 });
