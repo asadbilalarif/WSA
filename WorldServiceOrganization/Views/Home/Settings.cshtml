@@ -9,7 +9,9 @@
     string FontStyle = Model.FontStyle;
     string FontSize = Model.FontSize;
 
-    
+
+    string Update = @ViewBag.Error;
+
 
 }
 
@@ -54,7 +56,9 @@
                                 </div>
                             </div>
                         </div>
-                        <h2 style="color:green;">@ViewBag.Error</h2>
+                        <div style="display:none;" class="alert alert-info alert-dismissible fade show" id="UpdateAlert" role="alert">
+                            <strong>Success!</strong> @ViewBag.Error
+                        </div>
                         <div class="card-body">
 
 
@@ -153,7 +157,22 @@
     
 
 
+    $(document).ready(function () {
 
+                
+                if ("@Update" != "") {
+                    $('#UpdateAlert').fadeIn();
+                    $('#UpdateAlert').fadeOut(3000);
+                }
+                else {
+                    $('#UpdateAlert').fadeOut();
+                }
+
+              $(".nav li").removeClass("active");
+                $('#Setting').addClass('active');
+                $('#S').addClass('active subdrop');
+
+            });
    
 
 

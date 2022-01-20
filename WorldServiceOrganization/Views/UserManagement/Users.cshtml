@@ -82,7 +82,7 @@
                                         <th>Phone Number</th>
                                         <th>Email</th>
                                         <th>Role</th>
-                                        <th>Active</th>
+                                        @*<th>Active</th>*@
 
                                         <th>Action</th>
                                     </tr>
@@ -107,7 +107,7 @@
 
                                             <td>@User.Email</td>
                                             <td>@User.tblRole.Role</td>
-                                            @if (User.isActive == true)
+                                            @*@if (User.isActive == true)
                                             {
                                                 <td>
                                                     <span class="badge badge-primary">Active</span>
@@ -120,7 +120,7 @@
                                                 <td>
                                                     <span class="badge badge-danger">In-Active</span>
                                                 </td>
-                                            }
+                                            }*@
 
                                             <td>
                                                 <a href="@Url.Action("CreateUser","UserManagement",new {id=User.UserId })" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditUser"></i></a>

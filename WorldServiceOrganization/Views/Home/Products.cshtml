@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<WorldServiceOrganization.Models.tblProduct>
 
 @{
-    /**/
 
     ViewData["Title"] = "Users";
+    string Succ = @ViewBag.Success;
+    string Update = @ViewBag.Update;
+    string Delete = @ViewBag.Delete;
+}
 }
 
 
@@ -27,9 +30,6 @@
 <div class="content container-fluid">
 
     <!-- Page Header -->
-    
-
-
     <!-- /Page Header -->
 
     <div class="row">
@@ -51,6 +51,15 @@
                         </div>
                     </div>
                 </div>
+                <div style="display:none;" class="alert alert-success alert-dismissible fade show" id="SuccessAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Success
+                </div>
+                <div style="display:none;" class="alert alert-info alert-dismissible fade show" id="UpdateAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Update
+                </div>
+                <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Delete
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <div class="table-responsive">
@@ -63,7 +72,6 @@
                                         <th style="display:none;">Product Type ID</th>
                                         <th>Product Type</th>
                                         <th>Price</th>
-                                        <th>Active</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -77,20 +85,6 @@
                                             <td style="display:none;">@Product.ProductTypeId</td>
                                             <td>@Product.tblProductType.Name</td>
                                             <td>@Product.Price</td>
-                                            @if (@Product.isActive == true)
-                                            {
-                                                <td>
-                                                    <span class="badge badge-primary">Active</span>
-                                                </td>
-                                                /**/
-
-                                            }
-                                            else
-                                            {
-                                                <td>
-                                                    <span class="badge badge-danger">In-Active</span>
-                                                </td>
-                                            }
 
                                             <td>
                                                 <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditProduct" data-toggle="modal" data-target="#ProductModal"></i></a>
@@ -235,11 +229,11 @@
     $("#ProductSubmit").on("click", function () {
 
         var error = $("#Producterror");
-        if ($("#ECode").val() != "" && $("#EName").val() != "" && $("#ProductTypeD").val() != "0"&& $("#EPrice").val() != "") {
+        if ($("#ECode").val() != "" && $("#EName").val() != "" && $("#ProductTypeD").val() != "0" && $("#EPrice").val() != "") {
             error.text('');
             $("#ProductSubmit").attr("disabled", true);
             $("#Productloading").show();
-
+            var CheckMessage = 0;
 
             var UId = $("#ProductID").val();
             var UCode = $("#ECode").val();
@@ -256,6 +250,7 @@
                     Price: UPrice,
                     ProductTypeId: UProductTypeId,
                 };
+                CheckMessage = 1;
             }
             else {
                 var model = {
@@ -265,6 +260,7 @@
                     Price: UPrice,
                     ProductTypeId: UProductTypeId,
                 };
+                CheckMessage = 2;
             }
 
 
@@ -288,7 +284,16 @@
                         $("#Productloading").hide();
                     }
                     else {
-                        location.reload();
+                        if (CheckMessage == 1) {
+                            var url = window.location.origin;
+                            url += '/Home/Products?Update=Product has been update successfully.';
+                            window.location.href = url;
+                        }
+                        else {
+                            var url = window.location.origin;
+                            url += '/Home/Products?Success=Product has been add successfully.';
+                            window.location.href = url;
+                        }
                     }
                 }
             });
@@ -333,81 +338,94 @@
     });
 
 
-                $("body").on("click", "#DeleteProduct", function () {
-                    var currentRow = $(this).closest("tr");
-                    $("#DeleteProductID").val(currentRow.find("td:eq(0)").text());
-                    //alert($("#DeleteProductID").val());
-                });
+    $("body").on("click", "#DeleteProduct", function () {
+        var currentRow = $(this).closest("tr");
+        $("#DeleteProductID").val(currentRow.find("td:eq(0)").text());
+        //alert($("#DeleteProductID").val());
+    });
 
-            $("#CDeleteProduct").on("click", function () {
-
-
-                $("#CDeleteProduct").attr("disabled", true);
-
-                var ID = $("#DeleteProductID").val();
-
-                var model = {
-                    ProductId: ID,
-                };
-                console.log(model);
+    $("#CDeleteProduct").on("click", function () {
 
 
-                //Send the JSON array to Controller using AJAX.
-                $.ajax({
-                    type: "POST",
-                    url: "/Home/DeleteProduct",
-                    data: JSON.stringify(model),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (r) {
-                        //alert(r + " record(s) inserted.");
-                        location.reload();
+        $("#CDeleteProduct").attr("disabled", true);
+
+        var ID = $("#DeleteProductID").val();
+
+        var model = {
+            ProductId: ID,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Home/DeleteProduct",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                var url = window.location.origin;
+                url += '/Home/Products?Delete=Product has been delete successfully.';
+                window.location.href = url;
+            }
+        });
+
+    });
+
+
+
+
+
+
+
+    $(document).ready(function () {
+
+                if ("@Succ"!="") {
+                    $('#SuccessAlert').fadeIn();
+                    $('#SuccessAlert').fadeOut(3000);
+                }
+                else {
+                    $('#SuccessAlert').fadeOut();
+                }
+                if ("@Update" != "") {
+                    $('#UpdateAlert').fadeIn();
+                    $('#UpdateAlert').fadeOut(3000);
+                }
+                else {
+                    $('#UpdateAlert').fadeOut();
+                }
+                if ("@Delete" != "") {
+                    $('#DeleteAlert').fadeIn();
+                    $('#DeleteAlert').fadeOut(3000);
+                }
+                else {
+                    $('#DeleteAlert').fadeOut();
+                }
+
+        $('#ProductTable').DataTable({
+            dom: 'Bfrtip',
+            lengthMenu: [
+                [10, 25, 50, -1],
+                ['10 rows', '25 rows', '50 rows', 'Show all']
+            ],
+            buttons: [
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [1, 2, 4, 5]
                     }
-                });
 
-            });
+                }
+            ],
+            searching: true, paging: true
+        });
 
+        $(".nav li").removeClass("active");
+        $('#Product').addClass('active');
+        $('#RC').addClass('active subdrop');
 
-
-
-
-
-
-            $(document).ready(function () {
-
-                //    $("#Role").select2({
-                //        dropdownCssClass: 'bigdrop'
-
-
-                //    });
-                //    var table=$('#ProductTable').DataTable({
-
-                //        searching: false, paging: false
-                //    });
-
-                $('#ProductTable').DataTable({
-                    dom: 'Bfrtip',
-                    lengthMenu: [
-                        [10, 25, 50, -1],
-                        ['10 rows', '25 rows', '50 rows', 'Show all']
-                    ],
-                    buttons: [
-                        {
-                            extend: 'excel',
-                            exportOptions: {
-                                columns: [1, 2,4,5]
-                            }
-
-                        }
-                    ],
-                    searching: true, paging: true
-                });
-
-              $(".nav li").removeClass("active");
-                $('#Product').addClass('active');
-                $('#RC').addClass('active subdrop');
-
-            });
+    });
 
 
 

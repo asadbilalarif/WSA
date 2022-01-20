@@ -2,6 +2,9 @@
 
 @{
     ViewData["Title"] = "ProductPackages";
+    string Succ = @ViewBag.Success;
+    string Update = @ViewBag.Update;
+    string Delete = @ViewBag.Delete;
 }
 
 
@@ -50,6 +53,15 @@
                     </div>
 
                 </div>
+                <div style="display:none;" class="alert alert-success alert-dismissible fade show" id="SuccessAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Success
+                </div>
+                <div style="display:none;" class="alert alert-info alert-dismissible fade show" id="UpdateAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Update
+                </div>
+                <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Delete
+                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <div class="table-responsive">
@@ -59,7 +71,6 @@
                                         <th style="display:none;">ProductPackage ID</th>
                                         <th>Code</th>
                                         <th>Name</th>
-                                        <th>Active</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -70,20 +81,6 @@
                                             <td style="display:none;">@ProductPackage.ProductPackageId</td>
                                             <td>@ProductPackage.Code</td>
                                             <td>@ProductPackage.Name</td>
-                                            @if (ProductPackage.isActive == true)
-                                            {
-                                                <td>
-                                                    <span class="badge badge-primary">Active</span>
-                                                </td>
-                                                /**/
-
-                                            }
-                                            else
-                                            {
-                                                <td>
-                                                    <span class="badge badge-danger">In-Active</span>
-                                                </td>
-                                            }
 
                                             <td>
                                                 <a href="@Url.Action("CreateProductPackage","Home",new {id=ProductPackage.ProductPackageId })" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditProductPackage"></i></a>
@@ -156,14 +153,9 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (r) {
-                location.reload();
-                //if (r == 1) {
-                //    $("#ConfigDerror").text("Device Already schedule!!!");
-                //}
-                //else {
-                //    location.reload();
-                //}
-                //alert(r + " record(s) inserted.");
+                var url = window.location.origin;
+                url += '/Home/Productpackages?Delete=Productpackage has been delete successfully.';
+                window.location.href = url;
             }
         });
 
@@ -350,15 +342,27 @@
 
             $(document).ready(function () {
 
-                //$("#Role").select2({
-                //    dropdownCssClass: 'bigdrop'
-
-
-                //});
-                //var table=$('#ProductPackageTable').DataTable({
-
-                //    searching: false, paging: false
-                //});
+                if ("@Succ"!="") {
+                    $('#SuccessAlert').fadeIn();
+                    $('#SuccessAlert').fadeOut(3000);
+                }
+                else {
+                    $('#SuccessAlert').fadeOut();
+                }
+                if ("@Update" != "") {
+                    $('#UpdateAlert').fadeIn();
+                    $('#UpdateAlert').fadeOut(3000);
+                }
+                else {
+                    $('#UpdateAlert').fadeOut();
+                }
+                if ("@Delete" != "") {
+                    $('#DeleteAlert').fadeIn();
+                    $('#DeleteAlert').fadeOut(3000);
+                }
+                else {
+                    $('#DeleteAlert').fadeOut();
+                }
 
                 $('#ProductPackageTable').DataTable({
                     dom: 'Bfrtip',

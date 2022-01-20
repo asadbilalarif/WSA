@@ -16,11 +16,16 @@ namespace WorldServiceOrganization.Controllers
             return View();
         }
 
-        public ActionResult Countries()
+        public ActionResult Countries(string Success, string Update, string Delete)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             
             var Data = DB.tblCountries.Where(x => x.isActive == true).ToList() ;
+
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
+
             return View(Data);
         }
 
@@ -111,11 +116,15 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult Eyes()
+        public ActionResult Eyes(string Success, string Update, string Delete)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
             var Data = DB.tblEyes.Where(x => x.isActive == true).ToList();
+
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
             return View(Data);
         }
 
@@ -206,11 +215,16 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult Occupations()
+        public ActionResult Occupations(string Success, string Update, string Delete)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
             var Data = DB.tblOccupations.Where(x => x.isActive == true).ToList();
+
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
+
             return View(Data);
         }
 
@@ -301,11 +315,16 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult Products()
+        public ActionResult Products(string Success, string Update, string Delete)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             ViewBag.ProductType= DB.tblProductTypes.Where(x => x.isActive == true).ToList();
             var Data = DB.tblProducts.Where(x => x.isActive == true).ToList();
+
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
+
             return View(Data);
         }
 
@@ -398,11 +417,16 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult ProductTypes()
+        public ActionResult ProductTypes(string Success, string Update, string Delete)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
             var Data = DB.tblProductTypes.Where(x => x.isActive == true).ToList();
+
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
+
             return View(Data);
         }
 
@@ -493,11 +517,16 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult Status()
+        public ActionResult Status(string Success, string Update, string Delete)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
             var Data = DB.tblStatus.Where(x => x.isActive == true).ToList();
+
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
+
             return View(Data);
         }
 
@@ -588,11 +617,16 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult Sex()
+        public ActionResult Sex(string Success, string Update, string Delete)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
             var Data = DB.tblSex.Where(x => x.isActive == true).ToList();
+
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
+
             return View(Data);
         }
 
@@ -683,11 +717,21 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult Productpackages()
+        public ActionResult Productpackages(int? Success, string Delete)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
             var Data = DB.tblProductPackages.Where(x => x.isActive == true).ToList();
+            if(Success > 0)
+            {
+                ViewBag.Update = "Productpackage has been update successfully.";
+            }
+            else if(Success==-1)
+            {
+                ViewBag.Success = "Productpackage has been add successfully.";
+            }
+            ViewBag.Delete = Delete;
+
             return View(Data);
         }
 
@@ -741,6 +785,7 @@ namespace WorldServiceOrganization.Controllers
             var CheckProductPackageId = HeadData[0].ProductPackageId;
 
             Check = DB.tblProductPackages.Select(r => r).Where(x => x.Code == CheckCode).FirstOrDefault();
+                int Succ = 0;
             try
             {
                 if(HeadData[0].ProductPackageId!=0)
@@ -754,6 +799,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.isActive = true;
                         DB.Entry(Data);
                         DB.SaveChanges();
+                        Succ = 1;
                     }
                     else
                     {
@@ -792,7 +838,7 @@ namespace WorldServiceOrganization.Controllers
 
                     }
                     DB.SaveChanges();
-                    var RedirectUrl = new UrlHelper(Request.RequestContext).Action("ProductPackages", "Home");
+                    var RedirectUrl = new UrlHelper(Request.RequestContext).Action("ProductPackages", "Home", new { Success = Succ });
                     return Json(new { Url = RedirectUrl });
                 }
                 else
@@ -805,6 +851,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.isActive = true;
                         DB.tblProductPackages.Add(Data);
                         DB.SaveChanges();
+                        Succ = -1;
                     }
                     else
                     {
@@ -847,7 +894,7 @@ namespace WorldServiceOrganization.Controllers
                 Console.WriteLine("Error" + ex.Message);
             }
 
-            var redirectUrl = new UrlHelper(Request.RequestContext).Action("ProductPackages", "Home");
+            var redirectUrl = new UrlHelper(Request.RequestContext).Action("ProductPackages", "Home",new { Success= Succ });
             return Json(new { Url = redirectUrl });
         }
 
@@ -895,6 +942,9 @@ namespace WorldServiceOrganization.Controllers
             {
                 ViewBag.Error = "Record Successfully Updated!!!";
             }
+
+            
+
             return View(Data);
         }
 

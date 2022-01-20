@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<WorldServiceOrganization.Models.tblSex>
 
 @{
-    /**/
-
     ViewData["Title"] = "Users";
+    string Succ = @ViewBag.Success;
+    string Update = @ViewBag.Update;
+    string Delete = @ViewBag.Delete;
 }
 
 
@@ -49,6 +50,15 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div style="display:none;" class="alert alert-success alert-dismissible fade show" id="SuccessAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Success
+                </div>
+                <div style="display:none;" class="alert alert-info alert-dismissible fade show" id="UpdateAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Update
+                </div>
+                <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Delete
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -212,7 +222,7 @@
             error.text('');
             $("#SexSubmit").attr("disabled", true);
             $("#Sexloading").show();
-
+            var CheckMessage = 0;
 
             var UId = $("#SexID").val();
             var UCode = $("#ECode").val();
@@ -225,6 +235,7 @@
                     Name: UName,
                     Code: UCode,
                 };
+                CheckMessage = 1;
             }
             else {
                 var model = {
@@ -232,6 +243,7 @@
                     Name: UName,
                     Code: UCode,
                 };
+                CheckMessage = 2;
             }
 
 
@@ -255,7 +267,16 @@
                         $("#Sexloading").hide();
                     }
                     else {
-                        location.reload();
+                        if (CheckMessage == 1) {
+                            var url = window.location.origin;
+                            url += '/Home/Sex?Update=Sex has been update successfully.';
+                            window.location.href = url;
+                        }
+                        else {
+                            var url = window.location.origin;
+                            url += '/Home/Sex?Success=Sex has been add successfully.';
+                            window.location.href = url;
+                        }
                     }
                 }
             });
@@ -313,8 +334,9 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (r) {
-                        //alert(r + " record(s) inserted.");
-                        location.reload();
+                        var url = window.location.origin;
+                        url += '/Home/Sex?Delete=Sex has been delete successfully.';
+                        window.location.href = url;
                     }
                 });
 
@@ -328,15 +350,27 @@
 
             $(document).ready(function () {
 
-                //    $("#Role").select2({
-                //        dropdownCssClass: 'bigdrop'
-
-
-                //    });
-                //    var table=$('#SexTable').DataTable({
-
-                //        searching: false, paging: false
-                //    });
+                if ("@Succ"!="") {
+                    $('#SuccessAlert').fadeIn();
+                    $('#SuccessAlert').fadeOut(3000);
+                }
+                else {
+                    $('#SuccessAlert').fadeOut();
+                }
+                if ("@Update" != "") {
+                    $('#UpdateAlert').fadeIn();
+                    $('#UpdateAlert').fadeOut(3000);
+                }
+                else {
+                    $('#UpdateAlert').fadeOut();
+                }
+                if ("@Delete" != "") {
+                    $('#DeleteAlert').fadeIn();
+                    $('#DeleteAlert').fadeOut(3000);
+                }
+                else {
+                    $('#DeleteAlert').fadeOut();
+                }
 
                 $('#SexTable').DataTable({
                     dom: 'Bfrtip',
