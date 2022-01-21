@@ -1,0 +1,413 @@
+﻿@model  WorldServiceOrganization.Models.tblPerson
+@{
+    int PersonId = 0;
+    string Personname = "";
+    string FirstName = "";
+    string LastName = "";
+    string Organization = "";
+    string Title = "";
+    string Address1 = "";
+    string Address2 = "";
+    string City = "";
+    string StateProvince = "";
+    string Country = "";
+    string PostalCode = "";
+    string PhoneNumber = "";
+    string Email = "";
+    int? RoleId = 0;
+
+    if (Model != null)
+    {
+        //PersonId = Model.PersonId;
+        //Personname = Model.Personname;
+        //FirstName = Model.FirstName;
+        //LastName = Model.LastName;
+        //Organization = Model.Organization;
+        //Title = Model.Title;
+        //Address1 = Model.Address1;
+        //Address2 = Model.Address2;
+        //City = Model.City;
+        //StateProvince = Model.StateProvince;
+        //Country = Model.Country;
+        //PostalCode = Model.PostalCode;
+        //PhoneNumber = Model.PhoneNumber;
+        //Email = Model.Email;
+        //RoleId = Model.RoleId;
+    }
+
+
+
+}
+
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-md-12">
+
+            @using (Html.BeginForm("CreatePerson", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {@Html.AntiForgeryToken()
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        @if (Model == null)
+                                        {
+                                            <h5 class="breadcrumb-title">Create Person</h5>
+                                        }
+                                        else
+                                        {
+                                            <h5 class="breadcrumb-title">Edit Person</h5>
+                                        }
+                                    </div>
+                                    <div class="col-md-6 col-6 text-right" id="CreatePersonB">
+                                        <a href="@Url.Action("Persons","Home")" class="btn btn-primary"><i class="fa fa-list"></i> Back</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <span style="color:red;">@ViewBag.Error</span>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input type="text" class="form-control" style="display:none;" name="PersonIDNumber" value="@PersonId" required>
+                                <label>CountryOfApplication</label>
+                                <input style="display:none;" type="text" class="form-control" id="CountryOfApplication" name="CountryOfApplication" value="@Personname" required>
+                                <input type="text" class="form-control" id="CountryOfApplicationCode"  value="@Personname" required>
+                                <input type="text" class="form-control" id="CountryOfApplicationName" value="@Personname" required readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" id="FirstName" name="FirstName" value="@FirstName" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" id="LastName" name="LastName" value="@LastName" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>CityOfBirth</label>
+                                <input type="text" class="form-control" id="CityOfBirth" name="CityOfBirth" value="@Organization" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>CountryOfBirth</label>
+                                &nbsp;&nbsp;
+                                <input style="display:none;" type="text" class="form-control" id="CountryOfBirth" name="CountryOfBirth" value="@Title" required>
+                                <input type="text" class="form-control" id="CountryOfBirthCode"  value="@Title" required>
+                                <input type="text" class="form-control" id="CountryOfBirthName"  value="@Title" required readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Phone</label>
+                                &nbsp;&nbsp;
+                                <input type="text" class="form-control" id="Phone" name="Phone" value="@Address1" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Fax</label>
+                                &nbsp;&nbsp;&nbsp;
+                                <input type="text" class="form-control" id="Fax" name="Fax" value="@Address2" required>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>EMail</label>
+                                <div>
+                                    <input type="text" class="form-control" id="EMail" name="EMail" value="@City" required>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div>
+                                    <label>Website</label>&nbsp;&nbsp;
+                                    <input type="text" class="form-control" id="Website" name="Website" value="@StateProvince" required>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>DateOfBirth</label>
+                                &nbsp;&nbsp;
+                                <input type="text" class="form-control" id="DateOfBirth" name="DateOfBirth" value="@Country" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>BirthDay</label>&nbsp;&nbsp;
+                                <input type="text" class="form-control" id="BirthDay" name="BirthDay" value="@PostalCode" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>BirthMonth</label>
+                                <input type="text" class="form-control" id="BirthMonth" name="BirthMonth" value="@PhoneNumber" required>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div>
+                                    <label>Eyes</label>&nbsp;&nbsp;
+                                    <input type="text" class="form-control" id="Eyes" name="Eyes" value="@StateProvince" required>
+                                    <input type="text" class="form-control" id="EyesCode"  value="@StateProvince" required>
+                                    <input type="text" class="form-control" id="EyesName"  value="@StateProvince" required>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Marks</label>
+                                &nbsp;&nbsp;
+                                <input type="text" class="form-control" id="Marks" name="Marks" value="@Country" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>OccupationCode</label>&nbsp;&nbsp;
+                                <input type="text" class="form-control" id="OccupationCode" name="OccupationCode" value="@PostalCode" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Title</label>
+                                <input type="text" class="form-control" id="Title" name="Title" value="@PhoneNumber" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div>
+                                    <label>FatherName</label>&nbsp;&nbsp;
+                                    <input type="text" class="form-control" id="FatherName" name="FatherName" value="@StateProvince" required>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>MotherName</label>
+                                &nbsp;&nbsp;
+                                <input type="text" class="form-control" id="MotherName" name="MotherName" value="@Country" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>WSANumber</label>&nbsp;&nbsp;
+                                <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@PostalCode" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Comments</label>
+                                <input type="text" class="form-control" id="Comments" name="Comments" value="@PhoneNumber" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <div>
+                                    <label>Status</label>&nbsp;&nbsp;
+                                    <input type="text" class="form-control" id="Status" name="Status" value="@StateProvince" required>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>TransactionCount</label>
+                                &nbsp;&nbsp;
+                                <input type="text" class="form-control" id="TransactionCount" name="TransactionCount" value="@Country" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>SignaturePath</label>&nbsp;&nbsp;
+                                <input type="text" class="form-control" id="SignaturePath" name="SignaturePath" value="@PostalCode" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Photo</label>
+                                <input type="text" class="form-control" id="Photo" name="Photo" value="@PhoneNumber" required>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>BirthYear</label>
+                                <input type="text" class="form-control" id="BirthYear" name="BirthYear" value="@Email" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Sex</label>
+                                <input type="text" class="form-control" id="Sex" name="Sex" value="" required>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Height</label><br />
+                                <input type="text" class="form-control" id="Height" name="Height" value="" required>
+
+                                @*<select class="form-control" id="Role" name="RoleId" required>
+                                        <option value="0">Select Role</option>
+                                        @foreach (WorldServiceOrganization.Models.tblRole Role in @ViewBag.Roles)
+                                        {
+                                            if (@Role.RoleId == RoleId)
+                                            {
+                                                <option value="@Role.RoleId" selected>@Role.Role</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@Role.RoleId">@Role.Role</option>
+                                            }
+                                        }
+                                    </select>*@
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label></label>
+                                <button class="btn btn-primary" type="submit" id="SaveChanges" style="margin-top:10%;">Save Changes</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        }
+        </div>
+    </div>
+
+</div>
+
+<!-- /Page Wrapper -->
+@*<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>*@
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="Stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css" />
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>*@
+
+
+
+
+<script>
+
+    $(document).ready(function () {
+        $("#CountryOfApplicationCode").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/GetCountryCode",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (CountryList) {
+                            return { label: CountryList.CountryList, value: CountryList };
+                        }))
+                    }
+                })
+            },
+            //messages: {
+            //    noResults: "", results: ""
+            //},
+            select: function (event, ui) {
+                var text = ui.item.label
+                const myArray = text.split(",");
+
+                $('#CountryOfApplicationCode').val(myArray[0]);
+                alert($('#CountryOfApplicationCode').val())
+                $('#CountryOfApplicationName').val(myArray[1]);
+                $('#CountryOfApplication').val(myArray[2]);
+
+               
+            }
+        });
+        $("#CountryOfBirthCode").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/GetCountryCode",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (CountryList) {
+                            return { label: CountryList.CountryList, value: CountryList };
+                        }))
+                    }
+                })
+            },
+            //messages: {
+            //    noResults: "", results: ""
+            //},
+            select: function (event, ui) {
+                var text = ui.item.label
+                const myArray = text.split(",");
+
+                $('#CountryOfBirthCode').val(myArray[0]);
+                alert($('#CountryOfBirthCode').val())
+                $('#CountryOfBirthName').val(myArray[1]);
+                $('#CountryOfBirth').val(myArray[2]);
+
+               
+            }
+        });
+    });
+
+
+    
+
+</script>

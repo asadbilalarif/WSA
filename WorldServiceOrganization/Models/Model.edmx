@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="WorldServiceOrganizationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="tblAccessLevel">
           <Key>
             <PropertyRef Name="AccessId" />
@@ -84,6 +94,50 @@
           <Property Name="CreatedDate" Type="datetime" />
           <Property Name="EditBy" Type="int" />
           <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblPerson">
+          <Key>
+            <PropertyRef Name="PersonIDNumber" />
+          </Key>
+          <Property Name="PersonIDNumber" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="CountryOfApplication" Type="int" />
+          <Property Name="CityOfBirth" Type="nvarchar(max)" />
+          <Property Name="CountryOfBirth" Type="int" />
+          <Property Name="Phone" Type="nvarchar(max)" />
+          <Property Name="Fax" Type="nvarchar(max)" />
+          <Property Name="EMail" Type="nvarchar(max)" />
+          <Property Name="Website" Type="nvarchar(max)" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="BirthDay" Type="int" />
+          <Property Name="BirthMonth" Type="int" />
+          <Property Name="BirthYear" Type="int" />
+          <Property Name="Sex" Type="int" />
+          <Property Name="Height" Type="float" />
+          <Property Name="Eyes" Type="int" />
+          <Property Name="Marks" Type="nvarchar(max)" />
+          <Property Name="OccupationId" Type="int" />
+          <Property Name="OccupationCode" Type="int" />
+          <Property Name="Title" Type="nvarchar(max)" />
+          <Property Name="FatherName" Type="nvarchar(max)" />
+          <Property Name="MotherName" Type="nvarchar(max)" />
+          <Property Name="WSANumber" Type="int" />
+          <Property Name="Comments" Type="nvarchar(max)" />
+          <Property Name="Status" Type="int" />
+          <Property Name="TransactionCount" Type="int" />
+          <Property Name="SignaturePath" Type="nvarchar(max)" />
+          <Property Name="Photo" Type="nvarchar(max)" />
+          <Property Name="Photograph" Type="image" />
+          <Property Name="Signature" Type="image" />
+          <Property Name="CountryOfBirthStatistical" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="LastEditedBy" Type="int" />
+          <Property Name="LastModifiedDate" Type="datetime" />
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedDate" Type="datetime" />
           <Property Name="isActive" Type="bit" />
@@ -242,18 +296,6 @@
           <Property Name="isActive" Type="bit" />
           <Property Name="RoleId" Type="int" />
         </EntityType>
-        <Association Name="FK_AccessManu">
-          <End Role="tblMenu" Type="Self.tblMenu" Multiplicity="0..1" />
-          <End Role="tblAccessLevel" Type="Self.tblAccessLevel" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblMenu">
-              <PropertyRef Name="MenuId" />
-            </Principal>
-            <Dependent Role="tblAccessLevel">
-              <PropertyRef Name="MenuId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_AccessRole">
           <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
           <End Role="tblAccessLevel" Type="Self.tblAccessLevel" Multiplicity="*" />
@@ -290,15 +332,123 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_MenuTable">
-          <End Role="tblMenu" Type="Self.tblMenu" Multiplicity="0..1" />
-          <End Role="tblMenu1" Type="Self.tblMenu" Multiplicity="*" />
+        <Association Name="FK_PersonCountryAppli">
+          <End Role="tblCountry" Type="Self.tblCountry" Multiplicity="0..1" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblMenu">
-              <PropertyRef Name="MenuId" />
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryId" />
             </Principal>
-            <Dependent Role="tblMenu1">
-              <PropertyRef Name="ParentId" />
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="CountryOfApplication" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonCountryBirth">
+          <End Role="tblCountry" Type="Self.tblCountry" Multiplicity="0..1" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="CountryOfBirth" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonCountryStatis">
+          <End Role="tblCountry" Type="Self.tblCountry" Multiplicity="0..1" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="CountryOfBirthStatistical" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonEye">
+          <End Role="tblEye" Type="Self.tblEye" Multiplicity="0..1" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEye">
+              <PropertyRef Name="EyeId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="Eyes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonOccupation">
+          <End Role="tblOccupation" Type="Self.tblOccupation" Multiplicity="0..1" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOccupation">
+              <PropertyRef Name="OccupationId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="OccupationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonSex">
+          <End Role="tblSex" Type="Self.tblSex" Multiplicity="0..1" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSex">
+              <PropertyRef Name="SexId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="Sex" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonStatus">
+          <End Role="tblStatus" Type="Self.tblStatus" Multiplicity="0..1" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonUserCre">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonUserDel">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="DeletedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonUserEdit">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="LastEditedBy" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -311,6 +461,18 @@
             </Principal>
             <Dependent Role="tblProduct">
               <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblAccessLevel_tblMenu">
+          <End Role="tblMenu" Type="Self.tblMenu" Multiplicity="0..1" />
+          <End Role="tblAccessLevel" Type="Self.tblAccessLevel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMenu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="tblAccessLevel">
+              <PropertyRef Name="MenuId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -327,11 +489,13 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="WorldServiceOrganizationModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccessLevel" EntityType="Self.tblAccessLevel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCountry" EntityType="Self.tblCountry" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEye" EntityType="Self.tblEye" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblMenu" EntityType="Self.tblMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOccupation" EntityType="Self.tblOccupation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPerson" EntityType="Self.tblPerson" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProduct" EntityType="Self.tblProduct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProductPackage" EntityType="Self.tblProductPackage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblProductPackageProduct" EntityType="Self.tblProductPackageProduct" Schema="dbo" store:Type="Tables" />
@@ -341,10 +505,6 @@
           <EntitySet Name="tblSex" EntityType="Self.tblSex" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStatus" EntityType="Self.tblStatus" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_AccessManu" Association="Self.FK_AccessManu">
-            <End Role="tblMenu" EntitySet="tblMenu" />
-            <End Role="tblAccessLevel" EntitySet="tblAccessLevel" />
-          </AssociationSet>
           <AssociationSet Name="FK_AccessRole" Association="Self.FK_AccessRole">
             <End Role="tblRole" EntitySet="tblRole" />
             <End Role="tblAccessLevel" EntitySet="tblAccessLevel" />
@@ -357,13 +517,53 @@
             <End Role="tblProductPackage" EntitySet="tblProductPackage" />
             <End Role="tblProductPackageProduct" EntitySet="tblProductPackageProduct" />
           </AssociationSet>
-          <AssociationSet Name="FK_MenuTable" Association="Self.FK_MenuTable">
-            <End Role="tblMenu" EntitySet="tblMenu" />
-            <End Role="tblMenu1" EntitySet="tblMenu" />
+          <AssociationSet Name="FK_PersonCountryAppli" Association="Self.FK_PersonCountryAppli">
+            <End Role="tblCountry" EntitySet="tblCountry" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonCountryBirth" Association="Self.FK_PersonCountryBirth">
+            <End Role="tblCountry" EntitySet="tblCountry" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonCountryStatis" Association="Self.FK_PersonCountryStatis">
+            <End Role="tblCountry" EntitySet="tblCountry" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonEye" Association="Self.FK_PersonEye">
+            <End Role="tblEye" EntitySet="tblEye" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonOccupation" Association="Self.FK_PersonOccupation">
+            <End Role="tblOccupation" EntitySet="tblOccupation" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonSex" Association="Self.FK_PersonSex">
+            <End Role="tblSex" EntitySet="tblSex" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonStatus" Association="Self.FK_PersonStatus">
+            <End Role="tblStatus" EntitySet="tblStatus" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonUserCre" Association="Self.FK_PersonUserCre">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonUserDel" Association="Self.FK_PersonUserDel">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonUserEdit" Association="Self.FK_PersonUserEdit">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblPerson" EntitySet="tblPerson" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductProductType" Association="Self.FK_ProductProductType">
             <End Role="tblProductType" EntitySet="tblProductType" />
             <End Role="tblProduct" EntitySet="tblProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblAccessLevel_tblMenu" Association="Self.FK_tblAccessLevel_tblMenu">
+            <End Role="tblMenu" EntitySet="tblMenu" />
+            <End Role="tblAccessLevel" EntitySet="tblAccessLevel" />
           </AssociationSet>
           <AssociationSet Name="FK_UsersRole" Association="Self.FK_UsersRole">
             <End Role="tblRole" EntitySet="tblRole" />
@@ -402,6 +602,9 @@
           <Property Name="isActive" Type="Boolean" />
           <Property Name="RoleId" Type="Int32" />
           <NavigationProperty Name="tblRole" Relationship="WorldServiceOrganizationModel.FK__tblUsers__RoleId__1367E606" FromRole="tblUser" ToRole="tblRole" />
+          <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonUserCre" FromRole="tblUser" ToRole="tblPerson" />
+          <NavigationProperty Name="tblPersons1" Relationship="WorldServiceOrganizationModel.FK_PersonUserDel" FromRole="tblUser" ToRole="tblPerson" />
+          <NavigationProperty Name="tblPersons2" Relationship="WorldServiceOrganizationModel.FK_PersonUserEdit" FromRole="tblUser" ToRole="tblPerson" />
         </EntityType>
         <EntityContainer Name="WorldServiceOrganizationEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
@@ -446,6 +649,48 @@
             <End Role="tblProductPackageProduct" EntitySet="tblProductPackageProducts" />
           </AssociationSet>
           <EntitySet Name="tblSettings" EntityType="WorldServiceOrganizationModel.tblSetting" />
+          <EntitySet Name="sysdiagrams" EntityType="WorldServiceOrganizationModel.sysdiagram" />
+          <EntitySet Name="tblPersons" EntityType="WorldServiceOrganizationModel.tblPerson" />
+          <AssociationSet Name="FK_PersonCountryAppli" Association="WorldServiceOrganizationModel.FK_PersonCountryAppli">
+            <End Role="tblCountry" EntitySet="tblCountries" />
+            <End Role="tblPerson" EntitySet="tblPersons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonCountryBirth" Association="WorldServiceOrganizationModel.FK_PersonCountryBirth">
+            <End Role="tblCountry" EntitySet="tblCountries" />
+            <End Role="tblPerson" EntitySet="tblPersons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonCountryStatis" Association="WorldServiceOrganizationModel.FK_PersonCountryStatis">
+            <End Role="tblCountry" EntitySet="tblCountries" />
+            <End Role="tblPerson" EntitySet="tblPersons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonEye" Association="WorldServiceOrganizationModel.FK_PersonEye">
+            <End Role="tblEye" EntitySet="tblEyes" />
+            <End Role="tblPerson" EntitySet="tblPersons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonOccupation" Association="WorldServiceOrganizationModel.FK_PersonOccupation">
+            <End Role="tblOccupation" EntitySet="tblOccupations" />
+            <End Role="tblPerson" EntitySet="tblPersons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonSex" Association="WorldServiceOrganizationModel.FK_PersonSex">
+            <End Role="tblSex" EntitySet="tblSex" />
+            <End Role="tblPerson" EntitySet="tblPersons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonStatus" Association="WorldServiceOrganizationModel.FK_PersonStatus">
+            <End Role="tblStatus" EntitySet="tblStatus" />
+            <End Role="tblPerson" EntitySet="tblPersons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonUserCre" Association="WorldServiceOrganizationModel.FK_PersonUserCre">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblPerson" EntitySet="tblPersons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonUserDel" Association="WorldServiceOrganizationModel.FK_PersonUserDel">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblPerson" EntitySet="tblPersons" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonUserEdit" Association="WorldServiceOrganizationModel.FK_PersonUserEdit">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblPerson" EntitySet="tblPersons" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tblRole">
           <Key>
@@ -568,6 +813,9 @@
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="DeletedDate" Type="DateTime" Precision="3" />
           <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonCountryAppli" FromRole="tblCountry" ToRole="tblPerson" />
+          <NavigationProperty Name="tblPersons1" Relationship="WorldServiceOrganizationModel.FK_PersonCountryBirth" FromRole="tblCountry" ToRole="tblPerson" />
+          <NavigationProperty Name="tblPersons2" Relationship="WorldServiceOrganizationModel.FK_PersonCountryStatis" FromRole="tblCountry" ToRole="tblPerson" />
         </EntityType>
         <EntityType Name="tblEye">
           <Key>
@@ -583,6 +831,7 @@
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="DeletedDate" Type="DateTime" Precision="3" />
           <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonEye" FromRole="tblEye" ToRole="tblPerson" />
         </EntityType>
         <EntityType Name="tblOccupation">
           <Key>
@@ -598,6 +847,7 @@
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="DeletedDate" Type="DateTime" Precision="3" />
           <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonOccupation" FromRole="tblOccupation" ToRole="tblPerson" />
         </EntityType>
         <EntityType Name="tblProduct">
           <Key>
@@ -648,6 +898,7 @@
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="DeletedDate" Type="DateTime" Precision="3" />
           <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonStatus" FromRole="tblStatus" ToRole="tblPerson" />
         </EntityType>
         <EntityType Name="tblSex">
           <Key>
@@ -663,6 +914,7 @@
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="DeletedDate" Type="DateTime" Precision="3" />
           <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonSex" FromRole="tblSex" ToRole="tblPerson" />
         </EntityType>
         <Association Name="FK_ProductProductType">
           <End Type="WorldServiceOrganizationModel.tblProductType" Role="tblProductType" Multiplicity="0..1" />
@@ -753,6 +1005,190 @@
           <Property Name="FontSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LetterCase" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblPerson">
+          <Key>
+            <PropertyRef Name="PersonIDNumber" />
+          </Key>
+          <Property Name="PersonIDNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountryOfApplication" Type="Int32" />
+          <Property Name="CityOfBirth" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CountryOfBirth" Type="Int32" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Fax" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="EMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="BirthDay" Type="Int32" />
+          <Property Name="BirthMonth" Type="Int32" />
+          <Property Name="BirthYear" Type="Int32" />
+          <Property Name="Sex" Type="Int32" />
+          <Property Name="Height" Type="Double" />
+          <Property Name="Eyes" Type="Int32" />
+          <Property Name="Marks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OccupationId" Type="Int32" />
+          <Property Name="OccupationCode" Type="Int32" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FatherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MotherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="WSANumber" Type="Int32" />
+          <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" />
+          <Property Name="TransactionCount" Type="Int32" />
+          <Property Name="SignaturePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Photograph" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Signature" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="CountryOfBirthStatistical" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="LastEditedBy" Type="Int32" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblCountry" Relationship="WorldServiceOrganizationModel.FK_PersonCountryAppli" FromRole="tblPerson" ToRole="tblCountry" />
+          <NavigationProperty Name="tblCountry1" Relationship="WorldServiceOrganizationModel.FK_PersonCountryBirth" FromRole="tblPerson" ToRole="tblCountry" />
+          <NavigationProperty Name="tblCountry2" Relationship="WorldServiceOrganizationModel.FK_PersonCountryStatis" FromRole="tblPerson" ToRole="tblCountry" />
+          <NavigationProperty Name="tblEye" Relationship="WorldServiceOrganizationModel.FK_PersonEye" FromRole="tblPerson" ToRole="tblEye" />
+          <NavigationProperty Name="tblOccupation" Relationship="WorldServiceOrganizationModel.FK_PersonOccupation" FromRole="tblPerson" ToRole="tblOccupation" />
+          <NavigationProperty Name="tblSex" Relationship="WorldServiceOrganizationModel.FK_PersonSex" FromRole="tblPerson" ToRole="tblSex" />
+          <NavigationProperty Name="tblStatu" Relationship="WorldServiceOrganizationModel.FK_PersonStatus" FromRole="tblPerson" ToRole="tblStatus" />
+          <NavigationProperty Name="tblUser" Relationship="WorldServiceOrganizationModel.FK_PersonUserCre" FromRole="tblPerson" ToRole="tblUser" />
+          <NavigationProperty Name="tblUser1" Relationship="WorldServiceOrganizationModel.FK_PersonUserDel" FromRole="tblPerson" ToRole="tblUser" />
+          <NavigationProperty Name="tblUser2" Relationship="WorldServiceOrganizationModel.FK_PersonUserEdit" FromRole="tblPerson" ToRole="tblUser" />
+        </EntityType>
+        <Association Name="FK_PersonCountryAppli">
+          <End Type="WorldServiceOrganizationModel.tblCountry" Role="tblCountry" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="CountryOfApplication" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonCountryBirth">
+          <End Type="WorldServiceOrganizationModel.tblCountry" Role="tblCountry" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="CountryOfBirth" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonCountryStatis">
+          <End Type="WorldServiceOrganizationModel.tblCountry" Role="tblCountry" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCountry">
+              <PropertyRef Name="CountryId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="CountryOfBirthStatistical" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonEye">
+          <End Type="WorldServiceOrganizationModel.tblEye" Role="tblEye" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblEye">
+              <PropertyRef Name="EyeId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="Eyes" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonOccupation">
+          <End Type="WorldServiceOrganizationModel.tblOccupation" Role="tblOccupation" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblOccupation">
+              <PropertyRef Name="OccupationId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="OccupationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonSex">
+          <End Type="WorldServiceOrganizationModel.tblSex" Role="tblSex" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSex">
+              <PropertyRef Name="SexId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="Sex" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonStatus">
+          <End Type="WorldServiceOrganizationModel.tblStatus" Role="tblStatus" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblStatus">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="Status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonUserCre">
+          <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonUserDel">
+          <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="DeletedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonUserEdit">
+          <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPerson">
+              <PropertyRef Name="LastEditedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1007,6 +1443,62 @@
                 <ScalarProperty Name="NumberOfRetrieves" ColumnName="NumberOfRetrieves" />
                 <ScalarProperty Name="DateFormat" ColumnName="DateFormat" />
                 <ScalarProperty Name="SettingId" ColumnName="SettingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPersons">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblPerson">
+              <MappingFragment StoreEntitySet="tblPerson">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="LastEditedBy" ColumnName="LastEditedBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CountryOfBirthStatistical" ColumnName="CountryOfBirthStatistical" />
+                <ScalarProperty Name="Signature" ColumnName="Signature" />
+                <ScalarProperty Name="Photograph" ColumnName="Photograph" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="SignaturePath" ColumnName="SignaturePath" />
+                <ScalarProperty Name="TransactionCount" ColumnName="TransactionCount" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="WSANumber" ColumnName="WSANumber" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="OccupationCode" ColumnName="OccupationCode" />
+                <ScalarProperty Name="OccupationId" ColumnName="OccupationId" />
+                <ScalarProperty Name="Marks" ColumnName="Marks" />
+                <ScalarProperty Name="Eyes" ColumnName="Eyes" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="BirthYear" ColumnName="BirthYear" />
+                <ScalarProperty Name="BirthMonth" ColumnName="BirthMonth" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="CountryOfBirth" ColumnName="CountryOfBirth" />
+                <ScalarProperty Name="CityOfBirth" ColumnName="CityOfBirth" />
+                <ScalarProperty Name="CountryOfApplication" ColumnName="CountryOfApplication" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PersonIDNumber" ColumnName="PersonIDNumber" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

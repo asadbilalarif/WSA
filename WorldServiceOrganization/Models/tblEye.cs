@@ -14,6 +14,12 @@ namespace WorldServiceOrganization.Models
     
     public partial class tblEye
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblEye()
+        {
+            this.tblPersons = new HashSet<tblPerson>();
+        }
+    
         public int EyeId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
@@ -24,5 +30,8 @@ namespace WorldServiceOrganization.Models
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Nullable<bool> isActive { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPerson> tblPersons { get; set; }
     }
 }

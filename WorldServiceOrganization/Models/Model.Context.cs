@@ -39,5 +39,7 @@ namespace WorldServiceOrganization.Models
         public virtual DbSet<tblProductPackage> tblProductPackages { get; set; }
         public virtual DbSet<tblProductPackageProduct> tblProductPackageProducts { get; set; }
         public virtual DbSet<tblSetting> tblSettings { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
+        public virtual DbSet<tblPerson> tblPersons { get; set; }
     }
 }

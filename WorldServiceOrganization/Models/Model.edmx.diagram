@@ -26,6 +26,18 @@
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_ManyProduct" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_ManyProductPackage" />
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblSetting" Width="1.5" PointX="0.75" PointY="11.75" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.sysdiagram" Width="1.5" PointX="5.375" PointY="11.75" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblPerson" Width="1.5" PointX="14.625" PointY="2.125" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonCountryAppli" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonCountryBirth" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonCountryStatis" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonEye" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonOccupation" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonSex" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonStatus" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserCre" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserDel" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserEdit" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

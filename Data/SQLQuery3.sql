@@ -209,6 +209,69 @@ CREATE TABLE tblSetting(
 );
 
 
+CREATE TABLE tblPerson (
+    PersonIDNumber int IDENTITY(1,1) NOT NULL,
+	LastName nvarchar(max),
+	FirstName nvarchar(max),
+    CountryOfApplication int ,
+    CityOfBirth nvarchar(max),
+    CountryOfBirth int ,
+    Phone nvarchar(max),
+    Fax nvarchar(max),
+    EMail nvarchar(max),
+    Website nvarchar(max),
+    DateOfBirth datetime,
+	BirthDay int,
+	BirthMonth int,
+	BirthYear int,
+	Sex int,
+    Height float,
+    Eyes int,
+    Marks nvarchar(max),
+    OccupationId int,
+	OccupationCode int,
+    Title nvarchar(max),
+    FatherName nvarchar(max),
+    MotherName nvarchar(max),
+	WSANumber int,
+    Comments nvarchar(max),
+	Status int,
+	TransactionCount int,
+	SignaturePath nvarchar(max),
+	Photo nvarchar(max),
+	Photograph image,
+	Signature image,
+	CountryOfBirthStatistical int,
+	CreatedBy int,
+	EntryDate datetime,
+    LastEditedBy int,
+    LastModifiedDate datetime,
+    DeletedBy int,
+    DeletedDate datetime,
+	isActive bit,
+    PRIMARY KEY (PersonIDNumber),
+    CONSTRAINT FK_PersonCountryAppli FOREIGN KEY (CountryOfApplication)
+    REFERENCES tblCountry(CountryId),
+	CONSTRAINT FK_PersonCountryBirth FOREIGN KEY (CountryOfBirth)
+    REFERENCES tblCountry(CountryId),
+	CONSTRAINT FK_PersonCountryStatis FOREIGN KEY (CountryOfBirthStatistical)
+    REFERENCES tblCountry(CountryId),
+	CONSTRAINT FK_PersonSex FOREIGN KEY (Sex)
+    REFERENCES tblSex(SexId),
+	CONSTRAINT FK_PersonEye FOREIGN KEY (Eyes)
+    REFERENCES tblEye(EyeId),
+	CONSTRAINT FK_PersonOccupation FOREIGN KEY (OccupationId)
+    REFERENCES tblOccupation(OccupationId),
+	CONSTRAINT FK_PersonStatus FOREIGN KEY (Status)
+    REFERENCES tblStatus(StatusId),
+	CONSTRAINT FK_PersonUserCre FOREIGN KEY (CreatedBy)
+    REFERENCES tblUsers(UserId),
+	CONSTRAINT FK_PersonUserEdit FOREIGN KEY (LastEditedBy)
+    REFERENCES tblUsers(UserId),
+	CONSTRAINT FK_PersonUserDel FOREIGN KEY (DeletedBy)
+    REFERENCES tblUsers(UserId),
+);
+
 INSERT INTO tblMenu (Name, ControllerName, ActionName,isParent,ParentId,isActive,ElementId)
 VALUES ('User Management', '', '',0,0,1,''),('Users', 'UserManagement', 'Users',1,1,1,'Users'),('Roles & Permissions', 'UserManagement', 'RolesPermission',1,1,1,'Roles'),('Reference Codes', '', '',0,0,1,''),('Countries', 'Home', 'Countries',1,4,1,'Country'),('Eyes', 'Home', 'Eyes',1,4,1,'Eye'),('Occupations', 'Home', 'Occupations',1,4,1,'Occupation'),('Products', 'Home', 'Products',1,4,1,'Product'),('Product types', 'Home', 'ProductTypes',1,4,1,'ProductType'),('Status', 'Home', 'Status',1,4,1,'Status'),('Sex', 'Home', 'Sex',1,4,1,'Sex'),('Product packages', 'Home', 'Productpackages',1,4,1,'Productpackage'),('Settings', '', '',0,0,1,''),('Setting/Configuration', 'Home', 'Settings',1,14,1,'Setting');
 

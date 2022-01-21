@@ -151,6 +151,9 @@
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductProductPackage.cs" />
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblAccessLevel.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -164,6 +167,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblOccupation.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblPerson.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblProduct.cs">
@@ -381,6 +387,8 @@
     <Content Include="Views\Home\CreateProductPackage.cshtml" />
     <Content Include="Views\Home\Settings.cshtml" />
     <Content Include="Views\Account\ChangeForgetPassword.cshtml" />
+    <Content Include="Views\Home\Persons.cshtml" />
+    <Content Include="Views\Home\CreatePerson.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

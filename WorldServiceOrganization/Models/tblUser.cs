@@ -14,6 +14,14 @@ namespace WorldServiceOrganization.Models
     
     public partial class tblUser
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblUser()
+        {
+            this.tblPersons = new HashSet<tblPerson>();
+            this.tblPersons1 = new HashSet<tblPerson>();
+            this.tblPersons2 = new HashSet<tblPerson>();
+        }
+    
         public int UserId { get; set; }
         public string username { get; set; }
         public string FirstName { get; set; }
@@ -39,5 +47,11 @@ namespace WorldServiceOrganization.Models
         public Nullable<int> RoleId { get; set; }
     
         public virtual tblRole tblRole { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPerson> tblPersons { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPerson> tblPersons1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPerson> tblPersons2 { get; set; }
     }
 }

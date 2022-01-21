@@ -14,6 +14,14 @@ namespace WorldServiceOrganization.Models
     
     public partial class tblCountry
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblCountry()
+        {
+            this.tblPersons = new HashSet<tblPerson>();
+            this.tblPersons1 = new HashSet<tblPerson>();
+            this.tblPersons2 = new HashSet<tblPerson>();
+        }
+    
         public int CountryId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
@@ -24,5 +32,12 @@ namespace WorldServiceOrganization.Models
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Nullable<bool> isActive { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPerson> tblPersons { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPerson> tblPersons1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPerson> tblPersons2 { get; set; }
     }
 }

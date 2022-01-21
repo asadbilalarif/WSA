@@ -985,6 +985,43 @@ namespace WorldServiceOrganization.Controllers
 
         
 
+        public ActionResult Persons(string Success, string Update, string Delete)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            var PersonList = DB.tblPersons.Where(x => x.isActive == true).ToList();
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
+            return View(PersonList);
+        }
+
+        public ActionResult CreatePerson(int? id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblPerson Person = null;
+            if (id != null && id != 0)
+            {
+
+                Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
+                return View(Person);
+            }
+            else
+            {
+                return View(Person);
+            }
+        }
+
+
+        [HttpPost]
+        public JsonResult GetCountryCode(string Prefix)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            //Searching records from list using LINQ query  
+            
+            var CountryList = DB.tblCountries.Where(q => q.Code.StartsWith(Prefix)).Select(s => s.Code+","+s.Name+","+s.CountryId).ToList();
+            
+            return Json(CountryList, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult About()
         {
