@@ -24,7 +24,7 @@ namespace WorldServiceOrganization.Models
         public string Fax { get; set; }
         public string EMail { get; set; }
         public string Website { get; set; }
-        public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public System.DateTime DateOfBirth { get; set; }
         public Nullable<int> BirthDay { get; set; }
         public Nullable<int> BirthMonth { get; set; }
         public Nullable<int> BirthYear { get; set; }

@@ -112,7 +112,7 @@
           <Property Name="Fax" Type="nvarchar(max)" />
           <Property Name="EMail" Type="nvarchar(max)" />
           <Property Name="Website" Type="nvarchar(max)" />
-          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
           <Property Name="BirthDay" Type="int" />
           <Property Name="BirthMonth" Type="int" />
           <Property Name="BirthYear" Type="int" />
@@ -1029,7 +1029,7 @@
           <Property Name="Fax" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="EMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="BirthDay" Type="Int32" />
           <Property Name="BirthMonth" Type="Int32" />
           <Property Name="BirthYear" Type="Int32" />

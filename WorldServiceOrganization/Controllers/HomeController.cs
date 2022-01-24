@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -999,16 +1000,167 @@ namespace WorldServiceOrganization.Controllers
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             tblPerson Person = null;
+            ViewBag.Country= DB.tblCountries.Where(x => x.isActive == true).ToList();
+            ViewBag.Eye= DB.tblEyes.Where(x => x.isActive == true).ToList();
+            ViewBag.Occupation= DB.tblOccupations.Where(x => x.isActive == true).ToList();
+            ViewBag.Sex= DB.tblSex.Where(x => x.isActive == true).ToList();
+            ViewBag.Status= DB.tblStatus.Where(x => x.isActive == true).ToList();
+
             if (id != null && id != 0)
             {
 
                 Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
+                
                 return View(Person);
             }
             else
             {
                 return View(Person);
             }
+        }
+
+        [HttpPost]
+        public ActionResult CreatePerson(tblPerson Person, HttpPostedFileBase Image, HttpPostedFileBase SigImage)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblPerson Data = new tblPerson();
+
+            try
+            {
+                if (Person.PersonIDNumber == 0)
+                {
+                    if (DB.tblPersons.Select(r => r).Where(x => x.EMail==Person.EMail).FirstOrDefault() == null)
+                    {
+                        Data = Person;
+                        string folder = Server.MapPath(string.Format("~/{0}/", "Uploading"));
+                        if (!Directory.Exists(folder))
+                        {
+                            Directory.CreateDirectory(folder);
+                        }
+
+                        string path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(Image.FileName));
+
+                        Image.SaveAs(path);
+                        path = Path.Combine("\\Uploading", Path.GetFileName(Image.FileName));
+
+                        Data.Photo = path;
+
+                        path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(SigImage.FileName));
+
+                        SigImage.SaveAs(path);
+                        path = Path.Combine("\\Uploading", Path.GetFileName(SigImage.FileName));
+
+                        Data.SignaturePath = path;
+
+                        Data.EntryDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.tblPersons.Add(Data);
+                        DB.SaveChanges();
+                        return RedirectToAction("Persons", new { Success = "Person has been add successfully." });
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Person Already Exsist!!!";
+                    }
+                }
+                else
+                {
+                    var check = DB.tblPersons.Select(r => r).Where(x => x.EMail == Person.EMail).FirstOrDefault();
+                    if (check == null || check.PersonIDNumber == Person.PersonIDNumber)
+                    {
+
+                        Data = DB.tblPersons.Select(r => r).Where(x => x.PersonIDNumber == Person.PersonIDNumber).FirstOrDefault();
+                        Data.FirstName = Person.FirstName;
+                        Data.LastName = Person.LastName;
+                        Data.CityOfBirth = Person.CityOfBirth;
+                        Data.Phone = Person.CityOfBirth;
+                        Data.Fax = Person.Fax;
+                        Data.EMail= Person.EMail;
+                        Data.Website= Person.Website;
+                        Data.DateOfBirth= Person.DateOfBirth;
+                        Data.BirthDay= Person.BirthDay;
+                        Data.BirthMonth= Person.BirthMonth;
+                        Data.BirthYear= Person.BirthYear;
+                        Data.Marks= Person.Marks;
+                        Data.FatherName= Person.FatherName;
+                        Data.MotherName= Person.MotherName;
+                        Data.WSANumber= Person.WSANumber;
+                        Data.Comments= Person.Comments;
+                        Data.Height= Person.Height;
+                        Data.CountryOfApplication= Person.CountryOfApplication;
+                        Data.CountryOfBirth= Person.CountryOfBirth;
+                        Data.Sex= Person.Sex;
+                        Data.Status= Person.Status;
+                        Data.Eyes= Person.Eyes;
+                        Data.OccupationCode= Person.OccupationCode;
+                        Data.TransactionCount= Person.TransactionCount;
+
+
+                        string path = null;
+                        if (Person.SignaturePath != null)
+                        {
+                            path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(SigImage.FileName));
+
+                            SigImage.SaveAs(path);
+                            path = Path.Combine("\\Uploading", Path.GetFileName(SigImage.FileName));
+
+                            Data.SignaturePath = path;
+                        }
+
+                        if (Person.Photo != null)
+                        {
+                            path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(Image.FileName));
+
+                            Image.SaveAs(path);
+                            path = Path.Combine("\\Uploading", Path.GetFileName(Image.FileName));
+
+                            Data.Photo = path;
+                        }
+
+                        Data.LastModifiedDate = DateTime.Now;
+                        DB.Entry(Data);
+                        DB.SaveChanges();
+                        return RedirectToAction("Persons", new { Update = "Person has been Update successfully." });
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Person Already Exsist!!!";
+                    }
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+            
+            return View(Person);
+        }
+
+        [HttpPost]
+        public ActionResult DeletePerson(int PersonId)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblPerson Data = new tblPerson();
+            try
+            {
+                Data = DB.tblPersons.Select(r => r).Where(x => x.PersonIDNumber == PersonId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+                return Json(1);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
         }
 
 
@@ -1020,6 +1172,17 @@ namespace WorldServiceOrganization.Controllers
             
             var CountryList = DB.tblCountries.Where(q => q.Code.StartsWith(Prefix)).Select(s => s.Code+","+s.Name+","+s.CountryId).ToList();
             
+            return Json(CountryList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult GetEyeCode(string Prefix)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            //Searching records from list using LINQ query  
+
+            var CountryList = DB.tblEyes.Where(q => q.Code.StartsWith(Prefix)).Select(s => s.Code + "," + s.Name + "," + s.EyeId).ToList();
+
             return Json(CountryList, JsonRequestBehavior.AllowGet);
         }
 

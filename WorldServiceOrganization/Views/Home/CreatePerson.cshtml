@@ -1,23 +1,61 @@
 ﻿@model  WorldServiceOrganization.Models.tblPerson
 @{
     int PersonId = 0;
-    string Personname = "";
     string FirstName = "";
     string LastName = "";
-    string Organization = "";
-    string Title = "";
-    string Address1 = "";
-    string Address2 = "";
-    string City = "";
-    string StateProvince = "";
-    string Country = "";
-    string PostalCode = "";
-    string PhoneNumber = "";
-    string Email = "";
-    int? RoleId = 0;
+    string CityOfBirth = "";
+    string Phone = "";
+    string Fax = "";
+    string EMail = "";
+    string Website = "";
+    DateTime DateOfBirth=DateTime.Now;
+    int? BirthDay = 0;
+    int? BirthMonth = 0;
+    int? BirthYear = 0;
+    string Marks = "";
+    string FatherName = "";
+    string MotherName = "";
+    int? WSANumber = 0;
+    string Comments = "";
+    double? Height = 0.0;
+    int? CountryApplicationId = 0;
+    int? CountryBirthId = 0;
+    int? EyeId = 0;
+    int? OccupationId = 0;
+    int? SexId = 0;
+    int? StatusId = 0;
+    int? TransactionCount = 0;
 
     if (Model != null)
     {
+
+
+         PersonId = Model.PersonIDNumber;
+         FirstName = Model.FatherName;
+         LastName = Model.LastName;
+         CityOfBirth = Model.CityOfBirth;
+         Phone = Model.Phone;
+         Fax = Model.Fax;
+         EMail = Model.EMail;
+         Website = Model.Website;
+         DateOfBirth = DateTime.Now;
+         BirthDay = Model.BirthDay;
+         BirthMonth = Model.BirthMonth;
+         BirthYear = Model.BirthYear;
+         Marks = Model.Marks;
+         FatherName = Model.FatherName;
+         MotherName = Model.MotherName;
+         WSANumber = Model.WSANumber;
+         Comments = Model.Comments;
+         Height = Model.Height;
+         CountryApplicationId = Model.CountryOfApplication;
+         CountryBirthId = Model.CountryOfBirth;
+         EyeId = Model.Eyes;
+         OccupationId = Model.OccupationCode;
+         SexId = Model.Sex;
+         StatusId = Model.Status;
+         TransactionCount = Model.TransactionCount;
+
         //PersonId = Model.PersonId;
         //Personname = Model.Personname;
         //FirstName = Model.FirstName;
@@ -83,9 +121,21 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" style="display:none;" name="PersonIDNumber" value="@PersonId" required>
                                 <label>CountryOfApplication</label>
-                                <input style="display:none;" type="text" class="form-control" id="CountryOfApplication" name="CountryOfApplication" value="@Personname" required>
-                                <input type="text" class="form-control" id="CountryOfApplicationCode"  value="@Personname" required>
-                                <input type="text" class="form-control" id="CountryOfApplicationName" value="@Personname" required readonly>
+                                <select class="form-control" id="CountryOfApplication" name="CountryOfApplication" required>
+                                    <option value="0">Select Country</option>
+                                    @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                    {
+                                        if (Countries.CountryId == CountryApplicationId)
+                                        {
+                                            <option value="@Countries.CountryId" selected>@Countries.Code "/" @Countries.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@Countries.CountryId" >@Countries.Code / @Countries.Name</option>
+                                        }
+                                    }
+                                </select>
+
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -103,7 +153,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>CityOfBirth</label>
-                                <input type="text" class="form-control" id="CityOfBirth" name="CityOfBirth" value="@Organization" required>
+                                <input type="text" class="form-control" id="CityOfBirth" name="CityOfBirth" value="@CityOfBirth" required>
                             </div>
                         </div>
                     </div>
@@ -112,23 +162,35 @@
                             <div class="form-group">
                                 <label>CountryOfBirth</label>
                                 &nbsp;&nbsp;
-                                <input style="display:none;" type="text" class="form-control" id="CountryOfBirth" name="CountryOfBirth" value="@Title" required>
-                                <input type="text" class="form-control" id="CountryOfBirthCode"  value="@Title" required>
-                                <input type="text" class="form-control" id="CountryOfBirthName"  value="@Title" required readonly>
+                                <select class="form-control" id="CountryOfBirth" name="CountryOfBirth" required>
+                                    <option value="0">Select Country</option>
+                                    @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                    {
+                                        if (Countries.CountryId == CountryBirthId)
+                                        {
+                                            <option value="@Countries.CountryId" selected>@Countries.Code "/" @Countries.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@Countries.CountryId">@Countries.Code / @Countries.Name</option>
+                                        }
+                                    }
+                                </select>
+                                
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Phone</label>
                                 &nbsp;&nbsp;
-                                <input type="text" class="form-control" id="Phone" name="Phone" value="@Address1" required>
+                                <input type="text" class="form-control" id="Phone" name="Phone" value="@Phone" required>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Fax</label>
                                 &nbsp;&nbsp;&nbsp;
-                                <input type="text" class="form-control" id="Fax" name="Fax" value="@Address2" required>
+                                <input type="text" class="form-control" id="Fax" name="Fax" value="@Fax" required>
 
                             </div>
                         </div>
@@ -136,7 +198,7 @@
                             <div class="form-group">
                                 <label>EMail</label>
                                 <div>
-                                    <input type="text" class="form-control" id="EMail" name="EMail" value="@City" required>
+                                    <input type="text" class="form-control" id="EMail" name="EMail" value="@EMail" required>
                                 </div>
                             </div>
                         </div>
@@ -149,7 +211,7 @@
                             <div class="form-group">
                                 <div>
                                     <label>Website</label>&nbsp;&nbsp;
-                                    <input type="text" class="form-control" id="Website" name="Website" value="@StateProvince" required>
+                                    <input type="text" class="form-control" id="Website" name="Website" value="@Website" required>
                                 </div>
 
                             </div>
@@ -158,19 +220,19 @@
                             <div class="form-group">
                                 <label>DateOfBirth</label>
                                 &nbsp;&nbsp;
-                                <input type="text" class="form-control" id="DateOfBirth" name="DateOfBirth" value="@Country" required>
+                                <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" value="@DateOfBirth.ToString("DD-MM-YY")" required>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>BirthDay</label>&nbsp;&nbsp;
-                                <input type="text" class="form-control" id="BirthDay" name="BirthDay" value="@PostalCode" required>
+                                <input type="text" class="form-control" id="BirthDay" name="BirthDay" value="@BirthDay" required>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>BirthMonth</label>
-                                <input type="text" class="form-control" id="BirthMonth" name="BirthMonth" value="@PhoneNumber" required>
+                                <input type="text" class="form-control" id="BirthMonth" name="BirthMonth" value="@BirthMonth" required>
                             </div>
                         </div>
 
@@ -185,9 +247,20 @@
                             <div class="form-group">
                                 <div>
                                     <label>Eyes</label>&nbsp;&nbsp;
-                                    <input type="text" class="form-control" id="Eyes" name="Eyes" value="@StateProvince" required>
-                                    <input type="text" class="form-control" id="EyesCode"  value="@StateProvince" required>
-                                    <input type="text" class="form-control" id="EyesName"  value="@StateProvince" required>
+                                    <select class="form-control" id="Eyes" name="Eyes" required>
+                                        <option value="0">Select Eyes</option>
+                                        @foreach (WorldServiceOrganization.Models.tblEye Eye in @ViewBag.Eye)
+                                        {
+                                            if (Eye.EyeId == EyeId)
+                                            {
+                                                <option value="@Eye.EyeId" selected>@Eye.Code "/" @Eye.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@Eye.EyeId">@Eye.Code / @Eye.Name</option>
+                                            }
+                                        }
+                                    </select>
                                 </div>
 
                             </div>
@@ -196,19 +269,32 @@
                             <div class="form-group">
                                 <label>Marks</label>
                                 &nbsp;&nbsp;
-                                <input type="text" class="form-control" id="Marks" name="Marks" value="@Country" required>
+                                <input type="text" class="form-control" id="Marks" name="Marks" value="@Marks" required>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>OccupationCode</label>&nbsp;&nbsp;
-                                <input type="text" class="form-control" id="OccupationCode" name="OccupationCode" value="@PostalCode" required>
+                                <select class="form-control" id="OccupationCode" name="OccupationCode" required>
+                                    <option value="0">Select Occupation</option>
+                                    @foreach (WorldServiceOrganization.Models.tblOccupation Occupation in @ViewBag.Occupation)
+                                    {
+                                        if (Occupation.OccupationId == OccupationId)
+                                        {
+                                            <option value="@Occupation.OccupationId" selected>@Occupation.Code "/" @Occupation.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@Occupation.OccupationId">@Occupation.Code / @Occupation.Name</option>
+                                        }
+                                    }
+                                </select>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Title</label>
-                                <input type="text" class="form-control" id="Title" name="Title" value="@PhoneNumber" required>
+                                <input type="text" class="form-control" id="Title" name="Title" value="">
                             </div>
                         </div>
                     </div>
@@ -218,7 +304,7 @@
                             <div class="form-group">
                                 <div>
                                     <label>FatherName</label>&nbsp;&nbsp;
-                                    <input type="text" class="form-control" id="FatherName" name="FatherName" value="@StateProvince" required>
+                                    <input type="text" class="form-control" id="FatherName" name="FatherName" value="@FatherName" required>
                                 </div>
 
                             </div>
@@ -227,19 +313,19 @@
                             <div class="form-group">
                                 <label>MotherName</label>
                                 &nbsp;&nbsp;
-                                <input type="text" class="form-control" id="MotherName" name="MotherName" value="@Country" required>
+                                <input type="text" class="form-control" id="MotherName" name="MotherName" value="@MotherName" required>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>WSANumber</label>&nbsp;&nbsp;
-                                <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@PostalCode" required>
+                                <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" required>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Comments</label>
-                                <input type="text" class="form-control" id="Comments" name="Comments" value="@PhoneNumber" required>
+                                <input type="text" class="form-control" id="Comments" name="Comments" value="@Comments" required>
                             </div>
                         </div>
                     </div>
@@ -249,7 +335,20 @@
                             <div class="form-group">
                                 <div>
                                     <label>Status</label>&nbsp;&nbsp;
-                                    <input type="text" class="form-control" id="Status" name="Status" value="@StateProvince" required>
+                                    <select class="form-control" id="StatusD" name="Status" required>
+                                        <option value="0">Select Status</option>
+                                        @foreach (WorldServiceOrganization.Models.tblStatus Status in @ViewBag.Status)
+                                        {
+                                            if (Status.StatusId == StatusId)
+                                            {
+                                                <option value="@Status.StatusId" selected>@Status.Code "/" @Status.Name</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@Status.StatusId">@Status.Code / @Status.Name</option>
+                                            }
+                                        }
+                                    </select>
                                 </div>
 
                             </div>
@@ -258,19 +357,33 @@
                             <div class="form-group">
                                 <label>TransactionCount</label>
                                 &nbsp;&nbsp;
-                                <input type="text" class="form-control" id="TransactionCount" name="TransactionCount" value="@Country" required>
+                                <input type="text" class="form-control" id="TransactionCount" name="TransactionCount" value="@TransactionCount" required>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>SignaturePath</label>&nbsp;&nbsp;
-                                <input type="text" class="form-control" id="SignaturePath" name="SignaturePath" value="@PostalCode" required>
+                                @if (Model != null)
+                                {
+                                    <input type="file" class="form-control" name="SigImage" id="SignaturePath" accept="image/*" value="Upload Photo">
+                                }
+                                else
+                                {
+                                    <input type="file" class="form-control" name="SigImage" id="SignaturePath" accept="image/*" value="Upload Photo" required>
+                                }
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Photo</label>
-                                <input type="text" class="form-control" id="Photo" name="Photo" value="@PhoneNumber" required>
+                                @if (Model != null)
+                                {
+                                    <input type="file" class="form-control" name="Image" id="Photo" accept="image/*" value="Upload Photo">
+                                }
+                                else
+                                {
+                                    <input type="file" class="form-control" name="Image" id="Photo" accept="image/*" value="Upload Photo" required>
+                                }
                             </div>
                         </div>
                     </div>
@@ -281,20 +394,33 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>BirthYear</label>
-                                <input type="text" class="form-control" id="BirthYear" name="BirthYear" value="@Email" required>
+                                <input type="text" class="form-control" id="BirthYear" name="BirthYear" value="@BirthYear" required>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Sex</label>
-                                <input type="text" class="form-control" id="Sex" name="Sex" value="" required>
+                                <select class="form-control" id="SexD" name="Sex" required>
+                                    <option value="0">Select Sex</option>
+                                    @foreach (WorldServiceOrganization.Models.tblSex Sex in @ViewBag.Sex)
+                                    {
+                                        if (Sex.SexId == SexId)
+                                        {
+                                            <option value="@Sex.SexId" selected>@Sex.Code "/" @Sex.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@Sex.SexId">@Sex.Code / @Sex.Name</option>
+                                        }
+                                    }
+                                </select>
 
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>Height</label><br />
-                                <input type="text" class="form-control" id="Height" name="Height" value="" required>
+                                <input type="text" class="form-control" id="Height" name="Height" value="@Height" required>
 
                                 @*<select class="form-control" id="Role" name="RoleId" required>
                                         <option value="0">Select Role</option>
@@ -315,7 +441,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label></label>
-                                <button class="btn btn-primary" type="submit" id="SaveChanges" style="margin-top:10%;">Save Changes</button>
+                                <button class="btn btn-primary" type="submit"  style="margin-top:10%;">Save Changes</button>
                             </div>
                         </div>
 
@@ -333,9 +459,9 @@
 </div>
 
 <!-- /Page Wrapper -->
-@*<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>*@
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+@*<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>*@
 
 @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <link rel="Stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css" />
@@ -347,63 +473,127 @@
 <script>
 
     $(document).ready(function () {
-        $("#CountryOfApplicationCode").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: "/Home/GetCountryCode",
-                    type: "POST",
-                    dataType: "json",
-                    data: { Prefix: request.term },
-                    success: function (data) {
-                        response($.map(data, function (CountryList) {
-                            return { label: CountryList.CountryList, value: CountryList };
-                        }))
-                    }
-                })
-            },
-            //messages: {
-            //    noResults: "", results: ""
-            //},
-            select: function (event, ui) {
-                var text = ui.item.label
-                const myArray = text.split(",");
 
-                $('#CountryOfApplicationCode').val(myArray[0]);
-                alert($('#CountryOfApplicationCode').val())
-                $('#CountryOfApplicationName').val(myArray[1]);
-                $('#CountryOfApplication').val(myArray[2]);
 
-               
-            }
-        });
-        $("#CountryOfBirthCode").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: "/Home/GetCountryCode",
-                    type: "POST",
-                    dataType: "json",
-                    data: { Prefix: request.term },
-                    success: function (data) {
-                        response($.map(data, function (CountryList) {
-                            return { label: CountryList.CountryList, value: CountryList };
-                        }))
-                    }
-                })
-            },
-            //messages: {
-            //    noResults: "", results: ""
-            //},
-            select: function (event, ui) {
-                var text = ui.item.label
-                const myArray = text.split(",");
 
-                $('#CountryOfBirthCode').val(myArray[0]);
-                alert($('#CountryOfBirthCode').val())
-                $('#CountryOfBirthName').val(myArray[1]);
-                $('#CountryOfBirth').val(myArray[2]);
+
+        //$("#CountryOfApplicationCode").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: "/Home/GetCountryCode",
+        //            type: "POST",
+        //            dataType: "json",
+        //            data: { Prefix: request.term },
+        //            success: function (data) {
+        //                response($.map(data, function (CountryList) {
+        //                    return { label: CountryList.CountryList, value: CountryList };
+        //                }))
+        //            }
+        //        })
+        //    },
+        //    //messages: {
+        //    //    noResults: "", results: ""
+        //    //},
+        //    select: function (event, ui) {
+        //        var text = ui.item.label
+        //        const myArray = text.split(",");
+
+        //        $('#CountryOfApplicationCode').val(myArray[0]);
+        //        $('#CountryOfApplicationName').val(myArray[1]);
+        //        $('#CountryOfApplication').val(myArray[2]);
 
                
-            }
+        //    }
+        //});
+        //$("#CountryOfBirthCode").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: "/Home/GetCountryCode",
+        //            type: "POST",
+        //            dataType: "json",
+        //            data: { Prefix: request.term },
+        //            success: function (data) {
+        //                response($.map(data, function (CountryList) {
+        //                    return { label: CountryList.CountryList, value: CountryList };
+        //                }))
+        //            }
+        //        })
+        //    },
+        //    //messages: {
+        //    //    noResults: "", results: ""
+        //    //},
+        //    select: function (event, ui) {
+        //        var text = ui.item.label
+        //        const myArray = text.split(",");
+
+        //        $('#CountryOfBirthCode').val(myArray[0]);
+        //        $('#CountryOfBirthName').val(myArray[1]);
+        //        $('#CountryOfBirth').val(myArray[2]);
+
+               
+        //    }
+        //});
+        //$("#EyesCode").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: "/Home/GetEyeCode",
+        //            type: "POST",
+        //            dataType: "json",
+        //            data: { Prefix: request.term },
+        //            success: function (data) {
+        //                response($.map(data, function (CountryList) {
+        //                    return { label: CountryList.CountryList, value: CountryList };
+        //                }))
+        //            }
+        //        })
+        //    },
+        //    //messages: {
+        //    //    noResults: "", results: ""
+        //    //},
+        //    select: function (event, ui) {
+        //        var text = ui.item.label
+        //        const myArray = text.split(",");
+
+        //        $('#EyesCode').val(myArray[0]);
+        //        $('#EyesName').val(myArray[1]);
+        //        $('#Eyes').val(myArray[2]);
+
+               
+        //    }
+        //});
+
+        $(document).ready(function () {
+            $("#CountryOfApplication").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#CountryOfBirth").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#Eyes").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#OccupationCode").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#SexD").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#StatusD").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+
         });
     });
 

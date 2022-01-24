@@ -65,10 +65,10 @@
                                 <thead>
                                     <tr>
                                         <th style="display:none;">Person ID</th>
-                                        @*<th>Personname</th>
                                         <th>First Name</th>
                                         <th>Last Name</th>
-                                        <th style="display:none;">Organization</th>
+                                        <th>Email</th>
+                                        @*<th style="display:none;">Organization</th>
                                         <th style="display:none;">Title</th>
                                         <th style="display:none;">Address1</th>
                                         <th style="display:none;">Address2</th>
@@ -88,10 +88,10 @@
                                     {
                                         <tr>
                                             <td style="display:none;">@Person.PersonIDNumber</td>
-                                            @*<td>@Person</td>
                                             <td>@Person.FirstName</td>
                                             <td>@Person.LastName</td>
-                                            <td style="display:none;">@Person.Organization</td>
+                                            <td>@Person.EMail</td>
+                                            @*<td style="display:none;">@Person.Organization</td>
                                             <td style="display:none;">@Person.Title</td>
                                             <td style="display:none;">@Person.Address1</td>
                                             <td style="display:none;">@Person.Address2</td>
@@ -156,7 +156,7 @@
         $("#CDeletePerson").attr("disabled", false);
         var currentRow = $(this).closest("tr");
         $("#DeletePersonID").val(currentRow.find("td:eq(0)").text());
-        //alert($("#DeleteDeviceInfoID").val());
+        //alert($("#DeletePersonID").val());
     });
 
     $("#CDeletePerson").on("click", function () {
