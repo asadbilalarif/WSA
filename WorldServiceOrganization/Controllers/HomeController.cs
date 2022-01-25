@@ -1020,7 +1020,7 @@ namespace WorldServiceOrganization.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreatePerson(tblPerson Person, HttpPostedFileBase Image, HttpPostedFileBase SigImage)
+        public ActionResult CreatePerson(tblPerson Person, HttpPostedFileBase Image, HttpPostedFileBase SigImage, HttpPostedFileBase CertificationFile)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             tblPerson Data = new tblPerson();
@@ -1039,18 +1039,19 @@ namespace WorldServiceOrganization.Controllers
                         }
 
                         string path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(Image.FileName));
-
                         Image.SaveAs(path);
                         path = Path.Combine("\\Uploading", Path.GetFileName(Image.FileName));
-
                         Data.Photo = path;
 
                         path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(SigImage.FileName));
-
                         SigImage.SaveAs(path);
-                        path = Path.Combine("\\Uploading", Path.GetFileName(SigImage.FileName));
+                        path = Path.Combine("\\Uploading", Path.GetFileName(SigImage.FileName));Data.SignaturePath = path;
 
-                        Data.SignaturePath = path;
+                        path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(CertificationFile.FileName));
+                        CertificationFile.SaveAs(path);
+                        path = Path.Combine("\\Uploading", Path.GetFileName(CertificationFile.FileName));
+                        Data.Certification = path;
+
 
                         Data.EntryDate = DateTime.Now;
                         Data.isActive = true;
@@ -1097,7 +1098,7 @@ namespace WorldServiceOrganization.Controllers
 
 
                         string path = null;
-                        if (Person.SignaturePath != null)
+                        if (SigImage != null)
                         {
                             path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(SigImage.FileName));
 
@@ -1107,7 +1108,7 @@ namespace WorldServiceOrganization.Controllers
                             Data.SignaturePath = path;
                         }
 
-                        if (Person.Photo != null)
+                        if (Image != null)
                         {
                             path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(Image.FileName));
 
@@ -1115,6 +1116,14 @@ namespace WorldServiceOrganization.Controllers
                             path = Path.Combine("\\Uploading", Path.GetFileName(Image.FileName));
 
                             Data.Photo = path;
+                        }
+
+                        if (CertificationFile != null)
+                        {
+                            path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(CertificationFile.FileName));
+                            CertificationFile.SaveAs(path);
+                            path = Path.Combine("\\Uploading", Path.GetFileName(CertificationFile.FileName));
+                            Data.Certification = path;
                         }
 
                         Data.LastModifiedDate = DateTime.Now;
@@ -1161,6 +1170,25 @@ namespace WorldServiceOrganization.Controllers
             }
 
             return Json(0);
+        }
+
+
+        public ActionResult CreateChild(int? id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblPerson Person = null;
+            ViewBag.Child = DB.tblChilds.Where(x => x.isActive == true).ToList();
+            ViewBag.Sex= DB.tblSex.Where(x => x.isActive == true).ToList();
+            if (id != null && id != 0)
+            {
+
+                Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
+                return View(User);
+            }
+            else
+            {
+                return View(Person);
+            }
         }
 
 

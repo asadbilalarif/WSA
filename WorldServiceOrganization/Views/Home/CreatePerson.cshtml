@@ -8,7 +8,10 @@
     string Fax = "";
     string EMail = "";
     string Website = "";
-    DateTime DateOfBirth=DateTime.Now;
+    string ImgSig = "/Content/assets/img/user-image.png";
+    string ImgImg = "/Content/assets/img/user-image.png";
+    string ImgCer = "/Content/assets/img/user-image.png";
+    string DateOfBirth= DateTime.Now.ToString("yyyy-MM-dd");
     int? BirthDay = 0;
     int? BirthMonth = 0;
     int? BirthYear = 0;
@@ -30,50 +33,37 @@
     {
 
 
-         PersonId = Model.PersonIDNumber;
-         FirstName = Model.FatherName;
-         LastName = Model.LastName;
-         CityOfBirth = Model.CityOfBirth;
-         Phone = Model.Phone;
-         Fax = Model.Fax;
-         EMail = Model.EMail;
-         Website = Model.Website;
-         DateOfBirth = DateTime.Now;
-         BirthDay = Model.BirthDay;
-         BirthMonth = Model.BirthMonth;
-         BirthYear = Model.BirthYear;
-         Marks = Model.Marks;
-         FatherName = Model.FatherName;
-         MotherName = Model.MotherName;
-         WSANumber = Model.WSANumber;
-         Comments = Model.Comments;
-         Height = Model.Height;
-         CountryApplicationId = Model.CountryOfApplication;
-         CountryBirthId = Model.CountryOfBirth;
-         EyeId = Model.Eyes;
-         OccupationId = Model.OccupationCode;
-         SexId = Model.Sex;
-         StatusId = Model.Status;
-         TransactionCount = Model.TransactionCount;
+        PersonId = Model.PersonIDNumber;
+        FirstName = Model.FatherName;
+        LastName = Model.LastName;
+        CityOfBirth = Model.CityOfBirth;
+        Phone = Model.Phone;
+        Fax = Model.Fax;
+        EMail = Model.EMail;
+        Website = Model.Website;
+        ImgSig = Model.SignaturePath;
+        ImgImg = Model.Photo;
+        ImgCer = Model.Certification;
+        DateOfBirth = Model.DateOfBirth.ToString("yyyy-MM-dd");
+        BirthDay = Model.BirthDay;
+        BirthMonth = Model.BirthMonth;
+        BirthYear = Model.BirthYear;
+        Marks = Model.Marks;
+        FatherName = Model.FatherName;
+        MotherName = Model.MotherName;
+        WSANumber = Model.WSANumber;
+        Comments = Model.Comments;
+        Height = Model.Height;
+        CountryApplicationId = Model.CountryOfApplication;
+        CountryBirthId = Model.CountryOfBirth;
+        EyeId = Model.Eyes;
+        OccupationId = Model.OccupationCode;
+        SexId = Model.Sex;
+        StatusId = Model.Status;
+        TransactionCount = Model.TransactionCount;
 
-        //PersonId = Model.PersonId;
-        //Personname = Model.Personname;
-        //FirstName = Model.FirstName;
-        //LastName = Model.LastName;
-        //Organization = Model.Organization;
-        //Title = Model.Title;
-        //Address1 = Model.Address1;
-        //Address2 = Model.Address2;
-        //City = Model.City;
-        //StateProvince = Model.StateProvince;
-        //Country = Model.Country;
-        //PostalCode = Model.PostalCode;
-        //PhoneNumber = Model.PhoneNumber;
-        //Email = Model.Email;
-        //RoleId = Model.RoleId;
+
     }
-
-
 
 }
 
@@ -220,7 +210,7 @@
                             <div class="form-group">
                                 <label>DateOfBirth</label>
                                 &nbsp;&nbsp;
-                                <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" value="@DateOfBirth.ToString("DD-MM-YY")" required>
+                                <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" value="@DateOfBirth" required>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -360,30 +350,46 @@
                                 <input type="text" class="form-control" id="TransactionCount" name="TransactionCount" value="@TransactionCount" required>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>SignaturePath</label>&nbsp;&nbsp;
                                 @if (Model != null)
                                 {
-                                    <input type="file" class="form-control" name="SigImage" id="SignaturePath" accept="image/*" value="Upload Photo">
+                                    <input type="file" class="form-control" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Photo">
                                 }
                                 else
                                 {
-                                    <input type="file" class="form-control" name="SigImage" id="SignaturePath" accept="image/*" value="Upload Photo" required>
+                                    <input type="file" class="form-control" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Photo" required>
                                 }
+                                <img id="ImgSig" style="width:130px;" src="@ImgSig" alt="your image" />
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>Photo</label>
                                 @if (Model != null)
                                 {
-                                    <input type="file" class="form-control" name="Image" id="Photo" accept="image/*" value="Upload Photo">
+                                    <input type="file" class="form-control" name="Image" id="Image" accept="image/*" onchange="showPreviewImg(event);" value="Upload Photo">
                                 }
                                 else
                                 {
-                                    <input type="file" class="form-control" name="Image" id="Photo" accept="image/*" value="Upload Photo" required>
+                                    <input type="file" class="form-control" name="Image" id="Image" accept="image/*" onchange="showPreviewImg(event);" value="Upload Photo" required>
                                 }
+                                <img id="ImgImg" style="width:130px;" src="@ImgImg" alt="your image" />
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Certification</label>
+                                @if (Model != null)
+                                {
+                                    <input type="file" class="form-control" name="CertificationFile" id="CertificationFile" accept="image/*" onchange="showPreviewCer(event);" value="Upload Photo">
+                                }
+                                else
+                                {
+                                    <input type="file" class="form-control" name="CertificationFile" id="CertificationFile" accept="image/*" onchange="showPreviewCer(event);" value="Upload Photo" required>
+                                }
+                                <img id="ImgCer" style="width:130px;" src="@ImgCer" alt="your image" />
                             </div>
                         </div>
                     </div>
@@ -471,6 +477,31 @@
 
 
 <script>
+
+    function showPreviewImg(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("ImgImg");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+    function showPreviewSig(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("ImgSig");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+    function showPreviewCer(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("ImgCer");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
 
     $(document).ready(function () {
 

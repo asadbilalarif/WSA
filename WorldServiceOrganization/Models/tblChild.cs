@@ -12,18 +12,13 @@ namespace WorldServiceOrganization.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblSex
+    public partial class tblChild
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblSex()
-        {
-            this.tblPersons = new HashSet<tblPerson>();
-            this.tblChilds = new HashSet<tblChild>();
-        }
-    
-        public int SexId { get; set; }
-        public string Code { get; set; }
+        public int ChildId { get; set; }
         public string Name { get; set; }
+        public Nullable<System.DateTime> BirthDate { get; set; }
+        public Nullable<int> SexId { get; set; }
+        public Nullable<int> PersonIDNumber { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> EditBy { get; set; }
@@ -32,9 +27,7 @@ namespace WorldServiceOrganization.Models
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Nullable<bool> isActive { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPerson> tblPersons { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblChild> tblChilds { get; set; }
+        public virtual tblPerson tblPerson { get; set; }
+        public virtual tblSex tblSex { get; set; }
     }
 }

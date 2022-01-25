@@ -157,6 +157,9 @@
     <Compile Include="Models\tblAccessLevel.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblChild.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblCountry.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -389,6 +392,7 @@
     <Content Include="Views\Account\ChangeForgetPassword.cshtml" />
     <Content Include="Views\Home\Persons.cshtml" />
     <Content Include="Views\Home\CreatePerson.cshtml" />
+    <Content Include="Views\Home\CreateChild.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

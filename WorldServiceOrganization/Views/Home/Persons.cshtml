@@ -105,6 +105,7 @@
                                             <td>@Person.tblRole.Role</td>*@
 
                                             <td>
+                                                <a href="@Url.Action("CreateChild","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="CreateChild"><i class="fa fa-edit" ></i></a>
                                                 <a href="@Url.Action("CreatePerson","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditPerson"></i></a>
                                                 <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#PersonDelete"><i class="fa fa-trash" id="DeletePerson"></i> </a>
                                             </td>
@@ -194,6 +195,193 @@
 
 
 
+
+    $("body").on("click", "#CreateChildB", function () {
+        var error = $("#Childerror");
+        error.text('');
+        $("#EHeading").hide();
+        $("#CHeading").show();
+        $("#ChildID").val('');
+        $("#ECode").val('');
+        $("#EName").val('');
+        $("#EPrice").val('');
+        $("#ChildTypeD").val(0).change();
+        $("#LblChildCodeError").fadeOut();
+        $("#LblChildNameError").fadeOut();
+        $("#LblChildTypeError").fadeOut();
+        $("#LblPriceError").fadeOut();
+    });
+
+    $("body").on("click", "#EditChild", function () {
+        var error = $("#Childerror");
+        error.text('');
+        var currentRow = $(this).closest("tr");
+        $("#EHeading").show();
+        $("#CHeading").hide();
+        $("#ChildID").val(currentRow.find("td:eq(0)").text());
+        $("#ECode").val(currentRow.find("td:eq(1)").text());
+        $("#EName").val(currentRow.find("td:eq(2)").text());
+        $("#ChildTypeD").val(currentRow.find("td:eq(3)").text()).change();
+        $("#EPrice").val(currentRow.find("td:eq(5)").text());
+
+        $("#LblChildCodeError").fadeOut();
+        $("#LblChildNameError").fadeOut();
+        $("#LblChildTypeError").fadeOut();
+        $("#LblPriceError").fadeOut();
+
+        //alert($("#ChildID").val());
+    });
+
+
+    $("#ChildSubmit").on("click", function () {
+
+        var error = $("#Childerror");
+        if ($("#ECode").val() != "" && $("#EName").val() != "" && $("#ChildTypeD").val() != "0" && $("#EPrice").val() != "") {
+            error.text('');
+            $("#ChildSubmit").attr("disabled", true);
+            $("#Childloading").show();
+            var CheckMessage = 0;
+
+            var UId = $("#ChildID").val();
+            var UCode = $("#ECode").val();
+            var UName = $("#EName").val();
+            var UPrice = $("#EPrice").val();
+            var UChildTypeId = $("#ChildTypeD").val();
+
+
+            if (UId != 0) {
+                var model = {
+                    ChildId: UId,
+                    Name: UName,
+                    Code: UCode,
+                    Price: UPrice,
+                    ChildTypeId: UChildTypeId,
+                };
+                CheckMessage = 1;
+            }
+            else {
+                var model = {
+
+                    Name: UName,
+                    Code: UCode,
+                    Price: UPrice,
+                    ChildTypeId: UChildTypeId,
+                };
+                CheckMessage = 2;
+            }
+
+
+
+            console.log(model);
+
+
+            //Send the JSON array to Controller using AJAX.
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/CreateChild",
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    if (r == 1) {
+                        error.text('  *Child Already Exsist!!!  ');
+                        $("#ChildSubmit").attr("disabled", false);
+                        error.css('color', 'red');
+                        $("#Childloading").hide();
+                    }
+                    else {
+                        if (CheckMessage == 1) {
+                            var url = window.location.origin;
+                            url += '/Home/Childs?Update=Child has been update successfully.';
+                            window.location.href = url;
+                        }
+                        else {
+                            var url = window.location.origin;
+                            url += '/Home/Childs?Success=Child has been add successfully.';
+                            window.location.href = url;
+                        }
+                    }
+                }
+            });
+
+        }
+        else {
+            error.text('');
+            error.css('color', 'red');
+            if ($("#ECode").val() == "") {
+
+                //text = error.text('  *Name must be filled!!!  ');
+                $("#LblChildCodeError").fadeIn();
+
+            }
+            else {
+                $("#LblChildCodeError").fadeOut();
+            }
+            if ($("#EName").val() == "") {
+                //text = error.append('  *Email must be filled!!!  ');
+                $("#LblChildNameError").fadeIn();
+            }
+            else {
+                $("#LblChildNameError").fadeOut();
+            }
+            if ($("#EPrice").val() == "") {
+                //text = error.append('  *Email must be filled!!!  ');
+                $("#LblPriceError").fadeIn();
+            }
+            else {
+                $("#LblPriceError").fadeOut();
+            }
+            if ($("#ChildTypeD").val() == "0") {
+                //text = error.append('  *Email must be filled!!!  ');
+                $("#LblChildTypeError").fadeIn();
+            }
+            else {
+                $("#LblChildTypeError").fadeOut();
+            }
+
+        }
+
+    });
+
+
+    $("body").on("click", "#DeleteChild", function () {
+        var currentRow = $(this).closest("tr");
+        $("#DeleteChildID").val(currentRow.find("td:eq(0)").text());
+        //alert($("#DeleteChildID").val());
+    });
+
+    $("#CDeleteChild").on("click", function () {
+
+
+        $("#CDeleteChild").attr("disabled", true);
+
+        var ID = $("#DeleteChildID").val();
+
+        var model = {
+            ChildId: ID,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Home/DeleteChild",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                var url = window.location.origin;
+                url += '/Home/Childs?Delete=Child has been delete successfully.';
+                window.location.href = url;
+            }
+        });
+
+    });
+
+
+
     $(document).ready(function () {
 
 
@@ -220,8 +408,14 @@
         }
 
         $('#PersonTable').DataTable({
+            destroy:true,
             dom: 'Bfrtip',
+            lengthMenu: [
+                [10, 25, 50, -1],
+                ['10 rows', '25 rows', '50 rows', 'Show all']
+            ],
             buttons: [
+            'pageLength',
                 {
 
 
@@ -231,14 +425,13 @@
                     }
                 }
             ],
-            searching: true, paging: true
         });
 
 
 
         $(".nav li a").removeClass("active");
         $('#Persons').addClass('active');
-        $('#UM').addClass('active subdrop');
+        $('#Per').addClass('active subdrop');
 
     });
 

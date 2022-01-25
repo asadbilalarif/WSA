@@ -272,6 +272,29 @@ CREATE TABLE tblPerson (
     REFERENCES tblUsers(UserId),
 );
 
+
+CREATE TABLE tblChild (
+    ChildId int IDENTITY(1,1) NOT NULL,
+	Name nvarchar(50),
+    BirthDate datetime ,
+    SexId int,
+    PersonIDNumber int,
+	CreatedBy int,
+	CreatedDate datetime,
+    EditBy int,
+    EditDate datetime,
+    DeletedBy int,
+    DeletedDate datetime,
+	isActive bit,
+    PRIMARY KEY (ChildId),
+    CONSTRAINT FK_PersonChild FOREIGN KEY (PersonIDNumber)
+    REFERENCES tblPerson(PersonIDNumber),
+	CONSTRAINT FK_SexChild FOREIGN KEY (SexId)
+    REFERENCES tblSex(SexId)
+);
+
+
+
 INSERT INTO tblMenu (Name, ControllerName, ActionName,isParent,ParentId,isActive,ElementId)
 VALUES ('User Management', '', '',0,0,1,''),('Users', 'UserManagement', 'Users',1,1,1,'Users'),('Roles & Permissions', 'UserManagement', 'RolesPermission',1,1,1,'Roles'),('Reference Codes', '', '',0,0,1,''),('Countries', 'Home', 'Countries',1,4,1,'Country'),('Eyes', 'Home', 'Eyes',1,4,1,'Eye'),('Occupations', 'Home', 'Occupations',1,4,1,'Occupation'),('Products', 'Home', 'Products',1,4,1,'Product'),('Product types', 'Home', 'ProductTypes',1,4,1,'ProductType'),('Status', 'Home', 'Status',1,4,1,'Status'),('Sex', 'Home', 'Sex',1,4,1,'Sex'),('Product packages', 'Home', 'Productpackages',1,4,1,'Productpackage'),('Settings', '', '',0,0,1,''),('Setting/Configuration', 'Home', 'Settings',1,14,1,'Setting');
 

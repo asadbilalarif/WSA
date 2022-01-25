@@ -38,6 +38,9 @@
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserCre" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserDel" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserEdit" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblChild" Width="1.5" PointX="16.875" PointY="6.375" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonChild" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_SexChild" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
