@@ -42,5 +42,7 @@ namespace WorldServiceOrganization.Models
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<tblPerson> tblPersons { get; set; }
         public virtual DbSet<tblChild> tblChilds { get; set; }
+        public virtual DbSet<tblAddress> tblAddresses { get; set; }
+        public virtual DbSet<tblTransaction> tblTransactions { get; set; }
     }
 }

@@ -18,6 +18,8 @@ namespace WorldServiceOrganization.Models
         public tblPerson()
         {
             this.tblChilds = new HashSet<tblChild>();
+            this.tblAddresses = new HashSet<tblAddress>();
+            this.tblTransactions = new HashSet<tblTransaction>();
         }
     
         public int PersonIDNumber { get; set; }
@@ -73,5 +75,9 @@ namespace WorldServiceOrganization.Models
         public virtual tblUser tblUser2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblChild> tblChilds { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblAddress> tblAddresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblTransaction> tblTransactions { get; set; }
     }
 }

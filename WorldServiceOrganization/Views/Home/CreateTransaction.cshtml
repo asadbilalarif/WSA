@@ -1,7 +1,7 @@
 ﻿@model  WorldServiceOrganization.Models.tblPerson
 
 @{
-    ViewData["Title"] = "Childs";
+    ViewData["Title"] = "Transactions";
     string Succ = @ViewBag.Success;
     string Update = @ViewBag.Update;
     string Delete = @ViewBag.Delete;
@@ -41,9 +41,9 @@
                             <div class="container-fluid">
                                 <div class="row align-items-center">
                                     <div class="col-md-6 col-6">
-                                        <h5 class="breadcrumb-title">Child LIST</h5>
+                                        <h5 class="breadcrumb-title">Transaction LIST</h5>
                                     </div>
-                                    <div class="col-md-6 col-6 text-right" id="CreateChildB">
+                                    <div class="col-md-6 col-6 text-right" id="CreateTransactionB">
                                         <a href="@Url.Action("Persons","Home")" class="btn btn-primary " style="float:right;"><i class="fa fa-list"></i> Back</a>
                                     </div>
                                 </div>
@@ -100,48 +100,94 @@
 
                     </div>
 
-                    @using (Html.BeginForm("CreateChild", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("CreateTransaction", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {@Html.AntiForgeryToken()
                     <span style="color:red;">@ViewBag.Error</span>
                     <div class="row">
-
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
-                                <input style="display:none;" type="text" class="form-control" id="PersonIDNumber" name="PersonIDNumber" value="@Model.PersonIDNumber" >
-                                <input style="display:none;" type="text" class="form-control" id="ChildId" name="ChildId" value="" >
-                                <label>Name</label>
-                                <input type="text" class="form-control" id="ChildName" name="Name" value="" required>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Gender</label>
-                                <select class="form-control" id="SexId" name="SexId" required>
-                                    <option value="0">Select Gender</option>
-                                    @foreach (WorldServiceOrganization.Models.tblSex Sex in @ViewBag.Sex)
+                                <label>Product</label>
+                                <select class="form-control" id="ProductD" name="ProductIDNumber" required>
+                                    <option value="0">Select Product</option>
+                                    @foreach (WorldServiceOrganization.Models.tblProduct Product in @ViewBag.Product)
                                     {
-                                        if (Sex.SexId == SexId)
-                                        {
-                                            <option value="@Sex.SexId" selected>@Sex.Code / @Sex.Name</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@Sex.SexId">@Sex.Code / @Sex.Name</option>
-                                        }
+                                        <option value="@Product.ProductId">@Product.Code / @Product.Name</option>
                                     }
                                 </select>
 
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label>Birth Date</label><br />
-                                <input type="date" class="form-control" id="BirthDate" name="BirthDate" value="" required>
 
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input style="display:none;" type="text" class="form-control" id="PersonIDNumber" name="PersonIDNumber" value="@Model.PersonIDNumber">
+                                <input style="display:none;" type="text" class="form-control" id="TransactionIDNumber" name="TransactionIDNumber" value="">
+                                <label>ID Code</label>
+                                <input type="text" class="form-control" id="IDCode" name="IDCode" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Cost</label>
+                                <input type="text" class="form-control" id="Cost" name="Cost" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Quantity</label><br />
+                                <input type="number" class="form-control" id="Quantity" name="Quantity" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Total Cost</label>
+                                <input type="text" class="form-control" id="TotalCost" name="" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Problems</label><br />
+                                <input type="text" class="form-control" id="Problems" name="Problems" value="" required>
 
                             </div>
                         </div>
-                        <div class="col-md-3">
+
+
+                        
+
+                    </div>
+
+
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Application Date</label>
+                                <input type="date" class="form-control" id="ApplicationDate" name="ApplicationDate" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Issue Date</label><br />
+                                <input type="date" class="form-control" id="IssueDate" name="IssueDate" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Sent Date</label><br />
+                                <input type="date" class="form-control" id="SentDate" name="SentDate" value="" required>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Return Date</label><br />
+                                <input type="date" class="form-control" id="ReturnDate" name="ReturnDate" value="" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label></label>
                                 <button class="btn btn-primary" type="submit" style="margin-top:10%;">Save Changes</button>
@@ -153,37 +199,43 @@
 
                     <div class="table-responsive">
                         <div class="table-responsive">
-                            <table class="cell-border table table-hover table-center  mb-0 " id="ChildTable">
+                            <table class="cell-border table table-hover table-center  mb-0 " id="TransactionTable">
                                 <thead>
                                     <tr>
                                         <th style="display:none;">Person ID</th>
-                                        <th style="display:none;">Child ID</th>
-                                        <th>Name</th>
-                                        <th>Birth Date</th>
-                                        <th>Gender</th>
-                                        <th style="display:none;">Gender</th>
+                                        <th style="display:none;">Transaction ID</th>
+                                        <th>Care Of</th>
+                                        <th>Transaction</th>
+                                        <th>City</th>
+                                        <th>State</th>
+                                        <th>Zip</th>
+                                        <th>Country</th>
+                                        <th style="display:none;">Country</th>
 
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (WorldServiceOrganization.Models.tblChild Child in ViewBag.Child)
-                                    {
-                                        <tr>
-                                            <td style="display:none;">@Child.PersonIDNumber</td>
-                                            <td style="display:none;">@Child.ChildId</td>
-                                            <td>@Child.Name</td>
-                                            <td>@Child.BirthDate.ToString("yyyy-MM-dd")</td>
-                                            <td>@Child.tblSex.Name</td>
-                                            <td style="display:none;">@Child.SexId</td>
-                                           
+                                    @*@foreach (WorldServiceOrganization.Models.tblTransaction Transaction in ViewBag.Transaction)
+                        {
+                            <tr>
+                                <td style="display:none;">@Transaction.PersonIDNumber</td>
+                                <td style="display:none;">@Transaction.TransactionIDNumber</td>
+                                <td>@Transaction.CareOf</td>
+                                <td>@Transaction.Transaction1</td>
+                                <td>@Transaction.City</td>
+                                <td>@Transaction.State</td>
+                                <td>@Transaction.PostalCode</td>
+                                <td>@Transaction.tblCountry.Name</td>
+                                <td style="display:none;">@Transaction.Country</td>
 
-                                            <td>
-                                                <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditChild"></i></a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#ChildDelete"><i class="fa fa-trash" id="DeleteChild"></i> </a>
-                                            </td>
-                                        </tr>
-                                    }
+
+                                <td>
+                                    <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditTransaction"></i></a>
+                                    <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#TransactionDelete"><i class="fa fa-trash" id="DeleteTransaction"></i> </a>
+                                </td>
+                            </tr>
+                        }*@
                                 </tbody>
                             </table>
                         </div>
@@ -196,18 +248,18 @@
 </div>
 
 
-<div id="ChildDelete" class="modal fade delete-modal" role="dialog">
+<div id="TransactionDelete" class="modal fade delete-modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
-                <input class="form-control" type="text" id="DeleteChildID" style="display:none;">
+                <input class="form-control" type="text" id="DeleteTransactionID" style="display:none;">
                 <input class="form-control" type="text" id="DeletePersonID" style="display:none;">
                 <h5>Are you sure want to delete this device Information?</h5>
                 <div class="m-t-20">
                     <p id="ConfigDerror" style="color:red;"></p>
                     <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
-                    <input type="button" class="btn btn-danger" id="CDeleteChild" value="Delete">
+                    <input type="button" class="btn btn-danger" id="CDeleteTransaction" value="Delete">
                 </div>
             </div>
         </div>
@@ -225,36 +277,39 @@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
 
-    $("body").on("click", "#EditChild", function () {
-        
+    $("body").on("click", "#EditTransaction", function () {
+
         var currentRow = $(this).closest("tr");
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
-        $("#ChildId").val(currentRow.find("td:eq(1)").text());
-        $("#ChildName").val(currentRow.find("td:eq(2)").text());
-        $("#BirthDate").val(currentRow.find("td:eq(3)").text());
-        $("#SexId").val(currentRow.find("td:eq(5)").text()).change();
+        $("#TransactionId").val(currentRow.find("td:eq(1)").text());
+        $("#CareOf").val(currentRow.find("td:eq(2)").text());
+        $("#Transaction1").val(currentRow.find("td:eq(3)").text());
+        $("#City").val(currentRow.find("td:eq(4)").text());
+        $("#State").val(currentRow.find("td:eq(5)").text());
+        $("#PostalCode").val(currentRow.find("td:eq(6)").text());
+        $("#CountryD").val(currentRow.find("td:eq(8)").text()).change();
         //alert($("#DeleteDeviceInfoID").val());
     });
 
 
-    $("body").on("click", "#DeleteChild", function () {
+    $("body").on("click", "#DeleteTransaction", function () {
         $("#ConfigDerror").text("");
-        $("#CDeleteChild").attr("disabled", false);
+        $("#CDeleteTransaction").attr("disabled", false);
         var currentRow = $(this).closest("tr");
         $("#DeletePersonID").val(currentRow.find("td:eq(0)").text());
-        $("#DeleteChildID").val(currentRow.find("td:eq(1)").text());
-        //alert($("#DeleteChildID").val());
+        $("#DeleteTransactionID").val(currentRow.find("td:eq(1)").text());
+        //alert($("#DeleteTransactionID").val());
     });
 
-    $("#CDeleteChild").on("click", function () {
+    $("#CDeleteTransaction").on("click", function () {
 
 
-        $("#CDeleteChild").attr("disabled", true);
+        $("#CDeleteTransaction").attr("disabled", true);
 
-        var ID = $("#DeleteChildID").val();
+        var ID = $("#DeleteTransactionID").val();
 
         var model = {
-            ChildId: ID,
+            TransactionId: ID,
         };
         console.log(model);
 
@@ -262,7 +317,7 @@
         //Send the JSON array to Controller using AJAX.
         $.ajax({
             type: "POST",
-            url: "/Home/DeleteChild",
+            url: "/Home/DeleteTransaction",
             data: JSON.stringify(model),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -270,7 +325,7 @@
                 if (r == 1) {
 
                     var url = window.location.origin;
-                    url += '/Home/CreateChild?Delete=Child has been delete successfully.&id='+$("#DeletePersonID").val()+'';
+                    url += '/Home/CreateTransaction?Delete=Transaction has been delete successfully.&id='+$("#DeletePersonID").val()+'';
                     window.location.href = url;
                 }
                 //alert(r + " record(s) inserted.");
@@ -306,7 +361,7 @@
             $('#DeleteAlert').fadeOut();
         }
 
-        $('#ChildTable').DataTable({
+        $('#TransactionTable').DataTable({
             dom: 'Bfrtip',
             buttons: [
                 'pageLength',
@@ -325,7 +380,7 @@
 
 
         $(".nav li a").removeClass("active");
-        $('#Childs').addClass('active');
+        $('#Transactions').addClass('active');
         $('#UM').addClass('active subdrop');
 
     });

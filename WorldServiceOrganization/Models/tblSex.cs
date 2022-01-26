@@ -19,6 +19,7 @@ namespace WorldServiceOrganization.Models
         {
             this.tblPersons = new HashSet<tblPerson>();
             this.tblChilds = new HashSet<tblChild>();
+            this.tblAddresses = new HashSet<tblAddress>();
         }
     
         public int SexId { get; set; }
@@ -36,5 +37,7 @@ namespace WorldServiceOrganization.Models
         public virtual ICollection<tblPerson> tblPersons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblChild> tblChilds { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblAddress> tblAddresses { get; set; }
     }
 }

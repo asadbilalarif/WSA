@@ -157,6 +157,9 @@
     <Compile Include="Models\tblAccessLevel.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblAddress.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblChild.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -197,6 +200,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblStatus.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblTransaction.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblUser.cs">
@@ -393,6 +399,8 @@
     <Content Include="Views\Home\Persons.cshtml" />
     <Content Include="Views\Home\CreatePerson.cshtml" />
     <Content Include="Views\Home\CreateChild.cshtml" />
+    <Content Include="Views\Home\CreateAddress.cshtml" />
+    <Content Include="Views\Home\CreateTransaction.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

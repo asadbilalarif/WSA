@@ -12,12 +12,18 @@ namespace WorldServiceOrganization.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblChild
+    public partial class tblTransaction
     {
-        public int ChildId { get; set; }
-        public string Name { get; set; }
-        public System.DateTime BirthDate { get; set; }
-        public Nullable<int> SexId { get; set; }
+        public int TransactionIDNumber { get; set; }
+        public string IDCode { get; set; }
+        public Nullable<double> Cost { get; set; }
+        public Nullable<int> Quantity { get; set; }
+        public System.DateTime ApplicationDate { get; set; }
+        public System.DateTime IssueDate { get; set; }
+        public System.DateTime SentDate { get; set; }
+        public System.DateTime ReturnDate { get; set; }
+        public string Problems { get; set; }
+        public Nullable<int> ProductIDNumber { get; set; }
         public Nullable<int> PersonIDNumber { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
@@ -28,6 +34,6 @@ namespace WorldServiceOrganization.Models
         public Nullable<bool> isActive { get; set; }
     
         public virtual tblPerson tblPerson { get; set; }
-        public virtual tblSex tblSex { get; set; }
+        public virtual tblProduct tblProduct { get; set; }
     }
 }

@@ -294,6 +294,62 @@ CREATE TABLE tblChild (
 );
 
 
+CREATE TABLE tblAddress (
+    AddressIDNumber int IDENTITY(1,1) NOT NULL,
+	CareOf nvarchar(max),
+	Address1 nvarchar(max),
+	Address2 nvarchar(max),
+	City nvarchar(max),
+	State nvarchar(max),
+	PostalCode nvarchar(max),
+    Country int ,
+    AddressVector int ,
+    Label bit ,
+    SexId int,
+    PersonIDNumber int,
+	CreatedBy int,
+	CreatedDate datetime,
+    EditBy int,
+    EditDate datetime,
+    DeletedBy int,
+    DeletedDate datetime,
+	isActive bit,
+    PRIMARY KEY (AddressIDNumber),
+    CONSTRAINT FK_PersonAddress FOREIGN KEY (PersonIDNumber)
+    REFERENCES tblPerson(PersonIDNumber),
+	CONSTRAINT FK_SexAddress FOREIGN KEY (SexId)
+    REFERENCES tblSex(SexId),
+	CONSTRAINT FK_CountryAddress FOREIGN KEY (Country)
+    REFERENCES tblCountry(CountryId)
+);
+
+
+CREATE TABLE tblTransaction (
+    TransactionIDNumber int IDENTITY(1,1) NOT NULL,
+	IDCode nvarchar(max),
+	Cost float,
+	Quantity int,
+	ApplicationDate datetime,
+	IssueDate datetime,
+	SentDate datetime,
+	ReturnDate datetime,
+	Problems nvarchar(max),
+    ProductIDNumber int ,
+    PersonIDNumber int,
+	CreatedBy int,
+	CreatedDate datetime,
+    EditBy int,
+    EditDate datetime,
+    DeletedBy int,
+    DeletedDate datetime,
+	isActive bit,
+    PRIMARY KEY (TransactionIDNumber),
+    CONSTRAINT FK_PersonTransaction FOREIGN KEY (PersonIDNumber)
+    REFERENCES tblPerson(PersonIDNumber),
+	CONSTRAINT FK_ProductTransaction FOREIGN KEY (ProductIDNumber)
+    REFERENCES tblProduct(ProductId)
+);
+
 
 INSERT INTO tblMenu (Name, ControllerName, ActionName,isParent,ParentId,isActive,ElementId)
 VALUES ('User Management', '', '',0,0,1,''),('Users', 'UserManagement', 'Users',1,1,1,'Users'),('Roles & Permissions', 'UserManagement', 'RolesPermission',1,1,1,'Roles'),('Reference Codes', '', '',0,0,1,''),('Countries', 'Home', 'Countries',1,4,1,'Country'),('Eyes', 'Home', 'Eyes',1,4,1,'Eye'),('Occupations', 'Home', 'Occupations',1,4,1,'Occupation'),('Products', 'Home', 'Products',1,4,1,'Product'),('Product types', 'Home', 'ProductTypes',1,4,1,'ProductType'),('Status', 'Home', 'Status',1,4,1,'Status'),('Sex', 'Home', 'Sex',1,4,1,'Sex'),('Product packages', 'Home', 'Productpackages',1,4,1,'Productpackage'),('Settings', '', '',0,0,1,''),('Setting/Configuration', 'Home', 'Settings',1,14,1,'Setting');

@@ -105,6 +105,8 @@
                                             <td>@Person.tblRole.Role</td>*@
 
                                             <td>
+                                                <a href="@Url.Action("CreateTransaction","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="CreateChild"><i class="fa fa-edit" ></i></a>
+                                                <a href="@Url.Action("CreateAddress","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="CreateChild"><i class="fa fa-edit" ></i></a>
                                                 <a href="@Url.Action("CreateChild","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="CreateChild"><i class="fa fa-edit" ></i></a>
                                                 <a href="@Url.Action("CreatePerson","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditPerson"></i></a>
                                                 <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#PersonDelete"><i class="fa fa-trash" id="DeletePerson"></i> </a>

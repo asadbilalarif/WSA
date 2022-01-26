@@ -1173,23 +1173,234 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult CreateChild(int? id)
+        public ActionResult CreateChild(int? id, string Success, string Update, string Delete)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             tblPerson Person = null;
-            ViewBag.Child = DB.tblChilds.Where(x => x.isActive == true).ToList();
+            ViewBag.Child = DB.tblChilds.Where(x => x.isActive == true && x.PersonIDNumber==id).ToList();
+
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
+
             ViewBag.Sex= DB.tblSex.Where(x => x.isActive == true).ToList();
             if (id != null && id != 0)
             {
 
                 Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
-                return View(User);
+                return View(Person);
             }
             else
             {
                 return View(Person);
             }
         }
+
+
+        [HttpPost]
+        public ActionResult CreateChild(tblChild Child)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            tblChild Data = new tblChild();
+            try
+            {
+                if (Child.ChildId == 0)
+                {
+                    if (DB.tblChilds.Select(r => r).Where(x => x.Name == Child.Name&&x.PersonIDNumber==Child.PersonIDNumber).FirstOrDefault() == null)
+                    {
+                        Data = Child;
+                        
+                        Data.CreatedDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.tblChilds.Add(Data);
+                        DB.SaveChanges();
+                        return RedirectToAction("CreateChild", new { Success = "Child has been add successfully." });
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Child Already Exsist!!!";
+                    }
+                }
+                else
+                {
+                    var check = DB.tblChilds.Select(r => r).Where(x => x.Name == Child.Name && x.PersonIDNumber == Child.PersonIDNumber).FirstOrDefault();
+                    if (check == null || check.ChildId == Child.ChildId)
+                    {
+                        
+                        Data = DB.tblChilds.Select(r => r).Where(x => x.ChildId == Child.ChildId).FirstOrDefault();
+                        Data.PersonIDNumber = Child.PersonIDNumber;
+                        Data.Name = Child.Name;
+                        Data.SexId = Child.SexId;
+                        Data.BirthDate = Child.BirthDate;
+                        Data.EditDate = DateTime.Now;
+                        DB.Entry(Data);
+                        DB.SaveChanges();
+                        return RedirectToAction("CreateChild", new { Update = "Child has been Update successfully." });
+                    }
+                    else
+                    {
+                        ViewBag.Error = "Child Already Exsist!!!";
+                    }
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return RedirectToAction("CreateChild");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteChild(int ChildId)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblChild Data = new tblChild();
+
+            try
+            {
+                Data = DB.tblChilds.Select(r => r).Where(x => x.ChildId == ChildId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+                return Json(1);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
+        }
+
+
+        public ActionResult CreateAddress(int? id, string Success, string Update, string Delete)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblPerson Person = null;
+            ViewBag.Address = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
+
+            ViewBag.Country = DB.tblCountries.Where(x => x.isActive == true).ToList();
+            if (id != null && id != 0)
+            {
+
+                Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
+                return View(Person);
+            }
+            else
+            {
+                return View(Person);
+            }
+        }
+
+
+        [HttpPost]
+        public ActionResult CreateAddress(tblAddress Address)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            tblAddress Data = new tblAddress();
+            try
+            {
+                if (Address.AddressIDNumber == 0)
+                {
+                        Data = Address;
+
+                        Data.CreatedDate = DateTime.Now;
+                        Data.isActive = true;
+                        DB.tblAddresses.Add(Data);
+                        DB.SaveChanges();
+                        return RedirectToAction("CreateAddress", new { Success = "Address has been add successfully." });
+                   
+                }
+                else
+                {
+
+                        Data = DB.tblAddresses.Select(r => r).Where(x => x.AddressIDNumber == Address.AddressIDNumber).FirstOrDefault();
+                        Data.PersonIDNumber = Address.PersonIDNumber;
+                        Data.Address1 = Address.Address1;
+                        Data.CareOf = Address.CareOf;
+                        Data.City = Address.City;
+                        Data.State = Address.State;
+                        Data.PostalCode = Address.PostalCode;
+                        Data.Country = Address.Country;
+                        Data.EditDate = DateTime.Now;
+                        DB.Entry(Data);
+                        DB.SaveChanges();
+                        return RedirectToAction("CreateAddress", new { Update = "Address has been Update successfully." });
+                   
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return RedirectToAction("CreateAddress");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteAddress(int AddressId)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblAddress Data = new tblAddress();
+
+            try
+            {
+                Data = DB.tblAddresses.Select(r => r).Where(x => x.AddressIDNumber == AddressId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+                return Json(1);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
+        }
+
+        public ActionResult CreateTransaction(int? id, string Success, string Update, string Delete)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblPerson Person = null;
+            ViewBag.Transaction = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+
+            ViewBag.Success = Success;
+            ViewBag.Update = Update;
+            ViewBag.Delete = Delete;
+
+            ViewBag.Product = DB.tblProducts.Where(x => x.isActive == true).ToList();
+            if (id != null && id != 0)
+            {
+
+                Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
+                return View(Person);
+            }
+            else
+            {
+                return View(Person);
+            }
+        }
+
 
 
         [HttpPost]

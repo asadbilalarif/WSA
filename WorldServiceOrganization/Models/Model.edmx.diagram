@@ -41,6 +41,13 @@
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblChild" Width="1.5" PointX="16.875" PointY="6.375" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonChild" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_SexChild" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblAddress" Width="1.5" PointX="19.875" PointY="5.25" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_CountryAddress" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonAddress" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_SexAddress" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblTransaction" Width="1.5" PointX="16.875" PointY="0.75" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonTransaction" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_ProductTransaction" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

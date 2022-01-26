@@ -50,7 +50,7 @@ namespace WorldServiceOrganization.Controllers
             {
                 if(User.UserId==0)
                 {
-                    if (DB.tblUsers.Select(r => r).Where(x => x.username == User.username || x.Email == User.Email).FirstOrDefault() == null)
+                    if (DB.tblUsers.Select(r => r).Where(x => x.username == User.username && x.Email == User.Email).FirstOrDefault() == null)
                     {
                         Data = User;
                         //Foreign = DB.tblRoles.Where(x => x.RoleId == User.RoleId).FirstOrDefault();
@@ -71,7 +71,7 @@ namespace WorldServiceOrganization.Controllers
                 }
                 else
                 {
-                    var check = DB.tblUsers.Select(r => r).Where(x => x.username == User.username || x.Email == User.Email).FirstOrDefault();
+                    var check = DB.tblUsers.Select(r => r).Where(x => x.username == User.username && x.Email == User.Email).FirstOrDefault();
                     if (check==null||check.UserId==User.UserId)
                     {
                         //Foreign = DB.tblRoles.Where(x => x.RoleId == User.RoleId).FirstOrDefault();
@@ -98,6 +98,7 @@ namespace WorldServiceOrganization.Controllers
                             EncDataBtye = System.Text.Encoding.UTF8.GetBytes(User.PIN);
                             Data.PIN = Convert.ToBase64String(EncDataBtye);
                         }
+                        Data.EditDate = DateTime.Now;
                         DB.Entry(Data);
                         DB.SaveChanges();
                         return RedirectToAction("Users", new { Update = "User has been Update successfully." });

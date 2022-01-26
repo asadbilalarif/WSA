@@ -12,11 +12,18 @@ namespace WorldServiceOrganization.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblChild
+    public partial class tblAddress
     {
-        public int ChildId { get; set; }
-        public string Name { get; set; }
-        public System.DateTime BirthDate { get; set; }
+        public int AddressIDNumber { get; set; }
+        public string CareOf { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string PostalCode { get; set; }
+        public Nullable<int> Country { get; set; }
+        public Nullable<int> AddressVector { get; set; }
+        public Nullable<bool> Label { get; set; }
         public Nullable<int> SexId { get; set; }
         public Nullable<int> PersonIDNumber { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -27,6 +34,7 @@ namespace WorldServiceOrganization.Models
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Nullable<bool> isActive { get; set; }
     
+        public virtual tblCountry tblCountry { get; set; }
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblSex tblSex { get; set; }
     }

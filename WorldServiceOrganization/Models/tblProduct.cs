@@ -18,6 +18,7 @@ namespace WorldServiceOrganization.Models
         public tblProduct()
         {
             this.tblProductPackageProducts = new HashSet<tblProductPackageProduct>();
+            this.tblTransactions = new HashSet<tblTransaction>();
         }
     
         public int ProductId { get; set; }
@@ -36,5 +37,7 @@ namespace WorldServiceOrganization.Models
         public virtual tblProductType tblProductType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblProductPackageProduct> tblProductPackageProducts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblTransaction> tblTransactions { get; set; }
     }
 }
