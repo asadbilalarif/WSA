@@ -6,7 +6,7 @@
     string Update = @ViewBag.Update;
     string Delete = @ViewBag.Delete;
 
-    int? SexId = 0;
+    string CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
 
 }
 
@@ -109,7 +109,7 @@
                                 <label>Product</label>
                                 <select class="form-control" id="ProductD" name="ProductIDNumber" required>
                                     <option value="0">Select Product</option>
-                                    @foreach (WorldServiceOrganization.Models.tblProduct Product in @ViewBag.Product)
+                                    @foreach (WorldServiceOrganization.Models.ProductUnionPackage_Result Product in @ViewBag.Product)
                                     {
                                         <option value="@Product.ProductId">@Product.Code / @Product.Name</option>
                                     }
@@ -151,10 +151,6 @@
 
                             </div>
                         </div>
-
-
-                        
-
                     </div>
 
 
@@ -195,6 +191,26 @@
                         </div>
 
                     </div>
+
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Date of Entry</label>
+                                <input type="text" class="form-control" id="CreatedDate"  value="@CreatedDate" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Date Changed</label><br />
+                                <input type="text" class="form-control" id="EditDate" value=""  readonly>
+                            </div>
+                        </div>
+                        
+
+                        
+
+                    </div>
                 }
 
                     <div class="table-responsive">
@@ -204,38 +220,48 @@
                                     <tr>
                                         <th style="display:none;">Person ID</th>
                                         <th style="display:none;">Transaction ID</th>
-                                        <th>Care Of</th>
-                                        <th>Transaction</th>
-                                        <th>City</th>
-                                        <th>State</th>
-                                        <th>Zip</th>
-                                        <th>Country</th>
-                                        <th style="display:none;">Country</th>
+                                        <th>Product</th>
+                                        <th style="display:none;">Product</th>
+                                        <th>ID Code</th>
+                                        <th>Cost</th>
+                                        <th>Qty</th>
+                                        <th>Problems</th>
+                                        <th>Application Date</th>
+                                        <th>Issue Date</th>
+                                        <th>Sent Date</th>
+                                        <th>Return Date</th>
+                                        <th style="display:none;">Create Date</th>
+                                        <th style="display:none;">Edit Date</th>
 
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @*@foreach (WorldServiceOrganization.Models.tblTransaction Transaction in ViewBag.Transaction)
-                        {
-                            <tr>
-                                <td style="display:none;">@Transaction.PersonIDNumber</td>
-                                <td style="display:none;">@Transaction.TransactionIDNumber</td>
-                                <td>@Transaction.CareOf</td>
-                                <td>@Transaction.Transaction1</td>
-                                <td>@Transaction.City</td>
-                                <td>@Transaction.State</td>
-                                <td>@Transaction.PostalCode</td>
-                                <td>@Transaction.tblCountry.Name</td>
-                                <td style="display:none;">@Transaction.Country</td>
+                                    @foreach (WorldServiceOrganization.Models.tblTransaction Transaction in ViewBag.Transaction)
+                                    {
+                                        <tr>
+                                            <td style="display:none;">@Transaction.PersonIDNumber</td>
+                                            <td style="display:none;">@Transaction.TransactionIDNumber</td>
+                                            <td>@Transaction.tblProduct.Name</td>
+                                            <td style="display:none;">@Transaction.ProductIDNumber</td>
+                                            <td>@Transaction.IDCode</td>
+                                            <td>@Transaction.Cost</td>
+                                            <td>@Transaction.Quantity</td>
+                                            <td>@Transaction.Problems</td>
+                                            <td >@Transaction.ApplicationDate.ToString("yyyy-MM-dd")</td>
+                                            <td >@Transaction.IssueDate.ToString("yyyy-MM-dd")</td>
+                                            <td >@Transaction.SentDate.ToString("yyyy-MM-dd")</td>
+                                            <td >@Transaction.ReturnDate.ToString("yyyy-MM-dd")</td>
+                                            <td style="display:none;">@Transaction.CreatedDate.ToString("yyyy-MM-dd")</td>
+                                            <td style="display:none;">@Transaction.EditDate.ToString("yyyy-MM-dd")</td>
 
 
-                                <td>
-                                    <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditTransaction"></i></a>
-                                    <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#TransactionDelete"><i class="fa fa-trash" id="DeleteTransaction"></i> </a>
-                                </td>
-                            </tr>
-                        }*@
+                                            <td>
+                                                <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditTransaction"></i></a>
+                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#TransactionDelete"><i class="fa fa-trash" id="DeleteTransaction"></i> </a>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -277,17 +303,53 @@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
 
+    
+
+
+    $("body").on("change", "#Cost", function () {
+        var Qty = $("#Quantity");
+        var Cost = $("#Cost");
+        var Res = 0;
+        if (Qty.val() != 0) {
+            Res = Cost.val() * Qty.val();
+            $("#TotalCost").val(Res);
+        }
+        else {
+            $("#TotalCost").val(Cost.val());
+        }
+    });
+
+    $("body").on("change", "#Quantity", function () {
+        var Qty = $("#Quantity");
+        var Cost = $("#Cost");
+        var Res = 0;
+        if (Cost.val() != 0) {
+            Res = Cost.val() * Qty.val();
+            $("#TotalCost").val(Res);
+        }
+        else {
+            $("#TotalCost").val(Qty.val());
+        }
+    });
+
+
     $("body").on("click", "#EditTransaction", function () {
 
         var currentRow = $(this).closest("tr");
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
-        $("#TransactionId").val(currentRow.find("td:eq(1)").text());
-        $("#CareOf").val(currentRow.find("td:eq(2)").text());
-        $("#Transaction1").val(currentRow.find("td:eq(3)").text());
-        $("#City").val(currentRow.find("td:eq(4)").text());
-        $("#State").val(currentRow.find("td:eq(5)").text());
-        $("#PostalCode").val(currentRow.find("td:eq(6)").text());
-        $("#CountryD").val(currentRow.find("td:eq(8)").text()).change();
+        $("#TransactionIDNumber").val(currentRow.find("td:eq(1)").text());
+        $("#ProductD").val(currentRow.find("td:eq(3)").text()).change();
+        $("#IDCode").val(currentRow.find("td:eq(4)").text());
+        $("#Cost").val(currentRow.find("td:eq(5)").text());
+        $("#Quantity").val(currentRow.find("td:eq(6)").text());
+        $("#Problems").val(currentRow.find("td:eq(7)").text());
+        $("#ApplicationDate").val(currentRow.find("td:eq(8)").text());
+        $("#IssueDate").val(currentRow.find("td:eq(9)").text());
+        $("#SentDate").val(currentRow.find("td:eq(10)").text());
+        $("#ReturnDate").val(currentRow.find("td:eq(11)").text());
+        $("#CreatedDate").val(currentRow.find("td:eq(12)").text());
+        $("#EditDate").val(currentRow.find("td:eq(13)").text());
+        $("#TotalCost").val($("#Quantity").val() * $("#Cost").val());
         //alert($("#DeleteDeviceInfoID").val());
     });
 
@@ -337,7 +399,10 @@
 
 
     $(document).ready(function () {
-
+        $("ProductD").on("change", function () {
+            var id = $(this).attr("id");
+            alert(id);
+        });
 
         if ("@Succ"!="") {
             $('#SuccessAlert').fadeIn();
@@ -366,8 +431,6 @@
             buttons: [
                 'pageLength',
                 {
-
-
                     extend: 'excel',
                     exportOptions: {
                         columns: [ 1, 2,3,4,5,6,7,8,9,10,11,12,13,14]

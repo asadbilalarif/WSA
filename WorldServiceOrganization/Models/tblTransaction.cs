@@ -26,9 +26,9 @@ namespace WorldServiceOrganization.Models
         public Nullable<int> ProductIDNumber { get; set; }
         public Nullable<int> PersonIDNumber { get; set; }
         public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public System.DateTime CreatedDate { get; set; }
         public Nullable<int> EditBy { get; set; }
-        public Nullable<System.DateTime> EditDate { get; set; }
+        public System.DateTime EditDate { get; set; }
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Nullable<bool> isActive { get; set; }

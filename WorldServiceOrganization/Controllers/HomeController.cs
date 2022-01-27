@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.IO;
 using System.Linq;
@@ -1335,6 +1336,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.State = Address.State;
                         Data.PostalCode = Address.PostalCode;
                         Data.Country = Address.Country;
+                        Data.Label = Address.Label;
                         Data.EditDate = DateTime.Now;
                         DB.Entry(Data);
                         DB.SaveChanges();
@@ -1388,7 +1390,26 @@ namespace WorldServiceOrganization.Controllers
             ViewBag.Update = Update;
             ViewBag.Delete = Delete;
 
-            ViewBag.Product = DB.tblProducts.Where(x => x.isActive == true).ToList();
+            ViewBag.Product = DB.ProductUnionPackage().ToList();
+            //var ProductPackage = DB.tblProductPackages.Where(x => x.isActive == true).ToList();
+            //ViewBag.Product = Product.Union(ProductPackage).toList();
+            //var t = ProductPackage.Union(Product, StringComparer.OrdinalIgnoreCase).toList();
+            //        var sss =
+            //(from Product in DB.tblProducts
+            // select new 
+            // {
+            //      Product
+
+            // })
+            //.Union
+            //    (from ProductPackage in DB.tblProductPackages
+            //     select new 
+            //     {
+
+            //         ProductId= ProductPackage.ProductPackageId,
+            //         Code =ProductPackage.Code,
+            //         Name=ProductPackage.Name
+            //     });
             if (id != null && id != 0)
             {
 
@@ -1402,6 +1423,83 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
+        [HttpPost]
+        public ActionResult CreateTransaction(tblTransaction Transaction)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            tblTransaction Data = new tblTransaction();
+            try
+            {
+                if (Transaction.TransactionIDNumber == 0)
+                {
+                    Data = Transaction;
+
+                    Data.CreatedDate = DateTime.Now;
+                    Data.EditDate = DateTime.Now;
+                    Data.isActive = true;
+                    DB.tblTransactions.Add(Data);
+                    DB.SaveChanges();
+                    return RedirectToAction("CreateTransaction", new { Success = "Transaction has been add successfully." });
+
+                }
+                else
+                {
+
+                    Data = DB.tblTransactions.Select(r => r).Where(x => x.TransactionIDNumber == Transaction.TransactionIDNumber).FirstOrDefault();
+                    Data.PersonIDNumber = Transaction.PersonIDNumber;
+                    Data.ProductIDNumber = Transaction.ProductIDNumber;
+                    Data.IDCode = Transaction.IDCode;
+                    Data.Cost = Transaction.Cost;
+                    Data.Quantity = Transaction.Quantity;
+                    Data.Problems = Transaction.Problems;
+                    Data.ApplicationDate = Transaction.ApplicationDate;
+                    Data.IssueDate = Transaction.IssueDate;
+                    Data.SentDate = Transaction.SentDate;
+                    Data.ReturnDate = Transaction.ReturnDate;
+                    Data.EditDate = DateTime.Now;
+                    DB.Entry(Data);
+                    DB.SaveChanges();
+                    return RedirectToAction("CreateTransaction", new { Update = "Transaction has been Update successfully." });
+
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return RedirectToAction("CreateTransaction");
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteTransaction(int TransactionId)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            tblTransaction Data = new tblTransaction();
+
+            try
+            {
+                Data = DB.tblTransactions.Select(r => r).Where(x => x.TransactionIDNumber == TransactionId).FirstOrDefault();
+                DB.Entry(Data).State = EntityState.Deleted;
+                DB.SaveChanges();
+                return Json(1);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return Json(0);
+        }
 
         [HttpPost]
         public JsonResult GetCountryCode(string Prefix)

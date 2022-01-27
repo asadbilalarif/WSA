@@ -6,8 +6,6 @@
     string Update = @ViewBag.Update;
     string Delete = @ViewBag.Delete;
 
-    int? SexId = 0;
-
 }
 
 
@@ -103,6 +101,17 @@
                     @using (Html.BeginForm("CreateAddress", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {@Html.AntiForgeryToken()
                     <span style="color:red;">@ViewBag.Error</span>
+
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <input type="checkbox" id="Label" name="Label" value="true">
+                                <label for="Label">Label</label><br>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="row">
 
                         <div class="col-md-2">
@@ -140,7 +149,7 @@
                                     <option value="0">Select Country</option>
                                     @foreach (WorldServiceOrganization.Models.tblCountry Country in @ViewBag.Country)
                                     {
-                                            <option value="@Country.CountryId">@Country.Code / @Country.Name</option>
+                                        <option value="@Country.CountryId">@Country.Code / @Country.Name</option>
                                     }
                                 </select>
 
@@ -155,6 +164,7 @@
                         </div>
 
                     </div>
+
                 }
 
                     <div class="table-responsive">
@@ -168,9 +178,10 @@
                                         <th>Address</th>
                                         <th>City</th>
                                         <th>State</th>
-                                        <th >Zip</th>
-                                        <th >Country</th>
+                                        <th>Zip</th>
+                                        <th>Country</th>
                                         <th style="display:none;">Country</th>
+                                        <th >Label</th>
 
                                         <th>Action</th>
                                     </tr>
@@ -188,6 +199,7 @@
                                             <td>@Address.PostalCode</td>
                                             <td>@Address.tblCountry.Name</td>
                                             <td style="display:none;">@Address.Country</td>
+                                            <td >@Address.Label</td>
 
 
                                             <td>
@@ -248,7 +260,14 @@
         $("#State").val(currentRow.find("td:eq(5)").text());
         $("#PostalCode").val(currentRow.find("td:eq(6)").text());
         $("#CountryD").val(currentRow.find("td:eq(8)").text()).change();
-        //alert($("#DeleteDeviceInfoID").val());
+        //$("#Label").val(currentRow.find("td:eq(9)").text()).change();
+        if (currentRow.find("td:eq(9)").text() == "True") {
+            $("#Label").prop('checked', true);
+        }
+        else {
+            $("#Label").prop('checked', false);
+        }
+        
     });
 
 
