@@ -109,7 +109,7 @@
                                 <label>Product</label>
                                 <select class="form-control" id="ProductD" name="ProductIDNumber" required>
                                     <option value="0">Select Product</option>
-                                    @foreach (WorldServiceOrganization.Models.ProductUnionPackage_Result Product in @ViewBag.Product)
+                                    @foreach (WorldServiceOrganization.Models.tblProduct Product in @ViewBag.Product)
                                     {
                                         <option value="@Product.ProductId">@Product.Code / @Product.Name</option>
                                     }
@@ -396,13 +396,45 @@
 
     });
 
+    $("#ProductD").on("change", function () {
+        var ID = $(this).val();
 
+        var model = {
+            id: ID,
+        };
+        console.log(model);
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetProduct",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (ProductList) {
+                alert(ProductList);
+                $("#Cost").val(ProductList);
+            },
+        });
+
+    });
 
     $(document).ready(function () {
-        $("ProductD").on("change", function () {
-            var id = $(this).attr("id");
-            alert(id);
-        });
+
+
+        //$("body").on("change", "#Cost", function () {
+        //    var Qty = $("#Quantity");
+        //    var Cost = $("#Cost");
+        //    var Res = 0;
+        //    if (Qty.val() != 0) {
+        //        Res = Cost.val() * Qty.val();
+        //        $("#TotalCost").val(Res);
+        //    }
+        //    else {
+        //        $("#TotalCost").val(Cost.val());
+        //    }
+        //});
+
+        
 
         if ("@Succ"!="") {
             $('#SuccessAlert').fadeIn();

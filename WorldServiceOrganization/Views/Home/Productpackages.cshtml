@@ -1,13 +1,26 @@
-﻿@model IEnumerable<WorldServiceOrganization.Models.tblProductPackage>
+﻿@using WorldServiceOrganization.Models;
+@model  IEnumerable<WorldServiceOrganization.Models.ProductProductPackage>
 
 @{
     ViewData["Title"] = "ProductPackages";
-    string Succ = @ViewBag.Success;
-    string Update = @ViewBag.Update;
-    string Delete = @ViewBag.Delete;
+    string Succ = ViewBag.Success;
+    string Update = ViewBag.Update;
+    string Delete = ViewBag.Delete;
+
+    int ProductPackageId = 0;
+    string Code = "";
+    string Name = "";
+    if (Model != null)
+    {
+
+        ProductPackageId = Model.FirstOrDefault().ProductPackage.ProductPackageId;
+        Code = Model.FirstOrDefault().ProductPackage.Code;
+        Name = Model.FirstOrDefault().ProductPackage.Name;
+    }
+    List<tblProduct> Products = new List<tblProduct>(ViewBag.Products);
+    //int Num = 0;
+
 }
-
-
 <head>
 
     <style>
@@ -28,9 +41,6 @@
 <div class="content container-fluid">
 
     <!-- Page Header -->
-    
-
-
     <!-- /Page Header -->
 
     <div class="row">
@@ -63,35 +73,144 @@
                     <strong>Success!</strong> @ViewBag.Delete
                 </div>
                 <div class="card-body">
-                    <div class="table-responsive">
-                        <div class="table-responsive">
-                            <table class="cell-border table table-hover table-center  mb-0 " id="ProductPackageTable">
-                                <thead>
-                                    <tr>
-                                        <th style="display:none;">ProductPackage ID</th>
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (WorldServiceOrganization.Models.tblProductPackage ProductPackage in Model)
-                                    {
-                                        <tr>
-                                            <td style="display:none;">@ProductPackage.ProductPackageId</td>
-                                            <td>@ProductPackage.Code</td>
-                                            <td>@ProductPackage.Name</td>
 
-                                            <td>
-                                                <a href="@Url.Action("CreateProductPackage","Home",new {id=ProductPackage.ProductPackageId })" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditProductPackage"></i></a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#ProductPackageDelete"><i class="fa fa-trash" id="DeleteProductPackage"></i> </a>
-                                            </td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="row">
+                        <div class="col-sm-2">
+                                <div class="table-responsive">
+                                    <div class="table-responsive">
+                                        <table class="cell-border table table-hover table-center  mb-0 " id="ProductPackageTable">
+                                            <thead>
+                                                <tr>
+                                                    <th style="display:none;">ProductPackage ID</th>
+                                                    <th>Name</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (WorldServiceOrganization.Models.tblProductPackage ProductPackage in @ViewBag.ProductPackage)
+                                                {
+                                                    <tr>
+                                                        <td style="display:none;">@ProductPackage.ProductPackageId</td>
+                                                        <td><a href="@Url.Action("ProductPackages","Home",new {id=@ProductPackage.ProductPackageId})" >@ProductPackage.Name</a></td>
+
+                                                        <td>
+                                                            <a href="@Url.Action("CreateProductPackage","Home",new {id=ProductPackage.ProductPackageId })" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditProductPackage"></i></a>
+                                                            <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#ProductPackageDelete"><i class="fa fa-trash" id="DeleteProductPackage"></i> </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="col-sm-10" >
+                                <span style="color:red;">@ViewBag.Error</span>
+                                <div class="row">
+                                    @*<div class="col-md-3">
+                                        <div class="form-group">
+                                            
+                                            <label>Code</label>
+                                            <input type="text" class="form-control" name="Code" id="Code" value="@Code" required>
+                                        </div>
+                                    </div>*@
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" style="display:none;" name="ProductPackageId" id="ProductPackageId" value="@ProductPackageId" required>
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" id="Name" name="Name" value="@Name" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Product <small id="LblRoleError" style="display:none; color:red;">Product Must be selected!!!</small></label><br />
+                                            <select class="form-control" id="ProductDrop" name="ProductId" required onChange="myNewFunction(this);">
+                                                <option value="0">Select Product</option>
+                                                @foreach (WorldServiceOrganization.Models.tblProduct Product in @ViewBag.Products)
+                                                {
+                                                    if (@Product.ProductId == 1)
+                                                    {
+                                                        <option value="@Product.ProductId" selected>@Product.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Product.ProductId">@Product.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label></label>
+                                            <button class="btn btn-primary" type="submit" id="SaveChanges" style="margin-top:14%;">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <h6 class="card-title" style="background:#1b5a90; color:white;padding:9px !important">Products</h6>
+                                    </div>
+
+                                </div>
+
+                                <div class="row">
+
+                                    <div class="col-md-12">
+                                        <div class="table-responsive">
+                                            <div class="table-responsive">
+                                                <table class="cell-border table table-hover table-center  mb-0 " id="ProductPackagesTable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Code</th>
+                                                            <th>Description</th>
+                                                            <th>Cost</th>
+                                                            <th>Action</th>
+                                                            <th style="display:none;">Products</th>
+
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (Model != null)
+                                                        {
+                                                            foreach (WorldServiceOrganization.Models.ProductProductPackage productPackage in Model)
+                                                            {
+                                                                <tr>
+
+                                                                    <td><input type="text" class="form-control" value="@productPackage.Product.Code" style="border:0px !important;background-color: white !important;" readonly /></td>
+                                                                    <td><input type="text" class="form-control" value="@productPackage.Product.Name" style="border:0px !important;background-color: white !important;" readonly /></td>
+                                                                    <td><input type="text" class="form-control" value="@productPackage.Product.Price" style="border:0px !important;background-color: white !important;" readonly /></td>
+
+
+                                                                    <td>
+                                                                        <a href="#" class="text-danger font-50" title="Delete"><i class="fa fa-trash" onclick="DeleteRow(this)"></i> </a>
+                                                                    </td>
+                                                                    <td style="display:none;"><input type="text" class="form-control" value="@productPackage.Product.ProductId" id="ProductAddId" readonly="" /></td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <tr>
+
+                                                            </tr>
+                                                        }
+
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -119,7 +238,9 @@
 
 <!-- /Page Wrapper -->
 <!-- jQuery -->
-<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>
+@*<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>*@
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
 
@@ -161,184 +282,149 @@
 
     });
 
-            //$("body").on("click", "#DeleteUser", function () {
-            //    var currentRow = $(this).closest("tr");
-            //    $("#DeleteUserID").val(currentRow.find("td:eq(0)").text());
-            //    //alert($("#DeleteUserID").val());
-            //});
+    function myNewFunction(sel,ID) {
+        
+        var table = document.getElementById("ProductPackagesTable");
+        var RowCount = $("#ItemTable tr").length;
+        var row = table.insertRow(RowCount + 1);
 
-            //$("#CDeleteUser").on("click", function () {
+        
+       
 
+        var cell1 = row.insertCell(0);
+        element = CreateInputElement();
+        element.value = sel.options[sel.selectedIndex].text;
+        cell1.appendChild(element);
 
-            //    $("#CDeleteUser").attr("disabled", true);
+        var cell2 = row.insertCell(1);
+        element = document.createElement("a");
+        element.setAttribute('href', "javascript:void(0)");
+        element.className = "text-danger font-18";
+        element.title = "Remove";
+        var element2 = document.createElement("i");
+        element2.className = "fa fa-trash-o";
+        element2.setAttribute('onclick', 'DeleteRow(this)');
+        element.appendChild(element2);
+        cell2.appendChild(element);
 
-            //    var ID = $("#DeleteUserID").val();
-
-            //    var model = {
-            //        userid: ID,
-            //    };
-            //    console.log(model);
-
-
-            //    //Send the JSON array to Controller using AJAX.
-            //    $.ajax({
-            //        type: "POST",
-            //        url: "/Home/DeleteUser",
-            //        data: JSON.stringify(model),
-            //        contentType: "application/json; charset=utf-8",
-            //        dataType: "json",
-            //        success: function (r) {
-            //            //alert(r + " record(s) inserted.");
-            //            location.reload();
-            //        }
-            //    });
-
-            //});
-
-            //$("body").on("click", "#EditUser", function () {
-            //    var error = $("#Usererror");
-            //    error.text('');
-            //    var currentRow = $(this).closest("tr");
-            //    $("#EHeading").show();
-            //    $("#CHeading").hide();
-            //    $("#isEditCat").val(0);
-            //    $("#UserID").val(currentRow.find("td:eq(0)").text());
-            //    $("#UName").val(currentRow.find("td:eq(1)").text());
-            //    $("#Email").val(currentRow.find("td:eq(2)").text());
-            //    //$("#Password").val(currentRow.find("td:eq(3)").text());
-            //    $("#Role").val(currentRow.find("td:eq(5)").text()).change();
-            //    if (currentRow.find("span").text() == "Active") {
-            //        $("#UserStatus").val("true").change();
-            //    }
-            //    else {
-            //        $("#UserStatus").val("false").change();
-            //    }
-            //    //$("#UserStatus").val(currentRow.find("td:eq(5)").text()).change();
-            //    $("#LblNameError").fadeOut();
-            //    $("#LblEmailError").fadeOut();
-            //    $("#LblPasswordError").fadeOut();
-            //    $("#LblRoleError").fadeOut();
-            //    //alert($("#ID").val());
-            //});
-
-            //$("body").on("click", "#CreateUserB", function () {
-            //    var error = $("#Usererror");
-            //    error.text('');
-            //    $("#EHeading").hide();
-            //    $("#CHeading").show();
-            //    $("#UserID").val('');
-            //    $("#UName").val('');
-            //    $("#Email").val('');
-            //    $("#Password").val('');
-            //    //$("#Role").val(0).change();
-            //    $("#LblNameError").fadeOut();
-            //    $("#LblEmailError").fadeOut();
-            //    $("#LblPasswordError").fadeOut();
-            //    $("#LblRoleError").fadeOut();
-            //    $("#LblUserStatusError").fadeOut();
-
-            //});
-
-            //$("#UserSubmit").on("click", function () {
-
-            //    var error = $("#Usererror");
-            //    if ($("#UName").val() != "" && $("#Email").val() != "" && $("#Role").find(":selected").val() != 0&& $("#UserStatus").find(":selected").val() != 0) {
-            //        error.text('');
-            //        $("#UserSubmit").attr("disabled", true);
-            //        $("#Userloading").show();
+        var cell3 = row.insertCell(2);
+        var element = CreateInputElement();
+        var Clear = document.getElementById("ProductDrop");
+        element.value = Clear.value;
+        element.id = "ProductAddId";
+        cell3.appendChild(element);
+        $("#ProductAddId").hide();
+        Clear.value = 0;
+       
 
 
-            //        var UId = $("#UserID").val();
-            //        var UName = $("#UName").val();
-            //        var UEmail = $("#Email").val();
-            //        var UPassword = $("#Password").val();
-            //        var URole = $("#Role").val();
-            //        var UStatus = $("#UserStatus").val();
+        var model = {
+            id: $("#ProductAddId").val(),
+        };
+        console.log(model);
 
-            //        if (UId != 0) {
-            //            var model = {
-            //                userid: UId,
-            //                name: UName,
-            //                email: UEmail,
-            //                password: UPassword,
-            //                roleid: URole,
-            //                isactive: UStatus,
-            //            };
-            //        }
-            //        else {
-            //            var model = {
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetAllProductsss","Home")',
+            data: { id: $("#ProductAddId").val()},
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (ProductList) {
+                console.log(ProductList);
+            }
+        });
 
-            //                name: UName,
-            //                email: UEmail,
-            //                password: UPassword,
-            //                roleid: URole,
-            //                isactive: UStatus,
-            //            };
-            //        }
+        
+
+
+        //Get($("#ProductAddId").val());
+    }
+    function Get(ID) {
+
+        var model = {
+            id: ID,
+        };
+        console.log(model);
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetAllProductsss",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+           
+            success: function (ProductList) {
+                console.log(ProductList);
+            }
+        });
+    }
+
+
+    function CreateInputElement() {
+
+        var element = document.createElement("input");
+        element.readOnly = true;
+        element.type = "text";
+        element.className = "form-control";
+        element.style ="border:0px !important;background-color: white !important;"
+
+
+        return element
+    }
+
+
+    function DeleteRow(oButton) {
+        document.getElementById("ProductPackagesTable").deleteRow(oButton.parentNode.parentNode.parentNode.rowIndex);
+    }
 
 
 
-            //        console.log(model);
+    $("body").on("click", "#SaveChanges", function () {
+
+        $("#SaveChanges").attr("disabled", true);
+        //$("#loading").show();
+
+        var Heads = new Array();
+        var Head = {};
+        Head.Code = $("#Code").val();
+        Head.Name = $("#Name").val();
+        Head.ProductPackageId = $("#ProductPackageId").val();
+
+        Heads.push(Head);
+        console.log(Heads);
+
+        //Loop through the Table rows and build a JSON array.
+        var Items = new Array();
+        $("#ProductPackagesTable TBODY TR").each(function () {
+            var row = $(this);
+            var Item = {};
+            Item.Name = row.find("input").eq(0).val();
+            Item.ProductId = row.find("#ProductAddId").val();
+            Items.push(Item);
+        });
+        console.log(Items);
 
 
-            //        //Send the JSON array to Controller using AJAX.
+        var model = {
+            HeadData: Heads,
+            TailData: Items,
+        };
+        console.log(model);
 
-            //        $.ajax({
-            //            type: "POST",
-            //            url: "/Home/CreateUser",
-            //            data: JSON.stringify(model),
-            //            contentType: "application/json; charset=utf-8",
-            //            dataType: "json",
-            //            success: function (r) {
-            //                if (r.id == 1) {
-            //                    error.text('  *User Already Exsist!!!  ');
-            //                    $("#UserSubmit").attr("disabled", false);
-            //                    error.css('color', 'red');
-            //                    $("#Userloading").hide();
-            //                }
-            //                else {
-            //                    location.reload();
-            //                }
-            //            }
-            //        });
 
-            //    }
-            //    else {
-            //        error.text('');
-            //        error.css('color', 'red');
-            //        if ($("#UName").val() == "") {
-
-            //            //text = error.text('  *Name must be filled!!!  ');
-            //            $("#LblNameError").fadeIn();
-
-            //        }
-            //        else {
-            //            $("#LblNameError").fadeOut();
-            //        }
-            //        if ($("#Email").val() == "") {
-            //            //text = error.append('  *Email must be filled!!!  ');
-            //            $("#LblEmailError").fadeIn();
-            //        }
-            //        else {
-            //            $("#LblEmailError").fadeOut();
-            //        }
-            //        //if ($("#Password").val() == "") {
-            //        //    //text = error.append('  *Password must be filled!!!  ');
-            //        //    $("#LblPasswordError").fadeIn();
-            //        //}
-            //        //else {
-            //        //    $("#LblPasswordError").fadeOut();
-            //        //}
-            //        if ($("#Role").find(":selected").val() == 0) {
-            //            //text = error.append('  *Role must be filled!!!  ');
-            //            $("#LblRoleError").fadeIn();
-            //        }
-            //        else {
-            //            $("#LblRoleError").fadeOut();
-            //        }
-            //    }
-
-            //});
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Home/CreateProductPackage",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                //alert(r + " record(s) inserted.");
+                window.location.href = r.Url;
+            }
+        });
+    });
 
             $(document).ready(function () {
 
@@ -364,19 +450,19 @@
                     $('#DeleteAlert').fadeOut();
                 }
 
-                $('#ProductPackageTable').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        {
-                            extend: 'excel',
-                            exportOptions: {
-                                columns: [1, 2]
-                            }
+                //$('#ProductPackageTable').DataTable({
+                //    dom: 'Bfrtip',
+                //    buttons: [
+                //        {
+                //            extend: 'excel',
+                //            exportOptions: {
+                //                columns: [1, 2]
+                //            }
 
-                        }
-                    ],
-                    searching: true, paging: true
-                });
+                //        }
+                //    ],
+                //    searching: true, paging: true
+                //});
 
                 $(".nav li").removeClass("active");
                 $('#ProductPackages').addClass('active');

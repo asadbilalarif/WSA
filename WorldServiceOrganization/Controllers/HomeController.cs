@@ -719,11 +719,13 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult Productpackages(int? Success, string Delete)
+        public ActionResult Productpackages(int? id,int? Success, string Delete)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            List<ProductProductPackage> ProductPackage = null;
 
-            var Data = DB.tblProductPackages.Where(x => x.isActive == true).ToList();
+            
+            ViewBag.ProductPackage = DB.tblProductPackages.Where(x => x.isActive == true).ToList();
             if(Success > 0)
             {
                 ViewBag.Update = "Productpackage has been update successfully.";
@@ -734,7 +736,33 @@ namespace WorldServiceOrganization.Controllers
             }
             ViewBag.Delete = Delete;
 
-            return View(Data);
+            ViewBag.Products = DB.tblProducts.Where(x => x.isActive == true).ToList();
+            if (id != null && id != 0)
+            {
+
+                ProductPackage = (from PP in DB.tblProductPackages
+                                  join PPP in DB.tblProductPackageProducts on PP.ProductPackageId equals PPP.ProductPackageId
+                                  join P in DB.tblProducts on PPP.ProductId equals P.ProductId
+                                  where PP.ProductPackageId == id
+                                  select new ProductProductPackage
+                                  {
+                                      ProductPackage = PP,
+                                      ProductPackageProduct = PPP,
+                                      Product = P
+
+
+                                  }).ToList();
+
+
+
+                //ProductPackage = DB.tblProductPackages.Where(x => x.ProductPackageId == id).FirstOrDefault();
+
+                //ViewBag.ProductPackageProduct = DB.tblProductPackageProducts.Where(x => x.ProductPackageId == id).ToList();
+                //return View(ProductPackage);
+            }
+
+
+            return View(ProductPackage);
         }
 
         public ActionResult CreateProductPackage(int? id)
@@ -1390,26 +1418,9 @@ namespace WorldServiceOrganization.Controllers
             ViewBag.Update = Update;
             ViewBag.Delete = Delete;
 
-            ViewBag.Product = DB.ProductUnionPackage().ToList();
-            //var ProductPackage = DB.tblProductPackages.Where(x => x.isActive == true).ToList();
-            //ViewBag.Product = Product.Union(ProductPackage).toList();
-            //var t = ProductPackage.Union(Product, StringComparer.OrdinalIgnoreCase).toList();
-            //        var sss =
-            //(from Product in DB.tblProducts
-            // select new 
-            // {
-            //      Product
-
-            // })
-            //.Union
-            //    (from ProductPackage in DB.tblProductPackages
-            //     select new 
-            //     {
-
-            //         ProductId= ProductPackage.ProductPackageId,
-            //         Code =ProductPackage.Code,
-            //         Name=ProductPackage.Name
-            //     });
+            //ViewBag.Product = DB.ProductUnionPackage().ToList();
+            ViewBag.Product = DB.tblProducts.Where(x => x.isActive == true).ToList();
+            
             if (id != null && id != 0)
             {
 
@@ -1502,15 +1513,35 @@ namespace WorldServiceOrganization.Controllers
         }
 
         [HttpPost]
-        public JsonResult GetCountryCode(string Prefix)
+        public JsonResult GetProduct(int id)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
-            //Searching records from list using LINQ query  
-            
-            var CountryList = DB.tblCountries.Where(q => q.Code.StartsWith(Prefix)).Select(s => s.Code+","+s.Name+","+s.CountryId).ToList();
-            
-            return Json(CountryList, JsonRequestBehavior.AllowGet);
+            ////Searching records from list using LINQ query  
+
+            var ProductList = DB.tblProducts.Where(q => q.ProductId==id).Select(s => s.Price).FirstOrDefault();
+            return Json(ProductList, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult GetAllProduct(int id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            ////Searching records from list using LINQ query  
+
+            ViewBag.ProductList = DB.tblProducts.Where(q => q.ProductId == id).ToList();
+            return Json(ViewBag.ProductList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult GetAllProductsss(int id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            ////Searching records from list using LINQ query  
+            DB.Configuration.ProxyCreationEnabled = false;
+            ViewBag.ProductList = DB.tblProducts.Where(q => q.ProductId == id).ToList();
+            return Json(ViewBag.ProductList, JsonRequestBehavior.AllowGet);
+        }
+
 
         [HttpPost]
         public JsonResult GetEyeCode(string Prefix)
