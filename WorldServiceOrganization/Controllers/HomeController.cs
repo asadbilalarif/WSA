@@ -811,10 +811,10 @@ namespace WorldServiceOrganization.Controllers
             tblProductPackage Check = new tblProductPackage();
             List<tblProductPackageProduct> Data2 = new List<tblProductPackageProduct>();
 
-            var CheckCode = HeadData[0].Code;
+            var CheckName = HeadData[0].Name;
             var CheckProductPackageId = HeadData[0].ProductPackageId;
 
-            Check = DB.tblProductPackages.Select(r => r).Where(x => x.Code == CheckCode).FirstOrDefault();
+            Check = DB.tblProductPackages.Select(r => r).Where(x => x.Name == CheckName).FirstOrDefault();
                 int Succ = 0;
             try
             {
@@ -834,6 +834,8 @@ namespace WorldServiceOrganization.Controllers
                     else
                     {
                         ViewBag.Error = "Package Already Exist!!!";
+                        var redirectUrl1 = new UrlHelper(Request.RequestContext).Action("ProductPackages", "Home", new { Delete = ViewBag.Error });
+                        return Json(new { Url = redirectUrl1 });
                     }
 
                     Data2 = DB.tblProductPackageProducts.Select(r => r).Where(x => x.ProductPackageId == CheckProductPackageId).ToList();
@@ -857,7 +859,7 @@ namespace WorldServiceOrganization.Controllers
                         tblProductPackageProduct Data1 = new tblProductPackageProduct();
                         if (count != TailData.Count)
                         {
-                            Data1.ProductPackageId = DB.tblProductPackages.Where(x => x.Code == CheckCode).Select(r => r.ProductPackageId).FirstOrDefault();
+                            Data1.ProductPackageId = DB.tblProductPackages.Where(x => x.Name == CheckName).Select(r => r.ProductPackageId).FirstOrDefault();
                             Data1.ProductId = Item.ProductId;
                             DB.tblProductPackageProducts.Add(Data1);
                         }
@@ -886,6 +888,8 @@ namespace WorldServiceOrganization.Controllers
                     else
                     {
                         ViewBag.Error = "Package Already Exist!!!";
+                        var redirectUrl1 = new UrlHelper(Request.RequestContext).Action("ProductPackages", "Home", new { Delete = ViewBag.Error });
+                        return Json(new { Url = redirectUrl1 });
                     }
 
 
@@ -904,15 +908,11 @@ namespace WorldServiceOrganization.Controllers
                         tblProductPackageProduct Data1 = new tblProductPackageProduct();
                         if (count != TailData.Count)
                         {
-                            Data1.ProductPackageId = DB.tblProductPackages.Where(x => x.Code == CheckCode).Select(r => r.ProductPackageId).FirstOrDefault();
+                            Data1.ProductPackageId = DB.tblProductPackages.Where(x => x.Name == CheckName).Select(r => r.ProductPackageId).FirstOrDefault();
                             Data1.ProductId = Item.ProductId;
                             DB.tblProductPackageProducts.Add(Data1);
                         }
-
-
                         count++;
-
-
                     }
                     DB.SaveChanges();
                 }
@@ -1015,10 +1015,23 @@ namespace WorldServiceOrganization.Controllers
 
         
 
-        public ActionResult Persons(string Success, string Update, string Delete)
+        public ActionResult Persons(string Success, string Update, string Delete,string RecordType)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
-            var PersonList = DB.tblPersons.Where(x => x.isActive == true).ToList();
+            List<tblPerson> PersonList = new List<tblPerson>();
+            if (RecordType== "Information Only")
+            {
+                PersonList = DB.tblPersons.Where(x => x.isActive == true && x.WSANumber==0).ToList();
+            }
+            else if(RecordType== "WSA Only")
+            {
+                PersonList = DB.tblPersons.Where(x => x.isActive == true && x.WSANumber != 0).ToList();
+            }
+            else
+            {
+                PersonList = DB.tblPersons.Where(x => x.isActive == true).ToList();
+            }
+            ViewBag.RecordType = RecordType;
             ViewBag.Success = Success;
             ViewBag.Update = Update;
             ViewBag.Delete = Delete;

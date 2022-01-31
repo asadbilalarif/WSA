@@ -396,14 +396,22 @@
 
 
                     <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Print</label><br />
+                                <input type="Button" value="One Record"><br /><br />
+                                <input type="Button" value="Label"><br /><br />
+                                <input type="Button" value="Routing Slip">
+                            </div>
+                        </div>
 
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>BirthYear</label>
                                 <input type="text" class="form-control" id="BirthYear" name="BirthYear" value="@BirthYear" required>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>Sex</label>
                                 <select class="form-control" id="SexD" name="Sex" required>
@@ -423,35 +431,36 @@
 
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label>Height</label><br />
                                 <input type="text" class="form-control" id="Height" name="Height" value="@Height" required>
 
                                 @*<select class="form-control" id="Role" name="RoleId" required>
-                                        <option value="0">Select Role</option>
-                                        @foreach (WorldServiceOrganization.Models.tblRole Role in @ViewBag.Roles)
-                                        {
-                                            if (@Role.RoleId == RoleId)
-                                            {
-                                                <option value="@Role.RoleId" selected>@Role.Role</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@Role.RoleId">@Role.Role</option>
-                                            }
-                                        }
-                                    </select>*@
+                    <option value="0">Select Role</option>
+                    @foreach (WorldServiceOrganization.Models.tblRole Role in @ViewBag.Roles)
+                    {
+                        if (@Role.RoleId == RoleId)
+                        {
+                            <option value="@Role.RoleId" selected>@Role.Role</option>
+                        }
+                        else
+                        {
+                            <option value="@Role.RoleId">@Role.Role</option>
+                        }
+                    }
+                </select>*@
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-2">
                             <div class="form-group">
                                 <label></label>
-                                <button class="btn btn-primary" type="submit"  style="margin-top:10%;">Save Changes</button>
+                                <button class="btn btn-primary" type="submit" style="margin-top:10%;">Save Changes</button>
                             </div>
                         </div>
 
                     </div>
+
 
 
                 </div>

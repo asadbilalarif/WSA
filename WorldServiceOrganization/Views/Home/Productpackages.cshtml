@@ -10,7 +10,7 @@
     int ProductPackageId = 0;
     string Code = "";
     string Name = "";
-    if (Model != null)
+    if (Model != null && Model.Count()!=0)
     {
 
         ProductPackageId = Model.FirstOrDefault().ProductPackage.ProductPackageId;
@@ -293,10 +293,21 @@
 
         var cell1 = row.insertCell(0);
         element = CreateInputElement();
-        element.value = sel.options[sel.selectedIndex].text;
+        element.id = "ProductCode";
         cell1.appendChild(element);
 
-        var cell2 = row.insertCell(1);
+        var cell4 = row.insertCell(1);
+        element = CreateInputElement();
+        element.id = "ProductName";
+        element.value = sel.options[sel.selectedIndex].text;
+        cell4.appendChild(element);
+
+        var cell5 = row.insertCell(2);
+        element = CreateInputElement();
+        element.id = "ProductCost";
+        cell5.appendChild(element);
+
+        var cell2 = row.insertCell(3);
         element = document.createElement("a");
         element.setAttribute('href', "javascript:void(0)");
         element.className = "text-danger font-18";
@@ -307,7 +318,7 @@
         element.appendChild(element2);
         cell2.appendChild(element);
 
-        var cell3 = row.insertCell(2);
+        var cell3 = row.insertCell(4);
         var element = CreateInputElement();
         var Clear = document.getElementById("ProductDrop");
         element.value = Clear.value;
@@ -331,6 +342,14 @@
             dataType: "json",
             success: function (ProductList) {
                 console.log(ProductList);
+                
+                $.each(ProductList, function (i, item) {
+                    console.log(item.Name);
+                    $("#ProductCost").val(item.Price);
+                    $("#ProductCode").val(item.Code);
+                });  
+                
+                
             }
         });
 
@@ -339,25 +358,7 @@
 
         //Get($("#ProductAddId").val());
     }
-    function Get(ID) {
-
-        var model = {
-            id: ID,
-        };
-        console.log(model);
-
-        $.ajax({
-            type: "POST",
-            url: "/Home/GetAllProductsss",
-            data: JSON.stringify(model),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-           
-            success: function (ProductList) {
-                console.log(ProductList);
-            }
-        });
-    }
+    
 
 
     function CreateInputElement() {

@@ -155,7 +155,6 @@
 
                             </div>
                         </div>
-
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label></label>
@@ -164,56 +163,68 @@
                         </div>
 
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Print</label><br />
+                                <input type="Button" value="One Record">
+                                <input type="Button" value="Label">
+                                <input type="Button" value="Routing Slip">
+                                <input type="Button" value="Alpha Label">
+                            </div>
+                        </div>
+                    </div>
 
-                }
 
-                    <div class="table-responsive">
+                        }
+
                         <div class="table-responsive">
-                            <table class="cell-border table table-hover table-center  mb-0 " id="AddressTable">
-                                <thead>
-                                    <tr>
-                                        <th style="display:none;">Person ID</th>
-                                        <th style="display:none;">Address ID</th>
-                                        <th>Care Of</th>
-                                        <th>Address</th>
-                                        <th>City</th>
-                                        <th>State</th>
-                                        <th>Zip</th>
-                                        <th>Country</th>
-                                        <th style="display:none;">Country</th>
-                                        <th >Label</th>
-
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (WorldServiceOrganization.Models.tblAddress Address in ViewBag.Address)
-                                    {
+                            <div class="table-responsive">
+                                <table class="cell-border table table-hover table-center  mb-0 " id="AddressTable">
+                                    <thead>
                                         <tr>
-                                            <td style="display:none;">@Address.PersonIDNumber</td>
-                                            <td style="display:none;">@Address.AddressIDNumber</td>
-                                            <td>@Address.CareOf</td>
-                                            <td>@Address.Address1</td>
-                                            <td>@Address.City</td>
-                                            <td>@Address.State</td>
-                                            <td>@Address.PostalCode</td>
-                                            <td>@Address.tblCountry.Name</td>
-                                            <td style="display:none;">@Address.Country</td>
-                                            <td >@Address.Label</td>
+                                            <th style="display:none;">Person ID</th>
+                                            <th style="display:none;">Address ID</th>
+                                            <th>Label</th>
+                                            <th>Care Of</th>
+                                            <th>Address</th>
+                                            <th>City</th>
+                                            <th>State</th>
+                                            <th>Zip</th>
+                                            <th>Country</th>
+                                            <th style="display:none;">Country</th>
 
-
-                                            <td>
-                                                <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditAddress"></i></a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#AddressDelete"><i class="fa fa-trash" id="DeleteAddress"></i> </a>
-                                            </td>
+                                            <th>Action</th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (WorldServiceOrganization.Models.tblAddress Address in ViewBag.Address)
+                                        {
+                                            <tr>
+                                                <td style="display:none;">@Address.PersonIDNumber</td>
+                                                <td style="display:none;">@Address.AddressIDNumber</td>
+                                                <td>@Address.Label</td>
+                                                <td>@Address.CareOf</td>
+                                                <td>@Address.Address1</td>
+                                                <td>@Address.City</td>
+                                                <td>@Address.State</td>
+                                                <td>@Address.PostalCode</td>
+                                                <td>@Address.tblCountry.Name</td>
+                                                <td style="display:none;">@Address.Country</td>
+
+
+                                                <td>
+                                                    <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditAddress"></i></a>
+                                                    <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#AddressDelete"><i class="fa fa-trash" id="DeleteAddress"></i> </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 
@@ -254,19 +265,18 @@
         var currentRow = $(this).closest("tr");
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
         $("#AddressId").val(currentRow.find("td:eq(1)").text());
-        $("#CareOf").val(currentRow.find("td:eq(2)").text());
-        $("#Address1").val(currentRow.find("td:eq(3)").text());
-        $("#City").val(currentRow.find("td:eq(4)").text());
-        $("#State").val(currentRow.find("td:eq(5)").text());
-        $("#PostalCode").val(currentRow.find("td:eq(6)").text());
-        $("#CountryD").val(currentRow.find("td:eq(8)").text()).change();
-        //$("#Label").val(currentRow.find("td:eq(9)").text()).change();
-        if (currentRow.find("td:eq(9)").text() == "True") {
+        if (currentRow.find("td:eq(2)").text() == "True") {
             $("#Label").prop('checked', true);
         }
         else {
             $("#Label").prop('checked', false);
         }
+        $("#CareOf").val(currentRow.find("td:eq(3)").text());
+        $("#Address1").val(currentRow.find("td:eq(4)").text());
+        $("#City").val(currentRow.find("td:eq(5)").text());
+        $("#State").val(currentRow.find("td:eq(6)").text());
+        $("#PostalCode").val(currentRow.find("td:eq(7)").text());
+        $("#CountryD").val(currentRow.find("td:eq(9)").text()).change();
         
     });
 

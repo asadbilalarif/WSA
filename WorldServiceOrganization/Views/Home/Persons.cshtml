@@ -14,6 +14,13 @@
         .select2-container {
             width: 100% !important;
         }
+
+        tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }
+
     </style>
 
 
@@ -59,26 +66,51 @@
                     <strong>Success!</strong> @ViewBag.Delete
                 </div>
                 <div class="card-body">
+
+                    <div class="form-group">
+                        <label>Record Type</label>
+                        <select class="form-control" id="RecordType" name="RecordType" onChange="RecordType(this);">
+                            <option value="0">Select Record Type</option>
+                            @if (ViewBag.RecordType == "All")
+                            {
+                                <option value="1" selected>All</option>
+                            }
+                            else
+                            {
+                                <option value="1">All</option>
+                            }
+                            @if (ViewBag.RecordType == "WSA Only")
+                            {
+                                <option value="2" selected>WSA Only</option>
+                            }
+                            else
+                            {
+                                <option value="2">WSA Only</option>
+                            }
+                            @if (ViewBag.RecordType == "Information Only")
+                            {
+                                <option value="3" selected>Information Only</option>
+                            }
+                            else
+                            {
+                                <option value="3">Information Only</option>
+                            }
+                        </select>
+
+                    </div>
+
                     <div class="table-responsive">
                         <div class="table-responsive">
-                            <table class="cell-border table table-hover table-center  mb-0 " id="PersonTable">
+                            <table class="cell-border table table-hover table-center  mb-0 display" id="PersonTable">
                                 <thead>
                                     <tr>
                                         <th style="display:none;">Person ID</th>
-                                        <th>First Name</th>
+                                        <th>Status</th>
+                                        <th>WSA #</th>
                                         <th>Last Name</th>
-                                        <th>Email</th>
-                                        @*<th style="display:none;">Organization</th>
-                                        <th style="display:none;">Title</th>
-                                        <th style="display:none;">Address1</th>
-                                        <th style="display:none;">Address2</th>
-                                        <th style="display:none;">City</th>
-                                        <th style="display:none;">State Province</th>
-                                        <th style="display:none;">Country</th>
-                                        <th style="display:none;">Postal Code </th>
-                                        <th>Phone Number</th>
-                                        <th>Email</th>
-                                        <th>Role</th>*@
+                                        <th>First Name</th>
+                                        <th>Country</th>
+                                        <th>DOB</th>
 
                                         <th>Action</th>
                                     </tr>
@@ -88,32 +120,33 @@
                                     {
                                         <tr>
                                             <td style="display:none;">@Person.PersonIDNumber</td>
-                                            <td>@Person.FirstName</td>
+                                            <td>@Person.tblStatu.Name</td>
+                                            <td>@Person.WSANumber</td>
                                             <td>@Person.LastName</td>
-                                            <td>@Person.EMail</td>
-                                            @*<td style="display:none;">@Person.Organization</td>
-                                            <td style="display:none;">@Person.Title</td>
-                                            <td style="display:none;">@Person.Address1</td>
-                                            <td style="display:none;">@Person.Address2</td>
-                                            <td style="display:none;">@Person.City</td>
-                                            <td style="display:none;">@Person.StateProvince</td>
-                                            <td style="display:none;">@Person.Country</td>
-                                            <td style="display:none;">@Person.PostalCode</td>
-                                            <td>@Person.PhoneNumber</td>
-
-                                            <td>@Person.Email</td>
-                                            <td>@Person.tblRole.Role</td>*@
+                                            <td>@Person.FirstName</td>
+                                            <td>@Person.tblCountry.Name</td>
+                                            <td>@Person.DateOfBirth.ToString("yyyy-MM-dd")</td>
 
                                             <td>
-                                                <a href="@Url.Action("CreateTransaction","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="CreateChild"><i class="fa fa-edit" ></i></a>
-                                                <a href="@Url.Action("CreateAddress","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="CreateChild"><i class="fa fa-edit" ></i></a>
-                                                <a href="@Url.Action("CreateChild","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="CreateChild"><i class="fa fa-edit" ></i></a>
+                                                <a href="@Url.Action("CreateTransaction","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="CreateChild"><i class="fa fa-edit"></i></a>
+                                                <a href="@Url.Action("CreateAddress","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="CreateChild"><i class="fa fa-edit"></i></a>
+                                                <a href="@Url.Action("CreateChild","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="CreateChild"><i class="fa fa-edit"></i></a>
                                                 <a href="@Url.Action("CreatePerson","Home",new {id=Person.PersonIDNumber })" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditPerson"></i></a>
                                                 <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#PersonDelete"><i class="fa fa-trash" id="DeletePerson"></i> </a>
                                             </td>
                                         </tr>
                                     }
                                 </tbody>
+                                @*<tfoot>
+                                    <tr>
+                                        <th>Status</th>
+                                        <th>WSA #</th>
+                                        <th>Last Name</th>
+                                        <th>First Name</th>
+                                        <th>Country</th>
+                                        <th>DOB</th>
+                                    </tr>
+                                </tfoot>*@
                             </table>
                         </div>
                     </div>
@@ -149,9 +182,19 @@
 
 
 
+
 @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
+
+
+    function RecordType(sel)
+    {
+        var Selected = sel.options[sel.selectedIndex].text;
+        var url = window.location.origin;
+        url += '/Home/Persons?RecordType='+Selected+'';
+        window.location.href = url;
+    }
 
 
     $("body").on("click", "#DeletePerson", function () {
@@ -386,6 +429,105 @@
 
     $(document).ready(function () {
 
+        //$('#PersonTable tfoot th').each(function () {
+        //    var title = $(this).text();
+        //    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        //});
+
+
+        // Setup - add a text input to each footer cell
+        $('#PersonTable thead tr')
+            .clone(true)
+            .addClass('filters')
+            .appendTo('#PersonTable thead');
+
+        var tbl = $('#PersonTable').DataTable({
+
+            destroy:true,
+            dom: 'Bfrtip',
+            lengthMenu: [
+                [10, 25, 50, -1],
+                ['10 rows', '25 rows', '50 rows', 'Show all']
+            ],
+            buttons: [
+            'pageLength',
+                {
+
+
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [ 1, 2,3,4,5,6,7,8,9,10,11,12,13,14]
+                    }
+                }
+            ],
+
+            orderCellsTop: true,
+            fixedHeader: true,
+            initComplete: function () {
+                var api = this.api();
+
+                // For each column
+                api
+                    .columns()
+                    .eq(0)
+                    .each(function (colIdx) {
+                        // Set the header cell to contain the input element
+                        var cell = $('.filters th').eq(
+                            $(api.column(colIdx).header()).index()
+                        );
+                        var title = $(cell).text();
+                        $(cell).html('<input type="text" placeholder="' + title + '" />');
+
+                        // On every keypress in this input
+                        $(
+                            'input',
+                            $('.filters th').eq($(api.column(colIdx).header()).index())
+                        )
+                            .off('keyup change')
+                            .on('keyup change', function (e) {
+                                e.stopPropagation();
+
+                                // Get the search value
+                                $(this).attr('title', $(this).val());
+                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                var cursorPosition = this.selectionStart;
+                                // Search the column for that value
+                                api
+                                    .column(colIdx)
+                                    .search(
+                                        this.value != ''
+                                            ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                            : '',
+                                        this.value != '',
+                                        this.value == ''
+                                    )
+                                    .draw();
+
+                                $(this)
+                                    .focus()[0]
+                                    .setSelectionRange(cursorPosition, cursorPosition);
+                            });
+                    });
+            },
+            //language: {
+            //    'search': '검색' /*Empty to remove the label*/,
+            //    paginate: {
+            //        previous: '이전',
+            //        next: '다음'
+            //    },
+            //},
+
+            searching: true, paging: true, Sorting: false,
+            "lengthMenu": [[1000, 10, 25, 50, -1], [1000, 10, 25, 50, "All"]],
+            "order": [],
+            autoWidth: false,
+            columnDefs: [
+                { width: '20%', targets: 0 }
+            ],
+            fixedColumns: true
+        });
+
 
         if ("@Succ"!="") {
             $('#SuccessAlert').fadeIn();
@@ -409,27 +551,43 @@
             $('#DeleteAlert').fadeOut();
         }
 
-        $('#PersonTable').DataTable({
-            destroy:true,
-            dom: 'Bfrtip',
-            lengthMenu: [
-                [10, 25, 50, -1],
-                ['10 rows', '25 rows', '50 rows', 'Show all']
-            ],
-            buttons: [
-            'pageLength',
-                {
+       //var table = $('#PersonTable').DataTable({
+            //destroy:true,
+            //dom: 'Bfrtip',
+            //lengthMenu: [
+            //    [10, 25, 50, -1],
+            //    ['10 rows', '25 rows', '50 rows', 'Show all']
+            //],
+            //buttons: [
+            //'pageLength',
+            //    {
 
 
-                    extend: 'excel',
-                    exportOptions: {
-                        columns: [ 1, 2,3,4,5,6,7,8,9,10,11,12,13,14]
-                    }
-                }
-            ],
-        });
+            //        extend: 'excel',
+            //        exportOptions: {
+            //            columns: [ 1, 2,3,4,5,6,7,8,9,10,11,12,13,14]
+            //        }
+            //    }
+            //],
 
+            //initComplete: function () {
+            //    // Apply the search
+            //    this.api().columns().every(function () {
+            //        var that = this;
 
+            //        $('input', this.footer()).on('keyup change clear', function () {
+            //            if (that.search() !== this.value) {
+            //                that
+            //                    .search(this.value)
+            //                    .draw();
+            //            }
+            //        });
+            //    });
+            //}
+
+        //});
+
+        
 
         $(".nav li a").removeClass("active");
         $('#Persons').addClass('active');
