@@ -8,6 +8,10 @@
 
     int? SexId = 0;
 
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["DateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+
 }
 
 
@@ -173,7 +177,7 @@
                                             <td style="display:none;">@Child.PersonIDNumber</td>
                                             <td style="display:none;">@Child.ChildId</td>
                                             <td>@Child.Name</td>
-                                            <td>@Child.BirthDate.ToString("yyyy-MM-dd")</td>
+                                            <td>@Child.BirthDate.ToString(DateFormat)</td>
                                             <td>@Child.tblSex.Name</td>
                                             <td style="display:none;">@Child.SexId</td>
                                            
@@ -231,10 +235,25 @@
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
         $("#ChildId").val(currentRow.find("td:eq(1)").text());
         $("#ChildName").val(currentRow.find("td:eq(2)").text());
-        $("#BirthDate").val(currentRow.find("td:eq(3)").text());
+        var fromDate = new Date(currentRow.find("td:eq(3)").text()).toDateString();
+        $("#BirthDate").val(formatDate(fromDate));
         $("#SexId").val(currentRow.find("td:eq(5)").text()).change();
-        //alert($("#DeleteDeviceInfoID").val());
     });
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
 
 
     $("body").on("click", "#DeleteChild", function () {
@@ -319,6 +338,7 @@
                     }
                 }
             ],
+            "lengthMenu": [@Retrieves],
             searching: true, paging: true
         });
 

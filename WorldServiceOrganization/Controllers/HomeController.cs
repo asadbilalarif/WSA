@@ -1057,6 +1057,12 @@ namespace WorldServiceOrganization.Controllers
             }
             else
             {
+                ViewBag.WAS = null;
+                if(DB.tblPersons.Max(s=>s.WSANumber)!=null)
+                {
+                    ViewBag.WAS = DB.tblPersons.Max(s => s.WSANumber) + 1;
+                }
+
                 return View(Person);
             }
         }

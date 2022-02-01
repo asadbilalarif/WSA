@@ -1,71 +1,85 @@
 ﻿@model  WorldServiceOrganization.Models.tblPerson
 @{
-    int PersonId = 0;
-    string FirstName = "";
-    string LastName = "";
-    string CityOfBirth = "";
-    string Phone = "";
-    string Fax = "";
-    string EMail = "";
-    string Website = "";
-    string ImgSig = "/Content/assets/img/user-image.png";
-    string ImgImg = "/Content/assets/img/user-image.png";
-    string ImgCer = "/Content/assets/img/user-image.png";
-    string DateOfBirth= DateTime.Now.ToString("yyyy-MM-dd");
-    int? BirthDay = 0;
-    int? BirthMonth = 0;
-    int? BirthYear = 0;
-    string Marks = "";
-    string FatherName = "";
-    string MotherName = "";
-    int? WSANumber = 0;
-    string Comments = "";
-    double? Height = 0.0;
-    int? CountryApplicationId = 0;
-    int? CountryBirthId = 0;
-    int? EyeId = 0;
-    int? OccupationId = 0;
-    int? SexId = 0;
-    int? StatusId = 0;
-    int? TransactionCount = 0;
-
-    if (Model != null)
-    {
 
 
-        PersonId = Model.PersonIDNumber;
-        FirstName = Model.FatherName;
-        LastName = Model.LastName;
-        CityOfBirth = Model.CityOfBirth;
-        Phone = Model.Phone;
-        Fax = Model.Fax;
-        EMail = Model.EMail;
-        Website = Model.Website;
-        ImgSig = Model.SignaturePath;
-        ImgImg = Model.Photo;
-        ImgCer = Model.Certification;
-        DateOfBirth = Model.DateOfBirth.ToString("yyyy-MM-dd");
-        BirthDay = Model.BirthDay;
-        BirthMonth = Model.BirthMonth;
-        BirthYear = Model.BirthYear;
-        Marks = Model.Marks;
-        FatherName = Model.FatherName;
-        MotherName = Model.MotherName;
-        WSANumber = Model.WSANumber;
-        Comments = Model.Comments;
-        Height = Model.Height;
-        CountryApplicationId = Model.CountryOfApplication;
-        CountryBirthId = Model.CountryOfBirth;
-        EyeId = Model.Eyes;
-        OccupationId = Model.OccupationCode;
-        SexId = Model.Sex;
-        StatusId = Model.Status;
-        TransactionCount = Model.TransactionCount;
+                HttpCookie cookieObj = Request.Cookies["Settings"];
+                string WSA = cookieObj["WSA"];
+
+                int PersonId = 0;
+                string FirstName = "";
+                string LastName = "";
+                string CityOfBirth = "";
+                string Phone = "";
+                string Fax = "";
+                string EMail = "";
+                string Website = "";
+                string ImgSig = "/Content/assets/img/user-image.png";
+                string ImgImg = "/Content/assets/img/user-image.png";
+                string ImgCer = "/Content/assets/img/user-image.png";
+                string DateOfBirth= DateTime.Now.ToString("yyyy-MM-dd");
+                int? BirthDay = 0;
+                int? BirthMonth = 0;
+                int? BirthYear = 0;
+                string Marks = "";
+                string FatherName = "";
+                string MotherName = "";
+                int? WSANumber = 0;
+                if (ViewBag.WAS==null)
+                {
+                    WSANumber = Int16.Parse(WSA)+1;
+                }
+                else
+                {
+                    WSANumber = ViewBag.WAS;
+                }
+
+                string Comments = "";
+                double? Height = 0.0;
+                int? CountryApplicationId = 0;
+                int? CountryBirthId = 0;
+                int? EyeId = 0;
+                int? OccupationId = 0;
+                int? SexId = 0;
+                int? StatusId = 0;
+                int? TransactionCount = 0;
+
+                if (Model != null)
+                {
 
 
-    }
+                    PersonId = Model.PersonIDNumber;
+                    FirstName = Model.FatherName;
+                    LastName = Model.LastName;
+                    CityOfBirth = Model.CityOfBirth;
+                    Phone = Model.Phone;
+                    Fax = Model.Fax;
+                    EMail = Model.EMail;
+                    Website = Model.Website;
+                    ImgSig = Model.SignaturePath;
+                    ImgImg = Model.Photo;
+                    ImgCer = Model.Certification;
+                    DateOfBirth = Model.DateOfBirth.ToString("yyyy-MM-dd");
+                    BirthDay = Model.BirthDay;
+                    BirthMonth = Model.BirthMonth;
+                    BirthYear = Model.BirthYear;
+                    Marks = Model.Marks;
+                    FatherName = Model.FatherName;
+                    MotherName = Model.MotherName;
+                    WSANumber = Model.WSANumber;
+                    Comments = Model.Comments;
+                    Height = Model.Height;
+                    CountryApplicationId = Model.CountryOfApplication;
+                    CountryBirthId = Model.CountryOfBirth;
+                    EyeId = Model.Eyes;
+                    OccupationId = Model.OccupationCode;
+                    SexId = Model.Sex;
+                    StatusId = Model.Status;
+                    TransactionCount = Model.TransactionCount;
 
-}
+
+                }
+
+            }
 
 <!-- Page Wrapper -->
 <div class="content container-fluid">
@@ -86,7 +100,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-6 col-6">
                                         @if (Model == null)
-                                        {
+        {
                                             <h5 class="breadcrumb-title">Create Person</h5>
                                         }
                                         else
@@ -114,16 +128,16 @@
                                 <select class="form-control" id="CountryOfApplication" name="CountryOfApplication" required>
                                     <option value="0">Select Country</option>
                                     @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
-                                    {
-                                        if (Countries.CountryId == CountryApplicationId)
-                                        {
+    {
+        if (Countries.CountryId == CountryApplicationId)
+        {
                                             <option value="@Countries.CountryId" selected>@Countries.Code "/" @Countries.Name</option>
                                         }
-                                        else
-                                        {
+        else
+        {
                                             <option value="@Countries.CountryId" >@Countries.Code / @Countries.Name</option>
                                         }
-                                    }
+    }
                                 </select>
 
                             </div>
@@ -155,16 +169,16 @@
                                 <select class="form-control" id="CountryOfBirth" name="CountryOfBirth" required>
                                     <option value="0">Select Country</option>
                                     @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
-                                    {
-                                        if (Countries.CountryId == CountryBirthId)
-                                        {
+    {
+        if (Countries.CountryId == CountryBirthId)
+        {
                                             <option value="@Countries.CountryId" selected>@Countries.Code "/" @Countries.Name</option>
                                         }
-                                        else
-                                        {
+        else
+        {
                                             <option value="@Countries.CountryId">@Countries.Code / @Countries.Name</option>
                                         }
-                                    }
+    }
                                 </select>
                                 
                             </div>
@@ -240,16 +254,16 @@
                                     <select class="form-control" id="Eyes" name="Eyes" required>
                                         <option value="0">Select Eyes</option>
                                         @foreach (WorldServiceOrganization.Models.tblEye Eye in @ViewBag.Eye)
-                                        {
-                                            if (Eye.EyeId == EyeId)
-                                            {
+    {
+        if (Eye.EyeId == EyeId)
+        {
                                                 <option value="@Eye.EyeId" selected>@Eye.Code "/" @Eye.Name</option>
                                             }
-                                            else
-                                            {
+        else
+        {
                                                 <option value="@Eye.EyeId">@Eye.Code / @Eye.Name</option>
                                             }
-                                        }
+    }
                                     </select>
                                 </div>
 
@@ -268,16 +282,16 @@
                                 <select class="form-control" id="OccupationCode" name="OccupationCode" required>
                                     <option value="0">Select Occupation</option>
                                     @foreach (WorldServiceOrganization.Models.tblOccupation Occupation in @ViewBag.Occupation)
-                                    {
-                                        if (Occupation.OccupationId == OccupationId)
-                                        {
+    {
+        if (Occupation.OccupationId == OccupationId)
+        {
                                             <option value="@Occupation.OccupationId" selected>@Occupation.Code "/" @Occupation.Name</option>
                                         }
-                                        else
-                                        {
+        else
+        {
                                             <option value="@Occupation.OccupationId">@Occupation.Code / @Occupation.Name</option>
                                         }
-                                    }
+    }
                                 </select>
                             </div>
                         </div>
@@ -309,7 +323,7 @@
                         <div class="col-md-3">
                             <div class="form-group">
                                 <label>WSANumber</label>&nbsp;&nbsp;
-                                <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" required>
+                                <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber"  readonly required>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -328,16 +342,16 @@
                                     <select class="form-control" id="StatusD" name="Status" required>
                                         <option value="0">Select Status</option>
                                         @foreach (WorldServiceOrganization.Models.tblStatus Status in @ViewBag.Status)
-                                        {
-                                            if (Status.StatusId == StatusId)
-                                            {
+    {
+        if (Status.StatusId == StatusId)
+        {
                                                 <option value="@Status.StatusId" selected>@Status.Code "/" @Status.Name</option>
                                             }
-                                            else
-                                            {
+        else
+        {
                                                 <option value="@Status.StatusId">@Status.Code / @Status.Name</option>
                                             }
-                                        }
+    }
                                     </select>
                                 </div>
 
@@ -354,7 +368,7 @@
                             <div class="form-group">
                                 <label>SignaturePath</label>&nbsp;&nbsp;
                                 @if (Model != null)
-                                {
+    {
                                     <input type="file" class="form-control" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Photo">
                                 }
                                 else
@@ -368,7 +382,7 @@
                             <div class="form-group">
                                 <label>Photo</label>
                                 @if (Model != null)
-                                {
+    {
                                     <input type="file" class="form-control" name="Image" id="Image" accept="image/*" onchange="showPreviewImg(event);" value="Upload Photo">
                                 }
                                 else
@@ -382,7 +396,7 @@
                             <div class="form-group">
                                 <label>Certification</label>
                                 @if (Model != null)
-                                {
+    {
                                     <input type="file" class="form-control" name="CertificationFile" id="CertificationFile" accept="image/*" onchange="showPreviewCer(event);" value="Upload Photo">
                                 }
                                 else
@@ -417,16 +431,16 @@
                                 <select class="form-control" id="SexD" name="Sex" required>
                                     <option value="0">Select Sex</option>
                                     @foreach (WorldServiceOrganization.Models.tblSex Sex in @ViewBag.Sex)
-                                    {
-                                        if (Sex.SexId == SexId)
-                                        {
+    {
+        if (Sex.SexId == SexId)
+        {
                                             <option value="@Sex.SexId" selected>@Sex.Code "/" @Sex.Name</option>
                                         }
-                                        else
-                                        {
+        else
+        {
                                             <option value="@Sex.SexId">@Sex.Code / @Sex.Name</option>
                                         }
-                                    }
+    }
                                 </select>
 
                             </div>
@@ -456,6 +470,7 @@
                             <div class="form-group">
                                 <label></label>
                                 <button class="btn btn-primary" type="submit" style="margin-top:10%;">Save Changes</button>
+                                <a href="@Url.Action("CreatePerson","Home")"><input class="btn btn-primary" type="button" style="margin-top:10%;" value="Cancel"></a> 
                             </div>
                         </div>
 

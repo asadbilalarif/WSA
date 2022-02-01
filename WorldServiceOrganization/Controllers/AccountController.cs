@@ -23,7 +23,17 @@ namespace WorldServiceOrganization.Controllers
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             string pass = null;
-            
+            HttpCookie cookie = new HttpCookie("Settings");
+
+            cookie["DateFormat"] = DB.tblSettings.Select(r => r.DateFormat).FirstOrDefault();
+            cookie["WSA"] = DB.tblSettings.Select(r => r.NextWSA).FirstOrDefault();
+            cookie["Retrieves"] = DB.tblSettings.Select(r => r.NumberOfRetrieves).FirstOrDefault();
+            // This cookie will remain  for one month.
+            cookie.Expires = DateTime.Now.AddMonths(1);
+
+            // Add it to the current web response.
+            Response.Cookies.Add(cookie);
+
 
             try
             {
@@ -40,6 +50,7 @@ namespace WorldServiceOrganization.Controllers
                     
                     Session["User"] = DB.tblUsers.Select(r => r).Where(x => x.Email == Email).FirstOrDefault();
                     Session["Access"] = DB.tblAccessLevels.Select(r => r).Where(x => x.RoleId == User.RoleId).ToList();
+                    Session["Settings"] = DB.tblSettings.Select(r => r).FirstOrDefault();
 
                     FormsAuthentication.SetAuthCookie(Email, false);
 

@@ -8,6 +8,10 @@
 
     string CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
 
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["DateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+
 }
 
 
@@ -187,6 +191,7 @@
                             <div class="form-group">
                                 <label></label>
                                 <button class="btn btn-primary" type="submit" style="margin-top:10%;">Save Changes</button>
+                                <a href="@Url.Action("CreateTransaction","Home")"><input class="btn btn-primary" type="button" style="margin-top:6%;" value="Cancel"></a>
                             </div>
                         </div>
 
@@ -250,16 +255,16 @@
                                             <td style="display:none;">@Transaction.TransactionIDNumber</td>
                                             <td>@Transaction.tblProduct.Name</td>
                                             <td style="display:none;">@Transaction.ProductIDNumber</td>
-                                            <td >@Transaction.ApplicationDate.ToString("yyyy-MM-dd")</td>
-                                            <td >@Transaction.IssueDate.ToString("yyyy-MM-dd")</td>
-                                            <td >@Transaction.SentDate.ToString("yyyy-MM-dd")</td>
-                                            <td >@Transaction.ReturnDate.ToString("yyyy-MM-dd")</td>
+                                            <td >@Transaction.ApplicationDate.ToString(DateFormat)</td>
+                                            <td >@Transaction.IssueDate.ToString(DateFormat)</td>
+                                            <td >@Transaction.SentDate.ToString(DateFormat)</td>
+                                            <td >@Transaction.ReturnDate.ToString(DateFormat)</td>
                                             <td>@Transaction.IDCode</td>
                                             <td>@Transaction.Cost</td>
                                             <td>@Transaction.Quantity</td>
                                             <td>@Transaction.Problems</td>
-                                            <td style="display:none;">@Transaction.CreatedDate.ToString("yyyy-MM-dd")</td>
-                                            <td style="display:none;">@Transaction.EditDate.ToString("yyyy-MM-dd")</td>
+                                            <td style="display:none;">@Transaction.CreatedDate.ToString(DateFormat)</td>
+                                            <td style="display:none;">@Transaction.EditDate.ToString(DateFormat)</td>
 
 
                                             <td>
@@ -345,20 +350,40 @@
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
         $("#TransactionIDNumber").val(currentRow.find("td:eq(1)").text());
         $("#ProductD").val(currentRow.find("td:eq(3)").text()).change();
-        $("#ApplicationDate").val(currentRow.find("td:eq(4)").text());
-        $("#IssueDate").val(currentRow.find("td:eq(5)").text());
-        $("#SentDate").val(currentRow.find("td:eq(6)").text());
-        $("#ReturnDate").val(currentRow.find("td:eq(7)").text());
+        var fromDate = new Date(currentRow.find("td:eq(4)").text()).toDateString();
+        $("#ApplicationDate").val(formatDate(fromDate));
+        fromDate = new Date(currentRow.find("td:eq(5)").text()).toDateString();
+        $("#IssueDate").val(formatDate(fromDate));
+        fromDate = new Date(currentRow.find("td:eq(6)").text()).toDateString();
+        $("#SentDate").val(formatDate(fromDate));
+        fromDate = new Date(currentRow.find("td:eq(7)").text()).toDateString();
+        $("#ReturnDate").val(formatDate(fromDate));
         $("#IDCode").val(currentRow.find("td:eq(8)").text());
         $("#Cost").val(currentRow.find("td:eq(9)").text());
         $("#Quantity").val(currentRow.find("td:eq(10)").text());
         $("#Problems").val(currentRow.find("td:eq(11)").text());
-        $("#CreatedDate").val(currentRow.find("td:eq(12)").text());
-        $("#EditDate").val(currentRow.find("td:eq(13)").text());
+        fromDate = new Date(currentRow.find("td:eq(12)").text()).toDateString();
+        $("#CreatedDate").val(fromDate);
+        fromDate = new Date(currentRow.find("td:eq(13)").text()).toDateString();
+        $("#EditDate").val(fromDate);
         $("#TotalCost").val($("#Quantity").val() * $("#Cost").val());
         //alert($("#DeleteDeviceInfoID").val());
     });
 
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
 
     $("body").on("click", "#DeleteTransaction", function () {
         $("#ConfigDerror").text("");
@@ -417,7 +442,6 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (ProductList) {
-                alert(ProductList);
                 $("#Cost").val(ProductList);
             },
         });
@@ -475,6 +499,7 @@
                     }
                 }
             ],
+            "lengthMenu": [@Retrieves],
             searching: true, paging: true
         });
 

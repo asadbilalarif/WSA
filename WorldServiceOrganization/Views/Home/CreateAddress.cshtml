@@ -6,6 +6,10 @@
     string Update = @ViewBag.Update;
     string Delete = @ViewBag.Delete;
 
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["DateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+
 }
 
 
@@ -159,6 +163,7 @@
                             <div class="form-group">
                                 <label></label>
                                 <button class="btn btn-primary" type="submit" style="margin-top:10%;">Save Changes</button>
+                                <a href="@Url.Action("CreateAddress","Home")"><input class="btn btn-primary" type="button" style="margin-top:6%;" value="Cancel"></a>
                             </div>
                         </div>
 
@@ -203,7 +208,14 @@
                                             <tr>
                                                 <td style="display:none;">@Address.PersonIDNumber</td>
                                                 <td style="display:none;">@Address.AddressIDNumber</td>
-                                                <td>@Address.Label</td>
+                                                @if(Address.Label==true)
+                                                {
+                                                    <td><input type="checkbox" id="Label" name="Label" value="true" checked ></td>
+                                                }
+                                                else
+                                                {
+                                                    <td><input type="checkbox" id="Label" name="Label" value="false" ></td>
+                                                }
                                                 <td>@Address.CareOf</td>
                                                 <td>@Address.Address1</td>
                                                 <td>@Address.City</td>
@@ -265,7 +277,7 @@
         var currentRow = $(this).closest("tr");
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
         $("#AddressId").val(currentRow.find("td:eq(1)").text());
-        if (currentRow.find("td:eq(2)").text() == "True") {
+        if (currentRow.find("input").val() == "true") {
             $("#Label").prop('checked', true);
         }
         else {
@@ -355,14 +367,13 @@
             buttons: [
                 'pageLength',
                 {
-
-
                     extend: 'excel',
                     exportOptions: {
                         columns: [ 1, 2,3,4,5,6,7,8,9,10,11,12,13,14]
                     }
                 }
             ],
+            "lengthMenu": [@Retrieves],
             searching: true, paging: true
         });
 

@@ -5,6 +5,10 @@
     string Succ = @ViewBag.Success;
     string Update = @ViewBag.Update;
     string Delete = @ViewBag.Delete;
+
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["DateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
 }
 
 
@@ -240,6 +244,7 @@
         $('#UserTable').DataTable({
             dom: 'Bfrtip',
             buttons: [
+                'pageLength',
                 {
 
                 
@@ -249,6 +254,7 @@
                     }
                 }
             ],
+            "lengthMenu": [@Retrieves],
             searching: true, paging: true
         });
 
