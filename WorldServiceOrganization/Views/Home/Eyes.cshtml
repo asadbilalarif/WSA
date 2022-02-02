@@ -44,7 +44,7 @@
                             <div class="container-fluid">
                                 <div class="row align-items-center">
                                     <div class="col-md-6 col-6">
-                                        <h5 class="breadcrumb-title">Eyes List</h5>
+                                        <h5 class="breadcrumb-title">Eye List</h5>
                                     </div>
                                     <div class="col-md-6 col-6 text-right">
                                         <a href="@Url.Action("CreateProduct","Home")" class="btn btn-primary " data-toggle="modal" data-target="#EyeModal" style="float:right;" id="CreateEyeB"><i class="fa fa-plus"></i> Create New Eye</a>
@@ -72,37 +72,28 @@
                                         <th style="display:none;">User ID</th>
                                         <th>Code</th>
                                         <th>Name</th>
-                                        <th>Active</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (WorldServiceOrganization.Models.tblEye Eye in Model)
                                     {
-                                        <tr>
-                                            <td style="display:none;">@Eye.EyeId</td>
-                                            <td>@Eye.Code</td>
-                                            <td>@Eye.Name</td>
-                                            @if (@Eye.isActive == true)
-                                            {
-                                                <td>
-                                                    <span class="badge badge-primary">Active</span>
-                                                </td>
-                                                /**/
+                                    <tr>
+                                        <td style="display:none;">@Eye.EyeId</td>
+                                        <td>@Eye.Code</td>
+                                        <td>@Eye.Name</td>
 
-                                            }
-                                            else
-                                            {
-                                                <td>
-                                                    <span class="badge badge-danger">In-Active</span>
-                                                </td>
-                                            }
-
-                                            <td>
-                                                <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditEye" data-toggle="modal" data-target="#EyeModal"></i></a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#DeleteEyeM"><i class="fa fa-trash" id="DeleteEye"></i> </a>
-                                            </td>
-                                        </tr>
+                                        <td class="text-end">
+                                            <div class="actions">
+                                                <a href="#" id="EditEye" data-toggle="modal" data-target="#EyeModal">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <a class="text-danger" href="#" title="Delete" data-toggle="modal" data-target="#DeleteEyeM" id="DeleteEye">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -124,7 +115,7 @@
             <div class="modal-header">
                 <h4 class="modal-title" style="display:none;" id="CHeading">Create Eye</h4>
                 <h4 class="modal-title" style="display:none;" id="EHeading">Edit Eye</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+                
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -171,7 +162,7 @@
             <div class="modal-body text-center">
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
                 <input class="form-control" type="text" id="DeleteEyeID" style="display:none;">
-                <h5>Are you sure want to delete this Eye?</h5>
+                <h5>Are you sure want to delete this eye?</h5>
                 <div class="m-t-20">
                     <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
                     <input type="button" class="btn btn-danger" id="CDeleteEye" value="Delete">

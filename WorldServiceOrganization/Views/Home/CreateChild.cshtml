@@ -173,20 +173,25 @@
                                 <tbody>
                                     @foreach (WorldServiceOrganization.Models.tblChild Child in ViewBag.Child)
                                     {
-                                        <tr>
-                                            <td style="display:none;">@Child.PersonIDNumber</td>
-                                            <td style="display:none;">@Child.ChildId</td>
-                                            <td>@Child.Name</td>
-                                            <td>@Child.BirthDate.ToString(DateFormat)</td>
-                                            <td>@Child.tblSex.Name</td>
-                                            <td style="display:none;">@Child.SexId</td>
-                                           
+                                    <tr>
+                                        <td style="display:none;">@Child.PersonIDNumber</td>
+                                        <td style="display:none;">@Child.ChildId</td>
+                                        <td>@Child.Name</td>
+                                        <td>@Child.BirthDate.ToString(DateFormat)</td>
+                                        <td>@Child.tblSex.Name</td>
+                                        <td style="display:none;">@Child.SexId</td>
 
-                                            <td>
-                                                <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditChild"></i></a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#ChildDelete"><i class="fa fa-trash" id="DeleteChild"></i> </a>
-                                            </td>
-                                        </tr>
+                                        <td class="text-end">
+                                            <div class="actions">
+                                                <a href="#"  id="EditChild" class="text-black">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <a class="text-danger" href="#" data-toggle="modal" data-target="#ChildDelete" id="DeleteChild">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -207,7 +212,7 @@
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
                 <input class="form-control" type="text" id="DeleteChildID" style="display:none;">
                 <input class="form-control" type="text" id="DeletePersonID" style="display:none;">
-                <h5>Are you sure want to delete this device Information?</h5>
+                <h5>Are you sure want to delete this Child?</h5>
                 <div class="m-t-20">
                     <p id="ConfigDerror" style="color:red;"></p>
                     <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
@@ -221,8 +226,8 @@
 <!-- /Page Wrapper -->
 <!-- jQuery -->
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
+@*<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>*@
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
 
 
 @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@

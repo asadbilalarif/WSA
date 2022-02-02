@@ -74,7 +74,7 @@
                                                     }
                                                 </div>
                                                 <div class="col-md-6 col-6 text-right" id="CreateUserB">
-                                                    <a href="@Url.Action("Users","UserManagement")" class="btn btn-primary"><i class="fa fa-list"></i> Back</a>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -225,7 +225,9 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label></label>
-                                            <button class="btn btn-primary" type="submit" id="SaveChanges" style="margin-top:10%;">Save Changes</button>
+                                            <button class="btn btn-primary" type="submit" id="SaveChanges" style="margin-top:10%;">Save</button>
+                                            <a href="@Url.Action("CreateUser","UserManagement",new { id=0})"><input class="btn btn-danger" type="button" style="margin-top:10%;" value="Cancel"></a>
+                                            <a href="@Url.Action("Users","UserManagement")" class="btn btn-secondary" style="margin-top:10%;"><i class="fa fa-list"></i>List</a>
                                         </div>
                                     </div>
 
@@ -243,4 +245,5 @@
     </div>
 
 <!-- /Page Wrapper -->
-<script src="~/Theme/template/admin/assets/js/jquery-3.2.1.min.js"></script>
+@*<script src="~/Theme/template/admin/assets/js/jquery-3.2.1.min.js"></script>*@
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>

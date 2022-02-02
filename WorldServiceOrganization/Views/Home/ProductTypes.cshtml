@@ -41,10 +41,10 @@
                             <div class="container-fluid">
                                 <div class="row align-items-center">
                                     <div class="col-md-6 col-6">
-                                        <h5 class="breadcrumb-title">ProductType List</h5>
+                                        <h5 class="breadcrumb-title">Product Type List</h5>
                                     </div>
                                     <div class="col-md-6 col-6 text-right">
-                                        <a href="@Url.Action("CreateProductType","Home")" class="btn btn-primary " data-toggle="modal" data-target="#ProductTypeModal" style="float:right;" id="CreateProductTypeB"><i class="fa fa-plus"></i> Create New ProductType</a>
+                                        <a href="@Url.Action("CreateProductType","Home")" class="btn btn-primary " data-toggle="modal" data-target="#ProductTypeModal" style="float:right;" id="CreateProductTypeB"><i class="fa fa-plus"></i> Create New Product Type</a>
                                     </div>
                                 </div>
                             </div>
@@ -75,17 +75,22 @@
                                 <tbody>
                                     @foreach (WorldServiceOrganization.Models.tblProductType ProductType in Model)
                                     {
-                                        <tr>
-                                            <td style="display:none;">@ProductType.ProductTypeId</td>
-                                            <td>@ProductType.Code</td>
-                                            <td>@ProductType.Name</td>
-                                           
+                                    <tr>
+                                        <td style="display:none;">@ProductType.ProductTypeId</td>
+                                        <td>@ProductType.Code</td>
+                                        <td>@ProductType.Name</td>
 
-                                            <td>
-                                                <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditProductType" data-toggle="modal" data-target="#ProductTypeModal"></i></a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#DeleteProductTypeM"><i class="fa fa-trash" id="DeleteProductType"></i> </a>
-                                            </td>
-                                        </tr>
+                                        <td class="text-end">
+                                            <div class="actions">
+                                                <a href="#" id="EditProductType" data-toggle="modal" data-target="#ProductTypeModal" class="text-black">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <a class="text-danger" href="#" data-toggle="modal" data-target="#DeleteProductTypeM" id="DeleteProductType">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -107,7 +112,7 @@
             <div class="modal-header">
                 <h4 class="modal-title" style="display:none;" id="CHeading">Create ProductType</h4>
                 <h4 class="modal-title" style="display:none;" id="EHeading">Edit ProductType</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+                
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -154,7 +159,7 @@
             <div class="modal-body text-center">
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
                 <input class="form-control" type="text" id="DeleteProductTypeID" style="display:none;">
-                <h5>Are you sure want to delete this ProductType?</h5>
+                <h5>Are you sure want to delete this product type?</h5>
                 <div class="m-t-20">
                     <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
                     <input type="button" class="btn btn-danger" id="CDeleteProductType" value="Delete">

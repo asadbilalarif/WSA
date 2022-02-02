@@ -75,17 +75,26 @@
                                 <tbody>
                                     @foreach (WorldServiceOrganization.Models.tblStatus Status in Model)
                                     {
-                                        <tr>
-                                            <td style="display:none;">@Status.StatusId</td>
-                                            <td>@Status.Code</td>
-                                            <td>@Status.Name</td>
-                                            
+                                    <tr>
+                                        <td style="display:none;">@Status.StatusId</td>
+                                        <td>@Status.Code</td>
+                                        <td>@Status.Name</td>
 
-                                            <td>
-                                                <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditStatus" data-toggle="modal" data-target="#StatusModal"></i></a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#DeleteStatusM"><i class="fa fa-trash" id="DeleteStatus"></i> </a>
-                                            </td>
-                                        </tr>
+                                        <td class="text-end">
+                                            <div class="actions">
+                                                <a href="#" id="EditStatus" data-toggle="modal" data-target="#StatusModal" class="text-black">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <a class="text-danger" href="#" data-toggle="modal" data-target="#DeleteStatusM" id="DeleteStatus">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                        @*<td class="actions">
+                                            <a href="#" class="btn btn-warning" title="Edit"><i class="fa fa-edit" ><span> Edit</span></i></a>
+                                            <a href="#" class="text-danger" title="Delete" ><i class="fa fa-trash" id="DeleteStatus"></i> </a>
+                                        </td>*@
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -107,7 +116,7 @@
             <div class="modal-header">
                 <h4 class="modal-title" style="display:none;" id="CHeading">Create Status</h4>
                 <h4 class="modal-title" style="display:none;" id="EHeading">Edit Status</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+                
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -154,7 +163,7 @@
             <div class="modal-body text-center">
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
                 <input class="form-control" type="text" id="DeleteStatusID" style="display:none;">
-                <h5>Are you sure want to delete this Status?</h5>
+                <h5>Are you sure want to delete this status?</h5>
                 <div class="m-t-20">
                     <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
                     <input type="button" class="btn btn-danger" id="CDeleteStatus" value="Delete">

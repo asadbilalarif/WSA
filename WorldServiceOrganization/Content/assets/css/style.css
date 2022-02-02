@@ -94,7 +94,7 @@ input:-webkit-autofill:focus {
     box-shadow: none;
     color: #333;
     font-size: 15px;
-    height: 40px;
+    height: 30px;
 }
 .form-control:focus {
 	border-color: #00d0f1;
@@ -141,7 +141,7 @@ textarea.form-control {
 	float: left;
 }
 .form-group {
-	margin-bottom: 1.25rem;
+	margin-bottom: 0.5rem;
 }
 .input-group .form-control {
 	height: 40px;

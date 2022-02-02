@@ -69,37 +69,30 @@
                                         <th style="display:none;">User ID</th>
                                         <th>Code</th>
                                         <th>Name</th>
-                                        <th>Active</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (WorldServiceOrganization.Models.tblSex Sex in Model)
                                     {
-                                        <tr>
-                                            <td style="display:none;">@Sex.SexId</td>
-                                            <td>@Sex.Code</td>
-                                            <td>@Sex.Name</td>
-                                            @if (@Sex.isActive == true)
-                                            {
-                                                <td>
-                                                    <span class="badge badge-primary">Active</span>
-                                                </td>
-                                                /**/
+                                    <tr>
+                                        <td style="display:none;">@Sex.SexId</td>
+                                        <td>@Sex.Code</td>
+                                        <td>@Sex.Name</td>
 
-                                            }
-                                            else
-                                            {
-                                                <td>
-                                                    <span class="badge badge-danger">In-Active</span>
-                                                </td>
-                                            }
+                                        <td class="text-end">
+                                            <div class="actions">
+                                                <a href="#" id="EditSex" data-toggle="modal" data-target="#SexModal" class="text-black">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <a class="text-danger" href="#"  data-toggle="modal" data-target="#DeleteSexM" id="DeleteSex">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
 
-                                            <td>
-                                                <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditSex" data-toggle="modal" data-target="#SexModal"></i></a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#DeleteSexM"><i class="fa fa-trash" id="DeleteSex"></i> </a>
-                                            </td>
-                                        </tr>
+                                        
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -121,7 +114,7 @@
             <div class="modal-header">
                 <h4 class="modal-title" style="display:none;" id="CHeading">Create Sex</h4>
                 <h4 class="modal-title" style="display:none;" id="EHeading">Edit Sex</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+                
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -168,7 +161,7 @@
             <div class="modal-body text-center">
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
                 <input class="form-control" type="text" id="DeleteSexID" style="display:none;">
-                <h5>Are you sure want to delete this Sex?</h5>
+                <h5>Are you sure want to delete this sex?</h5>
                 <div class="m-t-20">
                     <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
                     <input type="button" class="btn btn-danger" id="CDeleteSex" value="Delete">

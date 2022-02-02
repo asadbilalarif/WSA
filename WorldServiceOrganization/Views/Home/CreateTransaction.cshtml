@@ -190,7 +190,7 @@
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label></label>
-                                <button class="btn btn-primary" type="submit" style="margin-top:10%;">Save Changes</button>
+                                <button class="btn btn-primary" type="submit" style="margin-top:10%;">Save</button>
                                 <a href="@Url.Action("CreateTransaction","Home")"><input class="btn btn-primary" type="button" style="margin-top:6%;" value="Cancel"></a>
                             </div>
                         </div>
@@ -250,28 +250,33 @@
                                 <tbody>
                                     @foreach (WorldServiceOrganization.Models.tblTransaction Transaction in ViewBag.Transaction)
                                     {
-                                        <tr>
-                                            <td style="display:none;">@Transaction.PersonIDNumber</td>
-                                            <td style="display:none;">@Transaction.TransactionIDNumber</td>
-                                            <td>@Transaction.tblProduct.Name</td>
-                                            <td style="display:none;">@Transaction.ProductIDNumber</td>
-                                            <td >@Transaction.ApplicationDate.ToString(DateFormat)</td>
-                                            <td >@Transaction.IssueDate.ToString(DateFormat)</td>
-                                            <td >@Transaction.SentDate.ToString(DateFormat)</td>
-                                            <td >@Transaction.ReturnDate.ToString(DateFormat)</td>
-                                            <td>@Transaction.IDCode</td>
-                                            <td>@Transaction.Cost</td>
-                                            <td>@Transaction.Quantity</td>
-                                            <td>@Transaction.Problems</td>
-                                            <td style="display:none;">@Transaction.CreatedDate.ToString(DateFormat)</td>
-                                            <td style="display:none;">@Transaction.EditDate.ToString(DateFormat)</td>
+                                    <tr>
+                                        <td style="display:none;">@Transaction.PersonIDNumber</td>
+                                        <td style="display:none;">@Transaction.TransactionIDNumber</td>
+                                        <td>@Transaction.tblProduct.Name</td>
+                                        <td style="display:none;">@Transaction.ProductIDNumber</td>
+                                        <td>@Transaction.ApplicationDate.ToString(DateFormat)</td>
+                                        <td>@Transaction.IssueDate.ToString(DateFormat)</td>
+                                        <td>@Transaction.SentDate.ToString(DateFormat)</td>
+                                        <td>@Transaction.ReturnDate.ToString(DateFormat)</td>
+                                        <td>@Transaction.IDCode</td>
+                                        <td>@Transaction.Cost</td>
+                                        <td>@Transaction.Quantity</td>
+                                        <td>@Transaction.Problems</td>
+                                        <td style="display:none;">@Transaction.CreatedDate.ToString(DateFormat)</td>
+                                        <td style="display:none;">@Transaction.EditDate.ToString(DateFormat)</td>
 
-
-                                            <td>
-                                                <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditTransaction"></i></a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#TransactionDelete"><i class="fa fa-trash" id="DeleteTransaction"></i> </a>
-                                            </td>
-                                        </tr>
+                                        <td class="text-end">
+                                            <div class="actions">
+                                                <a href="#" id="EditTransaction" class="text-black">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <a class="text-danger" href="#" data-toggle="modal" data-target="#TransactionDelete" id="DeleteTransaction">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -292,7 +297,7 @@
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
                 <input class="form-control" type="text" id="DeleteTransactionID" style="display:none;">
                 <input class="form-control" type="text" id="DeletePersonID" style="display:none;">
-                <h5>Are you sure want to delete this device Information?</h5>
+                <h5>Are you sure want to delete this transaction?</h5>
                 <div class="m-t-20">
                     <p id="ConfigDerror" style="color:red;"></p>
                     <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
@@ -306,8 +311,8 @@
 <!-- /Page Wrapper -->
 <!-- jQuery -->
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
-
+@*<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>*@
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
 
 
 @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@

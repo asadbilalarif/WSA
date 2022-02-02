@@ -52,10 +52,10 @@
                             <div class="container-fluid">
                                 <div class="row align-items-center">
                                     <div class="col-md-6 col-6">
-                                        <h5 class="breadcrumb-title">ProductPackage LIST</h5>
+                                        <h5 class="breadcrumb-title">Package List</h5>
                                     </div>
                                     <div class="col-md-6 col-6 text-right" id="CreateProductPackageB">
-                                        <a href="@Url.Action("CreateProductPackage","Home")" class="btn btn-primary " style="float:right;"><i class="fa fa-plus"></i> Create New ProductPackage</a>
+                                        @*<a href="@Url.Action("CreateProductPackage","Home")" class="btn btn-primary " style="float:right;"><i class="fa fa-plus"></i> Create New ProductPackage</a>*@
                                     </div>
                                 </div>
                             </div>
@@ -75,7 +75,7 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <div class="col-sm-2">
+                        <div class="col-md-4">
                                 <div class="table-responsive">
                                     <div class="table-responsive">
                                         <table class="cell-border table table-hover table-center  mb-0 " id="ProductPackageTable">
@@ -83,28 +83,41 @@
                                                 <tr>
                                                     <th style="display:none;">ProductPackage ID</th>
                                                     <th>Name</th>
-                                                    <th>Action</th>
+                                                    <th class="text-right">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach (WorldServiceOrganization.Models.tblProductPackage ProductPackage in @ViewBag.ProductPackage)
                                                 {
-                                                    <tr>
-                                                        <td style="display:none;">@ProductPackage.ProductPackageId</td>
-                                                        <td><a href="@Url.Action("ProductPackages","Home",new {id=@ProductPackage.ProductPackageId})" >@ProductPackage.Name</a></td>
+                                                <tr>
+                                                    <td style="display:none;">@ProductPackage.ProductPackageId</td>
+                                                    @if (ProductPackageId == ProductPackage.ProductPackageId)
+                                                    {
+                                                        <td style="background-color: #00d0f1;"><a href="@Url.Action("ProductPackages","Home",new {id=@ProductPackage.ProductPackageId})" style="color:white;">@ProductPackage.Name</a></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td><a href="@Url.Action("ProductPackages","Home",new {id=@ProductPackage.ProductPackageId})">@ProductPackage.Name</a></td>
+                                                    }
 
-                                                        <td>
-                                                            <a href="@Url.Action("CreateProductPackage","Home",new {id=ProductPackage.ProductPackageId })" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditProductPackage"></i></a>
-                                                            <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#ProductPackageDelete"><i class="fa fa-trash" id="DeleteProductPackage"></i> </a>
-                                                        </td>
-                                                    </tr>
+
+
+                                                    <td class="text-end text-right">
+                                                        <div class="actions">
+                                                            <a class="text-danger" href="#" data-toggle="modal" data-target="#ProductPackageDelete" id="DeleteProductPackage">
+                                                                <i class="fa fa-trash"></i> Delete
+                                                            </a>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
                                                 }
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                        <div class="col-sm-10" >
+                        <div class="col-sm-8" >
                                 <span style="color:red;">@ViewBag.Error</span>
                                 <div class="row">
                                     @*<div class="col-md-3">
@@ -143,7 +156,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label></label>
-                                            <button class="btn btn-primary" type="submit" id="SaveChanges" style="margin-top:14%;">Save Changes</button>
+                                            <button class="btn btn-primary" type="submit" id="SaveChanges" style="margin-top:12%;">Save</button>
                                         </div>
                                     </div>
                                 </div>
@@ -225,7 +238,7 @@
             <div class="modal-body text-center">
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
                 <input class="form-control" type="text" id="DeleteProductPackageID" style="display:none;">
-                <h5>Are you sure want to delete this device Information?</h5>
+                <h5>Are you sure want to delete this package?</h5>
                 <div class="m-t-20">
                     <p id="ConfigDerror" style="color:red;"></p>
                     <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>

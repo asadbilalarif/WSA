@@ -45,7 +45,7 @@
                             <div class="container-fluid">
                                 <div class="row align-items-center">
                                     <div class="col-md-6 col-6">
-                                        <h5 class="breadcrumb-title">USER LIST</h5>
+                                        <h5 class="breadcrumb-title">User List</h5>
                                     </div>
                                     <div class="col-md-6 col-6 text-right" id="CreateUserB">
                                         <a href="@Url.Action("CreateUser","UserManagement")" class="btn btn-primary " style="float:right;"><i class="fa fa-plus"></i> Create New User</a>
@@ -126,9 +126,15 @@
                                                 </td>
                                             }*@
 
-                                            <td>
-                                                <a href="@Url.Action("CreateUser","UserManagement",new {id=User.UserId })" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditUser"></i></a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#UserDelete"><i class="fa fa-trash" id="DeleteUser"></i> </a>
+                                            <td class="text-end">
+                                                <div class="actions">
+                                                    <a href="@Url.Action("CreateUser","UserManagement",new {id=User.UserId })" id="EditUser" class="text-black">
+                                                        <i class="fa fa-edit"></i> Edit
+                                                    </a>
+                                                    <a class="text-danger" href="#" data-toggle="modal" data-target="#UserDelete" id="DeleteUser">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </a>
+                                                </div>
                                             </td>
                                         </tr>
                                     }
@@ -150,7 +156,7 @@
             <div class="modal-body text-center">
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
                 <input class="form-control" type="text" id="DeleteUserID" style="display:none;">
-                <h5>Are you sure want to delete this device Information?</h5>
+                <h5>Are you sure want to delete this user information?</h5>
                 <div class="m-t-20">
                     <p id="ConfigDerror" style="color:red;"></p>
                     <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>

@@ -75,16 +75,23 @@
                                 <tbody>
                                     @foreach (WorldServiceOrganization.Models.tblOccupation Occupation in Model)
                                     {
-                                        <tr>
-                                            <td style="display:none;">@Occupation.OccupationId</td>
-                                            <td>@Occupation.Code</td>
-                                            <td>@Occupation.Name</td>
+                                    <tr>
+                                        <td style="display:none;">@Occupation.OccupationId</td>
+                                        <td>@Occupation.Code</td>
+                                        <td>@Occupation.Name</td>
 
-                                            <td>
-                                                <a href="#" class="text-success font-50" title="Edit"><i class="fa fa-edit" id="EditOccupation" data-toggle="modal" data-target="#OccupationModal"></i></a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#DeleteOccupationM"><i class="fa fa-trash" id="DeleteOccupation"></i> </a>
-                                            </td>
-                                        </tr>
+                                        <td class="text-end">
+                                            <div class="actions">
+                                                <a href="#" id="EditOccupation" data-toggle="modal" data-target="#OccupationModal">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <a class="text-danger" href="#" title="Delete" data-toggle="modal" data-target="#DeleteOccupationM" id="DeleteOccupation">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                        
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -106,7 +113,7 @@
             <div class="modal-header">
                 <h4 class="modal-title" style="display:none;" id="CHeading">Create Occupation</h4>
                 <h4 class="modal-title" style="display:none;" id="EHeading">Edit Occupation</h4>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close" data-original-title="" title=""><span aria-hidden="true">×</span></button>
+                
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -153,7 +160,7 @@
             <div class="modal-body text-center">
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
                 <input class="form-control" type="text" id="DeleteOccupationID" style="display:none;">
-                <h5>Are you sure want to delete this Occupation?</h5>
+                <h5>Are you sure want to delete this occupation?</h5>
                 <div class="m-t-20">
                     <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
                     <input type="button" class="btn btn-danger" id="CDeleteOccupation" value="Delete">
