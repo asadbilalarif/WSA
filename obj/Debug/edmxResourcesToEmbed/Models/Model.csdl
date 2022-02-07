@@ -1,0 +1,860 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WorldServiceOrganizationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="tblUser">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Organization" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="StateProvince" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PostalCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeteledBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <Property Name="RoleId" Type="Int32" />
+    <NavigationProperty Name="tblRole" Relationship="WorldServiceOrganizationModel.FK__tblUsers__RoleId__1367E606" FromRole="tblUser" ToRole="tblRole" />
+    <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonUserCre" FromRole="tblUser" ToRole="tblPerson" />
+    <NavigationProperty Name="tblPersons1" Relationship="WorldServiceOrganizationModel.FK_PersonUserDel" FromRole="tblUser" ToRole="tblPerson" />
+    <NavigationProperty Name="tblPersons2" Relationship="WorldServiceOrganizationModel.FK_PersonUserEdit" FromRole="tblUser" ToRole="tblPerson" />
+    <Property Name="Initials" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityContainer Name="WorldServiceOrganizationEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
+    <EntitySet Name="tblRoles" EntityType="WorldServiceOrganizationModel.tblRole" />
+    <AssociationSet Name="FK__tblUsers__RoleId__1367E606" Association="WorldServiceOrganizationModel.FK__tblUsers__RoleId__1367E606">
+      <End Role="tblRole" EntitySet="tblRoles" />
+      <End Role="tblUser" EntitySet="tblUsers" />
+    </AssociationSet>
+    <EntitySet Name="tblAccessLevels" EntityType="WorldServiceOrganizationModel.tblAccessLevel" />
+    <AssociationSet Name="FK_AccessRole" Association="WorldServiceOrganizationModel.FK_AccessRole">
+      <End EntitySet="tblRoles" Role="tblRole" />
+      <End EntitySet="tblAccessLevels" Role="tblAccessLevel" />
+    </AssociationSet>
+    <EntitySet Name="tblMenus" EntityType="WorldServiceOrganizationModel.tblMenu" />
+    <AssociationSet Name="FK_AccessManu" Association="WorldServiceOrganizationModel.FK_AccessManu">
+      <End Role="tblMenu" EntitySet="tblMenus" />
+      <End Role="tblAccessLevel" EntitySet="tblAccessLevels" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MenuTable" Association="WorldServiceOrganizationModel.FK_MenuTable">
+      <End Role="tblMenu" EntitySet="tblMenus" />
+      <End Role="tblMenu1" EntitySet="tblMenus" />
+    </AssociationSet>
+    <EntitySet Name="tblCountries" EntityType="WorldServiceOrganizationModel.tblCountry" />
+    <EntitySet Name="tblEyes" EntityType="WorldServiceOrganizationModel.tblEye" />
+    <EntitySet Name="tblOccupations" EntityType="WorldServiceOrganizationModel.tblOccupation" />
+    <EntitySet Name="tblProducts" EntityType="WorldServiceOrganizationModel.tblProduct" />
+    <EntitySet Name="tblProductTypes" EntityType="WorldServiceOrganizationModel.tblProductType" />
+    <EntitySet Name="tblStatus" EntityType="WorldServiceOrganizationModel.tblStatus" />
+    <EntitySet Name="tblSex" EntityType="WorldServiceOrganizationModel.tblSex" />
+    <AssociationSet Name="FK_ProductProductType" Association="WorldServiceOrganizationModel.FK_ProductProductType">
+      <End Role="tblProductType" EntitySet="tblProductTypes" />
+      <End Role="tblProduct" EntitySet="tblProducts" />
+    </AssociationSet>
+    <EntitySet Name="tblProductPackages" EntityType="WorldServiceOrganizationModel.tblProductPackage" />
+    <EntitySet Name="tblProductPackageProducts" EntityType="WorldServiceOrganizationModel.tblProductPackageProduct" />
+    <AssociationSet Name="FK_ManyProduct" Association="WorldServiceOrganizationModel.FK_ManyProduct">
+      <End Role="tblProduct" EntitySet="tblProducts" />
+      <End Role="tblProductPackageProduct" EntitySet="tblProductPackageProducts" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ManyProductPackage" Association="WorldServiceOrganizationModel.FK_ManyProductPackage">
+      <End Role="tblProductPackage" EntitySet="tblProductPackages" />
+      <End Role="tblProductPackageProduct" EntitySet="tblProductPackageProducts" />
+    </AssociationSet>
+    <EntitySet Name="tblSettings" EntityType="WorldServiceOrganizationModel.tblSetting" />
+    <EntitySet Name="sysdiagrams" EntityType="WorldServiceOrganizationModel.sysdiagram" />
+    <EntitySet Name="tblPersons" EntityType="WorldServiceOrganizationModel.tblPerson" />
+    <AssociationSet Name="FK_PersonCountryAppli" Association="WorldServiceOrganizationModel.FK_PersonCountryAppli">
+      <End Role="tblCountry" EntitySet="tblCountries" />
+      <End Role="tblPerson" EntitySet="tblPersons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonCountryBirth" Association="WorldServiceOrganizationModel.FK_PersonCountryBirth">
+      <End Role="tblCountry" EntitySet="tblCountries" />
+      <End Role="tblPerson" EntitySet="tblPersons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonCountryStatis" Association="WorldServiceOrganizationModel.FK_PersonCountryStatis">
+      <End Role="tblCountry" EntitySet="tblCountries" />
+      <End Role="tblPerson" EntitySet="tblPersons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonEye" Association="WorldServiceOrganizationModel.FK_PersonEye">
+      <End Role="tblEye" EntitySet="tblEyes" />
+      <End Role="tblPerson" EntitySet="tblPersons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonOccupation" Association="WorldServiceOrganizationModel.FK_PersonOccupation">
+      <End Role="tblOccupation" EntitySet="tblOccupations" />
+      <End Role="tblPerson" EntitySet="tblPersons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonSex" Association="WorldServiceOrganizationModel.FK_PersonSex">
+      <End Role="tblSex" EntitySet="tblSex" />
+      <End Role="tblPerson" EntitySet="tblPersons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonStatus" Association="WorldServiceOrganizationModel.FK_PersonStatus">
+      <End Role="tblStatus" EntitySet="tblStatus" />
+      <End Role="tblPerson" EntitySet="tblPersons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonUserCre" Association="WorldServiceOrganizationModel.FK_PersonUserCre">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblPerson" EntitySet="tblPersons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonUserDel" Association="WorldServiceOrganizationModel.FK_PersonUserDel">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblPerson" EntitySet="tblPersons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonUserEdit" Association="WorldServiceOrganizationModel.FK_PersonUserEdit">
+      <End Role="tblUser" EntitySet="tblUsers" />
+      <End Role="tblPerson" EntitySet="tblPersons" />
+    </AssociationSet>
+    <EntitySet Name="tblChilds" EntityType="WorldServiceOrganizationModel.tblChild" />
+    <AssociationSet Name="FK_PersonChild" Association="WorldServiceOrganizationModel.FK_PersonChild">
+      <End Role="tblPerson" EntitySet="tblPersons" />
+      <End Role="tblChild" EntitySet="tblChilds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SexChild" Association="WorldServiceOrganizationModel.FK_SexChild">
+      <End Role="tblSex" EntitySet="tblSex" />
+      <End Role="tblChild" EntitySet="tblChilds" />
+    </AssociationSet>
+    <EntitySet Name="tblAddresses" EntityType="WorldServiceOrganizationModel.tblAddress" />
+    <AssociationSet Name="FK_CountryAddress" Association="WorldServiceOrganizationModel.FK_CountryAddress">
+      <End Role="tblCountry" EntitySet="tblCountries" />
+      <End Role="tblAddress" EntitySet="tblAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PersonAddress" Association="WorldServiceOrganizationModel.FK_PersonAddress">
+      <End Role="tblPerson" EntitySet="tblPersons" />
+      <End Role="tblAddress" EntitySet="tblAddresses" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SexAddress" Association="WorldServiceOrganizationModel.FK_SexAddress">
+      <End Role="tblSex" EntitySet="tblSex" />
+      <End Role="tblAddress" EntitySet="tblAddresses" />
+    </AssociationSet>
+    <EntitySet Name="tblTransactions" EntityType="WorldServiceOrganizationModel.tblTransaction" />
+    <AssociationSet Name="FK_PersonTransaction" Association="WorldServiceOrganizationModel.FK_PersonTransaction">
+      <End Role="tblPerson" EntitySet="tblPersons" />
+      <End Role="tblTransaction" EntitySet="tblTransactions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductTransaction" Association="WorldServiceOrganizationModel.FK_ProductTransaction">
+      <End Role="tblProduct" EntitySet="tblProducts" />
+      <End Role="tblTransaction" EntitySet="tblTransactions" />
+    </AssociationSet>
+    <FunctionImport Name="ProductUnionPackage" ReturnType="Collection(WorldServiceOrganizationModel.ProductUnionPackage_Result)" />
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(WorldServiceOrganizationModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(WorldServiceOrganizationModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+  </EntityContainer>
+  <EntityType Name="tblRole">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Role" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblUsers" Relationship="WorldServiceOrganizationModel.FK__tblUsers__RoleId__1367E606" FromRole="tblRole" ToRole="tblUser" />
+    <NavigationProperty Name="tblAccessLevels" Relationship="WorldServiceOrganizationModel.FK_AccessRole" FromRole="tblRole" ToRole="tblAccessLevel" />
+  </EntityType>
+  <Association Name="FK__tblUsers__RoleId__1367E606">
+    <End Type="WorldServiceOrganizationModel.tblRole" Role="tblRole" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblRole">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="tblUser">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tblAccessLevel">
+    <Key>
+      <PropertyRef Name="AccessId" />
+    </Key>
+    <Property Name="AccessId" Nullable="false" Type="Int32" />
+    <Property Name="EditAccess" Type="Boolean" />
+    <Property Name="DeleteAccess" Type="Boolean" />
+    <Property Name="CreateAccess" Type="Boolean" />
+    <Property Name="MenuId" Type="Int32" />
+    <Property Name="RoleId" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Precision="3" Type="DateTime" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Precision="3" Type="DateTime" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Precision="3" Type="DateTime" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblRole" Relationship="WorldServiceOrganizationModel.FK_AccessRole" FromRole="tblAccessLevel" ToRole="tblRole" />
+    <NavigationProperty Name="tblMenu" Relationship="WorldServiceOrganizationModel.FK_AccessManu" FromRole="tblAccessLevel" ToRole="tblMenu" />
+  </EntityType>
+  <Association Name="FK_AccessRole">
+    <End Type="WorldServiceOrganizationModel.tblRole" Multiplicity="0..1" Role="tblRole" />
+    <End Type="WorldServiceOrganizationModel.tblAccessLevel" Multiplicity="*" Role="tblAccessLevel" />
+    <ReferentialConstraint>
+      <Principal Role="tblRole">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="tblAccessLevel">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tblMenu">
+    <Key>
+      <PropertyRef Name="MenuId" />
+    </Key>
+    <Property Name="MenuId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ControllerName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="ActionName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="isParent" Type="Boolean" />
+    <Property Name="ParentId" Type="Int32" />
+    <Property Name="FontAwesome" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblAccessLevels" Relationship="WorldServiceOrganizationModel.FK_AccessManu" FromRole="tblMenu" ToRole="tblAccessLevel" />
+    <NavigationProperty Name="tblMenu1" Relationship="WorldServiceOrganizationModel.FK_MenuTable" FromRole="tblMenu" ToRole="tblMenu1" />
+    <NavigationProperty Name="tblMenu2" Relationship="WorldServiceOrganizationModel.FK_MenuTable" FromRole="tblMenu1" ToRole="tblMenu" />
+    <Property Name="ElementId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_AccessManu">
+    <End Type="WorldServiceOrganizationModel.tblMenu" Role="tblMenu" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblAccessLevel" Role="tblAccessLevel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblMenu">
+        <PropertyRef Name="MenuId" />
+      </Principal>
+      <Dependent Role="tblAccessLevel">
+        <PropertyRef Name="MenuId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MenuTable">
+    <End Type="WorldServiceOrganizationModel.tblMenu" Role="tblMenu" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblMenu" Role="tblMenu1" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblMenu">
+        <PropertyRef Name="MenuId" />
+      </Principal>
+      <Dependent Role="tblMenu1">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tblCountry">
+    <Key>
+      <PropertyRef Name="CountryId" />
+    </Key>
+    <Property Name="CountryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonCountryAppli" FromRole="tblCountry" ToRole="tblPerson" />
+    <NavigationProperty Name="tblPersons1" Relationship="WorldServiceOrganizationModel.FK_PersonCountryBirth" FromRole="tblCountry" ToRole="tblPerson" />
+    <NavigationProperty Name="tblPersons2" Relationship="WorldServiceOrganizationModel.FK_PersonCountryStatis" FromRole="tblCountry" ToRole="tblPerson" />
+    <NavigationProperty Name="tblAddresses" Relationship="WorldServiceOrganizationModel.FK_CountryAddress" FromRole="tblCountry" ToRole="tblAddress" />
+  </EntityType>
+  <EntityType Name="tblEye">
+    <Key>
+      <PropertyRef Name="EyeId" />
+    </Key>
+    <Property Name="EyeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonEye" FromRole="tblEye" ToRole="tblPerson" />
+  </EntityType>
+  <EntityType Name="tblOccupation">
+    <Key>
+      <PropertyRef Name="OccupationId" />
+    </Key>
+    <Property Name="OccupationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonOccupation" FromRole="tblOccupation" ToRole="tblPerson" />
+  </EntityType>
+  <EntityType Name="tblProduct">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <Property Name="ProductTypeId" Type="Int32" />
+    <NavigationProperty Name="tblProductType" Relationship="WorldServiceOrganizationModel.FK_ProductProductType" FromRole="tblProduct" ToRole="tblProductType" />
+    <NavigationProperty Name="tblProductPackageProducts" Relationship="WorldServiceOrganizationModel.FK_ManyProduct" FromRole="tblProduct" ToRole="tblProductPackageProduct" />
+    <Property Name="Price" Type="Double" />
+    <NavigationProperty Name="tblTransactions" Relationship="WorldServiceOrganizationModel.FK_ProductTransaction" FromRole="tblProduct" ToRole="tblTransaction" />
+  </EntityType>
+  <EntityType Name="tblProductType">
+    <Key>
+      <PropertyRef Name="ProductTypeId" />
+    </Key>
+    <Property Name="ProductTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblProduct" Relationship="WorldServiceOrganizationModel.FK_ProductProductType" FromRole="tblProductType" ToRole="tblProduct" />
+  </EntityType>
+  <EntityType Name="tblStatus">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonStatus" FromRole="tblStatus" ToRole="tblPerson" />
+  </EntityType>
+  <EntityType Name="tblSex">
+    <Key>
+      <PropertyRef Name="SexId" />
+    </Key>
+    <Property Name="SexId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonSex" FromRole="tblSex" ToRole="tblPerson" />
+    <NavigationProperty Name="tblChilds" Relationship="WorldServiceOrganizationModel.FK_SexChild" FromRole="tblSex" ToRole="tblChild" />
+    <NavigationProperty Name="tblAddresses" Relationship="WorldServiceOrganizationModel.FK_SexAddress" FromRole="tblSex" ToRole="tblAddress" />
+  </EntityType>
+  <Association Name="FK_ProductProductType">
+    <End Type="WorldServiceOrganizationModel.tblProductType" Role="tblProductType" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblProduct" Role="tblProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblProductType">
+        <PropertyRef Name="ProductTypeId" />
+      </Principal>
+      <Dependent Role="tblProduct">
+        <PropertyRef Name="ProductTypeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tblProductPackage">
+    <Key>
+      <PropertyRef Name="ProductPackageId" />
+    </Key>
+    <Property Name="ProductPackageId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblProductPackageProducts" Relationship="WorldServiceOrganizationModel.FK_ManyProductPackage" FromRole="tblProductPackage" ToRole="tblProductPackageProduct" />
+  </EntityType>
+  <EntityType Name="tblProductPackageProduct">
+    <Key>
+      <PropertyRef Name="ProductPackageProductId" />
+    </Key>
+    <Property Name="ProductPackageProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ProductId" Type="Int32" />
+    <Property Name="ProductPackageId" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblProduct" Relationship="WorldServiceOrganizationModel.FK_ManyProduct" FromRole="tblProductPackageProduct" ToRole="tblProduct" />
+    <NavigationProperty Name="tblProductPackage" Relationship="WorldServiceOrganizationModel.FK_ManyProductPackage" FromRole="tblProductPackageProduct" ToRole="tblProductPackage" />
+  </EntityType>
+  <Association Name="FK_ManyProduct">
+    <End Type="WorldServiceOrganizationModel.tblProduct" Role="tblProduct" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblProductPackageProduct" Role="tblProductPackageProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblProduct">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="tblProductPackageProduct">
+        <PropertyRef Name="ProductId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ManyProductPackage">
+    <End Type="WorldServiceOrganizationModel.tblProductPackage" Role="tblProductPackage" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblProductPackageProduct" Role="tblProductPackageProduct" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblProductPackage">
+        <PropertyRef Name="ProductPackageId" />
+      </Principal>
+      <Dependent Role="tblProductPackageProduct">
+        <PropertyRef Name="ProductPackageId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tblSetting">
+    <Key>
+      <PropertyRef Name="SettingId" />
+    </Key>
+    <Property Name="SettingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DateFormat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NumberOfRetrieves" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NextWSA" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NextPassport" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <Property Name="FontStyle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="FontSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LetterCase" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="tblPerson">
+    <Key>
+      <PropertyRef Name="PersonIDNumber" />
+    </Key>
+    <Property Name="PersonIDNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CountryOfApplication" Type="Int32" />
+    <Property Name="CityOfBirth" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CountryOfBirth" Type="Int32" />
+    <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Fax" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="EMail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Website" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="DateOfBirth" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="BirthDay" Type="Int32" />
+    <Property Name="BirthMonth" Type="Int32" />
+    <Property Name="BirthYear" Type="Int32" />
+    <Property Name="Sex" Type="Int32" />
+    <Property Name="Height" Type="Double" />
+    <Property Name="Eyes" Type="Int32" />
+    <Property Name="Marks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OccupationId" Type="Int32" />
+    <Property Name="OccupationCode" Type="Int32" />
+    <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="FatherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MotherName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="WSANumber" Type="Int32" />
+    <Property Name="Comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Status" Type="Int32" />
+    <Property Name="TransactionCount" Type="Int32" />
+    <Property Name="SignaturePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Photograph" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="Signature" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="CountryOfBirthStatistical" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="EntryDate" Type="DateTime" Precision="3" />
+    <Property Name="LastEditedBy" Type="Int32" />
+    <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblCountry" Relationship="WorldServiceOrganizationModel.FK_PersonCountryAppli" FromRole="tblPerson" ToRole="tblCountry" />
+    <NavigationProperty Name="tblCountry1" Relationship="WorldServiceOrganizationModel.FK_PersonCountryBirth" FromRole="tblPerson" ToRole="tblCountry" />
+    <NavigationProperty Name="tblCountry2" Relationship="WorldServiceOrganizationModel.FK_PersonCountryStatis" FromRole="tblPerson" ToRole="tblCountry" />
+    <NavigationProperty Name="tblEye" Relationship="WorldServiceOrganizationModel.FK_PersonEye" FromRole="tblPerson" ToRole="tblEye" />
+    <NavigationProperty Name="tblOccupation" Relationship="WorldServiceOrganizationModel.FK_PersonOccupation" FromRole="tblPerson" ToRole="tblOccupation" />
+    <NavigationProperty Name="tblSex" Relationship="WorldServiceOrganizationModel.FK_PersonSex" FromRole="tblPerson" ToRole="tblSex" />
+    <NavigationProperty Name="tblStatu" Relationship="WorldServiceOrganizationModel.FK_PersonStatus" FromRole="tblPerson" ToRole="tblStatus" />
+    <NavigationProperty Name="tblUser" Relationship="WorldServiceOrganizationModel.FK_PersonUserCre" FromRole="tblPerson" ToRole="tblUser" />
+    <NavigationProperty Name="tblUser1" Relationship="WorldServiceOrganizationModel.FK_PersonUserDel" FromRole="tblPerson" ToRole="tblUser" />
+    <NavigationProperty Name="tblUser2" Relationship="WorldServiceOrganizationModel.FK_PersonUserEdit" FromRole="tblPerson" ToRole="tblUser" />
+    <Property Name="Certification" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="tblChilds" Relationship="WorldServiceOrganizationModel.FK_PersonChild" FromRole="tblPerson" ToRole="tblChild" />
+    <NavigationProperty Name="tblAddresses" Relationship="WorldServiceOrganizationModel.FK_PersonAddress" FromRole="tblPerson" ToRole="tblAddress" />
+    <NavigationProperty Name="tblTransactions" Relationship="WorldServiceOrganizationModel.FK_PersonTransaction" FromRole="tblPerson" ToRole="tblTransaction" />
+  </EntityType>
+  <Association Name="FK_PersonCountryAppli">
+    <End Type="WorldServiceOrganizationModel.tblCountry" Role="tblCountry" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCountry">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="tblPerson">
+        <PropertyRef Name="CountryOfApplication" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonCountryBirth">
+    <End Type="WorldServiceOrganizationModel.tblCountry" Role="tblCountry" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCountry">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="tblPerson">
+        <PropertyRef Name="CountryOfBirth" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonCountryStatis">
+    <End Type="WorldServiceOrganizationModel.tblCountry" Role="tblCountry" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCountry">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="tblPerson">
+        <PropertyRef Name="CountryOfBirthStatistical" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonEye">
+    <End Type="WorldServiceOrganizationModel.tblEye" Role="tblEye" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblEye">
+        <PropertyRef Name="EyeId" />
+      </Principal>
+      <Dependent Role="tblPerson">
+        <PropertyRef Name="Eyes" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonOccupation">
+    <End Type="WorldServiceOrganizationModel.tblOccupation" Role="tblOccupation" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblOccupation">
+        <PropertyRef Name="OccupationId" />
+      </Principal>
+      <Dependent Role="tblPerson">
+        <PropertyRef Name="OccupationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonSex">
+    <End Type="WorldServiceOrganizationModel.tblSex" Role="tblSex" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSex">
+        <PropertyRef Name="SexId" />
+      </Principal>
+      <Dependent Role="tblPerson">
+        <PropertyRef Name="Sex" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonStatus">
+    <End Type="WorldServiceOrganizationModel.tblStatus" Role="tblStatus" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblStatus">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="tblPerson">
+        <PropertyRef Name="Status" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonUserCre">
+    <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tblPerson">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonUserDel">
+    <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tblPerson">
+        <PropertyRef Name="DeletedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonUserEdit">
+    <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUser">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tblPerson">
+        <PropertyRef Name="LastEditedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tblChild">
+    <Key>
+      <PropertyRef Name="ChildId" />
+    </Key>
+    <Property Name="ChildId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="BirthDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="SexId" Type="Int32" />
+    <Property Name="PersonIDNumber" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblPerson" Relationship="WorldServiceOrganizationModel.FK_PersonChild" FromRole="tblChild" ToRole="tblPerson" />
+    <NavigationProperty Name="tblSex" Relationship="WorldServiceOrganizationModel.FK_SexChild" FromRole="tblChild" ToRole="tblSex" />
+  </EntityType>
+  <Association Name="FK_PersonChild">
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblChild" Role="tblChild" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPerson">
+        <PropertyRef Name="PersonIDNumber" />
+      </Principal>
+      <Dependent Role="tblChild">
+        <PropertyRef Name="PersonIDNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SexChild">
+    <End Type="WorldServiceOrganizationModel.tblSex" Role="tblSex" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblChild" Role="tblChild" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSex">
+        <PropertyRef Name="SexId" />
+      </Principal>
+      <Dependent Role="tblChild">
+        <PropertyRef Name="SexId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tblAddress">
+    <Key>
+      <PropertyRef Name="AddressIDNumber" />
+    </Key>
+    <Property Name="AddressIDNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CareOf" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Address2" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PostalCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Country" Type="Int32" />
+    <Property Name="AddressVector" Type="Int32" />
+    <Property Name="Label" Type="Boolean" />
+    <Property Name="SexId" Type="Int32" />
+    <Property Name="PersonIDNumber" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblCountry" Relationship="WorldServiceOrganizationModel.FK_CountryAddress" FromRole="tblAddress" ToRole="tblCountry" />
+    <NavigationProperty Name="tblPerson" Relationship="WorldServiceOrganizationModel.FK_PersonAddress" FromRole="tblAddress" ToRole="tblPerson" />
+    <NavigationProperty Name="tblSex" Relationship="WorldServiceOrganizationModel.FK_SexAddress" FromRole="tblAddress" ToRole="tblSex" />
+  </EntityType>
+  <Association Name="FK_CountryAddress">
+    <End Type="WorldServiceOrganizationModel.tblCountry" Role="tblCountry" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblAddress" Role="tblAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblCountry">
+        <PropertyRef Name="CountryId" />
+      </Principal>
+      <Dependent Role="tblAddress">
+        <PropertyRef Name="Country" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PersonAddress">
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblAddress" Role="tblAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPerson">
+        <PropertyRef Name="PersonIDNumber" />
+      </Principal>
+      <Dependent Role="tblAddress">
+        <PropertyRef Name="PersonIDNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SexAddress">
+    <End Type="WorldServiceOrganizationModel.tblSex" Role="tblSex" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblAddress" Role="tblAddress" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblSex">
+        <PropertyRef Name="SexId" />
+      </Principal>
+      <Dependent Role="tblAddress">
+        <PropertyRef Name="SexId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tblTransaction">
+    <Key>
+      <PropertyRef Name="TransactionIDNumber" />
+    </Key>
+    <Property Name="TransactionIDNumber" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Cost" Type="Double" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="ApplicationDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="IssueDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="SentDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="ReturnDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="Problems" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ProductIDNumber" Type="Int32" />
+    <Property Name="PersonIDNumber" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" Nullable="false" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblPerson" Relationship="WorldServiceOrganizationModel.FK_PersonTransaction" FromRole="tblTransaction" ToRole="tblPerson" />
+    <NavigationProperty Name="tblProduct" Relationship="WorldServiceOrganizationModel.FK_ProductTransaction" FromRole="tblTransaction" ToRole="tblProduct" />
+  </EntityType>
+  <Association Name="FK_PersonTransaction">
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblTransaction" Role="tblTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPerson">
+        <PropertyRef Name="PersonIDNumber" />
+      </Principal>
+      <Dependent Role="tblTransaction">
+        <PropertyRef Name="PersonIDNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductTransaction">
+    <End Type="WorldServiceOrganizationModel.tblProduct" Role="tblProduct" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblTransaction" Role="tblTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblProduct">
+        <PropertyRef Name="ProductId" />
+      </Principal>
+      <Dependent Role="tblTransaction">
+        <PropertyRef Name="ProductIDNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <ComplexType Name="ProductUnionPackage_Result">
+    <Property Type="Int32" Name="ProductId" Nullable="false" />
+    <Property Type="String" Name="Code" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+</Schema>

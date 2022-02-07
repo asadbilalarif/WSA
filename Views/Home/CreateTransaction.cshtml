@@ -1,0 +1,573 @@
+﻿@model  WorldServiceOrganization.Models.tblPerson
+
+@{
+    ViewData["Title"] = "Transactions";
+    string Succ = @ViewBag.Success;
+    string Update = @ViewBag.Update;
+    string Delete = @ViewBag.Delete;
+
+    string CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["DateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+}
+
+<head>
+
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+
+
+
+</head>
+
+
+
+
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">Transaction List</h5>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="display:none;" class="alert alert-success alert-dismissible fade show" id="SuccessAlert" role="alert">
+                    <strong>Success!</strong> @Succ
+                </div>
+                <div style="display:none;" class="alert alert-info alert-dismissible fade show" id="UpdateAlert" role="alert">
+                    <strong>Success!</strong> @Update
+                </div>
+                <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
+                    <strong>Success!</strong> @Delete
+                </div>
+
+
+
+
+
+
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>WSA #</label>
+                                <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@Model.WSANumber" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Status</label><br />
+                                <input type="text" class="form-control" id="Name" name="Name" value="@Model.tblStatu.Name" readonly>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    @*<div class="row">*@
+                        <div class="table-responsive">
+                            <table class="cell-border table" id="TransactionTable">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none;">Person ID</th>
+                                        <th style="display:none;">Transaction ID</th>
+                                        <th>Product</th>
+                                        <th style="display:none;">Product</th>
+                                        <th>Appl Date</th>
+                                        <th>Issue Date</th>
+                                        <th>Sent Date</th>
+                                        <th>Return Date</th>
+                                        <th>ID Code</th>
+                                        <th>Cost</th>
+                                        <th>Qty</th>
+                                        <th>Problems</th>
+
+                                        <th style="display:none;">Create Date</th>
+                                        <th style="display:none;">Edit Date</th>
+
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (WorldServiceOrganization.Models.tblTransaction Transaction in ViewBag.Transaction)
+                                    {
+                                        <tr>
+                                            <td style="display:none;">@Transaction.PersonIDNumber</td>
+                                            <td style="display:none;">@Transaction.TransactionIDNumber</td>
+                                            <td>@Transaction.tblProduct.Name</td>
+                                            <td style="display:none;">@Transaction.ProductIDNumber</td>
+                                            <td>@Transaction.ApplicationDate.ToString(DateFormat)</td>
+                                            <td>
+                                                @if (@Transaction.IssueDate.Year == 9999)
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    @Transaction.IssueDate.ToString(DateFormat)
+                                                }
+                                            </td>
+                                            <td>
+                                                @if (@Transaction.SentDate.Year == 9999)
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    @Transaction.SentDate.ToString(DateFormat)
+                                                }
+
+                                            </td>
+                                            <td>
+                                                @if (@Transaction.ReturnDate.Year == 9999)
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    @Transaction.ReturnDate.ToString(DateFormat)
+                                                }
+                                            </td>
+                                            <td>@Transaction.IDCode</td>
+                                            <td>@Transaction.Cost</td>
+                                            <td>@Transaction.Quantity</td>
+                                            <td>@Transaction.Problems</td>
+                                            <td style="display:none;">@Transaction.CreatedDate.ToString(DateFormat)</td>
+                                            <td style="display:none;">@Transaction.EditDate.ToString(DateFormat)</td>
+
+                                            <td class="text-end">
+                                                <div class="actions">
+                                                    <a href="#" id="EditTransaction" class="text-black">
+                                                        <i class="fa fa-edit"></i> Edit
+                                                    </a>
+                                                    <a class="text-danger" href="#" data-toggle="modal" data-target="#TransactionDelete" id="DeleteTransaction">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    @*</div>*@
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Number of Transections Listed <b>@ViewBag.Count</b></label>
+                            </div>
+                            <div class="col-md-6">
+                                <label style="margin-left: 9%;">Total Cost <b>@ViewBag.Sum</b></label>
+                            </div>
+                        </div>
+                    
+                    
+                </div>
+            </div>
+
+
+
+
+            <div class="row">
+
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-body">
+                            @using (Html.BeginForm("CreateTransaction", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                            {@Html.AntiForgeryToken()
+                            <span style="color:red;">@ViewBag.Error</span>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Product</label>
+                                                <select class="form-control" id="ProductD" name="ProductIDNumber" required>
+                                                    <option value="0">Select Product</option>
+                                                    @foreach (WorldServiceOrganization.Models.tblProduct Product in @ViewBag.Product)
+                                                    {
+                                                        <option value="@Product.ProductId">@Product.Code - @Product.Name</option>
+                                                    }
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <input style="display:none;" type="text" class="form-control" id="PersonIDNumber" name="PersonIDNumber" value="@Model.PersonIDNumber">
+                                                <input style="display:none;" type="text" class="form-control" id="TransactionIDNumber" name="TransactionIDNumber" value="">
+                                                <label>ID Code</label>
+                                                <input type="text" class="form-control" id="IDCode" name="IDCode" value="" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Cost</label>
+                                                <input type="text" class="form-control" id="Cost" name="Cost" value="" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Quantity</label><br />
+                                                <input type="number" class="form-control" id="Quantity" name="Quantity" value="" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label>Total Cost</label>
+                                                <input type="text" class="form-control" id="TotalCost" name="" value="" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Problems</label><br />
+                                                <textarea type="text" class="form-control" id="Problems" name="Problems" value=""></textarea>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Application Date</label>
+                                                <input type="date" class="form-control" id="ApplicationDate" name="ApplicationDate" value="" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Issue Date</label><br />
+                                                <input type="date" class="form-control" id="IssueDate" name="IssueDate" value="" >
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Sent Date</label><br />
+                                                <input type="date" class="form-control" id="SentDate" name="SentDate" value="" >
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label>Return Date</label><br />
+                                                <input type="date" class="form-control" id="ReturnDate" name="ReturnDate" value="" >
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-12 text-right">
+                                    <button class="btn btn-primary" type="submit">Save</button>
+                                    <a href="@Url.Action("CreateTransaction","Home")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                                    <a href="@Url.Action("Persons","Home")" class="btn btn-secondary"><i class="fa fa-list"></i>List</a>
+                                </div>
+
+                            </div>
+                        }
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <p class="col-md-12 text-right">
+                                    <button type="button" class="btn btn-primary btn-sm" style="width:50%">Passport Label</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" style="margin-top:2px; width:50%">Routing Slip</button>
+                                </p>
+                                <div class="col-md-12 text-center">
+                                    <div class="form-group row">
+                                        <label class="col-lg-6 col-form-label">Date of Entry</label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="CreatedDate" value="@CreatedDate" readonly>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group row">
+                                        <label class="col-lg-6 col-form-label">Date Changed</label>
+                                        <div class="col-lg-6">
+                                            <input type="text" class="form-control" id="EditDate" value="" readonly>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+                                  </div>
+    </div>
+
+</div>
+
+
+<div id="TransactionDelete" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
+                <input class="form-control" type="text" id="DeleteTransactionID" style="display:none;">
+                <input class="form-control" type="text" id="DeletePersonID" style="display:none;">
+                <h5>Are you sure want to delete this transaction?</h5>
+                <div class="m-t-20">
+                    <p id="ConfigDerror" style="color:red;"></p>
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <input type="button" class="btn btn-danger" id="CDeleteTransaction" value="Delete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /Page Wrapper -->
+<!-- jQuery -->
+
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+
+
+@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+<script>
+
+    
+
+
+    $("body").on("change", "#Cost", function () {
+        var Qty = $("#Quantity");
+        var Cost = $("#Cost");
+        var Res = 0;
+        if (Qty.val() != 0) {
+            Res = Cost.val() * Qty.val();
+            $("#TotalCost").val(Res);
+        }
+        else {
+            $("#TotalCost").val(Cost.val());
+        }
+    });
+
+    $("body").on("change", "#Quantity", function () {
+        var Qty = $("#Quantity");
+        var Cost = $("#Cost");
+        var Res = 0;
+        if (Cost.val() != 0) {
+            Res = Cost.val() * Qty.val();
+            $("#TotalCost").val(Res);
+        }
+        else {
+            $("#TotalCost").val(Qty.val());
+        }
+    });
+
+
+    $("body").on("click", "#EditTransaction", function () {
+
+        var currentRow = $(this).closest("tr");
+        $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
+        $("#TransactionIDNumber").val(currentRow.find("td:eq(1)").text());
+        $("#ProductD").val(currentRow.find("td:eq(3)").text()).change();
+        var fromDate = new Date(currentRow.find("td:eq(4)").text()).toDateString();
+        $("#ApplicationDate").val(formatDate(fromDate));
+        fromDate = new Date(currentRow.find("td:eq(5)").text()).toDateString();
+        $("#IssueDate").val(formatDate(fromDate));
+        fromDate = new Date(currentRow.find("td:eq(6)").text()).toDateString();
+        $("#SentDate").val(formatDate(fromDate));
+        fromDate = new Date(currentRow.find("td:eq(7)").text()).toDateString();
+        $("#ReturnDate").val(formatDate(fromDate));
+        $("#IDCode").val(currentRow.find("td:eq(8)").text());
+        $("#Cost").val(currentRow.find("td:eq(9)").text());
+        $("#Quantity").val(currentRow.find("td:eq(10)").text());
+        $("#Problems").val(currentRow.find("td:eq(11)").text());
+        fromDate = new Date(currentRow.find("td:eq(12)").text()).toDateString();
+        $("#CreatedDate").val(fromDate);
+        fromDate = new Date(currentRow.find("td:eq(13)").text()).toDateString();
+        $("#EditDate").val(fromDate);
+        $("#TotalCost").val($("#Quantity").val() * $("#Cost").val());
+        //alert($("#DeleteDeviceInfoID").val());
+    });
+
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+    $("body").on("click", "#DeleteTransaction", function () {
+        $("#ConfigDerror").text("");
+        $("#CDeleteTransaction").attr("disabled", false);
+        var currentRow = $(this).closest("tr");
+        $("#DeletePersonID").val(currentRow.find("td:eq(0)").text());
+        $("#DeleteTransactionID").val(currentRow.find("td:eq(1)").text());
+        //alert($("#DeleteTransactionID").val());
+    });
+
+    $("#CDeleteTransaction").on("click", function () {
+
+
+        $("#CDeleteTransaction").attr("disabled", true);
+
+        var ID = $("#DeleteTransactionID").val();
+
+        var model = {
+            TransactionId: ID,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Home/DeleteTransaction",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == 1) {
+
+                    var url = window.location.origin;
+                    url += '/Home/CreateTransaction?Delete=Transaction has been delete successfully.&id='+$("#DeletePersonID").val()+'';
+                    window.location.href = url;
+                }
+                //alert(r + " record(s) inserted.");
+            }
+        });
+
+    });
+
+    $("#ProductD").on("change", function () {
+        var ID = $(this).val();
+
+        var model = {
+            id: ID,
+        };
+        console.log(model);
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetProduct",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (ProductList) {
+                $("#Cost").val(ProductList);
+            },
+        });
+
+    });
+
+    $(document).ready(function () {
+
+
+        //$("body").on("change", "#Cost", function () {
+        //    var Qty = $("#Quantity");
+        //    var Cost = $("#Cost");
+        //    var Res = 0;
+        //    if (Qty.val() != 0) {
+        //        Res = Cost.val() * Qty.val();
+        //        $("#TotalCost").val(Res);
+        //    }
+        //    else {
+        //        $("#TotalCost").val(Cost.val());
+        //    }
+        //});
+
+        
+
+        if ("@Succ"!="") {
+            $('#SuccessAlert').fadeIn();
+            $('#SuccessAlert').fadeOut(6000);
+        }
+        else {
+            $('#SuccessAlert').fadeOut();
+        }
+        if ("@Update" != "") {
+            $('#UpdateAlert').fadeIn();
+            $('#UpdateAlert').fadeOut(6000);
+        }
+        else {
+            $('#UpdateAlert').fadeOut();
+        }
+        if ("@Delete" != "") {
+            $('#DeleteAlert').fadeIn();
+            $('#DeleteAlert').fadeOut(6000);
+        }
+        else {
+            $('#DeleteAlert').fadeOut();
+        }
+
+        $('#TransactionTable').DataTable({
+           
+            "bInfo": false,
+            "scrollY": "110px",
+            "scrollCollapse": true,
+            searching: false, paging: false
+        });
+
+
+
+        $(".nav li a").removeClass("active");
+        $('#Transactions').addClass('active');
+        $('#UM').addClass('active subdrop');
+
+    });
+
+
+
+
+</script>

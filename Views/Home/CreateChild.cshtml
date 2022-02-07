@@ -1,0 +1,352 @@
+﻿@model  WorldServiceOrganization.Models.tblPerson
+
+@{
+    ViewData["Title"] = "Childs";
+    string Succ = @ViewBag.Success;
+    string Update = @ViewBag.Update;
+    string Delete = @ViewBag.Delete;
+
+    int? SexId = 0;
+
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["DateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+}
+
+
+<head>
+
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+
+
+
+</head>
+
+
+
+
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">Child List</h5>
+                                    </div>
+                                    <div class="col-md-6 col-6 text-right" id="CreateChildB">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="display:none;" class="alert alert-success alert-dismissible fade show" id="SuccessAlert" role="alert">
+                    <strong>Success!</strong> @Succ
+                </div>
+                <div style="display:none;" class="alert alert-info alert-dismissible fade show" id="UpdateAlert" role="alert">
+                    <strong>Success!</strong> @Update
+                </div>
+                <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
+                    <strong>Success!</strong> @Delete
+                </div>
+
+
+
+
+
+
+
+                <div class="card-body">
+
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>WSA #</label>
+                                <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@Model.WSANumber" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Status</label><br />
+                                <input type="text" class="form-control" id="Name" name="Name" value="@Model.tblStatu.Name" readonly>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    @using (Html.BeginForm("CreateChild", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {@Html.AntiForgeryToken()
+                    <span style="color:red;">@ViewBag.Error</span>
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <input style="display:none;" type="text" class="form-control" id="PersonIDNumber" name="PersonIDNumber" value="@Model.PersonIDNumber">
+                                <input style="display:none;" type="text" class="form-control" id="ChildId" name="ChildId" value="">
+                                <label>Name</label>
+                                <input type="text" class="form-control" id="ChildName" name="Name" value="" required>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <select class="form-control" id="SexId" name="SexId" required>
+                                    <option value="0">Select Gender</option>
+                                    @foreach (WorldServiceOrganization.Models.tblSex Sex in @ViewBag.Sex)
+                                    {
+                                        if (Sex.SexId == SexId)
+                                        {
+                                            <option value="@Sex.SexId" selected>@Sex.Code / @Sex.Name</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@Sex.SexId">@Sex.Code / @Sex.Name</option>
+                                        }
+                                    }
+                                </select>
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Birth Date</label><br />
+                                <input type="date" class="form-control" id="BirthDate" name="BirthDate" value="" required>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label></label>
+                                <button class="btn btn-primary" type="submit" style="margin-top:10%;">Save</button>
+                                <a href="@Url.Action("CreateChild","Home")"> <input class="btn btn-danger" type="button" style="margin-top:10%;" value="Cancel"></a>
+                                <a href="@Url.Action("Persons","Home")" class="btn btn-secondary" style="margin-top:10%;"><i class="fa fa-list"></i>List</a>
+                            </div>
+                        </div>
+
+                    </div><br />
+                }
+                <div class="row">
+                    <div class="table-responsive">
+                        <div class="table-responsive">
+                            <table class="cell-border table table-hover table-center  mb-0 " id="ChildTable">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none;">Person ID</th>
+                                        <th style="display:none;">Child ID</th>
+                                        <th>Name</th>
+                                        <th>Birth Date</th>
+                                        <th>Gender</th>
+                                        <th style="display:none;">Gender</th>
+
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (WorldServiceOrganization.Models.tblChild Child in ViewBag.Child)
+                                    {
+                                        <tr>
+                                            <td style="display:none;">@Child.PersonIDNumber</td>
+                                            <td style="display:none;">@Child.ChildId</td>
+                                            <td>@Child.Name</td>
+                                            <td>@Child.BirthDate.ToString(DateFormat)</td>
+                                            <td>@Child.tblSex.Name</td>
+                                            <td style="display:none;">@Child.SexId</td>
+
+                                            <td class="text-end">
+                                                <div class="actions">
+                                                    <a href="#" id="EditChild" class="text-black">
+                                                        <i class="fa fa-edit"></i> Edit
+                                                    </a>
+                                                    <a class="text-danger" href="#" data-toggle="modal" data-target="#ChildDelete" id="DeleteChild">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="ChildDelete" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
+                <input class="form-control" type="text" id="DeleteChildID" style="display:none;">
+                <input class="form-control" type="text" id="DeletePersonID" style="display:none;">
+                <h5>Are you sure want to delete this Child?</h5>
+                <div class="m-t-20">
+                    <p id="ConfigDerror" style="color:red;"></p>
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <input type="button" class="btn btn-danger" id="CDeleteChild" value="Delete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /Page Wrapper -->
+<!-- jQuery -->
+
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+
+
+@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+<script>
+
+    $("body").on("click", "#EditChild", function () {
+        
+        var currentRow = $(this).closest("tr");
+        $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
+        $("#ChildId").val(currentRow.find("td:eq(1)").text());
+        $("#ChildName").val(currentRow.find("td:eq(2)").text());
+        var fromDate = new Date(currentRow.find("td:eq(3)").text()).toDateString();
+        $("#BirthDate").val(formatDate(fromDate));
+        $("#SexId").val(currentRow.find("td:eq(5)").text()).change();
+    });
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+
+
+    $("body").on("click", "#DeleteChild", function () {
+        $("#ConfigDerror").text("");
+        $("#CDeleteChild").attr("disabled", false);
+        var currentRow = $(this).closest("tr");
+        $("#DeletePersonID").val(currentRow.find("td:eq(0)").text());
+        $("#DeleteChildID").val(currentRow.find("td:eq(1)").text());
+        //alert($("#DeleteChildID").val());
+    });
+
+    $("#CDeleteChild").on("click", function () {
+
+
+        $("#CDeleteChild").attr("disabled", true);
+
+        var ID = $("#DeleteChildID").val();
+
+        var model = {
+            ChildId: ID,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Home/DeleteChild",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == 1) {
+
+                    var url = window.location.origin;
+                    url += '/Home/CreateChild?Delete=Child has been delete successfully.&id='+$("#DeletePersonID").val()+'';
+                    window.location.href = url;
+                }
+                //alert(r + " record(s) inserted.");
+            }
+        });
+
+    });
+
+
+
+    $(document).ready(function () {
+
+
+        if ("@Succ"!="") {
+            $('#SuccessAlert').fadeIn();
+            $('#SuccessAlert').fadeOut(6000);
+        }
+        else {
+            $('#SuccessAlert').fadeOut();
+        }
+        if ("@Update" != "") {
+            $('#UpdateAlert').fadeIn();
+            $('#UpdateAlert').fadeOut(6000);
+        }
+        else {
+            $('#UpdateAlert').fadeOut();
+        }
+        if ("@Delete" != "") {
+            $('#DeleteAlert').fadeIn();
+            $('#DeleteAlert').fadeOut(6000);
+        }
+        else {
+            $('#DeleteAlert').fadeOut();
+        }
+
+        $('#ChildTable').DataTable({
+            
+            "bInfo": false,
+            "scrollY": "110px",
+            "scrollCollapse": true,
+                searching: false, paging: false
+        });
+
+
+
+        $(".nav li a").removeClass("active");
+        $('#Childs').addClass('active');
+        $('#UM').addClass('active subdrop');
+
+    });
+
+
+
+
+</script>

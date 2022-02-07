@@ -1,0 +1,744 @@
+﻿@model  WorldServiceOrganization.Models.tblPerson
+@{
+
+
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string WSA = cookieObj["WSA"];
+
+    int PersonId = 0;
+    string FirstName = "";
+    string LastName = "";
+    string CityOfBirth = "";
+    string Phone = "";
+    string Fax = "";
+    string EMail = "";
+    string Website = "";
+    string ImgSig = "/Content/assets/img/sig.png";
+    string ImgImg = "/Content/assets/img/user-image.png";
+    string ImgCer = "/Content/assets/img/file.png";
+    string DateOfBirth = DateTime.Now.ToString("yyyy-MM-dd");
+    int? BirthDay = 0;
+    int? BirthMonth = 0;
+    int? BirthYear = 0;
+    string Marks = "";
+    string FatherName = "";
+    string MotherName = "";
+    int? WSANumber = 0;
+    if (ViewBag.WAS == null)
+    {
+        WSANumber = Int16.Parse(WSA) + 1;
+    }
+    else
+    {
+        WSANumber = ViewBag.WAS;
+    }
+
+    string Comments = "";
+    double? Height = 0.0;
+    int? CountryApplicationId = 0;
+    int? CountryBirthId = 0;
+    int? EyeId = 0;
+    int? OccupationId = 0;
+    int? SexId = 0;
+    int? StatusId = 0;
+    int? TransactionCount = 0;
+    DateTime? CreateDate = DateTime.Now;
+    int? CreateBy = 0;
+    DateTime? EditDate = DateTime.Now;
+    int? EditBy = 0;
+    string CIni = "";
+    string EIni = "";
+
+    if (Model != null)
+    {
+
+
+        PersonId = Model.PersonIDNumber;
+        FirstName = Model.FatherName;
+        LastName = Model.LastName;
+        CityOfBirth = Model.CityOfBirth;
+        Phone = Model.Phone;
+        Fax = Model.Fax;
+        EMail = Model.EMail;
+        Website = Model.Website;
+        ImgSig = Model.SignaturePath;
+        ImgImg = Model.Photo;
+        ImgCer = Model.Certification;
+        DateOfBirth = Model.DateOfBirth.ToString("yyyy-MM-dd");
+        BirthDay = Model.BirthDay;
+        BirthMonth = Model.BirthMonth;
+        BirthYear = Model.BirthYear;
+        Marks = Model.Marks;
+        FatherName = Model.FatherName;
+        MotherName = Model.MotherName;
+        WSANumber = Model.WSANumber;
+        Comments = Model.Comments;
+        Height = Model.Height;
+        CountryApplicationId = Model.CountryOfApplication;
+        CountryBirthId = Model.CountryOfBirth;
+        EyeId = Model.Eyes;
+        OccupationId = Model.OccupationCode;
+        SexId = Model.Sex;
+        StatusId = Model.Status;
+        TransactionCount = ViewBag.TransCount;
+        CreateDate = Model.EntryDate;
+        CreateBy = Model.CreatedBy;
+        EditDate = Model.LastModifiedDate;
+        EditBy = Model.LastEditedBy;
+        CIni = Model.tblUser.Initials;
+        EIni = Model.tblUser.Initials;
+
+    }
+
+}
+
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-md-12">
+
+            @using (Html.BeginForm("CreatePerson", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {@Html.AntiForgeryToken()
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        @if (Model == null)
+                                        {
+                                            <h5 class="breadcrumb-title">Create Person</h5>
+                                        }
+                                        else
+                                        {
+                                            <h5 class="breadcrumb-title">Edit Person</h5>
+                                        }
+                                    </div>
+                                    <div class="col-md-6 col-6 text-right" id="CreatePersonB">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <span style="color:red;">@ViewBag.Error</span>
+
+
+
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+                            <div class="form-row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>WSA#</label>&nbsp;&nbsp;
+                                        <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" readonly required>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-row" style="margin-top:5%">
+                                        <div class="col-md-4 ">
+                                            <p>
+
+                                            </p>
+                                        </div>
+                                        <div class="col-md-8 text-right">
+                                            <p>
+                                                <button type="button" class="btn btn-primary btn-sm">One Record</button>
+                                                <button type="button" class="btn btn-secondary btn-sm">Label</button>
+                                                <button type="button" class="btn btn-success btn-sm">Routing Slip</button>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input type="text" class="form-control" id="LastName" name="LastName" value="@LastName" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input type="text" class="form-control" id="FirstName" name="FirstName" value="@FirstName" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" style="display:none;" name="PersonIDNumber" value="@PersonId" required>
+                                        <label>Country of Application</label>
+                                        <select class="form-control" id="CountryOfApplication" name="CountryOfApplication" required>
+                                            <option value="0">Select Country</option>
+                                            @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                            {
+                                                if (Countries.CountryId == CountryApplicationId)
+                                                {
+                                                    <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                }
+                                            }
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>City of Birth</label>
+                                        <input type="text" class="form-control" id="CityOfBirth" name="CityOfBirth" value="@CityOfBirth" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Country of Birth</label>
+                                        &nbsp;&nbsp;
+                                        <select class="form-control" id="CountryOfBirth" name="CountryOfBirth" required>
+                                            <option value="0">Select Country</option>
+                                            @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                            {
+                                                if (Countries.CountryId == CountryBirthId)
+                                                {
+                                                    <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                }
+                                            }
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Phone</label>
+                                        &nbsp;&nbsp;
+                                        <input type="text" class="form-control" id="Phone" name="Phone" value="@Phone" >
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Fax</label>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <input type="text" class="form-control" id="Fax" name="Fax" value="@Fax" >
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>E-Mail</label>
+                                        <div>
+                                            <input type="text" class="form-control" id="EMail" name="EMail" value="@EMail" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div>
+                                            <label>Website</label>&nbsp;&nbsp;
+                                            <input type="text" class="form-control" id="Website" name="Website" value="@Website" >
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Date of Birth</label>
+                                        &nbsp;&nbsp;
+                                        <input type="date" class="form-control" id="DateOfBirth" name="DateOfBirth" value="@DateOfBirth" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Sex</label>
+                                        <select class="form-control" id="SexD" name="Sex" required>
+                                            <option value="0">Select Sex</option>
+                                            @foreach (WorldServiceOrganization.Models.tblSex Sex in @ViewBag.Sex)
+                                            {
+                                                if (Sex.SexId == SexId)
+                                                {
+                                                    <option value="@Sex.SexId" selected>@Sex.Code - @Sex.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@Sex.SexId">@Sex.Code - @Sex.Name</option>
+                                                }
+                                            }
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Height</label><br />
+                                        <input type="text" class="form-control" id="Height" name="Height" value="@Height" >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div>
+                                            <label>Eyes</label>&nbsp;&nbsp;
+                                            <select class="form-control" id="Eyes" name="Eyes" >
+                                                <option value="0">Select Eyes</option>
+                                                @foreach (WorldServiceOrganization.Models.tblEye Eye in @ViewBag.Eye)
+                                                {
+                                                    if (Eye.EyeId == EyeId)
+                                                    {
+                                                        <option value="@Eye.EyeId" selected>@Eye.Code - @Eye.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Eye.EyeId">@Eye.Code - @Eye.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Marks</label>
+                                        &nbsp;&nbsp;
+                                        <input type="text" class="form-control" id="Marks" name="Marks" value="@Marks" >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Occupation Code</label>&nbsp;&nbsp;
+                                        <select class="form-control" id="OccupationCode" name="OccupationCode" >
+                                            <option value="0">Select Occupation</option>
+                                            @foreach (WorldServiceOrganization.Models.tblOccupation Occupation in @ViewBag.Occupation)
+                                            {
+                                                if (Occupation.OccupationId == OccupationId)
+                                                {
+                                                    <option value="@Occupation.OccupationId" selected>@Occupation.Code - @Occupation.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@Occupation.OccupationId">@Occupation.Code - @Occupation.Name</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div>
+                                            <label>Father</label>&nbsp;&nbsp;
+                                            <input type="text" class="form-control" id="FatherName" name="FatherName" value="@FatherName" >
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Mother</label>
+                                        &nbsp;&nbsp;
+                                        <input type="text" class="form-control" id="MotherName" name="MotherName" value="@MotherName" >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <div>
+                                            <label>Status</label>&nbsp;&nbsp;
+                                            <select class="form-control" id="StatusD" name="Status" required>
+                                                <option value="0">Select Status</option>
+                                                @foreach (WorldServiceOrganization.Models.tblStatus Status in @ViewBag.Status)
+                                                {
+                                                    if (Status.StatusId == StatusId)
+                                                    {
+                                                        <option value="@Status.StatusId" selected>@Status.Code - @Status.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Status.StatusId">@Status.Code - @Status.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Comments</label>
+                                        <textarea type="text" class="form-control" id="Comments" name="Comments" value="@Comments" ></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="change-avatar">
+                                        <div class="row">
+                                            <div class="col-md-6 text-right">
+                                                <div class="profile-img">
+
+                                                    <img id="ImgImg" src="@ImgImg" alt="your image" />
+
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="upload-img">
+                                                    <div class="change-photo-btn">
+                                                        <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                                        <input type="file" class="upload" name="Image" id="Image" accept="image/*" onchange="showPreviewImg(event);" value="Upload Photo">
+                                                    </div>
+                                                    <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveImage"><i class="fa fa-download"></i> Save</a>
+                                                    <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i> Delete</a>
+                                                    <input type="text"  name="Photo" id="DeleteImageText" style="display:none;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="change-avatar">
+                                        <div class="row">
+                                            <div class="col-md-6 text-right">
+                                                <div class="profile-img">
+
+                                                    <img id="ImgSig" src="@ImgSig" alt="your image" />
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="upload-img">
+                                                    <div class="change-sing-btn">
+                                                        <span><i class="fa fa-upload"></i> Upload Signature</span>
+                                                            <input type="file" class="upload" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Photo" >
+                                                    </div>
+                                                    <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveSig"><i class="fa fa-download"></i> Save</a>
+                                                    <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i> Delete</a>
+                                                    <input type="text" name="SignaturePath" id="DeleteSigText" style="display:none;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+                            <br>
+                            <div class="form-row">
+                                <div class="col-md-12">
+                                    <div class="change-avatar">
+                                        <div class="row">
+                                            <div class="col-md-6 text-right">
+                                                <div class="profile-img">
+
+                                                    <img id="ImgCer" src="@ImgCer" alt="your image" />
+
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="upload-img">
+                                                    <div class="change-doc-btn">
+                                                        <span><i class="fa fa-upload"></i> Upload Document</span>
+                                                        <input type="file" class="upload" name="CertificationFile" id="CertificationFile" accept="image/*" onchange="showPreviewCer(event);" value="Upload Photo">
+                                                    </div>
+                                                    <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveCer"><i class="fa fa-download"></i> Save</a>
+                                                    <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteCer"><i class="fa fa-trash"></i> Delete</a>
+                                                    <input type="text" name="Certification" id="DeleteCerText" style="display:none;">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+
+                        <div class="col-md-12 text-right">
+                            <div class="form-group">
+                                <label></label>
+                                <button class="btn btn-primary" type="submit">Save</button>
+                                <a href="@Url.Action("CreatePerson","Home")"><input class="btn btn-danger" type="button" value="Cancel"></a>
+                                <a href="@Url.Action("Persons","Home")" class="btn btn-secondary"><i class="fa fa-list"></i>List</a>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Transaction Count: @TransactionCount</label>
+
+                        </div>
+
+                        <div class="col-md-5">
+                            <label>Date of Entry: @CreateDate</label>&nbsp;&nbsp;
+                            <label>Initials @CIni</label>
+                        </div>
+
+                        <div class="col-md-5">
+                            <label>Date Changed: @EditDate</label>&nbsp;&nbsp;
+                            <label>Initials @EIni</label>
+                        </div>
+
+                    </div>
+                </div>
+               
+                            </div>
+
+
+                            }
+                        </div>
+                    </div>
+
+                </div>
+
+<!-- /Page Wrapper -->
+
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+@*<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>*@
+
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="Stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css" />
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>*@
+
+
+
+
+<script>
+
+    function showPreviewImg(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("ImgImg");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+    function showPreviewSig(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("ImgSig");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+    function showPreviewCer(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("ImgCer");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+
+
+    $("body").on("click", "#DeleteImage", function () {
+        $("#DeleteImageText").val("\\Uploading\\user-image.png");
+        $("#ImgImg").attr("src", "/Content/assets/img/user-image.png");
+        //alert($("#DeleteImageText").val());
+    });
+    $("body").on("click", "#DeleteSig", function () {
+        $("#DeleteSigText").val("\\Uploading\\sig.png");
+        $("#ImgSig").attr("src", "/Content/assets/img/sig.png");
+        //alert($("#DeleteSigText").val());
+    });
+    $("body").on("click", "#DeleteCer", function () {
+        $("#DeleteCerText").val("\\Uploading\\file.png");
+        $("#ImgCer").attr("src", "/Content/assets/img/file.png");
+        //alert($("#DeleteCerText").val());
+    });
+
+
+    $("body").on("click", "#SaveImage", function () {
+        var Src = $('#ImgImg').attr('src');
+        window.open(Src, '_blank');
+        //alert($("#DeleteImageText").val());
+    });
+    $("body").on("click", "#SaveSig", function () {
+        var Src = $('#ImgSig').attr('src');
+        window.open(Src, '_blank');
+        //alert($("#DeleteSigText").val());
+    });
+    $("body").on("click", "#SaveCer", function () {
+        
+        var Src = $('#ImgCer').attr('src');
+        window.open(Src, '_blank');
+        //alert($('img').attr('src'));
+    });
+
+    $(document).ready(function () {
+
+
+
+
+        //$("#CountryOfApplicationCode").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: "/Home/GetCountryCode",
+        //            type: "POST",
+        //            dataType: "json",
+        //            data: { Prefix: request.term },
+        //            success: function (data) {
+        //                response($.map(data, function (CountryList) {
+        //                    return { label: CountryList.CountryList, value: CountryList };
+        //                }))
+        //            }
+        //        })
+        //    },
+        //    //messages: {
+        //    //    noResults: "", results: ""
+        //    //},
+        //    select: function (event, ui) {
+        //        var text = ui.item.label
+        //        const myArray = text.split(",");
+
+        //        $('#CountryOfApplicationCode').val(myArray[0]);
+        //        $('#CountryOfApplicationName').val(myArray[1]);
+        //        $('#CountryOfApplication').val(myArray[2]);
+
+
+        //    }
+        //});
+        //$("#CountryOfBirthCode").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: "/Home/GetCountryCode",
+        //            type: "POST",
+        //            dataType: "json",
+        //            data: { Prefix: request.term },
+        //            success: function (data) {
+        //                response($.map(data, function (CountryList) {
+        //                    return { label: CountryList.CountryList, value: CountryList };
+        //                }))
+        //            }
+        //        })
+        //    },
+        //    //messages: {
+        //    //    noResults: "", results: ""
+        //    //},
+        //    select: function (event, ui) {
+        //        var text = ui.item.label
+        //        const myArray = text.split(",");
+
+        //        $('#CountryOfBirthCode').val(myArray[0]);
+        //        $('#CountryOfBirthName').val(myArray[1]);
+        //        $('#CountryOfBirth').val(myArray[2]);
+
+
+        //    }
+        //});
+        //$("#EyesCode").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: "/Home/GetEyeCode",
+        //            type: "POST",
+        //            dataType: "json",
+        //            data: { Prefix: request.term },
+        //            success: function (data) {
+        //                response($.map(data, function (CountryList) {
+        //                    return { label: CountryList.CountryList, value: CountryList };
+        //                }))
+        //            }
+        //        })
+        //    },
+        //    //messages: {
+        //    //    noResults: "", results: ""
+        //    //},
+        //    select: function (event, ui) {
+        //        var text = ui.item.label
+        //        const myArray = text.split(",");
+
+        //        $('#EyesCode').val(myArray[0]);
+        //        $('#EyesName').val(myArray[1]);
+        //        $('#Eyes').val(myArray[2]);
+
+
+        //    }
+        //});
+
+        $(document).ready(function () {
+            $("#CountryOfApplication").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#CountryOfBirth").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#Eyes").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#OccupationCode").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#SexD").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#StatusD").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+
+        });
+    });
+
+
+
+
+</script>

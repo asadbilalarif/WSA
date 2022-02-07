@@ -1,0 +1,320 @@
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.dll.config
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.pdb
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.exe
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.exe.config
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.rsp
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.exe
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.exe.config
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.rsp
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.Managed.Core.targets
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.AppContext.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Collections.Immutable.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Console.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Compression.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.FileSystem.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Pipes.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Reflection.Metadata.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.AccessControl.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Claims.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Principal.Windows.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.ValueTuple.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XmlDocument.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XPath.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.exe
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.exe.config
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.rsp
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\VBCSCompiler.exe
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\VBCSCompiler.exe.config
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Antlr3.Runtime.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.SqlServer.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.Web.Infrastructure.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Newtonsoft.Json.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Helpers.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Mvc.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Optimization.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Razor.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Deployment.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Razor.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\WebGrease.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.xml
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.SqlServer.xml
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Helpers.xml
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Mvc.xml
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Optimization.xml
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Razor.xml
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.xml
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Deployment.xml
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Razor.xml
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Newtonsoft.Json.xml
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Antlr3.Runtime.pdb
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CoreCompileInputs.cache
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CopyComplete
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.dll
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.pdb
+D:\Xpert(49)\eazisols\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csprojAssemblyReference.cache
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.dll.config
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.pdb
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.exe
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.exe.config
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.rsp
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.exe
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.exe.config
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.rsp
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CSharp.Core.targets
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.Managed.Core.targets
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.VisualBasic.Core.targets
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.AppContext.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Collections.Immutable.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Console.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Diagnostics.StackTrace.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Compression.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.FileSystem.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.FileSystem.Primitives.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Pipes.AccessControl.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Pipes.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Reflection.Metadata.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.AccessControl.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Claims.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Encoding.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Primitives.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Principal.Windows.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Text.Encoding.CodePages.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.ValueTuple.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.ReaderWriter.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XmlDocument.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XPath.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XPath.XDocument.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.exe
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.exe.config
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.rsp
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\VBCSCompiler.exe
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\VBCSCompiler.exe.config
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\Antlr3.Runtime.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.SqlServer.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.Web.Infrastructure.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\Newtonsoft.Json.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Helpers.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Mvc.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Optimization.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Razor.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Deployment.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Razor.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\WebGrease.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.xml
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.SqlServer.xml
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Helpers.xml
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Mvc.xml
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Optimization.xml
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Razor.xml
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.xml
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Deployment.xml
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Razor.xml
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\Newtonsoft.Json.xml
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\Antlr3.Runtime.pdb
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csprojAssemblyReference.cache
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CoreCompileInputs.cache
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CopyComplete
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.dll
+F:\Clients\David World Service ORG\Source Code and database\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.pdb
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.dll.config
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.pdb
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.exe
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.exe.config
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.rsp
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.exe
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.exe.config
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.rsp
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.Managed.Core.targets
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.AppContext.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Collections.Immutable.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Console.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Compression.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.FileSystem.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Pipes.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Reflection.Metadata.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.AccessControl.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Claims.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Principal.Windows.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.ValueTuple.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XmlDocument.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XPath.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.exe
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.exe.config
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.rsp
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\VBCSCompiler.exe
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\VBCSCompiler.exe.config
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\Antlr3.Runtime.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.SqlServer.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.Web.Infrastructure.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\Newtonsoft.Json.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Helpers.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Mvc.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Optimization.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Razor.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Deployment.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Razor.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\WebGrease.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.SqlServer.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Helpers.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Mvc.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Optimization.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Razor.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Deployment.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Razor.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\Newtonsoft.Json.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\Antlr3.Runtime.pdb
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csprojAssemblyReference.cache
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CoreCompileInputs.cache
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CopyComplete
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.pdb
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.dll.config
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\WorldServiceOrganization.pdb
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.exe
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.exe.config
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csc.rsp
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.exe
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.exe.config
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\csi.rsp
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.CSharp.Core.targets
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.Managed.Core.targets
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\Microsoft.VisualBasic.Core.targets
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.AppContext.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Collections.Immutable.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Console.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Diagnostics.StackTrace.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Compression.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.FileSystem.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.FileSystem.Primitives.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Pipes.AccessControl.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.IO.Pipes.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Reflection.Metadata.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.AccessControl.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Claims.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Encoding.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.Primitives.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Security.Principal.Windows.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Text.Encoding.CodePages.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.ValueTuple.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.ReaderWriter.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XmlDocument.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XPath.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\System.Xml.XPath.XDocument.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.exe
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.exe.config
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\vbc.rsp
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\VBCSCompiler.exe
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\roslyn\VBCSCompiler.exe.config
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\Antlr3.Runtime.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.SqlServer.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.Web.Infrastructure.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\Newtonsoft.Json.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Helpers.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Mvc.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Optimization.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Razor.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Deployment.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Razor.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\WebGrease.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.SqlServer.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Helpers.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Mvc.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Optimization.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Razor.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Deployment.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Razor.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\Newtonsoft.Json.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\Antlr3.Runtime.pdb
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csprojAssemblyReference.cache
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CoreCompileInputs.cache
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CopyComplete
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.pdb
