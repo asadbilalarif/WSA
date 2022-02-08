@@ -1093,6 +1093,7 @@ namespace WorldServiceOrganization.Controllers
                     if (DB.tblPersons.Select(r => r).Where(x => x.EMail==Person.EMail).FirstOrDefault() == null)
                     {
                         Data = Person;
+                        Data.OccupationId = Person.OccupationCode;
                         string folder = Server.MapPath(string.Format("~/{0}/", "Uploading"));
                         if (!Directory.Exists(folder))
                         {
@@ -1181,6 +1182,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.Status= Person.Status;
                         Data.Eyes= Person.Eyes;
                         Data.OccupationCode= Person.OccupationCode;
+                        Data.OccupationId = Person.OccupationCode;
                         Data.TransactionCount= Person.TransactionCount;
 
 
@@ -1518,6 +1520,7 @@ namespace WorldServiceOrganization.Controllers
             tblTransaction Data = new tblTransaction();
             try
             {
+                ViewBag.User = Session["User"];
                 if (Transaction.TransactionIDNumber == 0)
                 {
                     Data = Transaction;
@@ -1537,6 +1540,8 @@ namespace WorldServiceOrganization.Controllers
                     }
                     Data.CreatedDate = DateTime.Now;
                     Data.EditDate = DateTime.Now;
+                    Data.CreatedBy = ViewBag.User.UserId;
+                    Data.EditBy = ViewBag.User.UserId;
                     Data.isActive = true;
                     DB.tblTransactions.Add(Data);
                     DB.SaveChanges();
@@ -1581,6 +1586,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.ReturnDate = Transaction.ReturnDate;
                     }
                     Data.EditDate = DateTime.Now;
+                    Data.EditBy = ViewBag.User.UserId;
                     DB.Entry(Data);
                     DB.SaveChanges();
                     return RedirectToAction("CreateTransaction", new { Update = "Transaction has been Update successfully." });
@@ -1679,6 +1685,53 @@ namespace WorldServiceOrganization.Controllers
                 ViewBag.CState =CState ;
                 ViewBag.id = id;
                  return View(Address);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+            return View();
+
+        }
+
+
+        public ActionResult OneRecord(int? id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            try
+            {
+                var Persons = DB.tblPersons.Where(x => x.isActive == true && x.PersonIDNumber == id).FirstOrDefault();
+                ViewBag.LabelAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == true).FirstOrDefault();
+                ViewBag.AltAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == false).ToList();
+                ViewBag.Transaction = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+                ViewBag.Sum = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Select(s => s.Cost).Sum();
+                ViewBag.Count = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Count();
+                return View(Persons);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+            return View();
+
+        }
+
+        public ActionResult RoutingSlip(int? id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            try
+            {
+                var Persons = DB.tblPersons.Where(x => x.isActive == true && x.PersonIDNumber == id).FirstOrDefault();
+                ViewBag.LabelAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == true).FirstOrDefault();
+                ViewBag.AltAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == false).ToList();
+                ViewBag.Transaction = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+                ViewBag.Sum = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Select(s => s.Quantity).Sum();
+                ViewBag.Count = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Count();
+                return View(Persons);
             }
             catch (Exception ex)
             {

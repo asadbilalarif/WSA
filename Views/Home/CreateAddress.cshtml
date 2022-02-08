@@ -250,9 +250,9 @@
                                         <div class="col-md-12 text-center">
                                           
                                                     <p>
-                                                        <button type="button" class="btn btn-primary btn-sm" style="width:50%">One Record</button><br>
+                                                        <a href="@Url.Action("OneRecord","Home",new {id=@Model.PersonIDNumber })" target ="_blank"> <button type="button" class="btn btn-primary btn-sm"  style="width:50%">One Record</button></a><br>
                                                         <button  type="button" class="btn btn-secondary btn-sm" onclick="window.location.href='@Url.Action("AddressLabel","Home",new {id=@Model.PersonIDNumber })';"   style="margin-top:2px; width:50%">Label</button><br>
-                                                        <button type="button" class="btn btn-success btn-sm" style="margin-top:2px;width:50%">Routing Slip</button><br>
+                                                        <a href="@Url.Action("RoutingSlip","Home",new {id=@Model.PersonIDNumber })" target ="_blank"><button type="button" class="btn btn-success btn-sm" style="margin-top:2px;width:50%">Routing Slip</button></a><br>
 
                                                         <button type="button" class="btn btn-warning btn-sm" style="margin-top:2px;width:50%">Alpha Label</button>
 

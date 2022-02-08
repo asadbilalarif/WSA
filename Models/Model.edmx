@@ -177,9 +177,9 @@
           <Property Name="Certification" Type="nvarchar(max)" />
           <Property Name="CountryOfBirthStatistical" Type="int" />
           <Property Name="CreatedBy" Type="int" />
-          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="LastEditedBy" Type="int" />
-          <Property Name="LastModifiedDate" Type="datetime" />
+          <Property Name="LastModifiedDate" Type="datetime" Nullable="false" />
           <Property Name="DeletedBy" Type="int" />
           <Property Name="DeletedDate" Type="datetime" />
           <Property Name="isActive" Type="bit" />
@@ -626,6 +626,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblTransaction_tblUsers">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransaction_tblUsers1">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+          <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="EditBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UsersRole">
           <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
           <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="*" />
@@ -778,6 +802,14 @@
             <End Role="tblMenu" EntitySet="tblMenu" />
             <End Role="tblAccessLevel" EntitySet="tblAccessLevel" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblTransaction_tblUsers" Association="Self.FK_tblTransaction_tblUsers">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblTransaction" EntitySet="tblTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransaction_tblUsers1" Association="Self.FK_tblTransaction_tblUsers1">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tblTransaction" EntitySet="tblTransaction" />
+          </AssociationSet>
           <AssociationSet Name="FK_UsersRole" Association="Self.FK_UsersRole">
             <End Role="tblRole" EntitySet="tblRole" />
             <End Role="tblUsers" EntitySet="tblUsers" />
@@ -819,6 +851,8 @@
           <NavigationProperty Name="tblPersons1" Relationship="WorldServiceOrganizationModel.FK_PersonUserDel" FromRole="tblUser" ToRole="tblPerson" />
           <NavigationProperty Name="tblPersons2" Relationship="WorldServiceOrganizationModel.FK_PersonUserEdit" FromRole="tblUser" ToRole="tblPerson" />
           <Property Name="Initials" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblTransactions" Relationship="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers" FromRole="tblUser" ToRole="tblTransaction" />
+          <NavigationProperty Name="tblTransactions1" Relationship="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers1" FromRole="tblUser" ToRole="tblTransaction" />
         </EntityType>
         <EntityContainer Name="WorldServiceOrganizationEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
@@ -967,6 +1001,14 @@
             <Parameter Name="new_diagramname" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_upgraddiagrams" />
+          <AssociationSet Name="FK_tblTransaction_tblUsers" Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblTransaction" EntitySet="tblTransactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblTransaction_tblUsers1" Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers1">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblTransaction" EntitySet="tblTransactions" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="tblRole">
           <Key>
@@ -1332,9 +1374,9 @@
           <Property Name="Signature" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="CountryOfBirthStatistical" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="EntryDate" Type="DateTime" Precision="3" />
+          <Property Name="EntryDate" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="LastEditedBy" Type="Int32" />
-          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" />
+          <Property Name="LastModifiedDate" Type="DateTime" Precision="3" Nullable="false" />
           <Property Name="DeletedBy" Type="Int32" />
           <Property Name="DeletedDate" Type="DateTime" Precision="3" />
           <Property Name="isActive" Type="Boolean" />
@@ -1603,6 +1645,8 @@
           <Property Name="isActive" Type="Boolean" />
           <NavigationProperty Name="tblPerson" Relationship="WorldServiceOrganizationModel.FK_PersonTransaction" FromRole="tblTransaction" ToRole="tblPerson" />
           <NavigationProperty Name="tblProduct" Relationship="WorldServiceOrganizationModel.FK_ProductTransaction" FromRole="tblTransaction" ToRole="tblProduct" />
+          <NavigationProperty Name="tblUser" Relationship="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers" FromRole="tblTransaction" ToRole="tblUser" />
+          <NavigationProperty Name="tblUser1" Relationship="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers1" FromRole="tblTransaction" ToRole="tblUser" />
         </EntityType>
         <Association Name="FK_PersonTransaction">
           <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="0..1" />
@@ -1644,6 +1688,30 @@
           <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
           <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
+        <Association Name="FK_tblTransaction_tblUsers">
+          <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblTransaction" Role="tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblTransaction_tblUsers1">
+          <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblTransaction" Role="tblTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblTransaction">
+              <PropertyRef Name="EditBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

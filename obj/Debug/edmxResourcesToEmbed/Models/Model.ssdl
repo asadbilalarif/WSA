@@ -172,9 +172,9 @@
     <Property Name="Certification" Type="nvarchar(max)" />
     <Property Name="CountryOfBirthStatistical" Type="int" />
     <Property Name="CreatedBy" Type="int" />
-    <Property Name="EntryDate" Type="datetime" />
+    <Property Name="EntryDate" Type="datetime" Nullable="false" />
     <Property Name="LastEditedBy" Type="int" />
-    <Property Name="LastModifiedDate" Type="datetime" />
+    <Property Name="LastModifiedDate" Type="datetime" Nullable="false" />
     <Property Name="DeletedBy" Type="int" />
     <Property Name="DeletedDate" Type="datetime" />
     <Property Name="isActive" Type="bit" />
@@ -621,6 +621,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tblTransaction_tblUsers">
+    <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+    <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUsers">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tblTransaction">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblTransaction_tblUsers1">
+    <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+    <End Role="tblTransaction" Type="Self.tblTransaction" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUsers">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tblTransaction">
+        <PropertyRef Name="EditBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_UsersRole">
     <End Role="tblRole" Type="Self.tblRole" Multiplicity="0..1" />
     <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="*" />
@@ -772,6 +796,14 @@
     <AssociationSet Name="FK_tblAccessLevel_tblMenu" Association="Self.FK_tblAccessLevel_tblMenu">
       <End Role="tblMenu" EntitySet="tblMenu" />
       <End Role="tblAccessLevel" EntitySet="tblAccessLevel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTransaction_tblUsers" Association="Self.FK_tblTransaction_tblUsers">
+      <End Role="tblUsers" EntitySet="tblUsers" />
+      <End Role="tblTransaction" EntitySet="tblTransaction" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblTransaction_tblUsers1" Association="Self.FK_tblTransaction_tblUsers1">
+      <End Role="tblUsers" EntitySet="tblUsers" />
+      <End Role="tblTransaction" EntitySet="tblTransaction" />
     </AssociationSet>
     <AssociationSet Name="FK_UsersRole" Association="Self.FK_UsersRole">
       <End Role="tblRole" EntitySet="tblRole" />

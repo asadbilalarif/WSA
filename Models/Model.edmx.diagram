@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e9663d3bd04c4f22a61fcebb4991345a" Name="Diagram1" ZoomLevel="92">
+      <Diagram DiagramId="e9663d3bd04c4f22a61fcebb4991345a" Name="Diagram1" ZoomLevel="89">
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblUser" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblRole" Width="1.5" PointX="3.375" PointY="0.75" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK__tblUsers__RoleId__1367E606" />
@@ -48,6 +48,8 @@
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblTransaction" Width="1.5" PointX="16.875" PointY="0.75" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonTransaction" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_ProductTransaction" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -35,5 +35,7 @@ namespace WorldServiceOrganization.Models
     
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblProduct tblProduct { get; set; }
+        public virtual tblUser tblUser { get; set; }
+        public virtual tblUser tblUser1 { get; set; }
     }
 }

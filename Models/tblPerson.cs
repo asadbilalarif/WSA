@@ -55,9 +55,9 @@ namespace WorldServiceOrganization.Models
         public byte[] Signature { get; set; }
         public Nullable<int> CountryOfBirthStatistical { get; set; }
         public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> EntryDate { get; set; }
+        public System.DateTime EntryDate { get; set; }
         public Nullable<int> LastEditedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        public System.DateTime LastModifiedDate { get; set; }
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Nullable<bool> isActive { get; set; }
