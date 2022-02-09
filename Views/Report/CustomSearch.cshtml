@@ -1,0 +1,307 @@
+﻿@model  IEnumerable<WorldServiceOrganization.Models.tblPerson>
+
+@{
+    ViewData["Title"] = "Transactions";
+
+
+    string CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["DateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+    string EDate = DateTime.Now.ToString("yyyy-MM-dd");
+    string BDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+    //DateTime EEDate = ViewBag.EDate.ToString("yyyy-MM-dd");
+    //DateTime BBDate = ViewBag.BDate.ToString("yyyy-MM-dd");
+}
+
+<head>
+
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+
+        .filters {
+            background-color: white !important;
+            /*color: white !important;*/
+        }
+    </style>
+
+
+
+</head>
+
+
+
+
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">Custom Search</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    @using (Html.BeginForm("ProductList", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {@Html.AntiForgeryToken()
+                    @*<div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                
+                                <div class="col-md-6">
+                                    <label>Select Report</label>
+                                    <select name="SelectReport" id="SelectReport">
+                                        <option value="1">Daily</option>
+                                        <option value="2">Date Range</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label >Status</label>
+                                    <select name="SelectStatus" id="SelectStatus">
+                                        @foreach (WorldServiceOrganization.Models.tblStatus Status in @ViewBag.Status)
+                                        {
+                                            <option value=@Status.StatusId>@Status.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                    
+
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="row">
+                                    
+                                <div class="col-md-12" style="display:none;" id="SBD">
+                                    <label>Search by Date</label>
+                                    <select name="SearchByDate" id="SearchByDate">
+                                        <option value="1">Date Entered</option>
+                                        <option value="2">Date Changed</option>
+                                    </select>
+                                </div>
+                                
+                                
+                            </div>
+
+                        </div>
+
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-5 text-right">
+                            <button class="btn btn-primary" type="submit" id="btnSearch">OK</button>
+                            <a href="@Url.Action("ProductList", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                        </div>
+                        <div class="col-md-1 text-right">
+                            
+                        </div>
+                        <div class="col-md-6" style="display:none;" id="BEDate">
+                            <label>Begin:</label>
+                            <input type="date" id="BDate" name="BDate" value="@BDate">
+                            <label>End:</label>
+                            <input type="date"  name="EDate" value="@EDate">
+                        </div>
+                    </div><br />*@
+                }
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="cell-border table" id="ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Status</th>
+                                            <th>WSA #</th>
+                                            <th>Last Name</th>
+                                            <th>First Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            foreach (WorldServiceOrganization.Models.tblPerson List in Model)
+                                            {
+                                                <tr>
+                                                    <td>@List.tblStatu.Name</td>
+                                                    <td>@List.WSANumber</td>
+                                                    <td>@List.LastName</td>
+                                                    <td>@List.FirstName</td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- /Page Wrapper -->
+<!-- jQuery -->
+
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+
+
+@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+<script>
+
+
+   
+
+
+
+    $(document).ready(function () {
+
+        $('#ListTable_filter').hide();
+
+        $('#ListTable tfoot th').each(function () {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        });
+
+
+        // Setup - add a text input to each footer cell
+        $('#ListTable thead tr')
+            .clone(true)
+            .addClass('filters')
+            .appendTo('#ListTable thead');
+
+        var tbl = $('#ListTable').DataTable({
+
+            destroy: true,
+            dom: 'Bfrtip',
+            //lengthMenu: [
+            //    [10, 25, 50, -1],
+            //    ['10 rows', '25 rows', '50 rows', 'Show all']
+            //],
+            buttons: [
+                'pageLength',
+                {
+
+
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+                    }
+                }
+            ],
+            //"lengthMenu": [@Retrieves],
+        orderCellsTop: true,
+            fixedHeader: true,
+                initComplete: function () {
+                    var api = this.api();
+
+                    // For each column
+                    api
+                        .columns()
+                        .eq(0)
+                        .each(function (colIdx) {
+                            // Set the header cell to contain the input element
+                            var cell = $('.filters th').eq(
+                                $(api.column(colIdx).header()).index()
+                            );
+                            var title = $(cell).text();
+                            $(cell).html('<input type="text" placeholder="' + title + '" />');
+
+                            // On every keypress in this input
+                            $(
+                                'input',
+                                $('.filters th').eq($(api.column(colIdx).header()).index())
+                            )
+                                .off('keyup change')
+                                .on('keyup change', function (e) {
+                                    e.stopPropagation();
+
+                                    // Get the search value
+                                    $(this).attr('title', $(this).val());
+                                    var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                    var cursorPosition = this.selectionStart;
+                                    // Search the column for that value
+                                    api
+                                        .column(colIdx)
+                                        .search(
+                                            this.value != ''
+                                                ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                                : '',
+                                            this.value != '',
+                                            this.value == ''
+                                        )
+                                        .draw();
+
+                                    $(this)
+                                        .focus()[0]
+                                        .setSelectionRange(cursorPosition, cursorPosition);
+                                });
+                        });
+                },
+        //language: {
+        //    'search': '검색' /*Empty to remove the label*/,
+        //    paginate: {
+        //        previous: '이전',
+        //        next: '다음'
+        //    },
+        //},
+
+            searching: true, paging: false, Sorting: false, "bInfo": false,
+            //"lengthMenu": [[1000, 10, 25, 50, -1], [1000, 10, 25, 50, "All"]],
+            "order": [],
+                autoWidth: false,
+                    columnDefs: [
+                        { width: '20%', targets: 0 }
+                    ],
+                        fixedColumns: true
+    });
+
+
+        //$('#ListTable').DataTable({
+
+        //    "bInfo": false,
+        //    "scrollY": "110px",
+        //    "scrollCollapse": true,
+        //    searching: false, paging: false
+        //});
+
+
+        $(".nav li ul li").removeClass("active");
+        $('#CSearch').addClass('active');
+        $('#Rep a').addClass('subdrop');
+        $("#Rep  ul").first().css('display', 'block');
+    });
+
+
+
+
+</script>

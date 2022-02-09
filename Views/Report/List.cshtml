@@ -1,7 +1,8 @@
-﻿@model  WorldServiceOrganization.Models.tblPerson
+﻿@model  IEnumerable<WorldServiceOrganization.Models.ReportList>
 
 @{
     ViewData["Title"] = "Transactions";
+
 
     string CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
 
@@ -13,9 +14,8 @@
 <head>
 
     <style>
-        .select2-container {
-            width: 100% !important;
-        }
+
+       
     </style>
 
 
@@ -51,134 +51,81 @@
                 </div>
 
                 <div class="card-body">
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Report</label><br />
-                                <input type="radio" id="OccupationListing" name="ReportList" value="1" checked>
-                                <label for="OccupationListing">Occupation Listing</label><br>
-                                <input type="radio" id="CountryListing" name="ReportList" value="2">
-                                <label for="CountryListing">Country Listing</label><br>
-                                <input type="radio" id="ProductListing" name="ReportList" value="3">
-                                <label for="ProductListing">Product Listing</label><br>
-                                <input type="radio" id="ProductTypeListing" name="ReportList" value="3">
-                                <label for="ProductTypeListing">Product Type Listing</label><br>
-                                <input type="radio" id="EyesListing" name="ReportList" value="3">
-                                <label for="EyesListing">Eyes Listing</label><br>
-                                <input type="radio" id="StatusListing" name="ReportList" value="3">
-                                <label for="StatusListing">Status Listing</label><br>
-                                <input type="radio" id="SexListing" name="ReportList" value="3">
-                                <label for="SexListing">Sex Listing</label><br>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Sort</label><br />
-                                <input type="radio" id="SortByCode" name="ListSort" value="1" checked>
-                                <label for="SortByCode">By Code</label><br>
-                                <input type="radio" id="SortByName" name="ListSort" value="2">
-                                <label for="SortByName">By Name</label><br>
-                                <button class="btn btn-primary" type="submit" id="btnSearch">Save</button>
-                                <a href="@Url.Action("List","Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
-                                <a href="@Url.Action("Persons","Home")" class="btn btn-secondary"><i class="fa fa-list"></i>List</a>
-                            </div>
-                        </div>
-                    </div>
-
-                   
+                    @using (Html.BeginForm("List", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {@Html.AntiForgeryToken()
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="row" id="divReport">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label>Report:</label>
+                                        <select name="ReportList" id="ReportList">
+                                            <option value="0">Report</option>
+                                            <option value="1">Occupation Listing</option>
+                                            <option value="2">Country Listing</option>
+                                            <option value="3">Product Listing</option>
+                                            <option value="4">Sex Listing</option>
+                                            <option value="5">Eyes Listing</option>
+                                            <option value="6">Status Listing</option>
+                                            <option value="7">Product Type Listing</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        <button class="btn btn-primary" type="submit" id="btnSearch">OK</button>
+                                        <a href="@Url.Action("List", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
                             </div>
                         </div>
-                       
+
                     </div>
+                }
 
 
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="cell-border table" id="ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            foreach (WorldServiceOrganization.Models.ReportList List in Model)
+                                            {
+                                                <tr>
+                                                    <td>@List.Code</td>
+                                                    <td>@List.Name</td>
+                                                </tr>
+                                            }
+                                        }
 
-
-
-
-            <div class="row">
-
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-body">
-                            @using (Html.BeginForm("CreateTransaction", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                            {@Html.AntiForgeryToken()
-                            <span style="color:red;">@ViewBag.Error</span>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-12 text-right">
-                                    <button class="btn btn-primary" type="submit">Save</button>
-                                    <a href="@Url.Action("CreateTransaction","Home")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
-                                    <a href="@Url.Action("Persons","Home")" class="btn btn-secondary"><i class="fa fa-list"></i>List</a>
-                                </div>
+                                    </tbody>
+                                </table>
 
                             </div>
-                        }
                         </div>
                     </div>
+
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row">
-                                <p class="col-md-12 text-right">
-                                    <button type="button" class="btn btn-primary btn-sm" style="width:50%">Passport Label</button>
-                                    <button type="button" class="btn btn-secondary btn-sm" style="margin-top:2px; width:50%">Routing Slip</button>
-                                </p>
-                                <div class="col-md-12 text-center">
-                                    <div class="form-group row">
-                                        <label class="col-lg-6 col-form-label">Date of Entry</label>
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="CreatedDate" value="@CreatedDate" readonly>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="form-group row">
-                                        <label class="col-lg-6 col-form-label">Date Changed</label>
-                                        <div class="col-lg-6">
-                                            <input type="text" class="form-control" id="EditDate" value="" readonly>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-
 
 
             </div>
         </div>
     </div>
-
 </div>
-
 
 
 
@@ -193,33 +140,28 @@
 <script>
 
 
-    $(function () {
-        $('#btnSearch').click(function () {
 
-            var searchText = $("#searchText").val();
 
-            //ASPX page URL to load report    
-            var src = '../Reports/CustomerReport.aspx?';
-            //We can add parameters here    
-            srcsrc = src + "searchText=" + searchText
 
-            //We can append more than one parameter like below    
-            //var companyId = 1    
-            //srcsrc = src + "compnayID=" + companyId    
-
-            //Create a dynamic iframe here and append this to div tag    
-            var iframe = '<iframe id="reportFrame" width="100%" height="800px" scrolling="no" frameborder="0" src="' + src + '" allowfullscreen></iframe>';
-            $("#divReport").html(iframe);
-        });
-    }); 
-
-    
 
     $(document).ready(function () {
 
+        $("#ReportList").val(@ViewBag.State).change();
 
-        
 
+        $('#ListTable').DataTable({
+
+            "bInfo": false,
+            "scrollY": "110px",
+            "scrollCollapse": true,
+            searching: false, paging: false
+        });
+
+
+        $(".nav li ul li").removeClass("active");
+        $('#RList').addClass('active');
+        $('#Rep a').addClass('subdrop');
+        $("#Rep  ul").first().css('display', 'block');
     });
 
 
