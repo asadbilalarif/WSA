@@ -312,7 +312,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <p class="col-md-12 text-right">
-                                    <button type="button" class="btn btn-primary btn-sm" style="width:50%">Passport Label</button>
+                                    <button type="button" id="PassportLabel" class="btn btn-primary btn-sm" style="width:50%">Passport Label</button>
                                     <button type="button" class="btn btn-secondary btn-sm" style="margin-top:2px; width:50%">Routing Slip</button>
                                 </p>
                                 <div class="col-md-12 text-center">
@@ -406,9 +406,16 @@
         }
     });
 
+    $("body").on("click", "#PassportLabel", function () {
+        var url = window.location.origin;
+        url += '/Home/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + $("#TransactionIDNumber").val() +'';
+        window.location.href = url;
+        
+    });
 
+    
     $("body").on("click", "#EditTransaction", function () {
-
+        $("#PassportLabel").attr("disabled", false);
         var currentRow = $(this).closest("tr");
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
         $("#TransactionIDNumber").val(currentRow.find("td:eq(1)").text());
@@ -513,7 +520,7 @@
 
     $(document).ready(function () {
 
-
+        $("#PassportLabel").attr("disabled", true);
         //$("body").on("change", "#Cost", function () {
         //    var Qty = $("#Quantity");
         //    var Cost = $("#Cost");

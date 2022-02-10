@@ -1,0 +1,273 @@
+﻿@model  IEnumerable<WorldServiceOrganization.Models.tblTransaction>
+
+@{
+    ViewData["Title"] = "Transactions";
+
+
+    string CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["DateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+    string EDate = DateTime.Now.ToString("yyyy-MM-dd");
+    string BDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+    DateTime EEDate = ViewBag.EDate;
+    DateTime BBDate = ViewBag.BDate;
+
+    double? Amount = 0;
+}
+
+<head>
+
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+
+
+
+</head>
+
+
+
+
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">Person List</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    @using (Html.BeginForm("TransactionSummary", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {@Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <label>Select Report</label>
+                                    <select name="SelectReport" id="SelectReport">
+                                        <option value="1">Daily Transaction Summary</option>
+                                        <option value="2">Date Range Transaction Summary</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="row">
+
+                                <div class="col-md-12" style="display:none;" id="SBD">
+                                    <label>Search by Date</label>
+                                    <select name="SearchByDate" id="SearchByDate">
+                                        <option value="1">Date Entered</option>
+                                        <option value="2">Date Changed</option>
+                                        <option value="3">Issue Changed</option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-5 text-right">
+                            <button class="btn btn-primary" type="submit" id="btnSearch">OK</button>
+                            <a href="@Url.Action("ProductList", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                        </div>
+                        <div class="col-md-1 text-right">
+
+                        </div>
+                        <div class="col-md-6" style="display:none;" id="BEDate">
+                            <label>Begin:</label>
+                            <input type="date" id="BDate" name="BDate" value="@BDate">
+                            <label>End:</label>
+                            <input type="date" name="EDate" value="@EDate">
+                        </div>
+                    </div><br />
+                }
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="cell-border table" id="ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Type of Transaction</th>
+                                            <th>Number</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            foreach (WorldServiceOrganization.Models.tblTransaction List in Model)
+                                            {
+                                                {
+                                                    Amount = @List.Cost * @List.Quantity;
+                                                }
+
+                                                <tr>
+                                                    <td>@List.tblProduct.tblProductType.Name</td>
+                                                    <td>@List.Quantity</td>
+                                                    <td>@Amount</td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @*<div class="row">
+                        <div class="col-md-4">
+                            <p>Type of Transaction</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>Number</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p>Amount</p>
+                        </div>
+                    </div>
+                        @if (Model != null)
+                        {
+                            foreach (WorldServiceOrganization.Models.tblTransaction List in Model)
+                            {
+                                {
+                                                            Amount = @List.Cost * @List.Quantity;
+                                                        }
+                                <div class="row">
+                                    <div class="col-md-4">
+                                    <p>@List.tblProduct.tblProductType.Name</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>@List.Quantity</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <p>@Amount</p>
+                                    </div>
+                                 </div>
+                            }
+                        }*@
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- /Page Wrapper -->
+<!-- jQuery -->
+
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+
+
+@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+<script>
+
+
+    $('#SelectReport').change(function () {
+        var Val = $(this).val();
+        if (Val == 2) {
+            $('#BEDate').show();
+            $('#SBD').show();
+        }
+        else {
+            $('#BEDate').hide();
+            $('#SBD').hide();
+        }
+    });
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+    $(document).ready(function () {
+
+        if (@ViewBag.SelectReport!=0) {
+            $("#SelectReport").val(@ViewBag.SelectReport).change();
+        }
+
+
+
+        if (@ViewBag.SelectReport == 2) {
+            $('#BEDate').show();
+            $('#SBD').show();
+            $("#SearchByDate").val(@ViewBag.SearchByDate).change();
+
+            var fromDate = new Date("@BBDate");
+            $("#BDate").val(formatDate(fromDate));
+            fromDate = new Date("@EEDate");
+            $("#EDate").val(formatDate(fromDate));
+
+        }
+
+
+        $('#ListTable').DataTable({
+
+            "bInfo": false,
+            "scrollY": "110px",
+            "scrollCollapse": true,
+            searching: false, paging: false,
+        });
+
+
+        $(".nav li ul li").removeClass("active");
+        $('#PList').addClass('active');
+        $('#Rep a').addClass('subdrop');
+        $("#Rep  ul").first().css('display', 'block');
+    });
+
+
+
+
+</script>

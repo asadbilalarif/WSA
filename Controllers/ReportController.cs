@@ -116,6 +116,8 @@ namespace WorldServiceOrganization.Controllers
         public ActionResult ProductList()
         {
             ViewBag.SelectReport = 0;
+            ViewBag.BDate = DateTime.Now;
+            ViewBag.EDate = DateTime.Now;
             ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
             return View();
         }
@@ -164,6 +166,135 @@ namespace WorldServiceOrganization.Controllers
         {
             var PL= DB.tblPersons.Where(x => x.isActive == true).ToList();
             ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
+            return View(PL);
+        }
+
+        public ActionResult CountrySummary()
+        {
+            ViewBag.SelectReport = 0;
+            ViewBag.BDate = DateTime.Now;
+            ViewBag.EDate = DateTime.Now;
+            var PL = DB.tblPersons.Where(x => x.isActive == true).ToList();
+            ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
+            ViewBag.Country = DB.tblCountries.Where(x => x.isActive == true).ToList();
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult CountrySummary( DateTime BDate, DateTime EDate,int SearchbyCountry= 0, int SelectReport = 0, int SearchByDate = 0)
+        {
+            List<tblPerson> PL = new List<tblPerson>();
+            try
+            {
+
+                //ViewBag.CountryApplication = DB.tblCountries.Where(x => x.isActive == true&&x.CountryId== SearchbyCountry).ToLicst();
+                ViewBag.SelectReport = SelectReport;
+                ViewBag.SearchbyCountry = SearchbyCountry;
+                ViewBag.SearchByDate = SearchByDate;
+                ViewBag.BDate = BDate;
+                ViewBag.EDate = EDate;
+                ViewBag.Country = DB.tblCountries.Where(x => x.isActive == true).ToList();
+                if (SelectReport == 1)
+                {
+                    if(SearchByDate==1)
+                    {
+                        PL = DB.tblPersons.Where(x => x.isActive == true && x.CountryOfApplication == SearchbyCountry && x.EntryDate >= BDate && x.EntryDate <= EDate).ToList();
+                        ViewBag.Count= DB.tblPersons.Where(x => x.isActive == true && x.CountryOfApplication == SearchbyCountry && x.EntryDate >= BDate && x.EntryDate <= EDate).Count();
+                    }
+                    else
+                    {
+                        PL = DB.tblPersons.Where(x => x.isActive == true && x.CountryOfApplication == SearchbyCountry && x.LastModifiedDate >= BDate && x.LastModifiedDate <= EDate).ToList();
+                        ViewBag.Count = DB.tblPersons.Where(x => x.isActive == true && x.CountryOfApplication == SearchbyCountry && x.LastModifiedDate >= BDate && x.LastModifiedDate <= EDate).Count();
+                    }
+                }
+                else if(SelectReport==2)
+                {
+                    PL = null;
+                    ViewBag.Count = DB.tblPersons.Where(x => x.isActive == true && x.CountryOfApplication == SearchbyCountry).Count();
+                }
+                else if (SelectReport == 3)
+                {
+                    if(SearchByDate == 1)
+                    {
+                        PL = DB.tblPersons.Where(x => x.isActive == true && x.CountryOfBirth == SearchbyCountry && x.EntryDate >= BDate && x.EntryDate <= EDate).ToList();
+                        ViewBag.Count = DB.tblPersons.Where(x => x.isActive == true && x.CountryOfBirth == SearchbyCountry && x.EntryDate >= BDate && x.EntryDate <= EDate).Count();
+                    }
+                    else
+                    {
+                        PL = DB.tblPersons.Where(x => x.isActive == true && x.CountryOfBirth == SearchbyCountry && x.LastModifiedDate >= BDate && x.LastModifiedDate <= EDate).ToList();
+                        ViewBag.Count = DB.tblPersons.Where(x => x.isActive == true && x.CountryOfBirth == SearchbyCountry && x.LastModifiedDate >= BDate && x.LastModifiedDate <= EDate).Count();
+                    }
+                }
+                else
+                {
+                    PL = null;
+                    ViewBag.Count = DB.tblPersons.Where(x => x.isActive == true && x.CountryOfBirth == SearchbyCountry).Count();
+                }
+                return View(PL);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return View(PL);
+        }
+
+        public ActionResult TransactionSummary()
+        {
+            ViewBag.SelectReport = 0;
+            ViewBag.BDate = DateTime.Now;
+            ViewBag.EDate = DateTime.Now;
+            List<tblTransaction> PL = null;
+            //var PL = DB.tblPersons.Where(x => x.isActive == true).ToList();
+            ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
+            ViewBag.Country = DB.tblCountries.Where(x => x.isActive == true).ToList();
+            return View(PL);
+        }
+
+        [HttpPost]
+        public ActionResult TransactionSummary(int SelectReport, int SearchByDate, DateTime BDate, DateTime EDate)
+        {
+            List<tblTransaction> PL = new List<tblTransaction>();
+            try
+            {
+
+                ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
+                ViewBag.SelectReport = SelectReport;
+                ViewBag.SearchByDate = SearchByDate;
+                ViewBag.BDate = BDate;
+                ViewBag.EDate = EDate;
+                if (SelectReport == 1)
+                {
+                    PL = DB.tblTransactions.Where(x => x.isActive == true && x.EditDate == DateTime.Now).ToList();
+                }
+                else
+                {
+                    if (SearchByDate == 1)
+                    {
+                        PL = DB.tblTransactions.Where(x => x.isActive == true && x.CreatedDate >= BDate && x.CreatedDate <= EDate).ToList();
+                    }
+                    else if(SearchByDate==2)
+                    {
+                        PL = DB.tblTransactions.Where(x => x.isActive == true && x.EditDate >= BDate && x.EditDate <= EDate).ToList();
+                    }
+                    else
+                    {
+                        PL = DB.tblTransactions.Where(x => x.isActive == true && x.IssueDate >= BDate && x.IssueDate <= EDate).ToList();
+                    }
+                }
+                return View(PL);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
             return View(PL);
         }
     }

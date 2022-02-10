@@ -1,0 +1,280 @@
+﻿@model  IEnumerable<WorldServiceOrganization.Models.tblPerson>
+
+@{
+    ViewData["Title"] = "Transactions";
+
+
+    string CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["DateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+    string EDate = DateTime.Now.ToString("yyyy-MM-dd");
+    string BDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+    DateTime EEDate = ViewBag.EDate;
+    DateTime BBDate = ViewBag.BDate;
+}
+
+<head>
+
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+
+
+
+</head>
+
+
+
+
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">Country Summary</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    @using (Html.BeginForm("CountrySummary", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {@Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+
+                                <div class="col-md-4">
+                                    <label>Search by Country</label>
+                                    <select name="SearchbyCountry" id="SearchbyCountry">
+                                        @foreach (WorldServiceOrganization.Models.tblCountry Country in @ViewBag.Country)
+                                        {
+                                            <option value=@Country.CountryId>@Country.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="col-md-8">
+                                    <label>Select Report</label>
+                                    <select name="SelectReport" id="SelectReport">
+                                        <option value="1">List of People by Application Country</option>
+                                        <option value="2">Totals of Application Country</option>
+                                        <option value="3">List of People by Country Birth</option>
+                                        <option value="4">Totals for Country Birth</option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="row">
+
+                                <div class="col-md-12" id="SBD">
+                                    <label>Search by Date</label>
+                                    <select name="SearchByDate" id="SearchByDate">
+                                        <option value="1">Date Entered</option>
+                                        <option value="2">Date Changed</option>
+                                    </select>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-5 text-right">
+                            <button class="btn btn-primary" type="submit" id="btnSearch">OK</button>
+                            <a href="@Url.Action("CountrySummary", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                        </div>
+                        <div class="col-md-1 text-right">
+
+                        </div>
+                        <div class="col-md-6" id="BEDate">
+                            <label>Begin:</label>
+                            <input type="date" id="BDate" name="BDate" value="@BDate">
+                            <label>End:</label>
+                            <input type="date" name="EDate" value="@EDate">
+                        </div>
+                    </div><br />
+                }
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="cell-border table" id="ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th>System#</th>
+                                            <th>Last Name</th>
+                                            <th>First Name</th>
+                                            <th>Date Entry</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            foreach (WorldServiceOrganization.Models.tblPerson List in Model)
+                                            {
+                                                <tr>
+                                                    <td>@List.WSANumber</td>
+                                                    <td>@List.LastName</td>
+                                                    <td>@List.FirstName</td>
+                                                    <td>@List.EntryDate</td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            @*<p>Country of Application: @Model.FirstOrDefault().tblCountry.Name</p>*@
+                        </div>
+                        <div class="col-md-6 text-right">
+                            <p>Count= @ViewBag.Count</p>
+                        </div>
+                    </div>
+
+                    
+                    @*<div class="row">
+                        <div class="col-md-3">
+                            <p>System#</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>Last Name</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>First Name</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p>Date Entry</p>
+                        </div>
+                    </div>
+                            @if (Model != null)
+                            {
+                                foreach (WorldServiceOrganization.Models.tblPerson List in Model)
+                                {
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                        <p>@List.WSANumber</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p>@List.LastName</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p>@List.FirstName</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <p>@List.EntryDate</p>
+                                        </div>
+                                     </div>
+                                   
+                                }
+                            }*@
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- /Page Wrapper -->
+<!-- jQuery -->
+
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+
+
+@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+<script>
+
+
+    //$('#SelectReport').change(function () {
+    //    var Val = $(this).val();
+    //    if (Val == 2) {
+    //        $('#BEDate').show();
+    //        $('#SBD').show();
+    //    }
+    //    else {
+    //        $('#BEDate').hide();
+    //        $('#SBD').hide();
+    //    }
+    //});
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+    $(document).ready(function () {
+
+        if (@ViewBag.SelectReport!=0) {
+            $("#SelectReport").val(@ViewBag.SelectReport).change();
+            $("#SearchbyCountry").val(@ViewBag.SearchbyCountry).change();
+        }
+        $("#SearchByDate").val(@ViewBag.SearchByDate).change();
+         var fromDate = new Date("@BBDate");
+            $("#BDate").val(formatDate(fromDate));
+            fromDate = new Date("@EEDate");
+            $("#EDate").val(formatDate(fromDate));
+
+
+        $('#ListTable').DataTable({
+
+            "bInfo": false,
+            "scrollY": "110px",
+            "scrollCollapse": true,
+            searching: false, paging: false,
+        });
+
+
+        $(".nav li ul li").removeClass("active");
+        $('#CSummary').addClass('active');
+        $('#Rep a').addClass('subdrop');
+        $("#Rep  ul").first().css('display', 'block');
+    });
+
+
+
+
+</script>
