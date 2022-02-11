@@ -1048,20 +1048,33 @@ namespace WorldServiceOrganization.Controllers
             return View(PersonList);
         }
 
-        public ActionResult CreatePerson(int? id)
+        public ActionResult CreatePerson(int? id, string Success, string Update, string Delete,int tab=0)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
-            tblPerson Person = null;
+            tblPerson Person = new tblPerson();
             ViewBag.Country= DB.tblCountries.Where(x => x.isActive == true).ToList();
             ViewBag.Eye= DB.tblEyes.Where(x => x.isActive == true).ToList();
             ViewBag.Occupation= DB.tblOccupations.Where(x => x.isActive == true).ToList();
             ViewBag.Sex= DB.tblSex.Where(x => x.isActive == true).ToList();
             ViewBag.Status= DB.tblStatus.Where(x => x.isActive == true).ToList();
-            
+            ViewBag.tab = tab;
             
 
             if (id != null && id != 0)
             {
+                ViewBag.Child = DB.tblChilds.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+
+                ViewBag.Address = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+
+                ViewBag.Transaction = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+
+                ViewBag.Success = Success;
+                ViewBag.Update = Update;
+                ViewBag.Delete = Delete;
+                ViewBag.Product = DB.tblProducts.Where(x => x.isActive == true).ToList();
+                ViewBag.Sum = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Select(s => s.Cost).Sum();
+                ViewBag.Count = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Count();
+
                 ViewBag.TransCount = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Count();
                 Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
                 
@@ -1070,6 +1083,7 @@ namespace WorldServiceOrganization.Controllers
             else
             {
                 ViewBag.WAS = null;
+                Person.PersonIDNumber=0;
                 if(DB.tblPersons.Max(s=>s.WSANumber)!=null)
                 {
                     ViewBag.WAS = DB.tblPersons.Max(s => s.WSANumber) + 1;
@@ -1090,8 +1104,8 @@ namespace WorldServiceOrganization.Controllers
                 ViewBag.User = Session["User"];
                 if (Person.PersonIDNumber == 0)
                 {
-                    if (DB.tblPersons.Select(r => r).Where(x => x.EMail==Person.EMail).FirstOrDefault() == null)
-                    {
+                    //if (DB.tblPersons.Select(r => r).Where(x => x.EMail==Person.EMail).FirstOrDefault() == null)
+                    //{
                         Data = Person;
                         Data.OccupationId = Person.OccupationCode;
                         string folder = Server.MapPath(string.Format("~/{0}/", "Uploading"));
@@ -1146,11 +1160,11 @@ namespace WorldServiceOrganization.Controllers
                         DB.tblPersons.Add(Data);
                         DB.SaveChanges();
                         return RedirectToAction("Persons", new { Success = "Person has been add successfully." });
-                    }
-                    else
-                    {
-                        ViewBag.Error = "Person Already Exsist!!!";
-                    }
+                    //}
+                    //else
+                    //{
+                    //    ViewBag.Error = "Person Already Exsist!!!";
+                    //}
                 }
                 else
                 {
@@ -1257,8 +1271,24 @@ namespace WorldServiceOrganization.Controllers
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             tblPerson Data = new tblPerson();
+            List<tblAddress> Data1 = new List<tblAddress>();
+            List <tblTransaction> Data2 = new List<tblTransaction>();
+            List<tblChild> Data3 = new List<tblChild>();
             try
             {
+                Data1 = DB.tblAddresses.Select(r => r).Where(x => x.PersonIDNumber == PersonId).ToList();
+                
+                
+                Data2 = DB.tblTransactions.Select(r => r).Where(x => x.PersonIDNumber == PersonId).ToList();
+                if (Data2.Count() > 0)
+                {
+                    DB.tblTransactions.RemoveRange(Data2);
+                }
+                Data3 = DB.tblChilds.Select(r => r).Where(x => x.PersonIDNumber == PersonId).ToList();
+                if (Data3.Count() > 0)
+                {
+                    DB.tblChilds.RemoveRange(Data3);
+                }
                 Data = DB.tblPersons.Select(r => r).Where(x => x.PersonIDNumber == PersonId).FirstOrDefault();
                 DB.Entry(Data).State = EntityState.Deleted;
                 DB.SaveChanges();
@@ -1321,7 +1351,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.isActive = true;
                         DB.tblChilds.Add(Data);
                         DB.SaveChanges();
-                        return RedirectToAction("CreateChild", new { Success = "Child has been add successfully." });
+                        return RedirectToAction("CreatePerson", new { Success = "Child has been add successfully.", id = Child.PersonIDNumber, tab = 3 });
                     }
                     else
                     {
@@ -1342,7 +1372,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.EditDate = DateTime.Now;
                         DB.Entry(Data);
                         DB.SaveChanges();
-                        return RedirectToAction("CreateChild", new { Update = "Child has been Update successfully." });
+                        return RedirectToAction("CreatePerson", new { Update = "Child has been Update successfully.", id = Data.PersonIDNumber, tab = 3 });
                     }
                     else
                     {
@@ -1427,7 +1457,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.isActive = true;
                         DB.tblAddresses.Add(Data);
                         DB.SaveChanges();
-                        return RedirectToAction("CreateAddress", new { Success = "Address has been add successfully." });
+                        return RedirectToAction("CreatePerson", new { Success = "Address has been add successfully.", id = Address.PersonIDNumber, tab = 2});
                    
                 }
                 else
@@ -1445,7 +1475,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.EditDate = DateTime.Now;
                         DB.Entry(Data);
                         DB.SaveChanges();
-                        return RedirectToAction("CreateAddress", new { Update = "Address has been Update successfully." });
+                        return RedirectToAction("CreatePerson", new { Update = "Address has been Update successfully.", id = Address.PersonIDNumber, tab = 2 });
                    
 
                 }
@@ -1545,7 +1575,8 @@ namespace WorldServiceOrganization.Controllers
                     Data.isActive = true;
                     DB.tblTransactions.Add(Data);
                     DB.SaveChanges();
-                    return RedirectToAction("CreateTransaction", new { Success = "Transaction has been add successfully." });
+                    
+                    return RedirectToAction("CreatePerson", new { Success = "Transaction has been add successfully.",id= Transaction.PersonIDNumber, tab = 1 });
 
                 }
                 else
@@ -1589,7 +1620,7 @@ namespace WorldServiceOrganization.Controllers
                     Data.EditBy = ViewBag.User.UserId;
                     DB.Entry(Data);
                     DB.SaveChanges();
-                    return RedirectToAction("CreateTransaction", new { Update = "Transaction has been Update successfully." });
+                    return RedirectToAction("CreatePerson", new { Update = "Transaction has been Update successfully.",id= Transaction.PersonIDNumber,tab=1 });
 
 
                 }
@@ -1603,7 +1634,7 @@ namespace WorldServiceOrganization.Controllers
                 Console.WriteLine("Error" + ex.Message);
             }
 
-            return RedirectToAction("CreateTransaction");
+            return RedirectToAction("CreatePerson");
         }
 
 

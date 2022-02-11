@@ -6,6 +6,8 @@
     string Update = @ViewBag.Update;
     string Delete = @ViewBag.Delete;
 
+    int? SexId = 0;
+
     string CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
 
     HttpCookie cookieObj = Request.Cookies["Settings"];

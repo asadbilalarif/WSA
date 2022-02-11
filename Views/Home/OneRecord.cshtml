@@ -1,408 +1,415 @@
 ﻿@model  WorldServiceOrganization.Models.tblPerson
 
 @{
-    Layout = null;
-}
-
-
-@{
     ViewData["Title"] = "Addresss";
 
     HttpCookie cookieObj = Request.Cookies["Settings"];
     string DateFormat = cookieObj["DateFormat"];
     string Retrieves = cookieObj["Retrieves"];
 
+    double? TotalCost = 0;
+    double? GrandCost = 0;
+
 }
 
-<!DOCTYPE html>
-<html lang="en">
+
 <head>
 
     <style>
         p {
-            margin-top: 0 !important;
-            margin-bottom: 0rem !important;
+            margin-top: 0;
+            margin-bottom: 0rem;
         }
-
-
-
-
-        .main-page {
-            background: white;
-            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-        }
-
-        /*body {
-            width: 230mm;
-            height: 100%;
-            margin: 0 auto;
-            padding: 0;
-            font-size: 12pt;
-            background: rgb(204,204,204);
-        }
-
-        * {
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-        }
-
-        .main-page {
-            width: 210mm;
-            min-height: 297mm;
-            margin: 10mm auto;
-            background: white;
-            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
-        }
-
-        .sub-page {
-            padding: 1cm;
-            height: 297mm;
-        }
-
-        @@page {
-            size: A4;
-            margin: 0;
-        }
-
-        @@media print {
-            html, body {
-                width: 210mm;
-                height: 297mm;
-            }
-
-            .main-page {
-                margin: 0;
-                border: initial;
-                border-radius: initial;
-                width: initial;
-                min-height: initial;
-                box-shadow: initial;
-                background: initial;
-                page-break-after: always;
-            }
-        }*/
     </style>
 
     <script src="http://www.openjs.com/scripts/events/keyboard_shortcuts/shortcut.js"></script>
-    @*<script language="javascript" type="text/javascript">
+    <script language="javascript" type="text/javascript">
 
-            shortcut.add("ctrl+p", function () {
+        shortcut.add("ctrl+p", function () {
 
-                var myDiv = document.getElementById("ID").innerHTML;
-                var State = $('input[name="WSADisplay"]:checked').val();
-                var CState = $('input[name="CountryDisplay"]:checked').val();
-                document.body.innerHTML =
-                    "<html><head><title></title></head><body>" +
-                    myDiv + "</body>";
-                window.print();
+            var db = document.body.getElementsByTagName('div');
+            var myDiv = document.getElementById("section").innerHTML;
+            var State = $('input[name="WSADisplay"]:checked').val();
+            var CState = $('input[name="CountryDisplay"]:checked').val();
+            document.body.innerHTML =
+                "<html><head><title></title></head><body>" +
+                myDiv + "</body>";
+            window.print();
 
-                var url = window.location.origin;
-                url += '/Home/AddressLabel?id='+@Model.FirstOrDefault().PersonIDNumber+'&&State=' + State + '&&CState=' + CState+'';
-                window.location.href = url;
-            });
+            var url = window.location.origin;
+            url += '/Home/OneRecord?id='+@Model.PersonIDNumber+'';
+            window.location.href = url;
+        });
 
-        </script>*@
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
-    <title>WSA - Dashboard</title>
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="~/Content/assets/img/favicon.png">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="~/Content/assets/css/bootstrap.min.css">
-
-    <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="~/Content/assets/css/font-awesome.min.css">
-
-    <!-- Feathericon CSS -->
-    <link rel="stylesheet" href="~/Content/assets/css/feathericon.min.css">
-
-
-
-    <link rel="stylesheet" href="~/Content/assets/plugins/morris/morris.css">
-    @*<link href="~/Content/assets/css/datatables.min.css" rel="stylesheet" />*@
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="~/Content/assets/css/style.css">
-
-
-    <link href="~/Content/assets/css/jquery.dataTables.min.css" rel="stylesheet" />
-    <link href="~/Content/assets/css/buttons.dataTables.min.css" rel="stylesheet" />
-
-
-    <link href="~/Content/assets/css/select2.min.css" rel="stylesheet" />
-
+    </script>
 
 </head>
 
 
-    <body>
 
 
+<!-- Page Wrapper -->
+<div class="content container-fluid">
 
-        <!-- Main Wrapper -->
-        <div class="main-wrapper main-page">
+    <!-- Page Header -->
+    <!-- /Page Header -->
 
-            <!-- Page Wrapper -->
-            <div class="content container-fluid sub-page">
-
-                <!-- Page Header -->
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
                 <div class="row">
-                    <div class="col-md-6">
-                        <p>World Service Authority Database Report</p>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <p>@DateTime.Now</p>
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">Address Label</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="row" style="border-bottom:solid">
-                    <div class="col-md-6">
-                        <p>Search: one person</p>
-                    </div>
-                    <div class="col-md-6 text-right">
-                        <p></p>
-                    </div>
-                </div><br />
-                <!-- /Page Header -->
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p>Last Name</p>
-                                <p>System#</p>
-                                <p>Country of Appl</p>
-                                <p>City of Birth</p>
-                                <p>Date of Birth</p>
-                                <p>Sex</p>
-                                <p>Height</p>
-                                <p>Eye</p>
-                                <p>Marks</p>
-                                <p>Occupation Code</p>
-                                <p>Father</p>
-                                <p>Phone</p>
-                                <p>E-Mail</p>
-                                <p>Date Entered</p>
-                            </div>
-                            <div class="col-md-6 ">
-                                <p><b>@Model.LastName</b></p>
-                                <p>@Model.WSANumber</p>
-                                <p>@Model.tblCountry.Name</p>
-                                <p>@Model.CityOfBirth</p>
-                                <p>@Model.DateOfBirth.ToString("dd-MMM-yy")</p>
-                                <p>@Model.tblSex.Name</p>
-                                <p>@Model.Height</p>
-                                <p>@Model.tblEye.Name</p>
-                                <p>@Model.Marks</p>
-                                <p>@Model.tblOccupation.Name</p>
-                                <p>@Model.FatherName</p>
-                                <p>@Model.Phone</p>
-                                <p>@Model.EMail</p>
-                                <p>@Model.EntryDate.ToString("dd-MMM-yy")</p>
-                            </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Letter Case</label>
+                            <select name="LetterCase" class="form-control" id="LetterCase">
+                                <option value=""> Select Letter Case</option>
+                                <option value="1">lowercase</option>
+                                <option value="2">UPPERCASE</option>
+                                <option value="3">Capitalize Each Word</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Font Size</label>
+                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="" />
+                        </div>
+                        <div class="col-md-4">
+                            <label>Font Style</label>
+                            <input type="text" class="form-control" name="FontStyle" id="FontStyle" value="" />
                         </div>
                     </div>
-                    <div class="col-md-6 ">
-                        <div class="row">
-                            <div class="col-md-6 ">
-                                <p>First Name</p>
-                                <p>Status</p>
-                                <p>Country of Birth</p>
-                                <p>Mother</p>
-                                <p>Fax</p>
-                                <p>Date Modified</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p><b>@Model.FirstName</b></p>
-                                <p>@Model.tblStatu.Name</p>
-                                <p>@Model.tblCountry1.Name</p>
-                                <p>@Model.MotherName</p>
-                                <p>@Model.Fax</p>
-                                <p>@Model.LastModifiedDate.ToString("dd-MMM-yy")</p>
-                            </div>
-                        </div>
-                    </div>
-                </div><br />
 
-                <div class="row" style="border:solid;">
-                    <div class="col-sm-2">
-                        <p>Send To</p>
-                        <p>CareOf</p>
-                        <p>Address</p>
-                        <p>City</p>
-                        <p>State</p>
-                        <p>Zip</p>
-                        <p>Country</p>
-
-                    </div>
-                    <div class="col-sm-10 text-left">
-                        <br />
-                        <p>@ViewBag.LabelAddress.CareOf</p>
-                        <p>@ViewBag.LabelAddress.Address1</p>
-                        <p>@ViewBag.LabelAddress.City</p>
-                        <p>@ViewBag.LabelAddress.State</p>
-                        <p>@ViewBag.LabelAddress.PostalCode</p>
-                        <p>@ViewBag.LabelAddress.tblCountry.Name</p>
-
-                    </div>
-                </div><br />
-                @foreach (WorldServiceOrganization.Models.tblAddress Address in @ViewBag.AltAddress)
-                {
-                    <div class="row" style="border:solid;">
-                        <div class="col-sm-2">
-                            <p>Alternate Address</p>
-                            <p>CareOf</p>
-                            <p>Address</p>
-                            <p>City</p>
-                            <p>State</p>
-                            <p>Zip</p>
-                            <p>Country</p>
-
-                        </div>
-                        <div class="col-sm-10 text-left">
-                            <br />
-                            <p>@Address.CareOf</p>
-                            <p>@Address.Address1</p>
-                            <p>@Address.City</p>
-                            <p>@Address.State</p>
-                            <p>@Address.PostalCode</p>
-                            <p>@Address.tblCountry.Name</p>
-
-                        </div>
-                    </div><br />
-                }
-                <div class="row">
-                    <div class="col-sm-10">
-                        <div class="row">
-                            <div class="col-sm-1">
-                                <p><b>Comment:</b></p>
-                            </div>
-                            <div class="col-sm-11 text-left">
-                                <p>@Model.Comments</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-2 text-center">
-                        <p>Entered By </p>
-                        <p><b>@Model.tblUser.Initials</b></p>
-
-                    </div>
-                </div><br />
-
-                <div class="row">
-                    <div class="col-md-1">
-                        <p>Product Code</p>
-                    </div>
-                    <div class="col-md-1">
-                        <p>Product Name</p>
-                    </div>
-                    <div class="col-md-1">
-                        <p>Unit Cost</p>
-                    </div>
-                    <div class="col-md-1">
-                        <p>Qty</p>
-                    </div>
-                    <div class="col-md-1">
-                        <p>Total Cost</p>
-                    </div>
-                    <div class="col-md-1 ">
-                        <p>Document ID</p>
-                    </div>
-                    <div class="col-sm-2">
-                        <p>Application Date</p>
-                    </div>
-                    <div class="col-sm-2 ">
-                        <p>Issue Date</p>
-                    </div>
-                    <div class="col-sm-2 ">
-                        <p>Sent Date</p>
-                    </div>
                 </div>
-                <div style="border:solid;">
-                    @foreach (WorldServiceOrganization.Models.tblTransaction Transaction in @ViewBag.Transaction)
-                    {
-                        <div class="row">
-                            <div class="col-md-1">
-                                <p>@Transaction.tblProduct.Code</p>
-                            </div>
-                            <div class="col-md-1">
-                                <p>@Transaction.tblProduct.Name</p>
-                            </div>
-                            <div class="col-md-1">
-                                <p>@Transaction.tblProduct.Price</p>
-                            </div>
-                            <div class="col-md-1">
-                                <p>@Transaction.Quantity</p>
-                            </div>
-                            <div class="col-md-1">
-                                <p>@Transaction.Cost</p>
-                            </div>
-                            <div class="col-md-1 ">
-                                <p>@Transaction.IDCode</p>
-                            </div>
-                            <div class="col-sm-2">
-                                <p>@Transaction.ApplicationDate.ToString("dd-MMM-yy")</p>
-                            </div>
-                            <div class="col-sm-2 ">
-                                <p>@Transaction.IssueDate.ToString("dd-MMM-yy")</p>
-                            </div>
-                            <div class="col-sm-2 ">
-                                <p>@Transaction.SentDate.ToString("dd-MMM-yy")</p>
-                            </div>
-                        </div>
-                    }
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <p>Total for <b>@ViewBag.Count</b> Transaction</p>
-                    </div>
-                    <div class="col-md-8">
-                        <p><b>$ @ViewBag.Sum</b></p>
-                    </div>
-                
-                </div><br />   
+
             </div>
 
+            <div class="card">
+                <div class="card-body">
+                    <section id="section">
+                        <div id="ID">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>World Service Authority Database Report</p>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <p>@DateTime.Now</p>
+                                </div>
+                            </div>
+                            <div class="row" style="border-bottom:solid">
+                                <div class="col-md-6">
+                                    <p>Search: one person</p>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <p></p>
+                                </div>
+                            </div><br />
+                            <!-- /Page Header -->
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p>Last Name</p>
+                                            <p>System#</p>
+                                            <p>Country of Appl</p>
+                                            <p>City of Birth</p>
+                                            <p>Date of Birth</p>
+                                            <p>Sex</p>
+                                            <p>Height</p>
+                                            <p>Eye</p>
+                                            <p>Marks</p>
+                                            <p>Occupation Code</p>
+                                            <p>Father</p>
+                                            <p>Phone</p>
+                                            <p>E-Mail</p>
+                                            <p>Date Entered</p>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            <p><b>@Model.LastName</b></p>
+                                            <p>@Model.WSANumber</p>
+                                            <p>@Model.tblCountry.Name</p>
+                                            <p>@Model.CityOfBirth</p>
+                                            <p>@Model.DateOfBirth.ToString("dd-MMM-yy")</p>
+                                            <p>@Model.tblSex.Name</p>
+                                            <p>@Model.Height</p>
+                                            <p>@Model.tblEye.Name</p>
+                                            <p>@Model.Marks</p>
+                                            <p>@Model.tblOccupation.Name</p>
+                                            <p>@Model.FatherName</p>
+                                            <p>@Model.Phone</p>
+                                            <p>@Model.EMail</p>
+                                            <p>@Model.EntryDate.ToString("dd-MMM-yy")</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <div class="row">
+                                        <div class="col-md-6 ">
+                                            <p>First Name</p>
+                                            <p>Status</p>
+                                            <p>Country of Birth</p>
+                                            <p>Mother</p>
+                                            <p>Fax</p>
+                                            <p>Date Modified</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><b>@Model.FirstName</b></p>
+                                            <p>@Model.tblStatu.Name</p>
+                                            <p>@Model.tblCountry1.Name</p>
+                                            <p>@Model.MotherName</p>
+                                            <p>@Model.Fax</p>
+                                            <p>@Model.LastModifiedDate.ToString("dd-MMM-yy")</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><br />
+
+                            <div class="row" style="border:solid;">
+                                <div class="col-sm-2">
+                                    <p>Send To</p>
+                                    <p>CareOf</p>
+                                    <p>Address</p>
+                                    <p>City</p>
+                                    <p>State</p>
+                                    <p>Zip</p>
+                                    <p>Country</p>
+
+                                </div>
+                                <div class="col-sm-10 text-left">
+                                    <br />
+                                    <p>@ViewBag.LabelAddress.CareOf</p>
+                                    <p>@ViewBag.LabelAddress.Address1</p>
+                                    <p>@ViewBag.LabelAddress.City</p>
+                                    <p>@ViewBag.LabelAddress.State</p>
+                                    <p>@ViewBag.LabelAddress.PostalCode</p>
+                                    <p>@ViewBag.LabelAddress.tblCountry.Name</p>
+
+                                </div>
+                            </div><br />
+                            @foreach (WorldServiceOrganization.Models.tblAddress Address in @ViewBag.AltAddress)
+                            {
+                                <div class="row" style="border:solid;">
+                                    <div class="col-sm-2">
+                                        <p>Alternate Address</p>
+                                        <p>CareOf</p>
+                                        <p>Address</p>
+                                        <p>City</p>
+                                        <p>State</p>
+                                        <p>Zip</p>
+                                        <p>Country</p>
+
+                                    </div>
+                                    <div class="col-sm-10 text-left">
+                                        <br />
+                                        <p>@Address.CareOf</p>
+                                        <p>@Address.Address1</p>
+                                        <p>@Address.City</p>
+                                        <p>@Address.State</p>
+                                        <p>@Address.PostalCode</p>
+                                        <p>@Address.tblCountry.Name</p>
+
+                                    </div>
+                                </div><br />
+                            }
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <p><b>Comment:</b></p>
+                                        </div>
+                                        <div class="col-sm-10 text-left">
+                                            <p>@Model.Comments</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <p>Entered By: <b>@Model.tblUser.Initials</b> </p>
+                                </div>
+                            </div><br />
+
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <p>Product Code</p>
+                                </div>
+                                <div class="col-md-1">
+                                    <p>Product Name</p>
+                                </div>
+                                <div class="col-md-1">
+                                    <p>Unit Cost</p>
+                                </div>
+                                <div class="col-md-1">
+                                    <p>Qty</p>
+                                </div>
+                                <div class="col-md-1">
+                                    <p>Total Cost</p>
+                                </div>
+                                <div class="col-md-1 ">
+                                    <p>Document ID</p>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p>Application Date</p>
+                                </div>
+                                <div class="col-sm-2 ">
+                                    <p>Issue Date</p>
+                                </div>
+                                <div class="col-sm-2 ">
+                                    <p>Sent Date</p>
+                                </div>
+                            </div>
+                            <div style="border:solid;">
+                                @foreach (WorldServiceOrganization.Models.tblTransaction Transaction in @ViewBag.Transaction)
+                                {
+                                    { TotalCost = @Transaction.tblProduct.Price * @Transaction.Quantity;
+                                        GrandCost += TotalCost;
+                                    }
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <p>@Transaction.tblProduct.Code</p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <p>@Transaction.tblProduct.Name</p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <p>@Transaction.tblProduct.Price</p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <p>@Transaction.Quantity</p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <p>@TotalCost</p>
+                                        </div>
+                                        <div class="col-md-1 ">
+                                            <p>@Transaction.IDCode</p>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <p>@Transaction.ApplicationDate.ToString("dd-MMM-yy")</p>
+                                        </div>
+                                        <div class="col-sm-2 ">
+                                            <p>@Transaction.IssueDate.ToString("dd-MMM-yy")</p>
+                                        </div>
+                                        <div class="col-sm-2 ">
+                                            <p>@Transaction.SentDate.ToString("dd-MMM-yy")</p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <p>Total for <b>@ViewBag.Count</b> Transaction</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><b>$ @GrandCost</b></p>
+                                </div>
+
+                            </div><br />
+                        </div>
 
 
-
-                    <!-- /Page Wrapper -->
+                    </section>
+                </div>
+            </div>
+               
+            </div>
         </div>
-            <!-- jQuery -->
-            <script src="~/Content/assets/js/jquery-3.5.1.js"></script>
-
-            <!-- Bootstrap Core JS -->
-            <script src="~/Content/assets/js/popper.min.js"></script>
-            <script src="~/Content/assets/js/bootstrap.min.js"></script>
-
-            <!-- Slimscroll JS -->
-            <script src="~/Content/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
-            <script src="~/Content/assets/plugins/raphael/raphael.min.js"></script>
-
-            <!-- Custom JS -->
-            <script src="~/Content/assets/js/script.js"></script>
-
-            <script src="~/Content/assets/js/jquery.dataTables.min.js"></script>
-            <script src="~/Content/assets/js/dataTables.buttons.min.js"></script>
-            <script src="~/Content/assets/js/jszip.min.js"></script>
-            <script src="~/Content/assets/js/pdfmake.min.js"></script>
-            <script src="~/Content/assets/js/vfs_fonts.js"></script>
-            <script src="~/Content/assets/js/buttons.print.min.js"></script>
-            <script src="~/Content/assets/js/buttons.html5.min.js"></script>
+</div>
 
 
-            <script src="~/Content/assets/js/jspdf.min.js"></script>
 
-            <script src="~/Content/assets/js/select2.min.js"></script>
-            <script>
-                $(document).ready(function () {
 
-                    window.print();
-                });
-            </script>
-    </body>
+<!-- /Page Wrapper -->
+<!-- jQuery -->
 
-</html>
-<!-- Mirrored from doccure-html.dreamguystech.com/template/admin/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 05 Jul 2021 15:16:39 GMT -->
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+
+
+
+@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+<script>
+
+    $("#FontStyle").change(function () {
+        $("#ID").css("font-family", $("#FontStyle").val());
+    });
+
+    $("#FontSize").change(function () {
+        $("#ID").css("font-size", $("#FontSize").val()+'px');
+    });
+
+    $('#LetterCase').change(function () {
+        if ($(this).val() == 1) {
+            $('#ID').css('textTransform', 'lowercase');
+        }
+        else if ($(this).val() == 2) {
+            $('#ID').css('textTransform', 'uppercase');
+        }
+        else {
+            $('#ID').css('textTransform', 'capitalize');
+        }
+    });
+
+
+   
+
+   
+
+    $('#PrintBtn').click(function () {
+        var myDiv = document.getElementById("ID").innerHTML;
+            document.body.innerHTML =
+                "<html><head><title></title></head><body>" +
+                myDiv + "</body>";
+            window.print();
+
+            var url = window.location.origin;
+            url += '/Home/OneRecord?id='+@Model.PersonIDNumber+'';
+            window.location.href = url;
+    });
+
+    $('#PDFBtn').click(function () {
+        var myDiv = document.getElementById("ID").innerHTML;
+            var State = $('input[name="WSADisplay"]:checked').val();
+            var CState = $('input[name="CountryDisplay"]:checked').val();
+            document.body.innerHTML =
+                "<html><head><title></title></head><body>" +
+                myDiv + "</body>";
+            window.print();
+
+            var url = window.location.origin;
+            url += '/Home/OneRecord?id='+@Model.PersonIDNumber+'';
+            window.location.href = url;
+    });
+
+
+
+
+
+
+    $(document).ready(function () {
+
+
+
+        
+
+
+
+
+
+
+    });
+
+
+
+
+</script>

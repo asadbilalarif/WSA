@@ -24,7 +24,8 @@
 
         shortcut.add("ctrl+p", function () {
 
-            var myDiv = document.getElementById("ID").innerHTML;
+            var db = document.body.getElementsByTagName('div');
+            var myDiv = document.getElementById("section").innerHTML;
             var State = $('input[name="WSADisplay"]:checked').val();
             var CState = $('input[name="CountryDisplay"]:checked').val();
             document.body.innerHTML =
@@ -69,7 +70,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="SeparateLine">WSA Number</label><br>
                             <input type="radio" id="SeparateLine" name="WSADisplay" value="1" checked>
                             <label for="SeparateLine">Separate Line</label><br>
@@ -79,12 +80,15 @@
                             <label for="WSASuppress">Suppress</label>
 
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="SeparateLine">Country</label><br>
                             <input type="radio" id="Display" name="CountryDisplay" value="1" checked>
                             <label for="Display">Display</label><br>
                             <input type="radio" id="CountrySuppress" name="CountryDisplay" value="2">
                             <label for="CountrySuppress">Suppress</label><br />
+                            
+                        </div>
+                        <div class="col-md-4">
                             <a href="@Url.Action("AddressLabel", "Home",new { id=@ViewBag.id })"> <input class="btn btn-danger" type="button" value="Cancel"></a>
                             <a href="@Url.Action("CreateAddress","Home",new { id=@ViewBag.id })" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
                             <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
@@ -92,10 +96,30 @@
                         </div>
                         
                     </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Letter Case</label>
+                            <select name="LetterCase" class="form-control" id="LetterCase">
+                                <option value=""> Select Letter Case</option>
+                                <option value="1">lowercase</option>
+                                <option value="2">UPPERCASE</option>
+                                <option value="3">Capitalize Each Word</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Font Size</label>
+                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="" />
+                        </div>
+                        <div class="col-md-4">
+                            <label>Font Style</label>
+                            <input type="text" class="form-control" name="FontStyle" id="FontStyle" value="" />
+                        </div>
+                    </div>
                         
                 </div>
                
             </div>
+            <section id="section">
                 <div class="row">
                     <div class="col-md-12">
 
@@ -114,8 +138,10 @@
                         </div>
                         <div id="editor"></div>
                     </div>
-                
+
                 </div>
+
+            </section>
         </div>
     </div>
 </div>
@@ -134,7 +160,29 @@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
 
+    $("#FontStyle").change(function () {
+        $("#ID").css("font-family", $("#FontStyle").val());
+    });
 
+    $("#FontSize").change(function () {
+        $("#ID").css("font-size", $("#FontSize").val()+'px');
+    });
+
+    $('#LetterCase').change(function () {
+
+        if ($(this).val() == 1) {
+            $('#ID').css('textTransform', 'lowercase');
+            //document.getElementsByTagName("section").setAttribute('textTransform', 'lowercase');
+        }
+        else if ($(this).val() == 2) {
+            $('#ID').css('textTransform', 'uppercase');
+            
+            //document.getElementById("ID").setAttribute('style', 'textTransform:uppercase');
+        }
+        else {
+            $('#ID').css('textTransform', 'capitalize');
+        }
+    });
 
 
     $('input:radio[name="WSADisplay"]').change(function () {

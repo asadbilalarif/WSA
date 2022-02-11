@@ -158,10 +158,10 @@
                                              <td class="text-end">
                                                  <div class="actions">
                                                      <a href="@Url.Action("CreatePerson","Home",new {id=Person.PersonIDNumber })" class="text-black" title="Edit"><i class="fa fa-edit" id="EditPerson"></i> Edit</a>
-                                                     <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#PersonDelete"><i class="fa fa-trash" id="DeletePerson"></i> Delete</a><br /><br />
-                                                     <a href="@Url.Action("CreateTransaction","Home",new {id=Person.PersonIDNumber })" class="text-dark " title="Transaction"><i class="fa fa-credit-card"></i> Transaction</a>
+                                                     <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#PersonDelete" id="DeletePersonRecord"><i class="fa fa-trash" ></i> Delete</a>
+                                                     @*<a href="@Url.Action("CreateTransaction","Home",new {id=Person.PersonIDNumber })" class="text-dark " title="Transaction"><i class="fa fa-credit-card"></i> Transaction</a>
                                                      <a href="@Url.Action("CreateAddress","Home",new {id=Person.PersonIDNumber })" class="text-info  " title="Address"><i class="fa fa-map"></i> Address</a>
-                                                     <a href="@Url.Action("CreateChild","Home",new {id=Person.PersonIDNumber })" class="text-warning " title="Child"><i class="fa fa-user"></i> Child</a>
+                                                     <a href="@Url.Action("CreateChild","Home",new {id=Person.PersonIDNumber })" class="text-warning " title="Child"><i class="fa fa-user"></i> Child</a>*@
                                                  </div>
                                                 </td>
                                         </tr>
@@ -208,7 +208,7 @@
 <!-- /Page Wrapper -->
 <!-- jQuery -->
 
-<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>
 
 
 
@@ -226,7 +226,7 @@
     }
 
 
-    $("body").on("click", "#DeletePerson", function () {
+    $("body").on("click", "#DeletePersonRecord", function () {
         $("#ConfigDerror").text("");
         $("#CDeletePerson").attr("disabled", false);
         var currentRow = $(this).closest("tr");
@@ -240,7 +240,6 @@
         $("#CDeletePerson").attr("disabled", true);
 
         var ID = $("#DeletePersonID").val();
-
         var model = {
             PersonId: ID,
         };
