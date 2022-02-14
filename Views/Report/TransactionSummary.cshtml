@@ -48,7 +48,7 @@
                             <div class="container-fluid">
                                 <div class="row align-items-center">
                                     <div class="col-md-6 col-6">
-                                        <h5 class="breadcrumb-title">Person List</h5>
+                                        <h5 class="breadcrumb-title">Transaction Summary</h5>
                                     </div>
 
                                 </div>
@@ -62,57 +62,50 @@
                     @using (Html.BeginForm("TransactionSummary", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {@Html.AntiForgeryToken()
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="row">
-
-                                <div class="col-md-6">
+                        <div class="col-md-4">
+                           
                                     <label>Select Report</label>
-                                    <select name="SelectReport" id="SelectReport">
+                                    <select name="SelectReport" id="SelectReport" class="form-control">
                                         <option value="1">Daily Transaction Summary</option>
                                         <option value="2">Date Range Transaction Summary</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                               
 
-                                </div>
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
+                            
+                      
+                        <div class="col-md-6" style="display:none;" id="SBD">
                             <div class="row">
 
-                                <div class="col-md-12" style="display:none;" id="SBD">
+                                <div class="col-md-4">
                                     <label>Search by Date</label>
-                                    <select name="SearchByDate" id="SearchByDate">
+                                    <select name="SearchByDate" id="SearchByDate" class="form-control">
                                         <option value="1">Date Entered</option>
                                         <option value="2">Date Changed</option>
                                         <option value="3">Issue Changed</option>
                                     </select>
                                 </div>
 
+                                <div class="col-md-4">
+                                    <label>Begin:</label>
+                                    <input type="date" id="BDate" name="BDate" value="@BDate" class="form-control">
 
+                                </div>
+                                <div class="col-md-4">
+
+
+                                    <label>End:</label>
+                                    <input type="date" name="EDate" value="@EDate" class="form-control">
+                                </div>
                             </div>
 
                         </div>
-
-                    </div><br />
-                    <div class="row">
-                        <div class="col-md-5 text-right">
+                        <div class="col-md-2 text-right" style=" margin-top: 20px;">
                             <button class="btn btn-primary" type="submit" id="btnSearch">OK</button>
                             <a href="@Url.Action("ProductList", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
                         </div>
-                        <div class="col-md-1 text-right">
-
-                        </div>
-                        <div class="col-md-6" style="display:none;" id="BEDate">
-                            <label>Begin:</label>
-                            <input type="date" id="BDate" name="BDate" value="@BDate">
-                            <label>End:</label>
-                            <input type="date" name="EDate" value="@EDate">
-                        </div>
                     </div><br />
+                    <br />
                 }
 
 
@@ -254,15 +247,21 @@
 
         $('#ListTable').DataTable({
 
-            "bInfo": false,
-            "scrollY": "110px",
-            "scrollCollapse": true,
-            searching: false, paging: false,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    exportoptions: {
+                        columns: [1, 2]
+                    }
+
+                }
+            ]
         });
 
 
         $(".nav li ul li").removeClass("active");
-        $('#PList').addClass('active');
+        $('#TSummary').addClass('active');
         $('#Rep a').addClass('subdrop');
         $("#Rep  ul").first().css('display', 'block');
     });

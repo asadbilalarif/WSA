@@ -65,14 +65,14 @@
                                 
                                 <div class="col-md-6">
                                     <label>Select Report</label>
-                                    <select name="SelectReport" id="SelectReport">
+                                    <select name="SelectReport" id="SelectReport" class="form-control">
                                         <option value="1">Daily</option>
                                         <option value="2">Date Range</option>
                                     </select>
                                 </div>
                                 <div class="col-md-6">
                                     <label >Status</label>
-                                    <select name="SelectStatus" id="SelectStatus">
+                                    <select name="SelectStatus" id="SelectStatus" class="form-control">
                                         @foreach (WorldServiceOrganization.Models.tblStatus Status in @ViewBag.Status)
                                         {
                                             <option value=@Status.StatusId>@Status.Name</option>
@@ -84,37 +84,41 @@
                             </div>
                         </div>
                         
-                        <div class="col-md-6">
+                        <div class="col-md-6" style="display:none;" id="SBD">
                             <div class="row">
-                                    
-                                <div class="col-md-12" style="display:none;" id="SBD">
+
+                                <div class="col-md-4"  >
                                     <label>Search by Date</label>
-                                    <select name="SearchByDate" id="SearchByDate">
+                                    <select name="SearchByDate" id="SearchByDate" class="form-control">
                                         <option value="1">Date Entered</option>
                                         <option value="2">Date Changed</option>
                                     </select>
                                 </div>
-                                
-                                
+                                <div class="col-md-4"  id="BEDate">
+                                    <label>Begin:</label>
+                                    <input type="date" id="BDate" name="BDate" value="@BDate" class="form-control">
+                                   
+                                </div>
+                                <div class="col-md-4" id="BEDate">
+                                  
+                                    <label>End:</label>
+                                    <input type="date" name="EDate" value="@EDate" class="form-control">
+                                </div>
+
                             </div>
 
                         </div>
 
                     </div><br />
                     <div class="row">
-                        <div class="col-md-5 text-right">
+                        <div class="col-md-12 text-right">
                             <button class="btn btn-primary" type="submit" id="btnSearch">OK</button>
                             <a href="@Url.Action("ProductList", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
                         </div>
                         <div class="col-md-1 text-right">
                             
                         </div>
-                        <div class="col-md-6" style="display:none;" id="BEDate">
-                            <label>Begin:</label>
-                            <input type="date" id="BDate" name="BDate" value="@BDate">
-                            <label>End:</label>
-                            <input type="date"  name="EDate" value="@EDate">
-                        </div>
+                        
                     </div><br />
                 }
 
@@ -220,11 +224,20 @@
 
 
         $('#ListTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    exportoptions: {
+                        columns: [1, 2]
+                    }
 
-            "bInfo": false,
-            "scrollY": "110px",
-            "scrollCollapse": true,
-            searching: false, paging: false,
+                }
+            ]
+            //"bInfo": false,
+            //"scrollY": "110px",
+            //"scrollCollapse": true,
+            //searching: false, paging: false,
         });
 
 

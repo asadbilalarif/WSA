@@ -188,7 +188,7 @@
 
         $('#ListTable tfoot th').each(function () {
             var title = $(this).text();
-            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+            $(this).html('<input type="text" placeholder="Search ' + title + '" class="form-control"/>');
         });
 
 
@@ -233,7 +233,7 @@
                                 $(api.column(colIdx).header()).index()
                             );
                             var title = $(cell).text();
-                            $(cell).html('<input type="text" placeholder="' + title + '" />');
+                            $(cell).html('<input type="text" placeholder="' + title + '" class="form-control"/>');
 
                             // On every keypress in this input
                             $(

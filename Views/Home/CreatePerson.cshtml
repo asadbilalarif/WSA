@@ -132,14 +132,9 @@
                                 <div class="container-fluid">
                                     <div class="row align-items-center">
                                         <div class="col-md-6 col-6">
-                                            @if (Model == null)
-                                            {
-                                                <h5 class="breadcrumb-title">Create Person</h5>
-                                            }
-                                            else
-                                            {
-                                                <h5 class="breadcrumb-title">Edit Person</h5>
-                                            }
+                                           
+                                        <h5 class="breadcrumb-title">Create Person</h5>
+                                            
                                         </div>
                                         <div class="col-md-6 col-6 text-right" id="CreatePersonB">
 
@@ -563,7 +558,7 @@
         <div class="row">
             <div class="col-md-12">
                 <ul class="nav nav-tabs nav-tabs-solid">
-                    <li class="nav-item"><a class="nav-link active" href="#solid-tab1" data-toggle="tab" id="Tab1">Edit Person</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="#solid-tab1" data-toggle="tab" id="Tab1">Person Info</a></li>
                     <li class="nav-item"><a class="nav-link" href="#solid-tab2" data-toggle="tab" id="Tab2">Transaction</a></li>
                     <li class="nav-item"><a class="nav-link" href="#solid-tab3" data-toggle="tab" id="Tab3">Address</a></li>
                     <li class="nav-item"><a class="nav-link" href="#solid-tab4" data-toggle="tab" id="Tab4">Child</a></li>
@@ -587,7 +582,7 @@
                                                     }
                                                     else
                                                     {
-                                                        <h5 class="breadcrumb-title">Edit Person</h5>
+                                                        <h5 class="breadcrumb-title">Edit Person Info</h5>
                                                     }
                                                 </div>
                                                 <div class="col-md-6 col-6 text-right" id="CreatePersonB">
@@ -636,13 +631,13 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Last Name</label>
-                                                    <input type="text" class="form-control" id="LastName" name="LastName" value="@LastName" required>
+                                                    <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>First Name</label>
-                                                    <input type="text" class="form-control" id="FirstName" name="FirstName" value="@FirstName" required>
+                                                    <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -866,8 +861,8 @@
                                                         <div class="col-md-6 text-right">
                                                             <div class="profile-img">
 
-                                                                <img id="ImgImg" src="@ImgImg" alt="your image" />
-
+                                                                <img id="ImgImg" src="@ImgImg" alt="your image" name="ImgImg" />
+                                                                <input type="text" name="Photo" value="@ImgImg" hidden>
 
 
                                                             </div>
@@ -899,8 +894,8 @@
                                                         <div class="col-md-6 text-right">
                                                             <div class="profile-img">
 
-                                                                <img id="ImgSig" src="@ImgSig" alt="your image" />
-
+                                                                <img id="ImgSig" src="@ImgSig" alt="your image" name="ImgSig" />
+                                                                <input type="text" name="SignaturePath" value="@ImgSig" hidden >
 
                                                             </div>
                                                         </div>
@@ -931,8 +926,8 @@
                                                         <div class="col-md-6 text-right">
                                                             <div class="profile-img">
 
-                                                                <img id="ImgCer" src="@ImgCer" alt="your image" />
-
+                                                                <img id="ImgCer" src="@ImgCer" alt="your image" name="ImgCer" />
+                                                                <input type="text" name="Certification" value="@ImgCer" hidden>
 
                                                             </div>
                                                         </div>
@@ -1273,7 +1268,7 @@
                                         <div class="row">
                                             <p class="col-md-12 text-right">
                                                 <button type="button" id="PassportLabel" class="btn btn-primary btn-sm" style="width:50%">Passport Label</button>
-                                                <button type="button" class="btn btn-secondary btn-sm" style="margin-top:2px; width:50%">Routing Slip</button>
+                                                <a href="@Url.Action("RoutingSlip","Home",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-secondary btn-sm" style="margin-top:2px; width:50%">Routing Slip</button></a>
                                             </p>
                                             <div class="col-md-12 text-center">
                                                 <div class="form-group row">
@@ -1940,14 +1935,14 @@
             $("#TotalCost").val(Qty.val());
         }
     });
-    if (@Model!=null) {
+
         $("body").on("click", "#PassportLabel", function () {
         var url = window.location.origin;
         url += '/Home/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + $("#TransactionIDNumber").val() +'';
         window.location.href = url;
 
         });
-    }
+    
     
 
 

@@ -40,7 +40,7 @@
                             <div class="container-fluid">
                                 <div class="row align-items-center">
                                     <div class="col-md-6 col-6">
-                                        <h5 class="breadcrumb-title">List</h5>
+                                        <h5 class="breadcrumb-title">Reference Code List</h5>
                                     </div>
 
                                 </div>
@@ -59,8 +59,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Report:</label>
-                                        <select name="ReportList" id="ReportList">
-                                            <option value="0">Report</option>
+                                        <select name="ReportList" id="ReportList" class="form-control">
+                                            <option value="0">Select Report Type</option>
                                             <option value="1">Occupation Listing</option>
                                             <option value="2">Country Listing</option>
                                             <option value="3">Product Listing</option>
@@ -70,7 +70,7 @@
                                             <option value="7">Product Type Listing</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-6 text-right">
+                                    <div class="col-md-6 text-right" style=" margin-top: 20px;">
                                         <button class="btn btn-primary" type="submit" id="btnSearch">OK</button>
                                         <a href="@Url.Action("List", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
                                     </div>
@@ -89,7 +89,7 @@
                     </div>
                 }
 
-
+                    <br>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="table-responsive">
@@ -150,11 +150,20 @@
 
 
         $('#ListTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    exportoptions: {
+                        columns: [1, 2]
+                    }
 
-            "bInfo": false,
-            "scrollY": "110px",
-            "scrollCollapse": true,
-            searching: false, paging: false
+                }
+            ]
+            //"bInfo": false,
+            //"scrollY": "110px",
+            //"scrollCollapse": true,
+            //searching: false, paging: false
         });
 
 

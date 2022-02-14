@@ -60,63 +60,57 @@
                     @using (Html.BeginForm("CountrySummary", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {@Html.AntiForgeryToken()
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="row">
+                        <div class="col-md-3">
 
-                                <div class="col-md-4">
-                                    <label>Search by Country</label>
-                                    <select name="SearchbyCountry" id="SearchbyCountry">
-                                        @foreach (WorldServiceOrganization.Models.tblCountry Country in @ViewBag.Country)
-                                        {
-                                            <option value=@Country.CountryId>@Country.Name</option>
-                                        }
-                                    </select>
-                                </div>
-                                <div class="col-md-8">
-                                    <label>Select Report</label>
-                                    <select name="SelectReport" id="SelectReport">
-                                        <option value="1">List of People by Application Country</option>
-                                        <option value="2">Totals of Application Country</option>
-                                        <option value="3">List of People by Country Birth</option>
-                                        <option value="4">Totals for Country Birth</option>
-                                    </select>
-                                </div>
-
-
-                            </div>
+                            <label>Search by Country</label>
+                            <select name="SearchbyCountry" id="SearchbyCountry" class="form-control">
+                                @foreach (WorldServiceOrganization.Models.tblCountry Country in @ViewBag.Country)
+                                {
+                                    <option value=@Country.CountryId>@Country.Name</option>
+                                }
+                            </select>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="row">
-
-                                <div class="col-md-12" id="SBD">
-                                    <label>Search by Date</label>
-                                    <select name="SearchByDate" id="SearchByDate">
-                                        <option value="1">Date Entered</option>
-                                        <option value="2">Date Changed</option>
-                                    </select>
-                                </div>
-
-
-                            </div>
-
+                        <div class="col-md-3">
+                            <label>Select Report</label>
+                            <select name="SelectReport" id="SelectReport" class="form-control">
+                                <option value="1">List of People by Application Country</option>
+                                <option value="2">Totals of Application Country</option>
+                                <option value="3">List of People by Country Birth</option>
+                                <option value="4">Totals for Country Birth</option>
+                            </select>
                         </div>
+                        <div class="col-md-2" id="SBD">
+                            <label>Search by Date</label>
+                            <select name="SearchByDate" id="SearchByDate" class="form-control">
+                                <option value="1">Date Entered</option>
+                                <option value="2">Date Changed</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2" id="BEDate">
+                            <label>Begin:</label>
+                            <input type="date" id="BDate" name="BDate" value="@BDate" class="form-control">
+                            
+                        </div>
+                        <div class="col-md-2" id="BEDate">
+                            
+                            <label>End:</label>
+                            <input type="date" name="EDate" value="@EDate" class="form-control">
+                        </div>
+                    </div>
+               
+              
+                
 
-                    </div><br />
+           <br>
                     <div class="row">
-                        <div class="col-md-5 text-right">
+                        <div class="col-md-12 text-right">
                             <button class="btn btn-primary" type="submit" id="btnSearch">OK</button>
                             <a href="@Url.Action("CountrySummary", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
                         </div>
                         <div class="col-md-1 text-right">
 
                         </div>
-                        <div class="col-md-6" id="BEDate">
-                            <label>Begin:</label>
-                            <input type="date" id="BDate" name="BDate" value="@BDate">
-                            <label>End:</label>
-                            <input type="date" name="EDate" value="@EDate">
-                        </div>
+                       
                     </div><br />
                 }
 
@@ -261,10 +255,16 @@
 
         $('#ListTable').DataTable({
 
-            "bInfo": false,
-            "scrollY": "110px",
-            "scrollCollapse": true,
-            searching: false, paging: false,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    exportoptions: {
+                        columns: [1, 2]
+                    }
+
+                }
+            ]
         });
 
 
