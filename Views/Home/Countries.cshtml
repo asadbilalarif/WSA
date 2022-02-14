@@ -5,6 +5,7 @@
     string Succ = @ViewBag.Success;
     string Update = @ViewBag.Update;
     string Delete = @ViewBag.Delete;
+    string FError = @ViewBag.FError;
 }
 
 
@@ -62,6 +63,9 @@
                 </div>
                 <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
                     <strong>Success!</strong> @ViewBag.Delete
+                </div>
+                <div style="display:none;" class="alert alert-danger alert-dismissible fade show" id="FErroeAlert" role="alert">
+                     @ViewBag.FError
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
@@ -156,14 +160,13 @@
             </div>
             <div class="modal-footer">
 
-                <div id="Countryloading" style="display:none;margin: 0 auto; text-decoration-color:cornflowerblue;">
+                <div  style="display:none;margin: 0 auto; text-decoration-color:cornflowerblue;">
                     <div class="spinner-border text-success" id="display_loading" style="margin: 0 auto;"></div>
                     <div class="spinner-border text-success" id="display_loading" style="display:none;margin: 0 auto;">
                     </div> Loading...
                 </div>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <input type="button" class="btn btn-primary" id="CountrySubmit" value="Save">
-
+                <button type="button" class="btn btn-primary" id="CountrySubmit"><span style="display:none;" class="spinner-border spinner-border-sm mr-2" role="status" id="Countryloading"></span>Save</button>
 
             </div>
         </div>
@@ -345,9 +348,18 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (r) {
-                        var url = window.location.origin;
-                        url += '/Home/Countries?Delete=Country has been delete successfully.';
-                        window.location.href = url;
+                        if (r == 2) {
+
+                            var url = window.location.origin;
+                            url += '/Home/Countries?FError=Country could not be delete because it is use in Person Info.';
+                            window.location.href = url;
+                        }
+                        else {
+                            var url = window.location.origin;
+                            url += '/Home/Countries?Delete=Country has been delete successfully.';
+                            window.location.href = url;
+                        }
+                        
                     }
                 });
 
@@ -382,6 +394,13 @@
                 }
                 else {
                     $('#DeleteAlert').fadeOut();
+                }
+                if ("@FError" != "") {
+                    $('#FErroeAlert').fadeIn();
+                    $('#FErroeAlert').fadeOut(6000);
+                }
+                else {
+                    $('#FErroeAlert').fadeOut();
                 }
 
                 $('#CountryTable').DataTable({

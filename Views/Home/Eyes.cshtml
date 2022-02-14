@@ -7,6 +7,7 @@
     string Succ = @ViewBag.Success;
     string Update = @ViewBag.Update;
     string Delete = @ViewBag.Delete;
+    string FError = @ViewBag.FError;
 }
 
 
@@ -63,20 +64,23 @@
                 <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
                     <strong>Success!</strong> @ViewBag.Delete
                 </div>
+                <div style="display:none;" class="alert alert-danger alert-dismissible fade show" id="FErroeAlert" role="alert">
+                    @ViewBag.FError
+                </div>
                 <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="cell-border table table-hover table-center  mb-0 " id="EyeTable">
-                                <thead>
-                                    <tr>
-                                        <th style="display:none;">User ID</th>
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (WorldServiceOrganization.Models.tblEye Eye in Model)
-                                    {
+                    <div class="table-responsive">
+                        <table class="cell-border table table-hover table-center  mb-0 " id="EyeTable">
+                            <thead>
+                                <tr>
+                                    <th style="display:none;">User ID</th>
+                                    <th>Code</th>
+                                    <th>Name</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (WorldServiceOrganization.Models.tblEye Eye in Model)
+                                {
                                     <tr>
                                         <td style="display:none;">@Eye.EyeId</td>
                                         <td>@Eye.Code</td>
@@ -93,11 +97,11 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                   
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -140,13 +144,13 @@
             </div>
             <div class="modal-footer">
 
-                <div id="Eyeloading" style="display:none;margin: 0 auto; text-decoration-color:cornflowerblue;">
+                @*<div id="Eyeloading" style="display:none;margin: 0 auto; text-decoration-color:cornflowerblue;">
                     <div class="spinner-border text-success" id="display_loading" style="margin: 0 auto;"></div>
                     <div class="spinner-border text-success" id="display_loading" style="display:none;margin: 0 auto;">
                     </div> Loading...
-                </div>
+                </div>*@
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <input type="button" class="btn btn-primary" id="EyeSubmit" value="Save">
+                <button type="button" class="btn btn-primary" id="EyeSubmit"><span style="display:none;" class="spinner-border spinner-border-sm mr-2" role="status" id="Eyeloading"></span>Save</button>
 
 
             </div>
@@ -332,9 +336,18 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (r) {
-                        var url = window.location.origin;
-                        url += '/Home/Eyes?Delete=Eye has been delete successfully.';
-                        window.location.href = url;
+                        if (r == 2) {
+
+                            var url = window.location.origin;
+                            url += '/Home/Eyes?FError=Eye could not be delete because it is use in Person Info.';
+                            window.location.href = url;
+                        }
+                        else {
+                            var url = window.location.origin;
+                            url += '/Home/Eyes?Delete=Eye has been delete successfully.';
+                            window.location.href = url;
+                        }
+                        
                     }
                 });
 
@@ -363,13 +376,21 @@
                 else {
                     $('#DeleteAlert').fadeOut();
                 }
+                if ("@FError" != "") {
+                    $('#FErroeAlert').fadeIn();
+                    $('#FErroeAlert').fadeOut(6000);
+                }
+                else {
+                    $('#FErroeAlert').fadeOut();
+                }
 
                 $('#EyeTable').DataTable({
                     dom: 'Bfrtip',
+                    
                     buttons: [
                         {
                             extend: 'excel',
-                            exportoptions: {
+                            exportOptions: {
                                 columns: [1, 2]
                             }
 

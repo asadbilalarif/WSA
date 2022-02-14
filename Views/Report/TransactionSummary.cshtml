@@ -104,7 +104,26 @@
                             <button class="btn btn-primary" type="submit" id="btnSearch">OK</button>
                             <a href="@Url.Action("ProductList", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
                         </div>
-                    </div><br />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Letter Case</label>
+                            <select name="LetterCase" class="form-control" id="LetterCase">
+                                <option value=""> Select Letter Case</option>
+                                <option value="1">lowercase</option>
+                                <option value="2">UPPERCASE</option>
+                                <option value="3">Capitalize Each Word</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Font Size</label>
+                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="" />
+                        </div>
+                        <div class="col-md-4">
+                            <label>Font Style</label>
+                            <input type="text" class="form-control" name="FontStyle" id="FontStyle" value="" />
+                        </div>
+                    </div>
                     <br />
                 }
 
@@ -120,7 +139,7 @@
                                             <th>Amount</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="ID">
                                         @if (Model != null)
                                         {
                                             foreach (WorldServiceOrganization.Models.tblTransaction List in Model)
@@ -197,6 +216,29 @@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
 
+    $("#FontStyle").change(function () {
+        $("#ID").css("font-family", $("#FontStyle").val());
+    });
+
+    $("#FontSize").change(function () {
+        $("#ID").css("font-size", $("#FontSize").val() + 'px');
+    });
+
+    $('#LetterCase').change(function () {
+
+        if ($(this).val() == 1) {
+            $('#ID').css('textTransform', 'lowercase');
+            //document.getElementsByTagName("section").setAttribute('textTransform', 'lowercase');
+        }
+        else if ($(this).val() == 2) {
+            $('#ID').css('textTransform', 'uppercase');
+
+            //document.getElementById("ID").setAttribute('style', 'textTransform:uppercase');
+        }
+        else {
+            $('#ID').css('textTransform', 'capitalize');
+        }
+    });
 
     $('#SelectReport').change(function () {
         var Val = $(this).val();

@@ -62,66 +62,25 @@
                 </div>
 
                 <div class="card-body">
-                    @using (Html.BeginForm("ProductList", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {@Html.AntiForgeryToken()
-                    @*<div class="row">
-                        <div class="col-md-6">
-                            <div class="row">
-                                
-                                <div class="col-md-6">
-                                    <label>Select Report</label>
-                                    <select name="SelectReport" id="SelectReport">
-                                        <option value="1">Daily</option>
-                                        <option value="2">Date Range</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-6">
-                                    <label >Status</label>
-                                    <select name="SelectStatus" id="SelectStatus">
-                                        @foreach (WorldServiceOrganization.Models.tblStatus Status in @ViewBag.Status)
-                                        {
-                                            <option value=@Status.StatusId>@Status.Name</option>
-                                        }
-                                    </select>
-                                </div>
-                                    
-
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-6">
-                            <div class="row">
-                                    
-                                <div class="col-md-12" style="display:none;" id="SBD">
-                                    <label>Search by Date</label>
-                                    <select name="SearchByDate" id="SearchByDate">
-                                        <option value="1">Date Entered</option>
-                                        <option value="2">Date Changed</option>
-                                    </select>
-                                </div>
-                                
-                                
-                            </div>
-
-                        </div>
-
-                    </div><br />
                     <div class="row">
-                        <div class="col-md-5 text-right">
-                            <button class="btn btn-primary" type="submit" id="btnSearch">OK</button>
-                            <a href="@Url.Action("ProductList", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                        <div class="col-md-4">
+                            <label>Letter Case</label>
+                            <select name="LetterCase" class="form-control" id="LetterCase">
+                                <option value=""> Select Letter Case</option>
+                                <option value="1">lowercase</option>
+                                <option value="2">UPPERCASE</option>
+                                <option value="3">Capitalize Each Word</option>
+                            </select>
                         </div>
-                        <div class="col-md-1 text-right">
-                            
+                        <div class="col-md-4">
+                            <label>Font Size</label>
+                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="" />
                         </div>
-                        <div class="col-md-6" style="display:none;" id="BEDate">
-                            <label>Begin:</label>
-                            <input type="date" id="BDate" name="BDate" value="@BDate">
-                            <label>End:</label>
-                            <input type="date"  name="EDate" value="@EDate">
+                        <div class="col-md-4">
+                            <label>Font Style</label>
+                            <input type="text" class="form-control" name="FontStyle" id="FontStyle" value="" />
                         </div>
-                    </div><br />*@
-                }
+                    </div><br />
 
 
                     <div class="row">
@@ -136,7 +95,7 @@
                                             <th>First Name</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="ID">
                                         @if (Model != null)
                                         {
                                             foreach (WorldServiceOrganization.Models.tblPerson List in Model)
@@ -177,7 +136,29 @@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
 
+    $("#FontStyle").change(function () {
+        $("#ID").css("font-family", $("#FontStyle").val());
+    });
 
+    $("#FontSize").change(function () {
+        $("#ID").css("font-size", $("#FontSize").val() + 'px');
+    });
+
+    $('#LetterCase').change(function () {
+
+        if ($(this).val() == 1) {
+            $('#ID').css('textTransform', 'lowercase');
+            //document.getElementsByTagName("section").setAttribute('textTransform', 'lowercase');
+        }
+        else if ($(this).val() == 2) {
+            $('#ID').css('textTransform', 'uppercase');
+
+            //document.getElementById("ID").setAttribute('style', 'textTransform:uppercase');
+        }
+        else {
+            $('#ID').css('textTransform', 'capitalize');
+        }
+    });
    
 
 

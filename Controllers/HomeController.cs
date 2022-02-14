@@ -18,7 +18,7 @@ namespace WorldServiceOrganization.Controllers
             return View();
         }
 
-        public ActionResult Countries(string Success, string Update, string Delete)
+        public ActionResult Countries(string Success, string Update, string Delete, string FError)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             
@@ -27,6 +27,7 @@ namespace WorldServiceOrganization.Controllers
             ViewBag.Success = Success;
             ViewBag.Update = Update;
             ViewBag.Delete = Delete;
+            ViewBag.FError = FError;
 
             return View(Data);
         }
@@ -103,9 +104,19 @@ namespace WorldServiceOrganization.Controllers
 
             try
             {
-                Data = DB.tblCountries.Select(r => r).Where(x => x.CountryId == Country.CountryId).FirstOrDefault();
-                DB.Entry(Data).State = EntityState.Deleted;
-                DB.SaveChanges();
+
+                if (DB.tblPersons.Where(x => x.CountryOfApplication == Country.CountryId||x.CountryOfBirth == Country.CountryId||x.CountryOfBirthStatistical == Country.CountryId).FirstOrDefault() == null && DB.tblAddresses.Where(x => x.Country== Country.CountryId ).FirstOrDefault() == null)
+                {
+                    Data = DB.tblCountries.Select(r => r).Where(x => x.CountryId == Country.CountryId).FirstOrDefault();
+                    DB.Entry(Data).State = EntityState.Deleted;
+                    DB.SaveChanges();
+                }
+                else
+                {
+                    return Json(2);
+                }
+
+                
             }
             catch (Exception ex)
             {
@@ -118,7 +129,7 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult Eyes(string Success, string Update, string Delete)
+        public ActionResult Eyes(string Success, string Update, string Delete, string FError)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
@@ -127,6 +138,7 @@ namespace WorldServiceOrganization.Controllers
             ViewBag.Success = Success;
             ViewBag.Update = Update;
             ViewBag.Delete = Delete;
+            ViewBag.FError = FError;
             return View(Data);
         }
 
@@ -202,9 +214,17 @@ namespace WorldServiceOrganization.Controllers
 
             try
             {
-                Data = DB.tblEyes.Select(r => r).Where(x => x.EyeId == Eye.EyeId).FirstOrDefault();
-                DB.Entry(Data).State = EntityState.Deleted;
-                DB.SaveChanges();
+                if (DB.tblPersons.Where(x => x.Eyes == Eye.EyeId).FirstOrDefault() == null )
+                {
+                    Data = DB.tblEyes.Select(r => r).Where(x => x.EyeId == Eye.EyeId).FirstOrDefault();
+                    DB.Entry(Data).State = EntityState.Deleted;
+                    DB.SaveChanges();
+                }
+                else
+                {
+                    return Json(2);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -217,7 +237,7 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult Occupations(string Success, string Update, string Delete)
+        public ActionResult Occupations(string Success, string Update, string Delete, string FError)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
@@ -226,6 +246,7 @@ namespace WorldServiceOrganization.Controllers
             ViewBag.Success = Success;
             ViewBag.Update = Update;
             ViewBag.Delete = Delete;
+            ViewBag.FError = FError;
 
             return View(Data);
         }
@@ -302,9 +323,18 @@ namespace WorldServiceOrganization.Controllers
 
             try
             {
-                Data = DB.tblOccupations.Select(r => r).Where(x => x.OccupationId == Occupation.OccupationId).FirstOrDefault();
-                DB.Entry(Data).State = EntityState.Deleted;
-                DB.SaveChanges();
+
+                if (DB.tblPersons.Where(x => x.OccupationCode == Occupation.OccupationId).FirstOrDefault() == null)
+                {
+                    Data = DB.tblOccupations.Select(r => r).Where(x => x.OccupationId == Occupation.OccupationId).FirstOrDefault();
+                    DB.Entry(Data).State = EntityState.Deleted;
+                    DB.SaveChanges();
+                }
+                else
+                {
+                    return Json(2);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -528,7 +558,7 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult Status(string Success, string Update, string Delete)
+        public ActionResult Status(string Success, string Update, string Delete, string FError)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
@@ -537,6 +567,7 @@ namespace WorldServiceOrganization.Controllers
             ViewBag.Success = Success;
             ViewBag.Update = Update;
             ViewBag.Delete = Delete;
+            ViewBag.FError = FError;
 
             return View(Data);
         }
@@ -613,9 +644,17 @@ namespace WorldServiceOrganization.Controllers
 
             try
             {
-                Data = DB.tblStatus.Select(r => r).Where(x => x.StatusId == Status.StatusId).FirstOrDefault();
-                DB.Entry(Data).State = EntityState.Deleted;
-                DB.SaveChanges();
+                if (DB.tblPersons.Where(x => x.Status == Status.StatusId).FirstOrDefault() == null)
+                {
+                    Data = DB.tblStatus.Select(r => r).Where(x => x.StatusId == Status.StatusId).FirstOrDefault();
+                    DB.Entry(Data).State = EntityState.Deleted;
+                    DB.SaveChanges();
+                }
+                else
+                {
+                    return Json(2);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -628,7 +667,7 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult Sex(string Success, string Update, string Delete)
+        public ActionResult Sex(string Success, string Update, string Delete, string FError)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
@@ -637,6 +676,7 @@ namespace WorldServiceOrganization.Controllers
             ViewBag.Success = Success;
             ViewBag.Update = Update;
             ViewBag.Delete = Delete;
+            ViewBag.FError = FError;
 
             return View(Data);
         }
@@ -713,9 +753,17 @@ namespace WorldServiceOrganization.Controllers
 
             try
             {
-                Data = DB.tblSex.Select(r => r).Where(x => x.SexId == Sex.SexId).FirstOrDefault();
-                DB.Entry(Data).State = EntityState.Deleted;
-                DB.SaveChanges();
+                if (DB.tblPersons.Where(x => x.Sex == Sex.SexId).FirstOrDefault() == null)
+                {
+                    Data = DB.tblSex.Select(r => r).Where(x => x.SexId == Sex.SexId).FirstOrDefault();
+                    DB.Entry(Data).State = EntityState.Deleted;
+                    DB.SaveChanges();
+                }
+                else
+                {
+                    return Json(2);
+                }
+                
             }
             catch (Exception ex)
             {

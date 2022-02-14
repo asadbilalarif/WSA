@@ -75,14 +75,32 @@
                                         <a href="@Url.Action("List", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
                                     </div>
                                 </div>
-                                
-                                
-                                
-                                
-                                
-                                
-                                
-                                
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Letter Case</label>
+                                        <select name="LetterCase" class="form-control" id="LetterCase">
+                                            <option value=""> Select Letter Case</option>
+                                            <option value="1">lowercase</option>
+                                            <option value="2">UPPERCASE</option>
+                                            <option value="3">Capitalize Each Word</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Font Size</label>
+                                        <input type="number" class="form-control" name="FontSize" id="FontSize" value="" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Font Style</label>
+                                        <input type="text" class="form-control" name="FontStyle" id="FontStyle" value="" />
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
                             </div>
                         </div>
 
@@ -91,8 +109,8 @@
 
                     <br>
                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="table-responsive">
+                        <div class="col-md-12" >
+                            <div class="table-responsive" >
                                 <table class="cell-border table" id="ListTable">
                                     <thead>
                                         <tr>
@@ -100,7 +118,7 @@
                                             <th>Name</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="ID">
                                         @if (Model != null)
                                         {
                                             foreach (WorldServiceOrganization.Models.ReportList List in Model)
@@ -140,7 +158,29 @@
 <script>
 
 
+    $("#FontStyle").change(function () {
+        $("#ID").css("font-family", $("#FontStyle").val());
+    });
 
+    $("#FontSize").change(function () {
+        $("#ID").css("font-size", $("#FontSize").val() + 'px');
+    });
+
+    $('#LetterCase').change(function () {
+
+        if ($(this).val() == 1) {
+            $('#ID').css('textTransform', 'lowercase');
+            //document.getElementsByTagName("section").setAttribute('textTransform', 'lowercase');
+        }
+        else if ($(this).val() == 2) {
+            $('#ID').css('textTransform', 'uppercase');
+
+            //document.getElementById("ID").setAttribute('style', 'textTransform:uppercase');
+        }
+        else {
+            $('#ID').css('textTransform', 'capitalize');
+        }
+    });
 
 
 
