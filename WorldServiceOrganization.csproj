@@ -177,6 +177,9 @@
     <Compile Include="Models\tblCountry.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblDocumentImg.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblEye.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

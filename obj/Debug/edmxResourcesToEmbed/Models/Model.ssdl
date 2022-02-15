@@ -84,6 +84,22 @@
     <Property Name="DeletedDate" Type="datetime" />
     <Property Name="isActive" Type="bit" />
   </EntityType>
+  <EntityType Name="tblDocumentImg">
+    <Key>
+      <PropertyRef Name="DocumentImgId" />
+    </Key>
+    <Property Name="DocumentImgId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ImgPath" Type="nvarchar(max)" />
+    <Property Name="FileName" Type="nvarchar(max)" />
+    <Property Name="PersonIDNumber" Type="int" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="EditBy" Type="int" />
+    <Property Name="EditDate" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="isActive" Type="bit" />
+  </EntityType>
   <EntityType Name="tblEye">
     <Key>
       <PropertyRef Name="EyeId" />
@@ -154,6 +170,7 @@
     <Property Name="BirthYear" Type="int" />
     <Property Name="Sex" Type="int" />
     <Property Name="Height" Type="float" />
+    <Property Name="HeightUnit" Type="int" />
     <Property Name="Eyes" Type="int" />
     <Property Name="Marks" Type="nvarchar(max)" />
     <Property Name="OccupationId" Type="int" />
@@ -378,6 +395,18 @@
       </Principal>
       <Dependent Role="tblAddress">
         <PropertyRef Name="Country" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DocumentPerson">
+    <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="0..1" />
+    <End Role="tblDocumentImg" Type="Self.tblDocumentImg" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPerson">
+        <PropertyRef Name="PersonIDNumber" />
+      </Principal>
+      <Dependent Role="tblDocumentImg">
+        <PropertyRef Name="PersonIDNumber" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -695,6 +724,7 @@
     <EntitySet Name="tblAddress" EntityType="Self.tblAddress" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblChild" EntityType="Self.tblChild" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblCountry" EntityType="Self.tblCountry" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblDocumentImg" EntityType="Self.tblDocumentImg" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblEye" EntityType="Self.tblEye" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblMenu" EntityType="Self.tblMenu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblOccupation" EntityType="Self.tblOccupation" Schema="dbo" store:Type="Tables" />
@@ -716,6 +746,10 @@
     <AssociationSet Name="FK_CountryAddress" Association="Self.FK_CountryAddress">
       <End Role="tblCountry" EntitySet="tblCountry" />
       <End Role="tblAddress" EntitySet="tblAddress" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DocumentPerson" Association="Self.FK_DocumentPerson">
+      <End Role="tblPerson" EntitySet="tblPerson" />
+      <End Role="tblDocumentImg" EntitySet="tblDocumentImg" />
     </AssociationSet>
     <AssociationSet Name="FK_ManyProduct" Association="Self.FK_ManyProduct">
       <End Role="tblProduct" EntitySet="tblProduct" />

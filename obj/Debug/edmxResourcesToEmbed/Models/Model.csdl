@@ -190,6 +190,11 @@
       <End Role="tblUser" EntitySet="tblUsers" />
       <End Role="tblTransaction" EntitySet="tblTransactions" />
     </AssociationSet>
+    <EntitySet Name="tblDocumentImgs" EntityType="WorldServiceOrganizationModel.tblDocumentImg" />
+    <AssociationSet Name="FK_DocumentPerson" Association="WorldServiceOrganizationModel.FK_DocumentPerson">
+      <End Role="tblPerson" EntitySet="tblPersons" />
+      <End Role="tblDocumentImg" EntitySet="tblDocumentImgs" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="tblRole">
     <Key>
@@ -575,6 +580,8 @@
     <NavigationProperty Name="tblChilds" Relationship="WorldServiceOrganizationModel.FK_PersonChild" FromRole="tblPerson" ToRole="tblChild" />
     <NavigationProperty Name="tblAddresses" Relationship="WorldServiceOrganizationModel.FK_PersonAddress" FromRole="tblPerson" ToRole="tblAddress" />
     <NavigationProperty Name="tblTransactions" Relationship="WorldServiceOrganizationModel.FK_PersonTransaction" FromRole="tblPerson" ToRole="tblTransaction" />
+    <Property Name="HeightUnit" Type="Int32" />
+    <NavigationProperty Name="tblDocumentImgs" Relationship="WorldServiceOrganizationModel.FK_DocumentPerson" FromRole="tblPerson" ToRole="tblDocumentImg" />
   </EntityType>
   <Association Name="FK_PersonCountryAppli">
     <End Type="WorldServiceOrganizationModel.tblCountry" Role="tblCountry" Multiplicity="0..1" />
@@ -890,6 +897,35 @@
       </Principal>
       <Dependent Role="tblTransaction">
         <PropertyRef Name="EditBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tblDocumentImg">
+    <Key>
+      <PropertyRef Name="DocumentImgId" />
+    </Key>
+    <Property Name="DocumentImgId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ImgPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PersonIDNumber" Type="Int32" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="EditBy" Type="Int32" />
+    <Property Name="EditDate" Type="DateTime" Precision="3" />
+    <Property Name="DeletedBy" Type="Int32" />
+    <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+    <Property Name="isActive" Type="Boolean" />
+    <NavigationProperty Name="tblPerson" Relationship="WorldServiceOrganizationModel.FK_DocumentPerson" FromRole="tblDocumentImg" ToRole="tblPerson" />
+    <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <Association Name="FK_DocumentPerson">
+    <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="0..1" />
+    <End Type="WorldServiceOrganizationModel.tblDocumentImg" Role="tblDocumentImg" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblPerson">
+        <PropertyRef Name="PersonIDNumber" />
+      </Principal>
+      <Dependent Role="tblDocumentImg">
+        <PropertyRef Name="PersonIDNumber" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

@@ -7,6 +7,8 @@
     string DateFormat = cookieObj["DateFormat"];
     string Retrieves = cookieObj["Retrieves"];
 
+    var Exp = @ViewBag.TL.IssueDate.AddYears(5).ToString("dd/MM/yyyy");
+
 }
 
 
@@ -143,11 +145,11 @@
                                     }
                                     else
                                     {
-                                        <p>@ViewBag.TL.IssueDate</p>
+                                        <p>@ViewBag.TL.IssueDate.ToString("dd/MM/yyyy")</p>
                                        
                                     }
                                     <p>Date of expiry/Date de d'expiration(7)</p>
-                                    <p>ExpiryDate</p>
+                                    <p>@Exp</p>
                                 </div>
                                 <div class="col-md-4">
                                     <img id="Photo" src="@Model.Photo" alt="your image" style="width:30%; height:30%;" />
@@ -166,7 +168,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <p>P < WSA @Model.FirstName << S < @Model.LastName <<<<<<<<<<<<<<<<<<<<<<<<</p>
-                                    <p>@ViewBag.TL.IDCode <<< WSA @Model.DateOfBirth 9 @Model.tblSex.Name ExpiryDate7 <<<<<<<<<<<<<< 08</p>
+                                    <p>@ViewBag.TL.IDCode <<< WSA @Model.DateOfBirth 9 @Model.tblSex.Name @Exp 7 <<<<<<<<<<<<<< 08</p>
                                 </div>
                             </div>
 

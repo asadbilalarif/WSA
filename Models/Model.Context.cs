@@ -46,6 +46,7 @@ namespace WorldServiceOrganization.Models
         public virtual DbSet<tblChild> tblChilds { get; set; }
         public virtual DbSet<tblAddress> tblAddresses { get; set; }
         public virtual DbSet<tblTransaction> tblTransactions { get; set; }
+        public virtual DbSet<tblDocumentImg> tblDocumentImgs { get; set; }
     
         public virtual ObjectResult<ProductUnionPackage_Result> ProductUnionPackage()
         {

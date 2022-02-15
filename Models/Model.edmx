@@ -89,6 +89,22 @@
           <Property Name="DeletedDate" Type="datetime" />
           <Property Name="isActive" Type="bit" />
         </EntityType>
+        <EntityType Name="tblDocumentImg">
+          <Key>
+            <PropertyRef Name="DocumentImgId" />
+          </Key>
+          <Property Name="DocumentImgId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImgPath" Type="nvarchar(max)" />
+          <Property Name="FileName" Type="nvarchar(max)" />
+          <Property Name="PersonIDNumber" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="EditBy" Type="int" />
+          <Property Name="EditDate" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="DeletedDate" Type="datetime" />
+          <Property Name="isActive" Type="bit" />
+        </EntityType>
         <EntityType Name="tblEye">
           <Key>
             <PropertyRef Name="EyeId" />
@@ -159,6 +175,7 @@
           <Property Name="BirthYear" Type="int" />
           <Property Name="Sex" Type="int" />
           <Property Name="Height" Type="float" />
+          <Property Name="HeightUnit" Type="int" />
           <Property Name="Eyes" Type="int" />
           <Property Name="Marks" Type="nvarchar(max)" />
           <Property Name="OccupationId" Type="int" />
@@ -383,6 +400,18 @@
             </Principal>
             <Dependent Role="tblAddress">
               <PropertyRef Name="Country" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentPerson">
+          <End Role="tblPerson" Type="Self.tblPerson" Multiplicity="0..1" />
+          <End Role="tblDocumentImg" Type="Self.tblDocumentImg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonIDNumber" />
+            </Principal>
+            <Dependent Role="tblDocumentImg">
+              <PropertyRef Name="PersonIDNumber" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -700,6 +729,7 @@
           <EntitySet Name="tblAddress" EntityType="Self.tblAddress" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblChild" EntityType="Self.tblChild" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCountry" EntityType="Self.tblCountry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDocumentImg" EntityType="Self.tblDocumentImg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEye" EntityType="Self.tblEye" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblMenu" EntityType="Self.tblMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOccupation" EntityType="Self.tblOccupation" Schema="dbo" store:Type="Tables" />
@@ -721,6 +751,10 @@
           <AssociationSet Name="FK_CountryAddress" Association="Self.FK_CountryAddress">
             <End Role="tblCountry" EntitySet="tblCountry" />
             <End Role="tblAddress" EntitySet="tblAddress" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentPerson" Association="Self.FK_DocumentPerson">
+            <End Role="tblPerson" EntitySet="tblPerson" />
+            <End Role="tblDocumentImg" EntitySet="tblDocumentImg" />
           </AssociationSet>
           <AssociationSet Name="FK_ManyProduct" Association="Self.FK_ManyProduct">
             <End Role="tblProduct" EntitySet="tblProduct" />
@@ -1008,6 +1042,11 @@
           <AssociationSet Name="FK_tblTransaction_tblUsers1" Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers1">
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblTransaction" EntitySet="tblTransactions" />
+          </AssociationSet>
+          <EntitySet Name="tblDocumentImgs" EntityType="WorldServiceOrganizationModel.tblDocumentImg" />
+          <AssociationSet Name="FK_DocumentPerson" Association="WorldServiceOrganizationModel.FK_DocumentPerson">
+            <End Role="tblPerson" EntitySet="tblPersons" />
+            <End Role="tblDocumentImg" EntitySet="tblDocumentImgs" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="tblRole">
@@ -1394,6 +1433,8 @@
           <NavigationProperty Name="tblChilds" Relationship="WorldServiceOrganizationModel.FK_PersonChild" FromRole="tblPerson" ToRole="tblChild" />
           <NavigationProperty Name="tblAddresses" Relationship="WorldServiceOrganizationModel.FK_PersonAddress" FromRole="tblPerson" ToRole="tblAddress" />
           <NavigationProperty Name="tblTransactions" Relationship="WorldServiceOrganizationModel.FK_PersonTransaction" FromRole="tblPerson" ToRole="tblTransaction" />
+          <Property Name="HeightUnit" Type="Int32" />
+          <NavigationProperty Name="tblDocumentImgs" Relationship="WorldServiceOrganizationModel.FK_DocumentPerson" FromRole="tblPerson" ToRole="tblDocumentImg" />
         </EntityType>
         <Association Name="FK_PersonCountryAppli">
           <End Type="WorldServiceOrganizationModel.tblCountry" Role="tblCountry" Multiplicity="0..1" />
@@ -1712,6 +1753,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tblDocumentImg">
+          <Key>
+            <PropertyRef Name="DocumentImgId" />
+          </Key>
+          <Property Name="DocumentImgId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImgPath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PersonIDNumber" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
+          <Property Name="isActive" Type="Boolean" />
+          <NavigationProperty Name="tblPerson" Relationship="WorldServiceOrganizationModel.FK_DocumentPerson" FromRole="tblDocumentImg" ToRole="tblPerson" />
+          <Property Name="FileName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_DocumentPerson">
+          <End Type="WorldServiceOrganizationModel.tblPerson" Role="tblPerson" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblDocumentImg" Role="tblDocumentImg" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPerson">
+              <PropertyRef Name="PersonIDNumber" />
+            </Principal>
+            <Dependent Role="tblDocumentImg">
+              <PropertyRef Name="PersonIDNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1984,6 +2054,7 @@
           <EntitySetMapping Name="tblPersons">
             <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblPerson">
               <MappingFragment StoreEntitySet="tblPerson">
+                <ScalarProperty Name="HeightUnit" ColumnName="HeightUnit" />
                 <ScalarProperty Name="Certification" ColumnName="Certification" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
@@ -2127,6 +2198,23 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="WorldServiceOrganizationModel.Store.sp_renamediagram" />
           <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="WorldServiceOrganizationModel.Store.sp_upgraddiagrams" />
+          <EntitySetMapping Name="tblDocumentImgs">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblDocumentImg">
+              <MappingFragment StoreEntitySet="tblDocumentImg">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="PersonIDNumber" ColumnName="PersonIDNumber" />
+                <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+                <ScalarProperty Name="DocumentImgId" ColumnName="DocumentImgId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

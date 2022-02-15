@@ -1115,6 +1115,7 @@ namespace WorldServiceOrganization.Controllers
                 ViewBag.Address = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
 
                 ViewBag.Transaction = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+                ViewBag.DocImg = DB.tblDocumentImgs.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
 
                 ViewBag.Success = Success;
                 ViewBag.Update = Update;
@@ -1237,9 +1238,12 @@ namespace WorldServiceOrganization.Controllers
                         Data.MotherName= Person.MotherName;
                         Data.WSANumber= Person.WSANumber;
                         Data.Comments= Person.Comments;
+                        Data.Title= Person.Title;
                         Data.Height= Person.Height;
+                        Data.HeightUnit = Person.HeightUnit;
                         Data.CountryOfApplication= Person.CountryOfApplication;
                         Data.CountryOfBirth= Person.CountryOfBirth;
+                        Data.CountryOfBirthStatistical= Person.CountryOfBirthStatistical;
                         Data.Sex= Person.Sex;
                         Data.Status= Person.Status;
                         Data.Eyes= Person.Eyes;
@@ -1829,6 +1833,8 @@ namespace WorldServiceOrganization.Controllers
             {
                 var Persons = DB.tblPersons.Where(x => x.isActive == true && x.PersonIDNumber == id).FirstOrDefault();
                 ViewBag.TL = DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
+                var data= DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
+                //data.tblProduct.tblProductType.Name
                 //ViewBag.LabelAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == true).FirstOrDefault();
                 //ViewBag.AltAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == false).ToList();
                 //ViewBag.Transaction = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
@@ -1846,6 +1852,106 @@ namespace WorldServiceOrganization.Controllers
 
         }
 
+        [HttpPost]
+
+        //Upload Files 
+        public ActionResult UploadImages(int? PersonIDNumber = 0)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+
+
+                    HttpFileCollectionBase files = Request.Files;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        HttpPostedFileBase file = files[i];
+                        string fname;
+                        if (Request.Browser.Browser.ToUpper() == "IE" || Request.Browser.Browser.ToUpper() == "INTERNETEXPLORER")
+                        {
+                            string[] testfiles = file.FileName.Split(new char[] { '\\' });
+                            fname = testfiles[testfiles.Length - 1];
+                            fname = file.FileName;
+                        }
+                        else
+                        {
+                            fname = file.FileName;
+
+                        }
+
+
+                        //var FolderPath = Server.MapPath("/TemplateImages/" + PersonIDNumber);
+
+                        //if (!Directory.Exists(FolderPath))
+                        //{
+                        //    // Try to create the directory.
+                        //    DirectoryInfo di = Directory.CreateDirectory(FolderPath);
+                        //}
+                        //FolderPath = "/TemplateImages/" + PersonIDNumber + "/" + fname + "";
+
+                        string folder = Server.MapPath(string.Format("~/{0}/", "Uploading"));
+                        if (!Directory.Exists(folder))
+                        {
+                            Directory.CreateDirectory(folder);
+                        }
+                        string path = null;
+                        path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(file.FileName));
+                        file.SaveAs(path);
+                        path = Path.Combine("\\Uploading", Path.GetFileName(file.FileName));
+
+                        tblDocumentImg temp = new tblDocumentImg();
+                        temp.PersonIDNumber = PersonIDNumber;
+                        temp.ImgPath = path;
+                        temp.FileName = fname;
+                        temp.isActive = true;
+                        temp.CreatedDate = DateTime.Now;
+                        temp.EditDate = DateTime.Now;
+                        DB.tblDocumentImgs.Add(temp);
+                        DB.SaveChanges();
+
+                        //FolderPath = "/TemplateImages/" + PersonIDNumber + "/";
+
+                        //fname = Path.Combine(Server.MapPath(FolderPath), fname);
+                        //file.SaveAs(fname);
+
+                    }
+                    DB.Configuration.ProxyCreationEnabled = false;
+                    List<tblDocumentImg> TemporaryUploadedFiles = new List<tblDocumentImg>();
+
+                    TemporaryUploadedFiles = DB.tblDocumentImgs.ToList();
+                    return Json(TemporaryUploadedFiles, JsonRequestBehavior.AllowGet);
+
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred.Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("1");
+            }
+        }
+
+        public ActionResult DeleteImage(int? PersonIDNumber = 0, int? DocumentImgId = 0)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            if (PersonIDNumber > 0)
+            {
+                DB.Database.ExecuteSqlCommand("Delete from tblDocumentImg where DocumentImgId=" + DocumentImgId);
+                //var ProductImage = db.tblTemplatesImages.Where(a => a.ID == ImageId);
+                //db.tblTemplatesImages.Remove(ProductImage);
+                DB.SaveChanges();
+                DB.Configuration.ProxyCreationEnabled = false;
+                List<tblDocumentImg> ProductUploadedFiles = new List<tblDocumentImg>();
+
+                ProductUploadedFiles = DB.tblDocumentImgs.Where(p => p.PersonIDNumber == PersonIDNumber).ToList();
+                return Json(ProductUploadedFiles, JsonRequestBehavior.AllowGet);
+            }
+            return Json("", JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult About()
         {

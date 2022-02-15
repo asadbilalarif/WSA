@@ -20,6 +20,7 @@ namespace WorldServiceOrganization.Models
             this.tblChilds = new HashSet<tblChild>();
             this.tblAddresses = new HashSet<tblAddress>();
             this.tblTransactions = new HashSet<tblTransaction>();
+            this.tblDocumentImgs = new HashSet<tblDocumentImg>();
         }
     
         public int PersonIDNumber { get; set; }
@@ -62,6 +63,7 @@ namespace WorldServiceOrganization.Models
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Nullable<bool> isActive { get; set; }
         public string Certification { get; set; }
+        public Nullable<int> HeightUnit { get; set; }
     
         public virtual tblCountry tblCountry { get; set; }
         public virtual tblCountry tblCountry1 { get; set; }
@@ -79,5 +81,7 @@ namespace WorldServiceOrganization.Models
         public virtual ICollection<tblAddress> tblAddresses { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblTransaction> tblTransactions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblDocumentImg> tblDocumentImgs { get; set; }
     }
 }

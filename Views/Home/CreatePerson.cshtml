@@ -43,9 +43,12 @@
     }
 
     string Comments = "";
+    string Title = "";
     double? Height = 0.0;
+    int? HeightUnit = 1;
     int? CountryApplicationId = 0;
     int? CountryBirthId = 0;
+    int? CountryOfBirthStatistical = 0;
     int? EyeId = 0;
     int? OccupationId = 0;
     int? SexId = 0;
@@ -83,9 +86,12 @@
         MotherName = Model.MotherName;
         WSANumber = Model.WSANumber;
         Comments = Model.Comments;
+        Title = Model.Title;
         Height = Model.Height;
+        HeightUnit = Model.HeightUnit;
         CountryApplicationId = Model.CountryOfApplication;
         CountryBirthId = Model.CountryOfBirth;
+        CountryOfBirthStatistical = Model.CountryOfBirthStatistical;
         EyeId = Model.Eyes;
         OccupationId = Model.OccupationCode;
         SexId = Model.Sex;
@@ -107,6 +113,7 @@
     <style>
         .select2-container {
             width: 100% !important;
+
         }
     </style>
 
@@ -187,7 +194,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>First Name</label>
+                                            <label>First and Middle Names</label>
                                             <input type="text" class="form-control" id="FirstName" name="FirstName" value="@FirstName" required>
                                         </div>
                                     </div>
@@ -241,12 +248,59 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
+                                            <label>Country of Birth Statistical</label>
+                                            &nbsp;&nbsp;
+                                            <select class="form-control" id="CountryOfBirthStatistical" name="CountryOfBirthStatistical" required>
+                                                <option value="">Select Country</option>
+                                                @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                                {
+                                                    if (Countries.CountryId == CountryOfBirthStatistical)
+                                                    {
+                                                        <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                    }
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
                                             <label>Phone</label>
                                             &nbsp;&nbsp;
                                             <input type="text" class="form-control" id="Phone" name="Phone" value="@Phone">
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Occupation Code</label>&nbsp;&nbsp;
+                                            <select class="form-control" id="OccupationCode" name="OccupationCode">
+                                                <option value="">Select Occupation</option>
+                                                @foreach (WorldServiceOrganization.Models.tblOccupation Occupation in @ViewBag.Occupation)
+                                                {
+                                                    if (Occupation.OccupationId == OccupationId)
+                                                    {
+                                                        <option value="@Occupation.OccupationId" selected>@Occupation.Code - @Occupation.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Occupation.OccupationId">@Occupation.Code - @Occupation.Name</option>
+                                                    }
+                                                }
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Title</label>&nbsp;&nbsp;
+                                            <input type="text" class="form-control" id="Title" name="Title" value="@Title">
 
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
@@ -303,8 +357,37 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Height</label><br />
-                                            <input type="text" class="form-control" id="Height" name="Height" value="@Height">
+                                            <div class="row" >
+                                                <div class="col-md-7">
+                                                    <label>Height</label><br />
+                                                    <input type="text" class="form-control" id="Height" name="Height" value="@Height">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <br />
+                                                    <select class="form-control" id="HeightUnit" name="HeightUnit">
+                                                        @if (@HeightUnit == 1)
+                                                        {
+                                                            <option value="1" selected>ft</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="1">ft</option>
+                                                        }
+                                                        @if (@HeightUnit == 2)
+                                                        {
+                                                            <option value="2" selected>m</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="2">m</option>
+                                                        }
+
+                                                        
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -336,25 +419,7 @@
                                             <input type="text" class="form-control" id="Marks" name="Marks" value="@Marks">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Occupation Code</label>&nbsp;&nbsp;
-                                            <select class="form-control" id="OccupationCode" name="OccupationCode">
-                                                <option value="">Select Occupation</option>
-                                                @foreach (WorldServiceOrganization.Models.tblOccupation Occupation in @ViewBag.Occupation)
-                                                {
-                                                    if (Occupation.OccupationId == OccupationId)
-                                                    {
-                                                        <option value="@Occupation.OccupationId" selected>@Occupation.Code - @Occupation.Name</option>
-                                                    }
-                                                    else
-                                                    {
-                                                        <option value="@Occupation.OccupationId">@Occupation.Code - @Occupation.Name</option>
-                                                    }
-                                                }
-                                            </select>
-                                        </div>
-                                    </div>
+                                   
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <div>
@@ -636,7 +701,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>First Name</label>
+                                                    <label>First and Middle Names</label>
                                                     <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" required>
                                                 </div>
                                             </div>
@@ -690,9 +755,57 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
+                                                    <label>Country of Birth Statistical</label>
+                                                    &nbsp;&nbsp;
+                                                    <select class="form-control" id="CountryOfBirthStatistical" name="CountryOfBirthStatistical" required>
+                                                        <option value="">Select Country</option>
+                                                        @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                                        {
+                                                            if (Countries.CountryId == CountryOfBirthStatistical)
+                                                            {
+                                                                <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
                                                     <label>Phone</label>
                                                     &nbsp;&nbsp;
                                                     <input type="text" class="form-control" id="Phone" name="Phone" value="@Phone">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Occupation Code</label>&nbsp;&nbsp;
+                                                    <select class="form-control" id="OccupationCode" name="OccupationCode">
+                                                        <option value="">Select Occupation</option>
+                                                        @foreach (WorldServiceOrganization.Models.tblOccupation Occupation in @ViewBag.Occupation)
+                                                        {
+                                                            if (Occupation.OccupationId == OccupationId)
+                                                            {
+                                                                <option value="@Occupation.OccupationId" selected>@Occupation.Code - @Occupation.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Occupation.OccupationId">@Occupation.Code - @Occupation.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Title</label>&nbsp;&nbsp;
+                                                    <input type="text" class="form-control" id="Title" name="Title" value="@Title">
+
                                                 </div>
                                             </div>
 
@@ -752,8 +865,35 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Height</label><br />
-                                                    <input type="text" class="form-control" id="Height" name="Height" value="@Height">
+                                                    <div class="row">
+                                                        <div class="col-md-9">
+                                                            <label>Height</label><br />
+                                                            <input type="text" class="form-control" id="Height" name="Height" value="@Height">
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <br />
+                                                            <select class="" id="HeightUnit" name="HeightUnit">
+                                                                @if (@HeightUnit == 1)
+                                                                {
+                                                                    <option value="1" selected>ft</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="1">ft</option>
+                                                                }
+                                                                @if (@HeightUnit == 2)
+                                                                {
+                                                                    <option value="2" selected>m</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="2">m</option>
+                                                                }
+
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -783,25 +923,6 @@
                                                     <label>Marks</label>
                                                     &nbsp;&nbsp;
                                                     <input type="text" class="form-control" id="Marks" name="Marks" value="@Marks">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label>Occupation Code</label>&nbsp;&nbsp;
-                                                    <select class="form-control" id="OccupationCode" name="OccupationCode">
-                                                        <option value="">Select Occupation</option>
-                                                        @foreach (WorldServiceOrganization.Models.tblOccupation Occupation in @ViewBag.Occupation)
-                                                        {
-                                                            if (Occupation.OccupationId == OccupationId)
-                                                            {
-                                                                <option value="@Occupation.OccupationId" selected>@Occupation.Code - @Occupation.Name</option>
-                                                            }
-                                                            else
-                                                            {
-                                                                <option value="@Occupation.OccupationId">@Occupation.Code - @Occupation.Name</option>
-                                                            }
-                                                        }
-                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -848,6 +969,47 @@
                                                 <div class="form-group">
                                                     <label>Comments</label>
                                                     <textarea type="text" class="form-control" id="Comments" name="Comments" value="@Comments"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" >
+                                            <div class="col-md-12">
+                                                <div style="" id="Imagesboxes">
+
+                                                    <input class="form-control" type="file" id="TemplateImages" name="TemplateImages" accept="image/jpeg, image/png, image/gif,">
+                                                    <small class="form-text text-muted">Allowed images: jpg, gif, png. Maximum 10 images only.</small>
+                                                    <div id="Alertdiv">
+                                                        <label id="Message"></label>
+                                                    </div>
+                                                    <div class="row" id="Products_Image_Div">
+                                                        @{int ImageId = 0;}
+
+
+
+                                                        @if (ViewBag.DocImg != null)
+                                                        {
+                                                            foreach (var item in ViewBag.DocImg)
+                                                            {
+                                                                ImageId = @item.DocumentImgId;
+                                                                <li>
+                                                                    <div class="upload-images">
+                                                                        <button style="color: black!important; font-size: 20px; background-color: black!important"
+                                                                                onclick="DeleteImage('@ImageId')" type="button" class="close">
+                                                                            <span style="color: white">×</span>
+                                                                        </button>
+                                                                        @*<img style="border: 1px solid black!important; width: 130px; height: 120px!important" id="product_img"
+                                                                             alt="Blog Image" src="@item.ImgPath">*@
+                                                                        <a href="@item.ImgPath" style="border: 1px solid black!important; width: 130px; height: 120px!important" id="product_img" >@item.FileName</a>
+                                                                    </div>
+                                                                </li>
+                                                            }
+
+                                                        }
+
+
+
+                                                    </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -1774,7 +1936,117 @@
 
 
 
-<script>
+            <script>
+
+
+    $('#TemplateImages').change(function (e) {
+
+        if (window.FormData !== undefined) {
+
+        var fileUpload = $("#TemplateImages").get(0);
+        var files = fileUpload.files;
+
+        var fileData = new FormData();
+        //var TemplateCardID = parseInt($('#TemplateCardID').val());
+
+        //if (TemplateCardID >= 10) // Selected images with in 10 count
+        //{
+        //    alert(TemplateCardID);
+        //    document.getElementById("Message").innerHTML = "Limit Reached! 10 Images";
+        //    document.getElementById("Message").style.color = "white";
+        //    document.getElementById("Alertdiv").style.backgroundColor = '#ef0255';
+        //    document.getElementById("Alertdiv").style.borderColor = "#ef0255";
+        //    $("#Alertdiv").fadeIn();
+        //    $("#Alertdiv").fadeOut(8000);
+        //    return;
+        //}
+
+
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+
+
+
+            var PersonIDNumber = @Model.PersonIDNumber;
+            // Adding one more key to FormData object
+            fileData.append('PersonIDNumber', PersonIDNumber);
+
+    $.ajax({
+    url: '@Url.Action("UploadImages", "Home")',
+    type: "POST",
+    contentType: false, // Not to set any content header
+    processData: false, // Not to process data
+    data: fileData,
+    success: function (result) {
+    //$("#TemplateCardID").val(TemplateCardID + 1);
+    $("#Products_Image_Div li ").remove();
+    var ImageDiv;
+
+    if (result != null || result.length > 0) {
+    for (var i = 0; i < result.length; i++) {
+    var img = document.createElement('img');
+        img.src = result[i].ImgPath ;
+
+    ImageDiv = "<li> <div class='upload-images'> \
+    <button style='color: black!important; font-size: 20px; background-color: black!important' onclick='DeleteImage("+ result[i].DocumentImgId+")' type='button' class='close'>\
+    <span style='color: white'>&times;</span></button>\
+         <a href="+result[i].ImgPath+" style='border: 1px solid black!important; width: 130px; height: 120px!important' id='product_img' >"+result[i].FileName+"</a>\
+    </div>   </li>";
+    $('#Products_Image_Div').append(ImageDiv);
+    }
+
+    }
+
+    },
+    error: function (err) {
+    /alert(err.statusText);/
+    }
+    });
+    } else {
+    alert("FormData is not supported.");
+    }
+        });
+
+
+    function DeleteImage(ImageId) {
+
+        var PersonIDNumber = @Model.PersonIDNumber;
+        var DocumentImgId = ImageId;
+    $.ajax({
+    url: '@Url.Action("DeleteImage", "Home")',
+    type: "POST",
+    dataType: 'JSON',
+        data: { PersonIDNumber: PersonIDNumber, DocumentImgId: DocumentImgId },
+    success: function (result) {
+    //var TemplateCardID = parseInt($('#TemplateCardID').val());
+    //$("#TemplateCardID").val(TemplateCardID - 1);
+    $("#Products_Image_Div li ").remove();
+        var ImageDiv;
+        console.log(result);
+    if (result != null || result.length > 0) {
+    for (var i = 0; i < result.length; i++) {
+    var img = document.createElement('img');
+        img.src = result[i].ImgPath;
+
+    ImageDiv = "<li> <div class='upload-images'> \
+    <button style='color: black!important; font-size: 20px; background-color: black!important' onclick='DeleteImage("+ result[i].DocumentImgId+")' type='button' class='close'>\
+    <span style='color: white'>&times;</span></button>\
+        <a href="+ result[i].ImgPath + " style='border: 1px solid black!important; width: 130px; height: 120px!important' id='product_img' >" + result[i].FileName +"</a>\
+    </div>   </li>";
+    $('#Products_Image_Div').append(ImageDiv);
+    }
+
+    }
+
+
+    },
+    error: function (err) {
+    /alert(err.statusText);/
+    }
+    });
+    }
+
 
 
     $("body").on("click", "#EditChild", function () {
@@ -1942,8 +2214,8 @@
         window.location.href = url;
 
         });
-    
-    
+
+
 
 
     $("body").on("click", "#EditTransaction", function () {
@@ -2228,7 +2500,7 @@
             $('#ChildTable').DataTable({
 
                 "bInfo": false,
-                
+
                 searching: false, paging: false
             });
 
@@ -2236,7 +2508,7 @@
                 "bInfo": false,
 
                 searching: false, paging: false
-                
+
             });
 
             if ("@Succ"!="") {
@@ -2303,4 +2575,4 @@
 
 
 
-</script>
+            </script>

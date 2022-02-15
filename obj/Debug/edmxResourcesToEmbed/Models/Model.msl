@@ -267,6 +267,7 @@
     <EntitySetMapping Name="tblPersons">
       <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblPerson">
         <MappingFragment StoreEntitySet="tblPerson">
+          <ScalarProperty Name="HeightUnit" ColumnName="HeightUnit" />
           <ScalarProperty Name="Certification" ColumnName="Certification" />
           <ScalarProperty Name="isActive" ColumnName="isActive" />
           <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
@@ -410,5 +411,22 @@
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="WorldServiceOrganizationModel.Store.sp_renamediagram" />
     <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="WorldServiceOrganizationModel.Store.sp_upgraddiagrams" />
+    <EntitySetMapping Name="tblDocumentImgs">
+      <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblDocumentImg">
+        <MappingFragment StoreEntitySet="tblDocumentImg">
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+          <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="PersonIDNumber" ColumnName="PersonIDNumber" />
+          <ScalarProperty Name="ImgPath" ColumnName="ImgPath" />
+          <ScalarProperty Name="DocumentImgId" ColumnName="DocumentImgId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
