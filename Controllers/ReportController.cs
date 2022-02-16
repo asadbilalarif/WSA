@@ -164,8 +164,21 @@ namespace WorldServiceOrganization.Controllers
 
         public ActionResult CustomSearch()
         {
-            var PL= DB.tblPersons.Where(x => x.isActive == true).ToList();
+            ViewBag.FieldtoSearch = "p.LastName";
+            ViewBag.SearchValue = "";
+            //var PL= DB.tblPersons.Where(x => x.isActive == true).ToList();
             ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult CustomSearch(string FieldtoSearch,string SearchValue)
+        {
+            ViewBag.FieldtoSearch = FieldtoSearch;
+            ViewBag.SearchValue = SearchValue;
+
+            List<CustomSearchLeftJoin_Result> PL = DB.CustomSearchLeftJoin(FieldtoSearch, SearchValue).ToList();
+            //ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
             return View(PL);
         }
 

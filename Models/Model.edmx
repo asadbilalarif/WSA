@@ -691,6 +691,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CustomSearchLeftJoin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FieldtoSearch" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="SearchValue" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="ProductUnionPackage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -1048,6 +1052,10 @@
             <End Role="tblPerson" EntitySet="tblPersons" />
             <End Role="tblDocumentImg" EntitySet="tblDocumentImgs" />
           </AssociationSet>
+          <FunctionImport Name="CustomSearchLeftJoin" ReturnType="Collection(WorldServiceOrganizationModel.CustomSearchLeftJoin_Result)">
+            <Parameter Name="FieldtoSearch" Mode="In" Type="String" />
+            <Parameter Name="SearchValue" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="tblRole">
           <Key>
@@ -1782,6 +1790,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="CustomSearchLeftJoin_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="WSANumber" Nullable="true" />
+          <Property Type="String" Name="LastName" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2215,6 +2229,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="CustomSearchLeftJoin" FunctionName="WorldServiceOrganizationModel.Store.CustomSearchLeftJoin">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WorldServiceOrganizationModel.CustomSearchLeftJoin_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="WSANumber" ColumnName="WSANumber" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

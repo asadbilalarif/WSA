@@ -85,7 +85,11 @@
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <label>Date Format</label>
-                                        <input type="text" class="form-control" id="DateFormat" name="DateFormat" value="@DateFormat" required>
+                                        @*<input type="text" class="form-control" id="DateFormat" name="DateFormat" value="@DateFormat" required>*@
+                                        <select class="form-control" id="DateFormat" name="DateFormat" required>
+                                            <option value="dd/MM/yyyy">dd/mm/yyyy</option>
+                                            <option value="MM/dd/yyyy">mm/dd/yyyy</option>
+                                        </select>
                                     </div>
                                 </div>
 
@@ -159,6 +163,7 @@
 
     $(document).ready(function () {
 
+        $("#DateFormat").val("@DateFormat").change();
                 
                 if ("@Update" != "") {
                     $('#UpdateAlert').fadeIn();

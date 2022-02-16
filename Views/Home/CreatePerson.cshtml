@@ -115,6 +115,63 @@
             width: 100% !important;
 
         }
+
+        button.close {
+            padding: 3px 6px;
+            position: absolute;
+            z-index: 1;
+            color: white !important;
+            font-size: 30px;
+            font-weight: bold !important;
+        }
+        .document {
+            /*border: 1px solid;
+            padding: 6px;
+            margin-top: 2%;
+            border-radius: 10px;*/
+        }
+        }
+        .icon-bar a {
+            display: block;
+            text-align: center;
+            padding: 4px;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 15px;
+        }
+        .upload-images {
+            position: relative;
+           
+        }
+            .upload-images img {
+                border-radius: 4px;
+                height: 100px;
+                width: 100px;
+            }
+        .btn-icon {
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            text-align: center;
+            position: absolute;
+            padding: 0;
+            font-size: 15px;
+            width: 20px;
+            height: 20px;
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            right: 3px;
+            top: 3px;
+            justify-content: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+        }
+
+        .btn-danger {
+            background-color: #ff0100;
+            border: 1px solid #ff0100;
+        }
     </style>
 
 
@@ -475,10 +532,12 @@
                                         <div class="change-avatar">
                                             <div class="row">
                                                 <div class="col-md-6 text-right">
-                                                    <div class="profile-img">
+                                                    <div class="upload-images">
 
-                                                        <img id="ImgImg" src="@ImgImg" alt="your image" />
-
+                                                        <img id="ImgImg" src="@ImgImg" alt="your image" name="ImgImg" />
+                                                        <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i></a>
+                                                        <input type="text" id="DeleteImageText" style="display:none;">
+                                                        <input type="text" name="Photo" value="@ImgImg" hidden>
 
 
                                                     </div>
@@ -489,9 +548,9 @@
                                                             <span><i class="fa fa-upload"></i> Upload Photo</span>
                                                             <input type="file" class="upload" name="Image" id="Image" accept="image/*" onchange="showPreviewImg(event);" value="Upload Photo">
                                                         </div>
-                                                        <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveImage"><i class="fa fa-download"></i> Save</a>
-                                                        <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i> Delete</a>
-                                                        <input type="text" name="Photo" id="DeleteImageText" style="display:none;">
+                                                        @*<a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveImage"><i class="fa fa-download"></i> Save</a>
+                                <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i> Delete</a>
+                                <input type="text" name="Photo" id="DeleteImageText" style="display:none;">*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -505,25 +564,30 @@
                                 <br>
                                 <div class="form-row">
                                     <div class="col-md-12">
+
                                         <div class="change-avatar">
                                             <div class="row">
                                                 <div class="col-md-6 text-right">
-                                                    <div class="profile-img">
 
-                                                        <img id="ImgSig" src="@ImgSig" alt="your image" />
+                                                    <div class="upload-images">
 
+                                                        <img id="ImgSig" src="@ImgSig" alt="your image" name="ImgSig" />
+                                                        <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i></a>
+                                                        <input type="text" id="DeleteSigText" style="display:none;">
+                                                        <input type="text" name="SignaturePath" value="@ImgSig" hidden>
 
                                                     </div>
                                                 </div>
+
                                                 <div class="col-md-6">
                                                     <div class="upload-img">
                                                         <div class="change-sing-btn">
                                                             <span><i class="fa fa-upload"></i> Upload Signature</span>
                                                             <input type="file" class="upload" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Photo">
                                                         </div>
-                                                        <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveSig"><i class="fa fa-download"></i> Save</a>
-                                                        <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i> Delete</a>
-                                                        <input type="text" name="SignaturePath" id="DeleteSigText" style="display:none;">
+                                                        @*<a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveSig"><i class="fa fa-download"></i> Save</a>
+                                <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i> Delete</a>
+                                <input type="text" name="SignaturePath" id="DeleteSigText" style="display:none;">*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -535,37 +599,37 @@
 
                                 </div>
                                 <br>
-                                <div class="form-row">
-                                    <div class="col-md-12">
-                                        <div class="change-avatar">
-                                            <div class="row">
-                                                <div class="col-md-6 text-right">
-                                                    <div class="profile-img">
+                                @*<div class="form-row">
+            <div class="col-md-12">
+                <div class="change-avatar">
+                    <div class="row">
+                        <div class="col-md-6 text-right">
+                            <div class="profile-img">
 
-                                                        <img id="ImgCer" src="@ImgCer" alt="your image" />
-
-
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="upload-img">
-                                                        <div class="change-doc-btn">
-                                                            <span><i class="fa fa-upload"></i> Upload Document</span>
-                                                            <input type="file" class="upload" name="CertificationFile" id="CertificationFile" accept="image/*" onchange="showPreviewCer(event);" value="Upload Photo">
-                                                        </div>
-                                                        <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveCer"><i class="fa fa-download"></i> Save</a>
-                                                        <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteCer"><i class="fa fa-trash"></i> Delete</a>
-                                                        <input type="text" name="Certification" id="DeleteCerText" style="display:none;">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <img id="ImgCer" src="@ImgCer" alt="your image" />
 
 
-
-                                    </div>
-
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="upload-img">
+                                <div class="change-doc-btn">
+                                    <span><i class="fa fa-upload"></i> Upload Document</span>
+                                    <input type="file" class="upload" name="CertificationFile" id="CertificationFile" accept="image/*" onchange="showPreviewCer(event);" value="Upload Photo">
                                 </div>
+                                <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveCer"><i class="fa fa-download"></i> Save</a>
+                                <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteCer"><i class="fa fa-trash"></i> Delete</a>
+                                <input type="text" name="Certification" id="DeleteCerText" style="display:none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>*@
 
 
                             </div>
@@ -866,13 +930,13 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <div class="row">
-                                                        <div class="col-md-9">
+                                                        <div class="col-md-7">
                                                             <label>Height</label><br />
                                                             <input type="text" class="form-control" id="Height" name="Height" value="@Height">
                                                         </div>
-                                                        <div class="col-md-3">
+                                                        <div class="col-md-5">
                                                             <br />
-                                                            <select class="" id="HeightUnit" name="HeightUnit">
+                                                            <select class="form-control" id="HeightUnit" name="HeightUnit">
                                                                 @if (@HeightUnit == 1)
                                                                 {
                                                                     <option value="1" selected>ft</option>
@@ -972,47 +1036,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row" >
-                                            <div class="col-md-12">
-                                                <div style="" id="Imagesboxes">
-
-                                                    <input class="form-control" type="file" id="TemplateImages" name="TemplateImages" accept="image/jpeg, image/png, image/gif,">
-                                                    <small class="form-text text-muted">Allowed images: jpg, gif, png. Maximum 10 images only.</small>
-                                                    <div id="Alertdiv">
-                                                        <label id="Message"></label>
-                                                    </div>
-                                                    <div class="row" id="Products_Image_Div">
-                                                        @{int ImageId = 0;}
-
-
-
-                                                        @if (ViewBag.DocImg != null)
-                                                        {
-                                                            foreach (var item in ViewBag.DocImg)
-                                                            {
-                                                                ImageId = @item.DocumentImgId;
-                                                                <li>
-                                                                    <div class="upload-images">
-                                                                        <button style="color: black!important; font-size: 20px; background-color: black!important"
-                                                                                onclick="DeleteImage('@ImageId')" type="button" class="close">
-                                                                            <span style="color: white">×</span>
-                                                                        </button>
-                                                                        @*<img style="border: 1px solid black!important; width: 130px; height: 120px!important" id="product_img"
-                                                                             alt="Blog Image" src="@item.ImgPath">*@
-                                                                        <a href="@item.ImgPath" style="border: 1px solid black!important; width: 130px; height: 120px!important" id="product_img" >@item.FileName</a>
-                                                                    </div>
-                                                                </li>
-                                                            }
-
-                                                        }
-
-
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
 
                                     <div class="col-md-4">
@@ -1021,9 +1045,11 @@
                                                 <div class="change-avatar">
                                                     <div class="row">
                                                         <div class="col-md-6 text-right">
-                                                            <div class="profile-img">
+                                                            <div class="upload-images">
 
                                                                 <img id="ImgImg" src="@ImgImg" alt="your image" name="ImgImg" />
+                                                                <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i></a>
+                                                                <input type="text"  id="DeleteImageText" style="display:none;">
                                                                 <input type="text" name="Photo" value="@ImgImg" hidden>
 
 
@@ -1035,9 +1061,9 @@
                                                                     <span><i class="fa fa-upload"></i> Upload Photo</span>
                                                                     <input type="file" class="upload" name="Image" id="Image" accept="image/*" onchange="showPreviewImg(event);" value="Upload Photo">
                                                                 </div>
-                                                                <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveImage"><i class="fa fa-download"></i> Save</a>
+                                                                @*<a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveImage"><i class="fa fa-download"></i> Save</a>
                                                                 <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i> Delete</a>
-                                                                <input type="text" name="Photo" id="DeleteImageText" style="display:none;">
+                                                                <input type="text" name="Photo" id="DeleteImageText" style="display:none;">*@
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1051,25 +1077,30 @@
                                         <br>
                                         <div class="form-row">
                                             <div class="col-md-12">
+                                                
                                                 <div class="change-avatar">
                                                     <div class="row">
                                                         <div class="col-md-6 text-right">
-                                                            <div class="profile-img">
+
+                                                            <div class="upload-images">
 
                                                                 <img id="ImgSig" src="@ImgSig" alt="your image" name="ImgSig" />
-                                                                <input type="text" name="SignaturePath" value="@ImgSig" hidden >
+                                                                <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i></a>
+                                                                <input type="text"  id="DeleteSigText" style="display:none;">
+                                                                <input type="text" name="SignaturePath" value="@ImgSig" hidden>
 
                                                             </div>
                                                         </div>
+
                                                         <div class="col-md-6">
                                                             <div class="upload-img">
                                                                 <div class="change-sing-btn">
                                                                     <span><i class="fa fa-upload"></i> Upload Signature</span>
                                                                     <input type="file" class="upload" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Photo">
                                                                 </div>
-                                                                <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveSig"><i class="fa fa-download"></i> Save</a>
+                                                                @*<a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveSig"><i class="fa fa-download"></i> Save</a>
                                                                 <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i> Delete</a>
-                                                                <input type="text" name="SignaturePath" id="DeleteSigText" style="display:none;">
+                                                                <input type="text" name="SignaturePath" id="DeleteSigText" style="display:none;">*@
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1081,37 +1112,88 @@
 
                                         </div>
                                         <br>
-                                        <div class="form-row">
+                                        <div class="row">
                                             <div class="col-md-12">
-                                                <div class="change-avatar">
-                                                    <div class="row">
-                                                        <div class="col-md-6 text-right">
-                                                            <div class="profile-img">
+                                                <div style="" id="Imagesboxes">
 
-                                                                <img id="ImgCer" src="@ImgCer" alt="your image" name="ImgCer" />
-                                                                <input type="text" name="Certification" value="@ImgCer" hidden>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="upload-img">
-                                                                <div class="change-doc-btn">
-                                                                    <span><i class="fa fa-upload"></i> Upload Document</span>
-                                                                    <input type="file" class="upload" name="CertificationFile" id="CertificationFile" accept="image/*" onchange="showPreviewCer(event);" value="Upload Photo">
-                                                                </div>
-                                                                <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveCer"><i class="fa fa-download"></i> Save</a>
-                                                                <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteCer"><i class="fa fa-trash"></i> Delete</a>
-                                                                <input type="text" name="Certification" id="DeleteCerText" style="display:none;">
-                                                            </div>
-                                                        </div>
+                                                    <div class="change-doc-btn">
+                                                        <span><i class="fa fa-upload"></i> Upload Documents</span>
+                                                        <input type="file" class="upload" id="TemplateImages" name="TemplateImages" onchange="showPreviewCer(event);" value="Upload Photo">
                                                     </div>
+                                                    @*<input class="form-control" type="file" id="TemplateImages" name="TemplateImages" accept="image/jpeg, image/png, image/gif,">
+                                                    <small class="form-text text-muted">Allowed images: jpg, gif, png. Maximum 10 images only.</small>*@
+                                                    <div id="Alertdiv">
+                                                        <label id="Message"></label>
+                                                    </div>
+                                                    
+
+                                                    <div class="upload-wrap" id="Products_Image_Div">
+                                                        @{int ImageId = 0;}
+
+
+
+                                                        @if (ViewBag.DocImg != null)
+                                                        {
+                                                            <ul style="list-style-type:none;">
+
+                                                                @foreach (var item in ViewBag.DocImg)
+                                                                {
+                                                                    ImageId = @item.DocumentImgId;
+
+                                                                    <li class="document">
+                                                                        <div class="upload-images">
+
+                                                                            @*<img style="border: 1px solid black!important; width: 130px; height: 120px!important" id="product_img"
+        alt="Blog Image" src="@item.ImgPath">*@
+                                                                            <a href="@item.ImgPath" id="product_img">@item.FileName</a>
+                                                                            @*<button style="color: black!important; font-size: 10px; background-color: red!important" onclick="DeleteImage('@ImageId')" type="button" class="close">
+                                                                                <span style="color: white">×</span>
+                                                                            </button>*@
+                                                                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" onclick="DeleteImage('@ImageId')"><i class="fa fa-trash"></i></a>
+                                                                        </div>
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        }
+
+
+
+                                                    </div>
+
                                                 </div>
-
-
-
                                             </div>
-
                                         </div>
+                                        @*<div class="form-row">
+            <div class="col-md-12">
+                <div class="change-avatar">
+                    <div class="row">
+                        <div class="col-md-6 text-right">
+                            <div class="profile-img">
+
+                                <img id="ImgCer" src="@ImgCer" alt="your image" name="ImgCer" />
+                                <input type="text" name="Certification" value="@ImgCer" hidden>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="upload-img">
+                                <div class="change-doc-btn">
+                                    <span><i class="fa fa-upload"></i> Upload Document</span>
+                                    <input type="file" class="upload" name="CertificationFile" id="CertificationFile" accept="image/*" onchange="showPreviewCer(event);" value="Upload Photo">
+                                </div>
+                                <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveCer"><i class="fa fa-download"></i> Save</a>
+                                <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteCer"><i class="fa fa-trash"></i> Delete</a>
+                                <input type="text" name="Certification" id="DeleteCerText" style="display:none;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+        </div>*@
 
 
                                     </div>
@@ -1132,10 +1214,6 @@
                                     </div>
 
                                 </div>
-
-
-
-
 
 
                                 <div class="row">
@@ -1863,10 +1941,6 @@
         </div>
     }
 
-
-
-
-
 </div>
 
             <div id="TransactionDelete" class="modal fade delete-modal" role="dialog">
@@ -1980,22 +2054,24 @@
     data: fileData,
     success: function (result) {
     //$("#TemplateCardID").val(TemplateCardID + 1);
-    $("#Products_Image_Div li ").remove();
+    $("#Products_Image_Div ul ").remove();
     var ImageDiv;
+    var LiDiv="";
 
-    if (result != null || result.length > 0) {
+        if (result != null || result.length > 0) {
+            ImageDiv = "<ul style='list-style-type: none;'>";
     for (var i = 0; i < result.length; i++) {
     var img = document.createElement('img');
         img.src = result[i].ImgPath ;
 
-    ImageDiv = "<li> <div class='upload-images'> \
-    <button style='color: black!important; font-size: 20px; background-color: black!important' onclick='DeleteImage("+ result[i].DocumentImgId+")' type='button' class='close'>\
-    <span style='color: white'>&times;</span></button>\
-         <a href="+result[i].ImgPath+" style='border: 1px solid black!important; width: 130px; height: 120px!important' id='product_img' >"+result[i].FileName+"</a>\
+        LiDiv += "<li class='document'> <div class='upload-images'> \
+         <a href="+ result[i].ImgPath + "  id='product_img' >" + result[i].FileName +"</a>\
+        <a href='javascript:void(0);' class='btn btn-icon btn-danger btn-sm' onclick='DeleteImage("+ result[i].DocumentImgId+")'><i class='fa fa-trash'></i></a>\
     </div>   </li>";
-    $('#Products_Image_Div').append(ImageDiv);
-    }
-
+    
+            }
+            var LiUlDiv = ImageDiv + LiDiv+"</ul>";
+            $('#Products_Image_Div').append(LiUlDiv);
     }
 
     },
@@ -2021,21 +2097,24 @@
     success: function (result) {
     //var TemplateCardID = parseInt($('#TemplateCardID').val());
     //$("#TemplateCardID").val(TemplateCardID - 1);
-    $("#Products_Image_Div li ").remove();
+    $("#Products_Image_Div ul ").remove();
         var ImageDiv;
-        console.log(result);
-    if (result != null || result.length > 0) {
-    for (var i = 0; i < result.length; i++) {
-    var img = document.createElement('img');
-        img.src = result[i].ImgPath;
+        var LiDiv = "";
 
-    ImageDiv = "<li> <div class='upload-images'> \
-    <button style='color: black!important; font-size: 20px; background-color: black!important' onclick='DeleteImage("+ result[i].DocumentImgId+")' type='button' class='close'>\
-    <span style='color: white'>&times;</span></button>\
-        <a href="+ result[i].ImgPath + " style='border: 1px solid black!important; width: 130px; height: 120px!important' id='product_img' >" + result[i].FileName +"</a>\
+        if (result != null || result.length > 0) {
+            ImageDiv = "<ul style='list-style-type: none;'>";
+            for (var i = 0; i < result.length; i++) {
+                var img = document.createElement('img');
+                img.src = result[i].ImgPath;
+
+                LiDiv += "<li class='document'> <div class='upload-images'> \
+         <a href="+ result[i].ImgPath + "  id='product_img' >" + result[i].FileName + "</a>\
+        <a href='javascript:void(0);' class='btn btn-icon btn-danger btn-sm' onclick='DeleteImage("+ result[i].DocumentImgId + ")'><i class='fa fa-trash'></i></a>\
     </div>   </li>";
-    $('#Products_Image_Div').append(ImageDiv);
-    }
+
+            }
+            var LiUlDiv = ImageDiv + LiDiv + "</ul>";
+            $('#Products_Image_Div').append(LiUlDiv);
 
     }
 

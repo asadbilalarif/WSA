@@ -112,7 +112,7 @@
                         </div>
                        
                     </div>
-                    <div class="row">
+                    @*<div class="row">
                         <div class="col-md-4">
                             <label>Letter Case</label>
                             <select name="LetterCase" class="form-control" id="LetterCase">
@@ -130,7 +130,7 @@
                             <label>Font Style</label>
                             <input type="text" class="form-control" name="FontStyle" id="FontStyle" value="" />
                         </div>
-                    </div>
+                    </div>*@
                     <br />
                 }
 
@@ -305,7 +305,13 @@
                 {
                     extend: 'excel',
                     exportoptions: {
-                        columns: [1, 2]
+                        columns: [0, 1, 2, 3]
+                    }
+                },
+                {
+                    extend: 'pdf',
+                    exportoptions: {
+                        columns: [0, 1, 2, 3]
                     }
 
                 }

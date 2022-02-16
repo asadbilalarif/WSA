@@ -135,6 +135,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomSearchLeftJoin_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MenuAccess.cs" />
     <Compile Include="Models\Model.Context.cs">
       <AutoGen>True</AutoGen>

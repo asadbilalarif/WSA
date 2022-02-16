@@ -155,5 +155,18 @@ namespace WorldServiceOrganization.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
         }
+    
+        public virtual ObjectResult<CustomSearchLeftJoin_Result> CustomSearchLeftJoin(string fieldtoSearch, string searchValue)
+        {
+            var fieldtoSearchParameter = fieldtoSearch != null ?
+                new ObjectParameter("FieldtoSearch", fieldtoSearch) :
+                new ObjectParameter("FieldtoSearch", typeof(string));
+    
+            var searchValueParameter = searchValue != null ?
+                new ObjectParameter("SearchValue", searchValue) :
+                new ObjectParameter("SearchValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CustomSearchLeftJoin_Result>("CustomSearchLeftJoin", fieldtoSearchParameter, searchValueParameter);
+        }
     }
 }
