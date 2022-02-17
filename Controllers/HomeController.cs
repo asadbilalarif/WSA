@@ -1852,9 +1852,9 @@ namespace WorldServiceOrganization.Controllers
 
         }
 
-        [HttpPost]
 
         //Upload Files 
+        [HttpPost]
         public ActionResult UploadImages(int? PersonIDNumber = 0)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
@@ -1951,6 +1951,30 @@ namespace WorldServiceOrganization.Controllers
                 return Json(ProductUploadedFiles, JsonRequestBehavior.AllowGet);
             }
             return Json("", JsonRequestBehavior.AllowGet);
+        }
+
+
+        [HttpPost]
+        public ActionResult CheckIDCode(string IDCode)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            
+                try
+                {
+                    if (DB.tblTransactions.Where(x=>x.IDCode== IDCode).FirstOrDefault()==null)
+                    {
+                        return Json(1);
+
+                    }
+                    else
+                    {
+                        return Json(0);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred.Error details: " + ex.Message);
+                }
         }
 
         public ActionResult About()
