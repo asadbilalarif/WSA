@@ -7,6 +7,9 @@ using WorldServiceOrganization.Models;
 
 namespace WorldServiceOrganization.Controllers
 {
+    [NoDirectAccess]
+    [AuthorizeAction1FilterAttribute]
+    [Authorize]
     public class ReportController : Controller
     {
         WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();

@@ -8,6 +8,8 @@ using WorldServiceOrganization.Models;
 
 namespace WorldServiceOrganization.Controllers
 {
+    [NoDirectAccess]
+    [AuthorizeAction1FilterAttribute]
     [Authorize]
     public class UserManagementController : Controller
     {

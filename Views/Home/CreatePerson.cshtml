@@ -2,16 +2,19 @@
 @{
 
 
-    string Succ = ViewBag.Success;
-    string Update = ViewBag.Update;
-    string Delete = ViewBag.Delete;
-    string CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
+
 
 
     HttpCookie cookieObj = Request.Cookies["Settings"];
     string WSA = cookieObj["WSA"];
     string DateFormat = cookieObj["DateFormat"];
     string Retrieves = cookieObj["Retrieves"];
+
+
+    string Succ = ViewBag.Success;
+    string Update = ViewBag.Update;
+    string Delete = ViewBag.Delete;
+    string CreatedDate = DateTime.Now.ToString(@DateFormat);
 
     int PersonId = 0;
     string FirstName = "";
@@ -665,10 +668,6 @@
                             </div>
 
                         </div>
-
-
-
-
 
 
                         <div class="row">
@@ -1480,19 +1479,19 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Application Date</label>
-                                                            <input type="date" class="form-control" id="ApplicationDate" name="ApplicationDate" value="" required>
+                                                            <input type="text" class="form-control" id="ApplicationDate" name="ApplicationDate" value="" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Issue Date</label><br />
-                                                            <input type="date" class="form-control" id="IssueDate" name="IssueDate" value="">
+                                                            <input type="text" class="form-control" id="IssueDate" name="IssueDate" value="">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Sent Date</label><br />
-                                                            <input type="date" class="form-control" id="SentDate" name="SentDate" value="">
+                                                            <input type="text" class="form-control" id="SentDate" name="SentDate" value="">
 
                                                         </div>
                                                     </div>
@@ -1500,7 +1499,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group">
                                                             <label>Return Date</label><br />
-                                                            <input type="date" class="form-control" id="ReturnDate" name="ReturnDate" value="">
+                                                            <input type="text" class="form-control" id="ReturnDate" name="ReturnDate" value="">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1508,7 +1507,7 @@
                                             </div>
                                             <div class="col-md-12 text-right">
                                                 <button class="btn btn-primary" type="submit" id="SaveB">Save</button>
-                                                <a href="@Url.Action("CreateTransaction","Home")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                                                <a href="@Url.Action("CreatePerson","Home", new {id=Model.PersonIDNumber})"> <input class="btn btn-danger" type="button" value="Cancel"></a>
                                                 <a href="@Url.Action("Persons","Home")" class="btn btn-secondary"><i class="fa fa-list"></i>List</a>
                                             </div>
 
@@ -1750,7 +1749,7 @@
                                             </div>
                                             <div class="col-md-8 text-right">
                                                 <button class="btn btn-primary" type="submit">Save</button>
-                                                <a href="@Url.Action("CreateAddress","Home")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                                                <a href="@Url.Action("CreatePerson","Home",new { id=Model.PersonIDNumber}))"> <input class="btn btn-danger" type="button" value="Cancel"></a>
                                                 <a href="@Url.Action("Persons","Home")" class="btn btn-secondary"><i class="fa fa-list"></i>List</a>
 
                                             </div>
@@ -1869,14 +1868,7 @@
                                                 <option value="">Select Gender</option>
                                                 @foreach (WorldServiceOrganization.Models.tblSex Sex in @ViewBag.Sex)
                                                 {
-                                                    if (Sex.SexId == SexId)
-                                                    {
-                                                        <option value="@Sex.SexId" selected>@Sex.Code / @Sex.Name</option>
-                                                    }
-                                                    else
-                                                    {
                                                         <option value="@Sex.SexId">@Sex.Code / @Sex.Name</option>
-                                                    }
                                                 }
                                             </select>
 
@@ -1885,7 +1877,7 @@
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Birth Date</label><br />
-                                            <input type="date" class="form-control" id="BirthDate" name="BirthDate" value="" required>
+                                            <input type="text" class="form-control" id="BirthDate" name="BirthDate" value="" required>
 
 
                                         </div>
@@ -1894,7 +1886,7 @@
                                         <div class="form-group">
                                             <label></label>
                                             <button class="btn btn-primary" type="submit" style="margin-top:10%;">Save</button>
-                                            <a href="@Url.Action("CreateChild","Home")"> <input class="btn btn-danger" type="button" style="margin-top:10%;" value="Cancel"></a>
+                                            <a href="@Url.Action("CreatePerson","Home",new { id=Model.PersonIDNumber})"> <input class="btn btn-danger" type="button" style="margin-top:10%;" value="Cancel"></a>
                                             <a href="@Url.Action("Persons","Home")" class="btn btn-secondary" style="margin-top:10%;"><i class="fa fa-list"></i>List</a>
                                         </div>
                                     </div>
@@ -2038,6 +2030,21 @@
     $(function () {
         var Formate = "@DateFormat"
         $('#DateOfBirth').datepicker({
+            format: Formate.toLowerCase() ,
+        });
+        $('#ApplicationDate').datepicker({
+            format: Formate.toLowerCase() ,
+        });
+        $('#IssueDate').datepicker({
+            format: Formate.toLowerCase() ,
+        });
+        $('#SentDate').datepicker({
+            format: Formate.toLowerCase() ,
+        });
+        $('#ReturnDate').datepicker({
+            format: Formate.toLowerCase() ,
+        });
+        $('#BirthDate').datepicker({
             format: Formate.toLowerCase() ,
         });
     });
@@ -2237,8 +2244,9 @@
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
         $("#ChildId").val(currentRow.find("td:eq(1)").text());
         $("#ChildName").val(currentRow.find("td:eq(2)").text());
-        var fromDate = new Date(currentRow.find("td:eq(3)").text()).toDateString();
-        $("#BirthDate").val(formatDate(fromDate));
+        //var fromDate = new Date(currentRow.find("td:eq(3)").text()).toDateString();
+        //$("#BirthDate").val(formatDate(fromDate));
+        $("#BirthDate").val(currentRow.find("td:eq(3)").text());
         $("#SexId").val(currentRow.find("td:eq(5)").text()).change();
     });
 
@@ -2391,9 +2399,9 @@
     });
 
         $("body").on("click", "#PassportLabel", function () {
-        var url = window.location.origin;
-        url += '/Home/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + $("#TransactionIDNumber").val() +'';
-        window.location.href = url;
+            var url = window.location.origin;
+            url += '/Home/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + $("#TransactionIDNumber").val() +'';
+            window.location.href = url;
 
         });
 
@@ -2406,22 +2414,28 @@
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
         $("#TransactionIDNumber").val(currentRow.find("td:eq(1)").text());
         $("#ProductD").val(currentRow.find("td:eq(3)").text()).change();
-        var fromDate = new Date(currentRow.find("td:eq(4)").text()).toDateString();
-        $("#ApplicationDate").val(formatDate(fromDate));
-        fromDate = new Date(currentRow.find("td:eq(5)").text()).toDateString();
-        $("#IssueDate").val(formatDate(fromDate));
-        fromDate = new Date(currentRow.find("td:eq(6)").text()).toDateString();
-        $("#SentDate").val(formatDate(fromDate));
-        fromDate = new Date(currentRow.find("td:eq(7)").text()).toDateString();
-        $("#ReturnDate").val(formatDate(fromDate));
+        //var fromDate = new Date(currentRow.find("td:eq(4)").text()).toDateString();
+        //$("#ApplicationDate").val(formatDate(fromDate));
+        //fromDate = new Date(currentRow.find("td:eq(5)").text()).toDateString();
+        //$("#IssueDate").val(formatDate(fromDate));
+        //fromDate = new Date(currentRow.find("td:eq(6)").text()).toDateString();
+        //$("#SentDate").val(formatDate(fromDate));
+        //fromDate = new Date(currentRow.find("td:eq(7)").text()).toDateString();
+        //$("#ReturnDate").val(formatDate(fromDate));
+        $("#ApplicationDate").val(currentRow.find("td:eq(4)").text());
+        $("#IssueDate").val(currentRow.find("td:eq(5)").text());
+        $("#SentDate").val(currentRow.find("td:eq(6)").text());
+        $("#ReturnDate").val(currentRow.find("td:eq(7)").text());
         $("#IDCode").val(currentRow.find("td:eq(8)").text());
         $("#Cost").val(currentRow.find("td:eq(9)").text());
         $("#Quantity").val(currentRow.find("td:eq(10)").text());
         $("#Problems").val(currentRow.find("td:eq(11)").text());
-        fromDate = new Date(currentRow.find("td:eq(12)").text()).toDateString();
-        $("#CreatedDate").val(fromDate);
-        fromDate = new Date(currentRow.find("td:eq(13)").text()).toDateString();
-        $("#EditDate").val(fromDate);
+        //fromDate = new Date(currentRow.find("td:eq(12)").text()).toDateString();
+        //$("#CreatedDate").val(fromDate);
+        //fromDate = new Date(currentRow.find("td:eq(13)").text()).toDateString();
+        //$("#EditDate").val(fromDate);
+        $("#CreatedDate").val(currentRow.find("td:eq(12)").text());
+        $("#EditDate").val(currentRow.find("td:eq(13)").text());
         $("#TotalCost").val($("#Quantity").val() * $("#Cost").val());
         //alert($("#DeleteDeviceInfoID").val());
     });
@@ -2763,7 +2777,7 @@
 
             });
 
-        });
+    });
 
 
 

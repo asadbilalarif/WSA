@@ -586,6 +586,7 @@
     <NavigationProperty Name="tblTransactions" Relationship="WorldServiceOrganizationModel.FK_PersonTransaction" FromRole="tblPerson" ToRole="tblTransaction" />
     <Property Name="HeightUnit" Type="Int32" />
     <NavigationProperty Name="tblDocumentImgs" Relationship="WorldServiceOrganizationModel.FK_DocumentPerson" FromRole="tblPerson" ToRole="tblDocumentImg" />
+    <Property Name="QRCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <Association Name="FK_PersonCountryAppli">
     <End Type="WorldServiceOrganizationModel.tblCountry" Role="tblCountry" Multiplicity="0..1" />

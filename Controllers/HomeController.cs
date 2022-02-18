@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WorldServiceOrganization.Models;
+using ZXing;
 
 namespace WorldServiceOrganization.Controllers
 {
+    [NoDirectAccess]
+    [AuthorizeAction1FilterAttribute]
     [Authorize]
     public class HomeController : Controller
     {
+        
         public ActionResult Index()
         {
             return View();
@@ -1151,6 +1157,10 @@ namespace WorldServiceOrganization.Controllers
             try
             {
                 ViewBag.User = Session["User"];
+
+                
+
+
                 if (Person.PersonIDNumber == 0)
                 {
                     //if (DB.tblPersons.Select(r => r).Where(x => x.EMail==Person.EMail).FirstOrDefault() == null)
@@ -1207,8 +1217,19 @@ namespace WorldServiceOrganization.Controllers
                         Data.LastEditedBy = ViewBag.User.UserId;
                         Data.isActive = true;
                         DB.tblPersons.Add(Data);
-                        DB.SaveChanges();
-                        return RedirectToAction("Persons", new { Success = "Person has been add successfully." });
+                        var ID=DB.SaveChanges();
+                    Data = DB.tblPersons.Where(x => x.PersonIDNumber == ID).FirstOrDefault();
+                    string vCardText = "BEGIN:VCARD\r\nN:";
+                    vCardText += "" + Person.FirstName + " " + Person.LastName + "\r\n";
+                    vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
+                    vCardText += "TEL:" + Person.Phone + "\r\n";
+                    vCardText += "END:VCARD";
+                    string QRCodeImagePath = GenerateQRCode(vCardText, ID);
+                   
+                    Data.QRCode = QRCodeImagePath;
+                    DB.Entry(Data);
+                    DB.SaveChanges();
+                    return RedirectToAction("Persons", new { Success = "Person has been add successfully." });
                     //}
                     //else
                     //{
@@ -1295,6 +1316,15 @@ namespace WorldServiceOrganization.Controllers
 
                         Data.LastModifiedDate = DateTime.Now;
                         Data.LastEditedBy = ViewBag.User.UserId;
+                        DB.Entry(Data);
+                        var ID=DB.SaveChanges();
+                        string vCardText = "BEGIN:VCARD\r\nN:";
+                        vCardText += "" + Person.FirstName+" "+ Person.LastName + "\r\n";
+                        vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
+                        vCardText += "TEL:" + Person.Phone + "\r\n";
+                        vCardText += "END:VCARD";
+                        string QRCodeImagePath = GenerateQRCode(vCardText, ID);
+                        Data.QRCode = QRCodeImagePath;
                         DB.Entry(Data);
                         DB.SaveChanges();
                         return RedirectToAction("Persons", new { Update = "Person has been Update successfully." });
@@ -1975,6 +2005,39 @@ namespace WorldServiceOrganization.Controllers
                 {
                     return Json("Error occurred.Error details: " + ex.Message);
                 }
+        }
+
+        private string GenerateQRCode(string qrcodeText, int Name)
+        {
+            string folderPath = "~/Uploading/QRCode/";
+            string imagePath = "/Uploading/QRCode/" + Name + ".jpg";
+            // If the directory doesn't exist then create it.
+            if (!Directory.Exists(Server.MapPath(folderPath)))
+            {
+                Directory.CreateDirectory(Server.MapPath(folderPath));
+            }
+            bool exists1 = (System.IO.File.Exists(Server.MapPath(imagePath)));
+            if (!exists1)
+            {
+                System.IO.File.Delete(Server.MapPath(imagePath));
+
+            }
+            var barcodeWriter = new BarcodeWriter();
+            barcodeWriter.Format = BarcodeFormat.QR_CODE;
+            var result = barcodeWriter.Write(qrcodeText);
+
+            string barcodePath = Server.MapPath(imagePath);
+            var barcodeBitmap = new Bitmap(result);
+            using (MemoryStream memory = new MemoryStream())
+            {
+                using (FileStream fs = new FileStream(barcodePath, FileMode.Create, FileAccess.ReadWrite))
+                {
+                    barcodeBitmap.Save(memory, ImageFormat.Jpeg);
+                    byte[] bytes = memory.ToArray();
+                    fs.Write(bytes, 0, bytes.Length);
+                }
+            }
+            return imagePath;
         }
 
         public ActionResult About()

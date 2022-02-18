@@ -398,3 +398,7 @@ D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CopyComplete
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.dll
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.pdb
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.presentation.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.presentation.xml

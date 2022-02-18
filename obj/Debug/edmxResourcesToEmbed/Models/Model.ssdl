@@ -188,6 +188,7 @@
     <Property Name="Signature" Type="image" />
     <Property Name="Certification" Type="nvarchar(max)" />
     <Property Name="CountryOfBirthStatistical" Type="int" />
+    <Property Name="QRCode" Type="nvarchar(max)" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="EntryDate" Type="datetime" Nullable="false" />
     <Property Name="LastEditedBy" Type="int" />

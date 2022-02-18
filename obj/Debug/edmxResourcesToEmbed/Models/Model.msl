@@ -267,6 +267,7 @@
     <EntitySetMapping Name="tblPersons">
       <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblPerson">
         <MappingFragment StoreEntitySet="tblPerson">
+          <ScalarProperty Name="QRCode" ColumnName="QRCode" />
           <ScalarProperty Name="HeightUnit" ColumnName="HeightUnit" />
           <ScalarProperty Name="Certification" ColumnName="Certification" />
           <ScalarProperty Name="isActive" ColumnName="isActive" />

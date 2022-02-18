@@ -9,11 +9,11 @@
     HttpCookie cookieObj = Request.Cookies["Settings"];
     string DateFormat = cookieObj["DateFormat"];
     string Retrieves = cookieObj["Retrieves"];
-    string EDate = DateTime.Now.ToString("yyyy-MM-dd");
-    string BDate = DateTime.Now.ToString("yyyy-MM-dd");
+    string EDate = DateTime.Now.ToString(DateFormat);
+    string BDate = DateTime.Now.ToString(DateFormat);
 
-    DateTime EEDate = ViewBag.EDate;
-    DateTime BBDate = ViewBag.BDate;
+    DateTime EEDate = ViewBag.EDate.ToString(DateFormat);
+    DateTime BBDate = ViewBag.BDate.ToString(DateFormat);
 }
 
 <head>
@@ -96,13 +96,13 @@
                                 </div>
                                 <div class="col-md-4"  id="BEDate">
                                     <label>Begin:</label>
-                                    <input type="date" id="BDate" name="BDate" value="@BDate" class="form-control">
+                                    <input type="text" id="BDate" name="BDate" value="@BDate" class="form-control">
                                    
                                 </div>
                                 <div class="col-md-4" id="BEDate">
                                   
                                     <label>End:</label>
-                                    <input type="date" name="EDate" value="@EDate" class="form-control">
+                                    <input type="text" id="EDate" name="EDate" value="@EDate" class="form-control">
                                 </div>
 
                             </div>
@@ -192,6 +192,17 @@
 @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
+
+     $(function () {
+        var Formate = "@DateFormat"
+         $('#BDate').datepicker({
+            format: Formate.toLowerCase() ,
+        });
+         $('#EDate').datepicker({
+            format: Formate.toLowerCase() ,
+        });
+        
+    });
 
     $("#FontStyle").change(function () {
         $("#ID").css("font-family", $("#FontStyle").val());

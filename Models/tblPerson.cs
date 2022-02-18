@@ -64,6 +64,7 @@ namespace WorldServiceOrganization.Models
         public Nullable<bool> isActive { get; set; }
         public string Certification { get; set; }
         public Nullable<int> HeightUnit { get; set; }
+        public string QRCode { get; set; }
     
         public virtual tblCountry tblCountry { get; set; }
         public virtual tblCountry tblCountry1 { get; set; }
