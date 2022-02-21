@@ -1132,7 +1132,10 @@ namespace WorldServiceOrganization.Controllers
 
                 ViewBag.TransCount = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Count();
                 Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
-                
+                if (DB.tblPersons.Max(s => s.WSANumber) != null)
+                {
+                    ViewBag.WAS = DB.tblPersons.Max(s => s.WSANumber) + 1;
+                }
                 return View(Person);
             }
             else
@@ -1153,7 +1156,6 @@ namespace WorldServiceOrganization.Controllers
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             tblPerson Data = new tblPerson();
-
             try
             {
                 ViewBag.User = Session["User"];

@@ -35,14 +35,17 @@
     string FatherName = "";
     string MotherName = "";
     int? WSANumber = 0;
+    int? WSANumberC = 0;
 
     if (ViewBag.WAS == null)
     {
         WSANumber = Int16.Parse(WSA) + 1;
+        WSANumberC = Int16.Parse(WSA) + 1;
     }
     else
     {
         WSANumber = ViewBag.WAS;
+        WSANumberC = ViewBag.WAS;
     }
 
     string Comments = "";
@@ -88,6 +91,7 @@
         FatherName = Model.FatherName;
         MotherName = Model.MotherName;
         WSANumber = Model.WSANumber;
+        WSANumberC = ViewBag.WAS;
         Comments = Model.Comments;
         Title = Model.Title;
         Height = Model.Height;
@@ -229,8 +233,8 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>WSA#</label>&nbsp;&nbsp;
-                                            <input type="text" class="form-control" style="display:none;" id="WSANumberCopy" value="@WSANumber">
-                                            <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" readonly required>
+                                            <input type="text" class="form-control" style="display:none;" id="WSANumberCopy" value="@WSANumberC">
+                                            <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" readonly >
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -253,20 +257,20 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Last Name</label>
+                                            <label>Last Name<span style="color:red;">*</span></label>
                                             <input type="text" class="form-control" id="LastName" name="LastName" value="@LastName" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>First and Middle Names</label>
+                                            <label>First and Middle Names<span style="color:red;">*</span></label>
                                             <input type="text" class="form-control" id="FirstName" name="FirstName" value="@FirstName" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <input type="text" class="form-control" style="display:none;" name="PersonIDNumber" value="@PersonId" required>
-                                            <label>Country of Application</label>
+                                            <label>Country of Application<span style="color:red;">*</span></label>
                                             <select class="form-control" id="CountryOfApplication" name="CountryOfApplication" required>
                                                 <option value="">Select Country</option>
                                                 @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
@@ -286,13 +290,13 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>City of Birth</label>
+                                            <label>City of Birth<span style="color:red;">*</span></label>
                                             <input type="text" class="form-control" id="CityOfBirth" name="CityOfBirth" value="@CityOfBirth" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Country of Birth</label>
+                                            <label>Country of Birth<span style="color:red;">*</span></label>
                                             &nbsp;&nbsp;
                                             <select class="form-control" id="CountryOfBirth" name="CountryOfBirth" required>
                                                 <option value="">Select Country</option>
@@ -313,7 +317,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Country of Birth Statistical</label>
+                                            <label>Country of Birth Statistical<span style="color:red;">*</span></label>
                                             &nbsp;&nbsp;
                                             <select class="form-control" id="CountryOfBirthStatistical" name="CountryOfBirthStatistical" required>
                                                 <option value="">Select Country</option>
@@ -405,14 +409,14 @@
                                                     </span>
                                                 </div>*@
 
-                                            <label>Date of Birth</label>
+                                            <label>Date of Birth<span style="color:red;">*</span></label>
                                             &nbsp;&nbsp;
                                             <input type="text" class="form-control" id="DateOfBirth" name="DateOfBirth" value="@DateOfBirth" required>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>Sex</label>
+                                            <label>Sex<span style="color:red;">*</span></label>
                                             <select class="form-control" id="SexD" name="Sex" required>
                                                 <option value="">Select Sex</option>
                                                 @foreach (WorldServiceOrganization.Models.tblSex Sex in @ViewBag.Sex)
@@ -514,7 +518,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <div>
-                                                <label>Status</label>&nbsp;&nbsp;
+                                                <label>Status<span style="color:red;">*</span></label>&nbsp;&nbsp;
                                                 <select class="form-control" id="StatusD" name="Status" required>
                                                     <option value="">Select Status</option>
                                                     @foreach (WorldServiceOrganization.Models.tblStatus Status in @ViewBag.Status)
@@ -750,7 +754,8 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>WSA#</label>&nbsp;&nbsp;
-                                                    <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" readonly required>
+                                                    <input type="text" class="form-control" style="display:none;" id="WSANumberCopy" value="@WSANumberC">
+                                                    <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" readonly>
                                                 </div>
                                             </div>
                                             <div class="col-md-8">
@@ -773,20 +778,20 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Last Name</label>
+                                                    <label>Last Name<span style="color:red;">*</span></label>
                                                     <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>First and Middle Names</label>
+                                                    <label>First and Middle Names<span style="color:red;">*</span></label>
                                                     <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" style="display:none;" name="PersonIDNumber" value="@PersonId" required>
-                                                    <label>Country of Application</label>
+                                                    <label>Country of Application<span style="color:red;">*</span></label>
                                                     <select class="form-control" id="CountryOfApplication" name="CountryOfApplication" required>
                                                         <option value="">Select Country</option>
                                                         @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
@@ -806,13 +811,13 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>City of Birth</label>
+                                                    <label>City of Birth<span style="color:red;">*</span></label>
                                                     <input type="text" class="form-control" id="CityOfBirth" name="CityOfBirth" value="@CityOfBirth" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Country of Birth</label>
+                                                    <label>Country of Birth<span style="color:red;">*</span></label>
                                                     &nbsp;&nbsp;
                                                     <select class="form-control" id="CountryOfBirth" name="CountryOfBirth" required>
                                                         <option value="">Select Country</option>
@@ -833,7 +838,7 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Country of Birth Statistical</label>
+                                                    <label>Country of Birth Statistical<span style="color:red;">*</span></label>
                                                     &nbsp;&nbsp;
                                                     <select class="form-control" id="CountryOfBirthStatistical" name="CountryOfBirthStatistical" required>
                                                         <option value="">Select Country</option>
@@ -916,14 +921,14 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Date of Birth</label>
+                                                    <label>Date of Birth<span style="color:red;">*</span></label>
                                                     &nbsp;&nbsp;
                                                     <input type="text" class="form-control" id="DateOfBirth" name="DateOfBirth" value="@DateOfBirth" required>
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label>Sex</label>
+                                                    <label>Sex<span style="color:red;">*</span></label>
                                                     <select class="form-control" id="SexD" name="Sex" required>
                                                         <option value="">Select Sex</option>
                                                         @foreach (WorldServiceOrganization.Models.tblSex Sex in @ViewBag.Sex)
@@ -1022,7 +1027,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <div>
-                                                        <label>Status</label>&nbsp;&nbsp;
+                                                        <label>Status<span style="color:red;">*</span></label>&nbsp;&nbsp;
                                                         <select class="form-control" id="StatusD" name="Status" required>
                                                             <option value="">Select Status</option>
                                                             @foreach (WorldServiceOrganization.Models.tblStatus Status in @ViewBag.Status)
