@@ -16,6 +16,7 @@ namespace WorldServiceOrganization.Controllers
         // GET: Report
         public ActionResult List()
         {
+            ViewBag.State = 0;
             return View();
         }
         
@@ -188,6 +189,7 @@ namespace WorldServiceOrganization.Controllers
         public ActionResult CountrySummary()
         {
             ViewBag.SelectReport = 0;
+            ViewBag.SearchbyCountry = 0;
             ViewBag.BDate = DateTime.Now;
             ViewBag.EDate = DateTime.Now;
             var PL = DB.tblPersons.Where(x => x.isActive == true).ToList();

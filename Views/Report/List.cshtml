@@ -185,8 +185,10 @@
 
 
     $(document).ready(function () {
-
-        $("#ReportList").val(@ViewBag.State).change();
+        if (@ViewBag.State!=0) {
+            $("#ReportList").val(@ViewBag.State).change();
+        }
+        
 
 
         $('#ListTable').DataTable({
@@ -213,6 +215,7 @@
             //searching: false, paging: false
         });
 
+        
 
         $(".nav li ul li").removeClass("active");
         $('#RList').addClass('active');

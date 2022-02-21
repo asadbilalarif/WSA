@@ -445,6 +445,7 @@
     <Content Include="Views\Home\PassportLabel.cshtml" />
     <Content Include="Views\Report\CountrySummary.cshtml" />
     <Content Include="Views\Report\TransactionSummary.cshtml" />
+    <Content Include="Views\Home\AlphaLabel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

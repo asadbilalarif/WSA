@@ -381,6 +381,8 @@ D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.dll
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Razor.dll
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\WebGrease.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.dll
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.presentation.dll
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.xml
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\EntityFramework.SqlServer.xml
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.Helpers.xml
@@ -392,13 +394,11 @@ D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\System.Web.WebPages.Razor.xml
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\Newtonsoft.Json.xml
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\Antlr3.Runtime.pdb
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.presentation.xml
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csprojAssemblyReference.cache
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CoreCompileInputs.cache
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CopyComplete
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.dll
 D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.pdb
-D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.dll
-D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.presentation.dll
-D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.xml
-D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.presentation.xml
+D:\Xpert(49)\eazisols\WSA\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csprojAssemblyReference.cache

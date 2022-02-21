@@ -1882,6 +1882,30 @@ namespace WorldServiceOrganization.Controllers
 
         }
 
+        public ActionResult AlphaLabel(int? id, int State = 0, int CState = 0)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            try
+            {
+                var Address = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == true).FirstOrDefault();
+                ViewBag.WSA = Address.tblPerson.WSANumber;
+                ViewBag.FName = Address.tblPerson.FirstName;
+                ViewBag.LName = Address.tblPerson.LastName;
+                ViewBag.State = State;
+                ViewBag.CState = CState;
+                ViewBag.id = id;
+                return View(Address);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+            return View();
+
+        }
+
 
         //Upload Files 
         [HttpPost]

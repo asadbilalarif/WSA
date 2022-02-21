@@ -9,11 +9,14 @@
     HttpCookie cookieObj = Request.Cookies["Settings"];
     string DateFormat = cookieObj["DateFormat"];
     string Retrieves = cookieObj["Retrieves"];
-    string EDate = DateTime.Now.ToString(DateFormat);
-    string BDate = DateTime.Now.ToString(DateFormat);
+    //string EDate = DateTime.Now.ToString(DateFormat);
+    //string BDate = DateTime.Now.ToString(DateFormat);
 
-    DateTime EEDate = ViewBag.EDate.ToString(DateFormat);
-    DateTime BBDate = ViewBag.BDate.ToString(DateFormat);
+    //DateTime EEDate = ViewBag.EDate.ToString(DateFormat);
+    //DateTime BBDate = ViewBag.BDate.ToString(DateFormat);
+
+    string EDate = ViewBag.EDate.ToString(DateFormat);
+    string BDate = ViewBag.BDate.ToString(DateFormat);
 }
 
 <head>
@@ -300,11 +303,17 @@
             $("#SelectReport").val(@ViewBag.SelectReport).change();
             $("#SearchbyCountry").val(@ViewBag.SearchbyCountry).change();
         }
-        $("#SearchByDate").val(@ViewBag.SearchByDate).change();
-         var fromDate = new Date("@BBDate");
+
+        if (@ViewBag.SearchbyCountry != 0) {
+           $("#SearchByDate").val(@ViewBag.SearchByDate).change();
+         @*var fromDate = new Date("@BBDate");
             $("#BDate").val(formatDate(fromDate));
             fromDate = new Date("@EEDate");
-            $("#EDate").val(formatDate(fromDate));
+            $("#EDate").val(formatDate(fromDate));*@
+
+        }
+
+        
 
 
         $('#ListTable').DataTable({
