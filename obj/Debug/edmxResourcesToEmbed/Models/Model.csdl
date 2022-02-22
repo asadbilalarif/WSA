@@ -377,6 +377,9 @@
     <NavigationProperty Name="tblProductPackageProducts" Relationship="WorldServiceOrganizationModel.FK_ManyProduct" FromRole="tblProduct" ToRole="tblProductPackageProduct" />
     <Property Name="Price" Type="Double" />
     <NavigationProperty Name="tblTransactions" Relationship="WorldServiceOrganizationModel.FK_ProductTransaction" FromRole="tblProduct" ToRole="tblTransaction" />
+    <Property Name="ValidFor" Type="Int32" />
+    <Property Name="ProductSerialNum" Type="Int32" />
+    <Property Name="ProductVector" Type="Int32" />
   </EntityType>
   <EntityType Name="tblProductType">
     <Key>

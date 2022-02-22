@@ -137,6 +137,9 @@
     <EntitySetMapping Name="tblProducts">
       <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblProduct">
         <MappingFragment StoreEntitySet="tblProduct">
+          <ScalarProperty Name="ProductVector" ColumnName="ProductVector" />
+          <ScalarProperty Name="ProductSerialNum" ColumnName="ProductSerialNum" />
+          <ScalarProperty Name="ValidFor" ColumnName="ValidFor" />
           <ScalarProperty Name="Price" ColumnName="Price" />
           <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
           <ScalarProperty Name="isActive" ColumnName="isActive" />

@@ -218,6 +218,9 @@
           <Property Name="isActive" Type="bit" />
           <Property Name="ProductTypeId" Type="int" />
           <Property Name="Price" Type="float" />
+          <Property Name="ValidFor" Type="int" />
+          <Property Name="ProductSerialNum" Type="int" />
+          <Property Name="ProductVector" Type="int" />
         </EntityType>
         <EntityType Name="tblProductPackage">
           <Key>
@@ -1235,6 +1238,9 @@
           <NavigationProperty Name="tblProductPackageProducts" Relationship="WorldServiceOrganizationModel.FK_ManyProduct" FromRole="tblProduct" ToRole="tblProductPackageProduct" />
           <Property Name="Price" Type="Double" />
           <NavigationProperty Name="tblTransactions" Relationship="WorldServiceOrganizationModel.FK_ProductTransaction" FromRole="tblProduct" ToRole="tblTransaction" />
+          <Property Name="ValidFor" Type="Int32" />
+          <Property Name="ProductSerialNum" Type="Int32" />
+          <Property Name="ProductVector" Type="Int32" />
         </EntityType>
         <EntityType Name="tblProductType">
           <Key>
@@ -1940,6 +1946,9 @@
           <EntitySetMapping Name="tblProducts">
             <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblProduct">
               <MappingFragment StoreEntitySet="tblProduct">
+                <ScalarProperty Name="ProductVector" ColumnName="ProductVector" />
+                <ScalarProperty Name="ProductSerialNum" ColumnName="ProductSerialNum" />
+                <ScalarProperty Name="ValidFor" ColumnName="ValidFor" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />

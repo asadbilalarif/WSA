@@ -159,7 +159,7 @@
 @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
-
+    
     $("#FontStyle").change(function () {
         $("#ID").css("font-family", $("#FontStyle").val());
     });
@@ -248,7 +248,8 @@
 
     $(document).ready(function () {
 
-
+        $("p").css("margin-top", '0rem');
+        $("p").css("margin-bottom", '0rem');
         
         if (@ViewBag.State== 1) {
             $("#SeparateLine").attr('checked', 'checked');

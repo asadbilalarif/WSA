@@ -33,6 +33,9 @@ namespace WorldServiceOrganization.Models
         public Nullable<bool> isActive { get; set; }
         public Nullable<int> ProductTypeId { get; set; }
         public Nullable<double> Price { get; set; }
+        public Nullable<int> ValidFor { get; set; }
+        public Nullable<int> ProductSerialNum { get; set; }
+        public Nullable<int> ProductVector { get; set; }
     
         public virtual tblProductType tblProductType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

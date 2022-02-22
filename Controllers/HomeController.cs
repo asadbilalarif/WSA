@@ -387,6 +387,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.ProductTypeId = Product.ProductTypeId;
                         Data.Code = Product.Code;
                         Data.Price = Product.Price;
+                        Data.ValidFor = Product.ValidFor;
                         Data.isActive = true;
                         Data.EditDate = DateTime.Now;
                         DB.Entry(Data);
@@ -406,6 +407,7 @@ namespace WorldServiceOrganization.Controllers
                     {
                         Data = Product;
                         Data.CreatedDate = DateTime.Now;
+                        Data.EditDate = DateTime.Now;
                         Data.isActive = true;
                         DB.tblProducts.Add(Data);
                         DB.SaveChanges();
@@ -424,10 +426,6 @@ namespace WorldServiceOrganization.Controllers
                 ViewBag.Error = ex.Message;
                 Console.WriteLine("Error" + ex.Message);
             }
-
-
-
-
             return Json(0);
         }
 
@@ -1750,9 +1748,14 @@ namespace WorldServiceOrganization.Controllers
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             ////Searching records from list using LINQ query  
-
+            string IdCode = "";
             var ProductList = DB.tblProducts.Where(q => q.ProductId==id).Select(s => s.Price).FirstOrDefault();
-            return Json(ProductList, JsonRequestBehavior.AllowGet);
+            var Product = DB.tblProducts.Where(q => q.ProductId==id).FirstOrDefault();
+            if(Product.tblProductType.ProductTypeId==1)
+            {
+                IdCode = DB.tblSettings.Select(x => x.NextPassport).FirstOrDefault();
+            }
+            return Json(new { ProductList= ProductList, IdCode= IdCode }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -1865,7 +1868,45 @@ namespace WorldServiceOrganization.Controllers
             {
                 var Persons = DB.tblPersons.Where(x => x.isActive == true && x.PersonIDNumber == id).FirstOrDefault();
                 ViewBag.TL = DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
+                
                 var data= DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
+                if(ViewBag.TL.IssueDate.Year!=9999)
+                {
+                    ViewBag.Exp = ViewBag.TL.IssueDate.AddYears(ViewBag.TL.tblProduct.ValidFor);
+                    ViewBag.ExpAppend = ViewBag.Exp.ToString("yyMMdd");
+                }
+                else
+                {
+                    ViewBag.Exp = null;
+                    ViewBag.ExpAppend = null;
+                }
+                string Line1 = null;
+                string Line2 = null;
+                int Len;
+                if (Persons.LastName.Contains(' '))
+                {
+                    string[] Arr = Persons.LastName.Split(' ');
+                    Len = Arr.Length;
+                    Line1 += "P<WSA" + Persons.FirstName + "<<"+Arr[0]+"<"+ Arr[1] + "<";
+                }
+                else
+                {
+                    Line1 += "P<WSA" + Persons.FirstName + "<<" + Persons.LastName + "<";
+                }
+                while(Line1.Length<44)
+                {
+                    Line1 += "<";
+                }
+
+                Line2 += ViewBag.TL.IDCode + "<<<0WSA" + Persons.DateOfBirth.ToString("yyMMdd") + "9" + Persons.tblSex.Name + ViewBag.ExpAppend + "7";
+                while (Line2.Length < 42)
+                {
+                    Line2 += "<";
+                }
+                Line2 += "08";
+                ViewBag.Line1 = Line1;
+                ViewBag.Line2 = Line2;
+                
                 //data.tblProduct.tblProductType.Name
                 //ViewBag.LabelAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == true).FirstOrDefault();
                 //ViewBag.AltAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == false).ToList();

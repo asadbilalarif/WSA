@@ -2517,7 +2517,14 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (ProductList) {
-                $("#Cost").val(ProductList);
+                $("#Cost").val(ProductList.ProductList);
+                if (ProductList.IDCode!="") {
+                    $("#IDCode").val(ProductList.IDCode);
+                    $("#IDCode").attr('readonly', true);
+
+                }
+                
+
             },
         });
 

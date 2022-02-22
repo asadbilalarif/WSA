@@ -3,10 +3,9 @@
 @{
 
     ViewData["Title"] = "Users";
-    string Succ = @ViewBag.Success;
-    string Update = @ViewBag.Update;
-    string Delete = @ViewBag.Delete;
-}
+    string Succ = ViewBag.Success;
+    string Update = ViewBag.Update;
+    string Delete = ViewBag.Delete;
 }
 
 
@@ -72,6 +71,7 @@
                                         <th style="display:none;">Product Type ID</th>
                                         <th>Product Type</th>
                                         <th>Price</th>
+                                        <th>Valid For</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -85,6 +85,7 @@
                                         <td style="display:none;">@Product.ProductTypeId</td>
                                         <td>@Product.tblProductType.Name</td>
                                         <td>@Product.Price</td>
+                                        <td>@Product.ValidFor</td>
 
 
                                         <td class="text-end">
@@ -137,6 +138,8 @@
                                         <input class="form-control" type="text" id="EName">
                                         <label>Price <small id="LblPriceError" style="display:none; color:red;">Price Must be filled!!!</small></label>
                                         <input class="form-control" type="text" id="EPrice">
+                                        <label>Valid For <small id="LblProductValidForError" style="display:none; color:red;">Valid For Must be filled!!!</small></label>
+                                        <input class="form-control" type="number" id="ValidFor">
                                         <label>Product Types <small id="LblProductTypeError" style="display:none; color:red;">Product Type Must be selected!!!</small></label>
                                         <select class="form-control" id="ProductTypeD">
                                             <option value="0">Select Product Type</option>
@@ -206,11 +209,13 @@
         $("#ECode").val('');
         $("#EName").val('');
         $("#EPrice").val('');
+        $("#ValidFor").val('');
         $("#ProductTypeD").val(0).change();
         $("#LblProductCodeError").fadeOut();
         $("#LblProductNameError").fadeOut();
         $("#LblProductTypeError").fadeOut();
         $("#LblPriceError").fadeOut();
+        $("#LblValidForError").fadeOut();
     });
 
     $("body").on("click", "#EditProduct", function () {
@@ -224,11 +229,13 @@
         $("#EName").val(currentRow.find("td:eq(2)").text());
         $("#ProductTypeD").val(currentRow.find("td:eq(3)").text()).change();
         $("#EPrice").val(currentRow.find("td:eq(5)").text());
+        $("#ValidFor").val(currentRow.find("td:eq(6)").text());
 
         $("#LblProductCodeError").fadeOut();
         $("#LblProductNameError").fadeOut();
         $("#LblProductTypeError").fadeOut();
         $("#LblPriceError").fadeOut();
+        $("#LblValidForError").fadeOut();
 
         //alert($("#ProductID").val());
     });
@@ -237,7 +244,7 @@
     $("#ProductSubmit").on("click", function () {
 
         var error = $("#Producterror");
-        if ($("#ECode").val() != "" && $("#EName").val() != "" && $("#ProductTypeD").val() != "0" && $("#EPrice").val() != "") {
+        if ($("#ECode").val() != "" && $("#EName").val() != "" && $("#ProductTypeD").val() != "0" && $("#EPrice").val() != "" && $("#ValidFor").val() != "") {
             error.text('');
             $("#ProductSubmit").attr("disabled", true);
             $("#Productloading").show();
@@ -247,6 +254,7 @@
             var UCode = $("#ECode").val();
             var UName = $("#EName").val();
             var UPrice = $("#EPrice").val();
+            var UValidFor = $("#ValidFor").val();
             var UProductTypeId = $("#ProductTypeD").val();
 
 
@@ -256,6 +264,7 @@
                     Name: UName,
                     Code: UCode,
                     Price: UPrice,
+                    ValidFor: UValidFor,
                     ProductTypeId: UProductTypeId,
                 };
                 CheckMessage = 1;
@@ -266,6 +275,7 @@
                     Name: UName,
                     Code: UCode,
                     Price: UPrice,
+                    ValidFor: UValidFor,
                     ProductTypeId: UProductTypeId,
                 };
                 CheckMessage = 2;
@@ -332,6 +342,13 @@
             }
             else {
                 $("#LblPriceError").fadeOut();
+            }
+            if ($("#ValidFor").val() == "") {
+                //text = error.append('  *Email must be filled!!!  ');
+                $("#LblValidForError").fadeIn();
+            }
+            else {
+                $("#LblValidForError").fadeOut();
             }
             if ($("#ProductTypeD").val() == "0") {
                 //text = error.append('  *Email must be filled!!!  ');

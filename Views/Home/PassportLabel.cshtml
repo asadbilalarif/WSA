@@ -7,39 +7,23 @@
     string DateFormat = cookieObj["DateFormat"];
     string Retrieves = cookieObj["Retrieves"];
 
-    var Exp = @ViewBag.TL.IssueDate.AddYears(5).ToString("dd/MM/yyyy");
+    
 
 }
 
 
 <head>
-
+    <link href="~/fonts/Passport.ttf" rel="stylesheet" type="text/css"/>
     <style>
         p {
             margin-top: 0;
             margin-bottom: 0rem;
+            font-size: 12px !important;
+            font-family: Passport !important;
         }
     </style>
 
-    <script src="http://www.openjs.com/scripts/events/keyboard_shortcuts/shortcut.js"></script>
-    <script language="javascript" type="text/javascript">
 
-        @*shortcut.add("ctrl+p", function () {
-
-            var myDiv = document.getElementById("ID").innerHTML;
-            var State = $('input[name="WSADisplay"]:checked').val();
-            var CState = $('input[name="CountryDisplay"]:checked').val();
-            document.body.innerHTML =
-                "<html><head><title></title></head><body>" +
-                myDiv + "</body>";
-            window.print();
-
-            var url = window.location.origin;
-            url += '/Home/AddressLabel?id='+@Model.FirstOrDefault().PersonIDNumber+'&&State=' + State + '&&CState=' + CState+'';
-            window.location.href = url;
-        });*@
-
-    </script>
 
 </head>
 
@@ -72,23 +56,45 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="SeparateLine">WSA Number</label><br>
-                            <input type="radio" id="SeparateLine" name="WSADisplay" value="1" checked>
-                            <label for="SeparateLine">Separate Line</label><br>
-                            <input type="radio" id="SameLineName" name="WSADisplay" value="2">
-                            <label for="SameLineName">Same Line as Name</label><br>
-                            <input type="radio" id="WSASuppress" name="WSADisplay" value="3">
-                            <label for="WSASuppress">Suppress</label>
-
+                            <label><b>MRZ</b></label><br>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="radio" id="MRZSuppress" name="MRZSuppress" value="1">
+                                    <label for="MRZSuppress">Suppress</label><br />
+                                    <input type="radio" id="MRZUnSuppress" name="MRZSuppress" value="2">
+                                    <label for="MRZUnSuppress">Unsuppress</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="radio" id="MRZStandard" name="MRZStandard" value="1" checked>
+                                    <label for="MRZStandard">Standard</label><br />
+                                    <input type="radio" id="MRZNonStandard" name="MRZStandard" value="2">
+                                    <label for="MRZNonStandard">Non-Standard</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="radio" id="MRZMixed" name="MRZLetterCase" value="1">
+                                    <label for="MRZMixed">Mixed Case</label><br />
+                                    <input type="radio" id="MRZLower" name="MRZLetterCase" value="2">
+                                    <label for="MRZLower">All Lowercase</label><br />
+                                    <input type="radio" id="MRZUpper" name="MRZLetterCase" value="3">
+                                    <label for="MRZUpper">UPPERCASE</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <label for="SeparateLine">Country</label><br>
-                            <input type="radio" id="Display" name="CountryDisplay" value="1" checked>
-                            <label for="Display">Display</label><br>
-                            <input type="radio" id="CountrySuppress" name="CountryDisplay" value="2">
-                            <label for="CountrySuppress">Suppress</label><br />
-                            <a href="@Url.Action("AddressLabel", "Home",new { id=@ViewBag.id })"> <input class="btn btn-danger" type="button" value="Cancel"></a>
-                            <a href="@Url.Action("CreateAddress","Home",new { id=@ViewBag.id })" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
+                        <div class="col-md-2">
+                            <label><b>Issuer</b></label><br>
+                            <input type="radio" id="IssuerWSA" name="Issuer" value="1" checked>
+                            <label for="IssuerWSA">WSA</label><br />
+                            <input type="radio" id="IssuerICAO" name="Issuer" value="2">
+                            <label for="IssuerICAO">ICAO "XXX"</label>
+                        </div>
+                        <div class="col-md-4">
+                            <label><b>Date Format</b></label><br>
+                            <input type="radio" id="DateFormatName" name="DateFormat" value="1" checked>
+                            <label for="DateFormatName">01 Jan 2000</label><br>
+                            <input type="radio" id="DateFormatNumber" name="DateFormat" value="2">
+                            <label for="DateFormatNumber">01 01 2000</label><br />
+                            <a href="@Url.Action("PassportLabel", "Home",new { id=Model.PersonIDNumber,tid= ViewBag.TL.TransactionIDNumber})"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                            <a href="@Url.Action("Persons","Home",new { id=Model.PersonIDNumber })" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
                             <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
                             <a href="#" id="PDFBtn" class="btn btn-success"><i class="fa fa-print"></i> PDF</a>
                         </div>
@@ -99,83 +105,119 @@
 
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-10">
+                    <section id="section">
+                        <div class="card" >
+                            <div class="card-body" >
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <p><b>WORLD GOVERNMENT OF WORLD CITIZENS</b></p><br />
+                                    </div>
+                                    <div class="col-md-3"style="padding:0px !important;">
+                                        <p style="float:right;">Passport/Passeport</p>
+                                    </div>
+                                    <div class="col-md-2" >
+                                        <p>Type/Type</p>
+                                        <p>P</p>
+                                    </div>
+                                    <div class="col-md-4" style="padding:0px !important;">
+                                        <p>Authority code/Code d'authoritie</p>
+                                        <p id="IssuerDisplay">WSA</p>
+                                    </div>
+                                    <div class="col-md-3" style="padding:0px !important;">
+                                        <p>Passport No./No de Passeport(8)</p>
+                                        <p>@ViewBag.TL.IDCode</p>
+                                    </div>
+                                </div>
+                                <section id="ID">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img id="Photo" src="@Model.Photo" alt="your image" style="width:100%; height:100%;" />
+                                        </div>
+                                        <div class="col-md-5">
+                                            <p>Name/Nom(1)</p>
+                                            <p>@Model.FirstName</p>
+                                            <p>Given Names/Prenoms(2)</p>
+                                            <p>@Model.LastName</p>
+                                            <p>Place ofbirth/Lieu de nalssance(3)</p>
+                                            <p>@Model.CityOfBirth, @Model.tblCountry.Name</p>
+                                            <p>Date ofbirth/Date de nalssance(4)</p>
+                                            <p id="BDateName">@Model.DateOfBirth.ToString("dd MMM yyyy")</p>
+                                            <p id="BDateNumber" style="display:none;">@Model.DateOfBirth.ToString("dd MM yyyy")</p>
+                                            <p>Gender/Sexe(5)</p>
+                                            <p>@Model.tblSex.Name</p>
+                                            <p>Date ofissue/Date de deliverance(6)</p>
+                                            @if (@ViewBag.TL.IssueDate.Year == 9999)
+                                            {
+                                                <p>NILL</p>
+                                            }
+                                            else
+                                            {
+                                                <p id="IDateName">@ViewBag.TL.IssueDate.ToString("dd MMM yyyy")</p>
+                                                <p id="IDateNumber" style="display:none;">@ViewBag.TL.IssueDate.ToString("dd MM yyyy")</p>
 
-                    <div class="card" id="ID">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 text-center">
-                                    <p>WORLD GOVERNMENT OF WORLD CITIZENS</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p>Passport/Passepor</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p>Type/Type</p>
-                                    <p>P</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p>Authority code/Code d'authoritie</p>
-                                    <p>WSA</p>
-                                </div>
-                                <div class="col-md-3">
-                                    <p>Passport No./No de Passeport(8)</p>
-                                    <p>@ViewBag.TL.IDCode</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <img id="Photo" src="@Model.Photo" alt="your image" style="width:30%; height:30%;" />
-                                </div>
-                                <div class="col-md-3">
-                                    <p>Name/Nom(1)</p>
-                                    <p>@Model.FatherName</p>
-                                    <p>Given Names/Prenoms(2)</p>
-                                    <p>@Model.LastName</p>
-                                    <p>Place ofbirth/Lieu de nalssance(3)</p>
-                                    <p>@Model.CityOfBirth</p>
-                                    <p>Date ofbirth/Date de nalssance(4)</p>
-                                    <p>@Model.DateOfBirth</p>
-                                    <p>Gender/Sexe(5)</p>
-                                    <p>@Model.tblSex.Name</p>
-                                    <p>Date ofissue/Date de deliverance(6)</p>
-                                    @if (@ViewBag.TL.IssueDate.Year == 9999)
-                                    {
-                                        <p>NILL</p>
-                                    }
-                                    else
-                                    {
-                                        <p>@ViewBag.TL.IssueDate.ToString("dd/MM/yyyy")</p>
-                                       
-                                    }
-                                    <p>Date of expiry/Date de d'expiration(7)</p>
-                                    <p>@Exp</p>
-                                </div>
-                                <div class="col-md-4">
-                                    <img id="Photo" src="@Model.Photo" alt="your image" style="width:30%; height:30%;" />
-                                    <p>PAGE 5</p>
-                                    <p>Renewal/Propogation(9)</p>
-                                    <p>PAGE 3</p>
-                                    <p>Authority/Authoritie(10)</p>
-                                    <p>WORLD SERVICE AUTHORITY</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>WORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITY</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <p>P < WSA @Model.FirstName << S < @Model.LastName <<<<<<<<<<<<<<<<<<<<<<<<</p>
-                                    <p>@ViewBag.TL.IDCode <<< WSA @Model.DateOfBirth 9 @Model.tblSex.Name @Exp 7 <<<<<<<<<<<<<< 08</p>
-                                </div>
+                                            }
+                                            <p>Date of expiry/Date de d'expiration(7)</p>
+                                            @if (@ViewBag.TL.IssueDate.Year == 9999)
+                                            {
+                                                <p>NILL</p>
+                                            }
+                                            else
+                                            {
+                                                <p id="EDateName">@ViewBag.Exp.ToString("dd MMM yyyy")</p>
+                                                <p id="EDateNumber" style="display:none;">@ViewBag.Exp.ToString("dd MM yyyy")</p>
+
+                                            }
+
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <img id="Photo" src="@Model.Photo" alt="your image" style="opacity: 0.5;width:50%; height:100%;float:right;" /><br />
+                                                </div>
+                                            </div>
+                                            <p>Explanatory notes/Notes explicatives</p>
+                                            <p>PAGE 5</p>
+                                            <p>Renewal/Propogation(9)</p>
+                                            <p>PAGE 3</p>
+                                            <p>Authority/Authoritie(10)</p>
+                                            <p>WORLD SERVICE AUTHORITY</p>
+                                        </div>
+                                    </div><br />
+                                    <div id="MRZHide">
+                                        <div class="row">
+                                            <div class="col-md-2">
+
+                                            </div>
+                                            <div class="col-md-8">
+                                                <p style="font-size:10px !important;">WORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITY</p>
+                                                <p class="letter">@ViewBag.Line1</p>
+                                                <p class="letter">@ViewBag.Line2</p>
+                                            </div>
+                                            <div class="col-md-2">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                               
+
+
                             </div>
 
                         </div>
+                    </section>
 
-                    </div>
                 </div>
+
+                @*<div class="co-md-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <label>Font Size</label>
+                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="" />
+                        </div>
+                    </div>
+                </div>*@
 
             </div>
         </div>
@@ -189,6 +231,7 @@
 <!-- jQuery -->
 
 <script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+<script src="http://www.openjs.com/scripts/events/keyboard_shortcuts/shortcut.js"></script>
 
 
 
@@ -197,63 +240,106 @@
 <script>
 
 
+        shortcut.add("ctrl+p", function () {
 
+            var db = document.body.getElementsByTagName('div');
+            var myDiv = document.getElementById("section").innerHTML;
 
-    $('input:radio[name="WSADisplay"]').change(function () {
+            document.body.innerHTML =
+                "<html><head><title></title></head><body>" +
+                myDiv + "</body>";
+            window.print();
+
+            var url = window.location.origin;
+            url += '/Home/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + @ViewBag.TL.TransactionIDNumber +'';
+            window.location.href = url;
+        });
+
+    $('#PrintBtn').click(function () {
+        var myDiv = document.getElementById("section").innerHTML;
+           
+            document.body.innerHTML =
+                "<html><head><title></title></head><body>" +
+                myDiv + "</body>";
+            window.print();
+
+            var url = window.location.origin;
+        url += '/Home/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + @ViewBag.TL.TransactionIDNumber +'';
+            window.location.href = url;
+    });
+
+    $('#PDFBtn').click(function () {
+        var myDiv = document.getElementById("section").innerHTML;
+            
+            document.body.innerHTML =
+                "<html><head><title></title></head><body>" +
+                myDiv + "</body>";
+            window.print();
+
+            var url = window.location.origin;
+        url += '/Home/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + @ViewBag.TL.TransactionIDNumber +'';
+            window.location.href = url;
+    });
+
+    $("#FontSize").change(function () {
+        $("p").css("font-size", $("#FontSize").val() + 'px');
+    });
+
+    $('input:radio[name="MRZSuppress"]').change(function () {
 
         if ($(this).val() == 1) {
-            $("#WSAShowSeparate").show();
-            $("#WSAShowName").hide();
+            $("#MRZHide").hide();
+        }
+        else {
+            $("#MRZHide").show();
+        }
+    });
 
+    $('input:radio[name="Issuer"]').change(function () {
+
+        if ($(this).val() == 1) {
+            $("#IssuerDisplay").text("WSA");
+        }
+        else {
+            $("#IssuerDisplay").text("ICAO 'XXX'");
+        }
+    });
+
+    $('input:radio[name="DateFormat"]').change(function () {
+        if ($(this).val() == 1) {
+            $("#BDateName").show();
+            $("#IDateName").show();
+            $("#EDateName").show();
+            $("#BDateNumber").hide();
+            $("#IDateNumber").hide();
+            $("#EDateNumber").hide();
+
+        }
+        else {
+            $("#BDateName").hide();
+            $("#IDateName").hide();
+            $("#EDateName").hide();
+            $("#BDateNumber").show();
+            $("#IDateNumber").show();
+            $("#EDateNumber").show();
+        }
+    });
+
+    $('input:radio[name="MRZLetterCase"]').change(function () {
+        if ($(this).val() == 1) {
+            $('#MRZHide').css('textTransform', 'capitalize');
+            //document.getElementsByTagName("section").setAttribute('textTransform', 'lowercase');
         }
         else if ($(this).val() == 2) {
-            $("#WSAShowName").show();
-            $("#WSAShowSeparate").hide();
+            $('#MRZHide').css('textTransform', 'lowercase');
+            //document.getElementById("ID").setAttribute('style', 'textTransform:uppercase');
         }
         else {
-            $("#WSAShowName").hide();
-            $("#WSAShowSeparate").hide();
+            $('#MRZHide').css('textTransform', 'uppercase');
         }
     });
 
-    $('input:radio[name="CountryDisplay"]').change(function () {
 
-        if ($(this).val() == 1) {
-            $("#CountryShow").show();
-
-        }
-        else {
-            $("#CountryShow").hide();
-        }
-    });
-
-    @*$('#PrintBtn').click(function () {
-        var myDiv = document.getElementById("ID").innerHTML;
-            var State = $('input[name="WSADisplay"]:checked').val();
-            var CState = $('input[name="CountryDisplay"]:checked').val();
-            document.body.innerHTML =
-                "<html><head><title></title></head><body>" +
-                myDiv + "</body>";
-            window.print();
-
-            var url = window.location.origin;
-            url += '/Home/AddressLabel?id='+@Model.FirstOrDefault().PersonIDNumber+'&&State=' + State + '&&CState=' + CState+'';
-            window.location.href = url;
-    });*@
-
-    @*$('#PDFBtn').click(function () {
-        var myDiv = document.getElementById("ID").innerHTML;
-            var State = $('input[name="WSADisplay"]:checked').val();
-            var CState = $('input[name="CountryDisplay"]:checked').val();
-            document.body.innerHTML =
-                "<html><head><title></title></head><body>" +
-                myDiv + "</body>";
-            window.print();
-
-            var url = window.location.origin;
-            url += '/Home/AddressLabel?id='+@Model.FirstOrDefault().PersonIDNumber+'&&State=' + State + '&&CState=' + CState+'';
-            window.location.href = url;
-    });*@
 
 
 
@@ -262,32 +348,36 @@
 
     $(document).ready(function () {
 
+        $("p").css("font-size", 12+ 'px');
+        $("p").css("font-family", 'Passport');
+        $("p").css("margin-top", '0rem');
+        $("p").css("margin-bottom", '0rem');
+        $(".letter").css("letter-spacing", '4.5px');
+       
+@*if (@ViewBag.State== 1) {
+        $("#SeparateLine").attr('checked', 'checked');
+        $("#WSAShowSeparate").show();
+        $("#WSAShowName").hide();
+    }
+    if (@ViewBag.State== 2) {
+        $("#SameLineName").attr('checked', 'checked');
+        $("#WSAShowName").show();
+        $("#WSAShowSeparate").hide();
+    }
+    if (@ViewBag.State== 3) {
+        $("#WSASuppress").attr('checked', 'checked');
+        $("#WSAShowName").hide();
+        $("#WSAShowSeparate").hide();
+    }
 
-
-        if (@ViewBag.State== 1) {
-            $("#SeparateLine").attr('checked', 'checked');
-            $("#WSAShowSeparate").show();
-            $("#WSAShowName").hide();
-        }
-        if (@ViewBag.State== 2) {
-            $("#SameLineName").attr('checked', 'checked');
-            $("#WSAShowName").show();
-            $("#WSAShowSeparate").hide();
-        }
-        if (@ViewBag.State== 3) {
-            $("#WSASuppress").attr('checked', 'checked');
-            $("#WSAShowName").hide();
-            $("#WSAShowSeparate").hide();
-        }
-
-        if (@ViewBag.CState== 1) {
-            $("#SeparateLine").attr('checked', 'checked');
-            $("#Display").show();
-        }
-        if (@ViewBag.CState== 2) {
-            $("#CountrySuppress").attr('checked', 'checked');
-            $("#CountryShow").hide();
-        }
+    if (@ViewBag.CState== 1) {
+        $("#SeparateLine").attr('checked', 'checked');
+        $("#Display").show();
+    }
+    if (@ViewBag.CState== 2) {
+        $("#CountrySuppress").attr('checked', 'checked');
+        $("#CountryShow").hide();
+    }*@
 
 
 

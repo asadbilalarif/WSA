@@ -213,6 +213,9 @@
     <Property Name="isActive" Type="bit" />
     <Property Name="ProductTypeId" Type="int" />
     <Property Name="Price" Type="float" />
+    <Property Name="ValidFor" Type="int" />
+    <Property Name="ProductSerialNum" Type="int" />
+    <Property Name="ProductVector" Type="int" />
   </EntityType>
   <EntityType Name="tblProductPackage">
     <Key>
