@@ -7,20 +7,43 @@
     string DateFormat = cookieObj["DateFormat"];
     string Retrieves = cookieObj["Retrieves"];
 
-    
+
 
 }
 
 
 <head>
-    <link href="~/fonts/Passport.ttf" rel="stylesheet" type="text/css"/>
+    <link href="~/fonts/Passport.ttf" rel="stylesheet" type="text/css" />
+    <link href="~/Content/assets/css/jquery-ui.css" rel="stylesheet" />
+
     <style>
-        p {
+        #PNdraggable {
+            width: 200px;
+            /*height: 30px;*/
+            /*padding: 0.5em;*/
+            border: 0px;
+        }
+
+        #PLIdraggable {
+            width: 100%;
+            /*height: 30px;*/
+            /*padding: 0.5em;*/
+            border: 0px;
+        }
+
+        .FNdraggable {
+            width: 300px;
+            /*height: 30px;*/
+            /*padding: 0.5em;*/
+            border: 0px;
+        }
+
+        /*p {
             margin-top: 0;
             margin-bottom: 0rem;
             font-size: 12px !important;
             font-family: Passport !important;
-        }
+        }*/
     </style>
 
 
@@ -87,12 +110,19 @@
                             <input type="radio" id="IssuerICAO" name="Issuer" value="2">
                             <label for="IssuerICAO">ICAO "XXX"</label>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <label><b>Date Format</b></label><br>
                             <input type="radio" id="DateFormatName" name="DateFormat" value="1" checked>
                             <label for="DateFormatName">01 Jan 2000</label><br>
                             <input type="radio" id="DateFormatNumber" name="DateFormat" value="2">
                             <label for="DateFormatNumber">01 01 2000</label><br />
+
+                        </div>
+                        <div class="col-md-2">
+                            <label>Font Size</label>
+                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="12" />
+                        </div>
+                        <div class="col-md-12 text-right">
                             <a href="@Url.Action("PassportLabel", "Home",new { id=Model.PersonIDNumber,tid= ViewBag.TL.TransactionIDNumber})"> <input class="btn btn-danger" type="button" value="Cancel"></a>
                             <a href="@Url.Action("Persons","Home",new { id=Model.PersonIDNumber })" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
                             <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
@@ -107,16 +137,16 @@
             <div class="row">
                 <div class="col-md-10">
                     <section id="section">
-                        <div class="card" >
-                            <div class="card-body" >
+                        <div class="card">
+                            <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-12 text-center">
                                         <p><b>WORLD GOVERNMENT OF WORLD CITIZENS</b></p><br />
                                     </div>
-                                    <div class="col-md-3"style="padding:0px !important;">
+                                    <div class="col-md-3" style="padding:0px !important;">
                                         <p style="float:right;">Passport/Passeport</p>
                                     </div>
-                                    <div class="col-md-2" >
+                                    <div class="col-md-2">
                                         <p>Type/Type</p>
                                         <p>P</p>
                                     </div>
@@ -126,45 +156,60 @@
                                     </div>
                                     <div class="col-md-3" style="padding:0px !important;">
                                         <p>Passport No./No de Passeport(8)</p>
-                                        <p>@ViewBag.TL.IDCode</p>
+                                        <div id="draggableArea" style="width: 100px;height:30px">
+                                            <div id="PNdraggable" class="ui-widget-content">
+                                                <p>@ViewBag.TL.IDCode</p>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <section id="ID">
                                     <div class="row">
-                                        <div class="col-md-3">
-                                            <img id="Photo" src="@Model.Photo" alt="your image" style="width:100%; height:100%;" />
+                                        <div class="col-md-3" id="PLIdraggableArea">
+                                            <div id="PLIdraggable" class="ui-widget-content">
+
+                                                <img id="Photo" src="@Model.Photo" alt="your image" style="width:100%; height:90%;" />
+                                            </div>
                                         </div>
-                                        <div class="col-md-5">
-                                            <p>Name/Nom(1)</p>
-                                            <p>@Model.FirstName</p>
-                                            <p>Given Names/Prenoms(2)</p>
-                                            <p>@Model.LastName</p>
-                                            <p>Place ofbirth/Lieu de nalssance(3)</p>
-                                            <p>@Model.CityOfBirth, @Model.tblCountry.Name</p>
-                                            <p>Date ofbirth/Date de nalssance(4)</p>
-                                            <p id="BDateName">@Model.DateOfBirth.ToString("dd MMM yyyy")</p>
+
+
+                                        <div class="col-md-5" id="FNdraggableArea" style="width: 100%;height:100%">
+                                            <p class="FNdraggable">Name/Nom(1)</p>
+
+                                            <div class="FNdraggable">
+                                                <p>@Model.LastName</p>
+                                            </div>
+
+
+                                            <p class="FNdraggable">Given Names/Prenoms(2)</p>
+                                            <p class="FNdraggable">@Model.FirstName</p>
+                                            <p class="FNdraggable">Place ofbirth/Lieu de nalssance(3)</p>
+                                            <p class="FNdraggable">@Model.CityOfBirth, @Model.tblCountry.Name</p>
+                                            <p class="FNdraggable">Date ofbirth/Date de nalssance(4)</p>
+                                            <p id="BDateName" class="FNdraggable">@Model.DateOfBirth.ToString("dd MMM yyyy")</p>
                                             <p id="BDateNumber" style="display:none;">@Model.DateOfBirth.ToString("dd MM yyyy")</p>
-                                            <p>Gender/Sexe(5)</p>
-                                            <p>@Model.tblSex.Name</p>
-                                            <p>Date ofissue/Date de deliverance(6)</p>
+                                            <p class="FNdraggable">Gender/Sexe(5)</p>
+                                            <p class="FNdraggable">@Model.tblSex.Name</p>
+                                            <p class="FNdraggable">Date ofissue/Date de deliverance(6)</p>
                                             @if (@ViewBag.TL.IssueDate.Year == 9999)
                                             {
-                                                <p>NILL</p>
+                                                <p class="FNdraggable">NILL</p>
                                             }
                                             else
                                             {
-                                                <p id="IDateName">@ViewBag.TL.IssueDate.ToString("dd MMM yyyy")</p>
+                                                <p id="IDateName" class="FNdraggable">@ViewBag.TL.IssueDate.ToString("dd MMM yyyy")</p>
                                                 <p id="IDateNumber" style="display:none;">@ViewBag.TL.IssueDate.ToString("dd MM yyyy")</p>
 
                                             }
-                                            <p>Date of expiry/Date de d'expiration(7)</p>
+                                            <p class="FNdraggable">Date of expiry/Date de d'expiration(7)</p>
                                             @if (@ViewBag.TL.IssueDate.Year == 9999)
                                             {
-                                                <p>NILL</p>
+                                                <p class="FNdraggable">NILL</p>
                                             }
                                             else
                                             {
-                                                <p id="EDateName">@ViewBag.Exp.ToString("dd MMM yyyy")</p>
+                                                <p id="EDateName" class="FNdraggable">@ViewBag.Exp.ToString("dd MMM yyyy")</p>
                                                 <p id="EDateNumber" style="display:none;">@ViewBag.Exp.ToString("dd MM yyyy")</p>
 
                                             }
@@ -173,9 +218,10 @@
                                         <div class="col-md-4">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <img id="Photo" src="@Model.Photo" alt="your image" style="opacity: 0.5;width:50%; height:100%;float:right;" /><br />
+                                                    <img id="Photo" src="@Model.Photo" alt="your image" style="opacity: 0.5;width:40%; height:100%;float:right;" /><br />
                                                 </div>
                                             </div>
+                                            <br> <br><br>
                                             <p>Explanatory notes/Notes explicatives</p>
                                             <p>PAGE 5</p>
                                             <p>Renewal/Propogation(9)</p>
@@ -200,7 +246,7 @@
                                         </div>
                                     </div>
                                 </section>
-                               
+
 
 
                             </div>
@@ -210,16 +256,10 @@
 
                 </div>
 
-                @*<div class="co-md-2">
-                    <div class="card">
-                        <div class="card-body">
-                            <label>Font Size</label>
-                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="" />
-                        </div>
-                    </div>
-                </div>*@
+
 
             </div>
+
         </div>
     </div>
 </div>
@@ -229,9 +269,10 @@
 
 <!-- /Page Wrapper -->
 <!-- jQuery -->
-
-<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
-<script src="http://www.openjs.com/scripts/events/keyboard_shortcuts/shortcut.js"></script>
+@*<script src="~/Content/assets/js/jquery-3.5.1.js"></script>*@
+@*<script src="~/Content/assets/js/jquery-3.6.0.js"></script>*@
+<script src="~/Content/assets/js/shortcut.js"></script>
+<script src="~/Content/assets/js/jquery-ui.js"></script>
 
 
 
@@ -239,6 +280,17 @@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
 
+    $(function () {
+        $("#PNdraggable").draggable({
+            containment: "#draggableArea"
+        });
+        $("#PLIdraggable").draggable({
+            containment: "#PLIdraggableArea"
+        });
+        $(".FNdraggable").draggable({
+            containment: "#FNdraggableArea"
+        });
+    });
 
         shortcut.add("ctrl+p", function () {
 
@@ -257,7 +309,7 @@
 
     $('#PrintBtn').click(function () {
         var myDiv = document.getElementById("section").innerHTML;
-           
+
             document.body.innerHTML =
                 "<html><head><title></title></head><body>" +
                 myDiv + "</body>";
@@ -270,7 +322,7 @@
 
     $('#PDFBtn').click(function () {
         var myDiv = document.getElementById("section").innerHTML;
-            
+
             document.body.innerHTML =
                 "<html><head><title></title></head><body>" +
                 myDiv + "</body>";
@@ -353,7 +405,7 @@
         $("p").css("margin-top", '0rem');
         $("p").css("margin-bottom", '0rem');
         $(".letter").css("letter-spacing", '4.5px');
-       
+
 @*if (@ViewBag.State== 1) {
         $("#SeparateLine").attr('checked', 'checked');
         $("#WSAShowSeparate").show();

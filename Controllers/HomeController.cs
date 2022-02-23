@@ -1110,7 +1110,8 @@ namespace WorldServiceOrganization.Controllers
             ViewBag.Sex= DB.tblSex.Where(x => x.isActive == true).ToList();
             ViewBag.Status= DB.tblStatus.Where(x => x.isActive == true).ToList();
             ViewBag.tab = tab;
-            
+
+            ViewBag.WSA = DB.tblSettings.Select(s => s.NextWSA).FirstOrDefault();
 
             if (id != null && id != 0)
             {
@@ -1216,12 +1217,33 @@ namespace WorldServiceOrganization.Controllers
                         Data.CreatedBy = ViewBag.User.UserId;
                         Data.LastEditedBy = ViewBag.User.UserId;
                         Data.isActive = true;
-                        DB.tblPersons.Add(Data);
-                        var ID=DB.SaveChanges();
+                    int? WSANum = 0;
+                    if (Person.WSANumber!=null)
+                    {
+                        var nextWSA = DB.tblPersons.Max(s => s.WSANumber);
+                        if (nextWSA != null)
+                        {
+                            Person.WSANumber = DB.tblPersons.Max(s => s.WSANumber) + 1;
+                            WSANum = DB.tblPersons.Max(s => s.WSANumber) + 2;
+                        }
+                        else
+                        {
+                            Person.WSANumber = Person.WSANumber;
+                            WSANum = Person.WSANumber + 1;
+                        }
+
+                        var Data1 = DB.tblSettings.FirstOrDefault();
+                        Data1.NextWSA = WSANum.ToString();
+                        DB.Entry(Data1);
+                        DB.SaveChanges();
+                    }
+                    DB.tblPersons.Add(Data);
+                    DB.SaveChanges();
+                    var ID = Data.PersonIDNumber;
                     Data = DB.tblPersons.Where(x => x.PersonIDNumber == ID).FirstOrDefault();
                     string vCardText = "BEGIN:VCARD\r\nN:";
                     vCardText += "" + Person.FirstName + " " + Person.LastName + "\r\n";
-                    vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
+                    //vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
                     vCardText += "TEL:" + Person.Phone + "\r\n";
                     vCardText += "END:VCARD";
                     string QRCodeImagePath = GenerateQRCode(vCardText, ID);
@@ -1229,6 +1251,9 @@ namespace WorldServiceOrganization.Controllers
                     Data.QRCode = QRCodeImagePath;
                     DB.Entry(Data);
                     DB.SaveChanges();
+
+                    
+                    
                     return RedirectToAction("Persons", new { Success = "Person has been add successfully." });
                     //}
                     //else
@@ -1239,10 +1264,14 @@ namespace WorldServiceOrganization.Controllers
                 else
                 {
                     var check = DB.tblPersons.Select(r => r).Where(x => x.EMail == Person.EMail).FirstOrDefault();
-                    if (check == null || check.PersonIDNumber == Person.PersonIDNumber)
-                    {
-
+                    //if (check == null || check.PersonIDNumber == Person.PersonIDNumber)
+                    //{
                         Data = DB.tblPersons.Select(r => r).Where(x => x.PersonIDNumber == Person.PersonIDNumber).FirstOrDefault();
+                        bool SCheck = false;
+                        if (Data.Status == Person.Status)
+                        {
+                            SCheck = true;
+                        }
                         Data.FirstName = Person.FirstName;
                         Data.LastName = Person.LastName;
                         Data.CityOfBirth = Person.CityOfBirth;
@@ -1271,7 +1300,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.OccupationCode= Person.OccupationCode;
                         Data.OccupationId = Person.OccupationCode;
                         Data.TransactionCount= Person.TransactionCount;
-
+                        
 
                         string path = null;
                         if (SigImage != null)
@@ -1314,25 +1343,50 @@ namespace WorldServiceOrganization.Controllers
                             Data.Certification = Person.Certification;
                         }
 
+                        int? WSANum = 0;
+                        if (SCheck==false&& Person.WSANumber != null)
+                        {
+                            var nextWSA = DB.tblPersons.Max(s => s.WSANumber);
+                            if(nextWSA!=null)
+                            {
+                                Person.WSANumber = DB.tblPersons.Max(s => s.WSANumber) + 1;
+                                WSANum = DB.tblPersons.Max(s => s.WSANumber) + 2;
+                            }
+                            else
+                            {
+                                Person.WSANumber = Person.WSANumber;
+                                WSANum = Person.WSANumber + 1;
+                            }
+
+                            
+
+                            var Data1 = DB.tblSettings.FirstOrDefault();
+                            Data1.NextWSA = WSANum.ToString();
+                            DB.Entry(Data1);
+                            DB.SaveChanges();
+                        }
+
                         Data.LastModifiedDate = DateTime.Now;
                         Data.LastEditedBy = ViewBag.User.UserId;
                         DB.Entry(Data);
-                        var ID=DB.SaveChanges();
+                        DB.SaveChanges();
+                        Data = DB.tblPersons.Where(x => x.PersonIDNumber == Person.PersonIDNumber).FirstOrDefault();
                         string vCardText = "BEGIN:VCARD\r\nN:";
                         vCardText += "" + Person.FirstName+" "+ Person.LastName + "\r\n";
-                        vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
+                        //vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
                         vCardText += "TEL:" + Person.Phone + "\r\n";
                         vCardText += "END:VCARD";
-                        string QRCodeImagePath = GenerateQRCode(vCardText, ID);
+                        string QRCodeImagePath = GenerateQRCode(vCardText, Person.PersonIDNumber);
                         Data.QRCode = QRCodeImagePath;
                         DB.Entry(Data);
                         DB.SaveChanges();
+                        
                         return RedirectToAction("Persons", new { Update = "Person has been Update successfully." });
-                    }
-                    else
-                    {
-                        ViewBag.Error = "Person Already Exsist!!!";
-                    }
+                    //}
+                    //else
+                    //{
+                    //    ViewBag.Error = "Person Already Exsist!!!";
+                    //}
 
                 }
 
@@ -1356,21 +1410,35 @@ namespace WorldServiceOrganization.Controllers
             List<tblAddress> Data1 = new List<tblAddress>();
             List <tblTransaction> Data2 = new List<tblTransaction>();
             List<tblChild> Data3 = new List<tblChild>();
+            List<tblDocumentImg> Data4 = new List<tblDocumentImg>();
             try
             {
                 Data1 = DB.tblAddresses.Select(r => r).Where(x => x.PersonIDNumber == PersonId).ToList();
-                
-                
+                if (Data1.Count() > 0)
+                {
+                    DB.tblAddresses.RemoveRange(Data1);
+                    DB.SaveChanges();
+                }
+
                 Data2 = DB.tblTransactions.Select(r => r).Where(x => x.PersonIDNumber == PersonId).ToList();
                 if (Data2.Count() > 0)
                 {
                     DB.tblTransactions.RemoveRange(Data2);
+                    DB.SaveChanges();
                 }
                 Data3 = DB.tblChilds.Select(r => r).Where(x => x.PersonIDNumber == PersonId).ToList();
                 if (Data3.Count() > 0)
                 {
                     DB.tblChilds.RemoveRange(Data3);
+                    DB.SaveChanges();
                 }
+                Data4 = DB.tblDocumentImgs.Select(r => r).Where(x => x.PersonIDNumber == PersonId).ToList();
+                if (Data4.Count() > 0)
+                {
+                    DB.tblDocumentImgs.RemoveRange(Data4);
+                    DB.SaveChanges();
+                }
+                
                 Data = DB.tblPersons.Select(r => r).Where(x => x.PersonIDNumber == PersonId).FirstOrDefault();
                 DB.Entry(Data).State = EntityState.Deleted;
                 DB.SaveChanges();
@@ -1632,6 +1700,7 @@ namespace WorldServiceOrganization.Controllers
             tblTransaction Data = new tblTransaction();
             try
             {
+                string PassportNum = "";
                 ViewBag.User = Session["User"];
                 if (Transaction.TransactionIDNumber == 0)
                 {
@@ -1650,13 +1719,38 @@ namespace WorldServiceOrganization.Controllers
                         Data.ReturnDate = new DateTime(9999, 01, 01);
                         
                     }
+                   
                     Data.CreatedDate = DateTime.Now;
                     Data.EditDate = DateTime.Now;
                     Data.CreatedBy = ViewBag.User.UserId;
                     Data.EditBy = ViewBag.User.UserId;
                     Data.isActive = true;
+                    PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
+                    var ID = DB.tblProducts.Where(x => x.ProductId == Transaction.ProductIDNumber).Select(s => s.ProductTypeId).FirstOrDefault();
+                    if (ID==1&& PassportNum != null)
+                    {
+                        //PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
+                        PassportNum = (Int32.Parse(PassportNum) + 1).ToString();
+                        Data.IDCode = PassportNum;
+
+                        PassportNum = (Int32.Parse(PassportNum) + 1).ToString();
+                        var Data1 = DB.tblSettings.FirstOrDefault();
+                        Data1.NextPassport = PassportNum.ToString();
+                        DB.Entry(Data1);
+                        DB.SaveChanges();
+                    }
+                    else if(ID == 1 && PassportNum == null)
+                    {
+                      
+                        PassportNum = (Int32.Parse(Data.IDCode) + 1).ToString();
+                        var Data1 = DB.tblSettings.FirstOrDefault();
+                        Data1.NextPassport = PassportNum.ToString();
+                        DB.Entry(Data1);
+                        DB.SaveChanges();
+                    }
                     DB.tblTransactions.Add(Data);
                     DB.SaveChanges();
+
                     
                     return RedirectToAction("CreatePerson", new { Success = "Transaction has been add successfully.",id= Transaction.PersonIDNumber, tab = 1 });
 
@@ -1700,6 +1794,33 @@ namespace WorldServiceOrganization.Controllers
                     }
                     Data.EditDate = DateTime.Now;
                     Data.EditBy = ViewBag.User.UserId;
+
+
+                    PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
+                    var ID = DB.tblProducts.Where(x => x.ProductId == Transaction.ProductIDNumber).Select(s => s.ProductTypeId).FirstOrDefault();
+                    if (ID == 1 && PassportNum != null)
+                    {
+                        //PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
+                        PassportNum = (Int32.Parse(PassportNum) + 1).ToString();
+                        Data.IDCode = PassportNum;
+
+                        PassportNum = (Int32.Parse(PassportNum) + 1).ToString();
+                        var Data1 = DB.tblSettings.FirstOrDefault();
+                        Data1.NextPassport = PassportNum.ToString();
+                        DB.Entry(Data1);
+                        DB.SaveChanges();
+                    }
+                    else if (ID == 1 && PassportNum == null)
+                    {
+
+                        PassportNum = (Int32.Parse(Data.IDCode) + 1).ToString();
+                        var Data1 = DB.tblSettings.FirstOrDefault();
+                        Data1.NextPassport = PassportNum.ToString();
+                        DB.Entry(Data1);
+                        DB.SaveChanges();
+                    }
+
+
                     DB.Entry(Data);
                     DB.SaveChanges();
                     return RedirectToAction("CreatePerson", new { Update = "Transaction has been Update successfully.",id= Transaction.PersonIDNumber,tab=1 });
@@ -1883,15 +2004,15 @@ namespace WorldServiceOrganization.Controllers
                 string Line1 = null;
                 string Line2 = null;
                 int Len;
-                if (Persons.LastName.Contains(' '))
+                if (Persons.FirstName.Contains(' '))
                 {
-                    string[] Arr = Persons.LastName.Split(' ');
+                    string[] Arr = Persons.FirstName.Split(' ');
                     Len = Arr.Length;
-                    Line1 += "P<WSA" + Persons.FirstName + "<<"+Arr[0]+"<"+ Arr[1] + "<";
+                    Line1 += "P<WSA" + Persons.LastName + "<<"+Arr[0]+"<"+ Arr[1] + "<";
                 }
                 else
                 {
-                    Line1 += "P<WSA" + Persons.FirstName + "<<" + Persons.LastName + "<";
+                    Line1 += "P<WSA" + Persons.LastName + "<<" + Persons.FirstName + "<";
                 }
                 while(Line1.Length<44)
                 {

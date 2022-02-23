@@ -5,6 +5,13 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="WorldServiceOrganizationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="SearchFields">
+          <Key>
+            <PropertyRef Name="SearchField" />
+          </Key>
+          <Property Name="SearchFieldName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SearchField" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -732,6 +739,7 @@
         </Function>
         <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="WorldServiceOrganizationModelStoreContainer">
+          <EntitySet Name="SearchFields" EntityType="Self.SearchFields" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccessLevel" EntityType="Self.tblAccessLevel" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAddress" EntityType="Self.tblAddress" Schema="dbo" store:Type="Tables" />
@@ -1060,6 +1068,7 @@
             <Parameter Name="FieldtoSearch" Mode="In" Type="String" />
             <Parameter Name="SearchValue" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="SearchFields" EntityType="WorldServiceOrganizationModel.SearchField" />
         </EntityContainer>
         <EntityType Name="tblRole">
           <Key>
@@ -1804,6 +1813,13 @@
           <Property Type="String" Name="LastName" Nullable="true" />
           <Property Type="String" Name="FirstName" Nullable="true" />
         </ComplexType>
+        <EntityType Name="SearchField">
+          <Key>
+            <PropertyRef Name="SearchField1" />
+          </Key>
+          <Property Name="SearchFieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SearchField1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2251,6 +2267,14 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="SearchFields">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.SearchField">
+              <MappingFragment StoreEntitySet="SearchFields">
+                <ScalarProperty Name="SearchField1" ColumnName="SearchField" />
+                <ScalarProperty Name="SearchFieldName" ColumnName="SearchFieldName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

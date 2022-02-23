@@ -37,16 +37,18 @@
     int? WSANumber = 0;
     int? WSANumberC = 0;
 
-    if (ViewBag.WAS == null)
-    {
-        WSANumber = Int16.Parse(WSA) + 1;
-        WSANumberC = Int16.Parse(WSA) + 1;
-    }
-    else
-    {
-        WSANumber = ViewBag.WAS;
-        WSANumberC = ViewBag.WAS;
-    }
+    WSANumber = Int32.Parse(ViewBag.WSA);
+    WSANumberC = Int32.Parse(ViewBag.WSA);
+    //if (ViewBag.WAS == null)
+    //{
+    //    WSANumber = Int16.Parse(WSA) + 1;
+    //    WSANumberC = Int16.Parse(WSA) + 1;
+    //}
+    //else
+    //{
+    //    WSANumber = ViewBag.WAS;
+    //    WSANumberC = ViewBag.WAS;
+    //}
 
     string Comments = "";
     string Title = "";
@@ -71,7 +73,14 @@
     if (Model.PersonIDNumber > 0)
     {
 
-
+        if(Model.WSANumber!=null)
+        {
+            WSANumberC = Model.WSANumber;
+        }
+        else
+        {
+            WSANumberC = Int32.Parse(ViewBag.WSA);
+        }
         PersonId = Model.PersonIDNumber;
         FirstName = Model.FatherName;
         LastName = Model.LastName;
@@ -91,7 +100,7 @@
         FatherName = Model.FatherName;
         MotherName = Model.MotherName;
         WSANumber = Model.WSANumber;
-        WSANumberC = ViewBag.WAS;
+
         Comments = Model.Comments;
         Title = Model.Title;
         Height = Model.Height;
@@ -1448,13 +1457,13 @@
                                                             <input style="display:none;" type="text" class="form-control" id="PersonIDNumber" name="PersonIDNumber" value="@Model.PersonIDNumber">
                                                             <input style="display:none;" type="text" class="form-control" id="TransactionIDNumber" name="TransactionIDNumber" value="@TransactionIDNumber">
                                                             <label>ID Code <small style="display:none;color:red;" id="IDCodeError">Exist</small></label>
-                                                            <input type="text" class="form-control" id="IDCode" name="IDCode" value="" required>
+                                                            <input type="text" class="form-control" id="IDCode" name="IDCode" value="" >
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Cost</label>
-                                                            <input type="text" class="form-control" id="Cost" name="Cost" value="" required>
+                                                            <input type="text" class="form-control" id="Cost" name="Cost" value="" required readonly>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -1466,7 +1475,7 @@
                                                     <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>Total Cost</label>
-                                                            <input type="text" class="form-control" id="TotalCost" name="" value="" required>
+                                                            <input type="text" class="form-control" id="TotalCost" name="" value="" required readonly>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
@@ -2414,6 +2423,10 @@
 
 
     $("body").on("click", "#EditTransaction", function () {
+        $("#IDCode").attr('readonly', true);
+        $("#ApplicationDate").attr('readonly', true);
+        $("#Cost").attr('readonly', true);
+        $("#ProductD").attr('readonly', true);
         $("#PassportLabel").attr("disabled", false);
         var currentRow = $(this).closest("tr");
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
@@ -2518,12 +2531,18 @@
             dataType: "json",
             success: function (ProductList) {
                 $("#Cost").val(ProductList.ProductList);
-                if (ProductList.IDCode!="") {
-                    $("#IDCode").val(ProductList.IDCode);
+                
+                if (ProductList.IdCode != "") {
+                    $("#IDCode").val(ProductList.IdCode);
                     $("#IDCode").attr('readonly', true);
 
                 }
-                
+                else {
+                    $("#IDCode").val(ProductList.IdCode);
+                    $("#IDCode").attr('readonly', false);
+                }
+                $("#Quantity").val("");
+                $("#TotalCost").val("");
 
             },
         });

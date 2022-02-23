@@ -166,6 +166,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReportList.cs" />
+    <Compile Include="Models\SearchField.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -235,6 +238,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\assets\css\bootstrap-datepicker.css" />
     <Content Include="Content\assets\css\bootstrap.min.css" />
     <Content Include="Content\assets\css\buttons.dataTables.min.css" />
     <Content Include="Content\assets\css\feathericon.min.css" />
@@ -302,6 +306,8 @@
     <Content Include="Content\assets\img\specialities\specialities-04.png" />
     <Content Include="Content\assets\img\specialities\specialities-05.png" />
     <Content Include="Content\assets\img\user-image.png" />
+    <Content Include="Content\assets\js\bootstrap-datepicker.js" />
+    <Content Include="Content\assets\js\bootstrap-datepicker.pt-BR.min.js" />
     <Content Include="Content\assets\js\bootstrap.min.js" />
     <Content Include="Content\assets\js\buttons.html5.min.js" />
     <Content Include="Content\assets\js\buttons.print.min.js" />
@@ -312,6 +318,9 @@
     <Content Include="Content\assets\js\form-validation.js" />
     <Content Include="Content\assets\js\jquery-3.2.1.min.js" />
     <Content Include="Content\assets\js\jquery-3.5.1.js" />
+    <Content Include="Content\assets\css\jquery-ui.css" />
+    <Content Include="Content\assets\js\jquery-3.6.0.js" />
+    <Content Include="Content\assets\js\jquery-ui.js" />
     <Content Include="Content\assets\js\jquery.dataTables.min.js" />
     <Content Include="Content\assets\js\jquery.maskedinput.min.js" />
     <Content Include="Content\assets\js\jspdf.min.js" />
@@ -321,6 +330,7 @@
     <Content Include="Content\assets\js\popper.min.js" />
     <Content Include="Content\assets\js\script.js" />
     <Content Include="Content\assets\js\select2.min.js" />
+    <Content Include="Content\assets\js\shortcut.js" />
     <Content Include="Content\assets\js\vfs_fonts.js" />
     <Content Include="Content\assets\plugins\datatables\datatables.min.css" />
     <Content Include="Content\assets\plugins\datatables\datatables.min.js" />

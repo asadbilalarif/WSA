@@ -199,6 +199,7 @@
       <Parameter Name="FieldtoSearch" Mode="In" Type="String" />
       <Parameter Name="SearchValue" Mode="In" Type="String" />
     </FunctionImport>
+    <EntitySet Name="SearchFields" EntityType="WorldServiceOrganizationModel.SearchField" />
   </EntityContainer>
   <EntityType Name="tblRole">
     <Key>
@@ -943,4 +944,11 @@
     <Property Type="String" Name="LastName" Nullable="true" />
     <Property Type="String" Name="FirstName" Nullable="true" />
   </ComplexType>
+  <EntityType Name="SearchField">
+    <Key>
+      <PropertyRef Name="SearchField1" />
+    </Key>
+    <Property Name="SearchFieldName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SearchField1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

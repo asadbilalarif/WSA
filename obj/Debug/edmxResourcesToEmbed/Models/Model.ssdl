@@ -1,5 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="WorldServiceOrganizationModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="SearchFields">
+    <Key>
+      <PropertyRef Name="SearchField" />
+    </Key>
+    <Property Name="SearchFieldName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="SearchField" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
       <PropertyRef Name="diagram_id" />
@@ -727,6 +734,7 @@
   </Function>
   <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="WorldServiceOrganizationModelStoreContainer">
+    <EntitySet Name="SearchFields" EntityType="Self.SearchFields" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblAccessLevel" EntityType="Self.tblAccessLevel" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblAddress" EntityType="Self.tblAddress" Schema="dbo" store:Type="Tables" />

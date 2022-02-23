@@ -172,6 +172,7 @@ namespace WorldServiceOrganization.Controllers
             ViewBag.SearchValue = "";
             //var PL= DB.tblPersons.Where(x => x.isActive == true).ToList();
             ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
+            ViewBag.SearchFields = DB.SearchFields.ToList();
             return View();
         }
 
@@ -180,7 +181,7 @@ namespace WorldServiceOrganization.Controllers
         {
             ViewBag.FieldtoSearch = FieldtoSearch;
             ViewBag.SearchValue = SearchValue;
-
+            ViewBag.SearchFields = DB.SearchFields.ToList();
             List<CustomSearchLeftJoin_Result> PL = DB.CustomSearchLeftJoin(FieldtoSearch, SearchValue).ToList();
             //ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
             return View(PL);
@@ -195,6 +196,7 @@ namespace WorldServiceOrganization.Controllers
             var PL = DB.tblPersons.Where(x => x.isActive == true).ToList();
             ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
             ViewBag.Country = DB.tblCountries.Where(x => x.isActive == true).ToList();
+            
             return View();
         }
 

@@ -52,6 +52,7 @@
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers1" />
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblDocumentImg" Width="1.5" PointX="16.875" PointY="11.875" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_DocumentPerson" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.SearchField" Width="1.5" PointX="11.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

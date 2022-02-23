@@ -69,7 +69,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-md-3">
+                                    @*<div class="col-md-3">
                                         <label>Field to Search:</label>
                                         <select name="FieldtoSearch" id="FieldtoSearch" class="form-control">
                                             <option value="p.LastName">Last Name</option>
@@ -109,6 +109,15 @@
                                             <option value="t.SentDate">Sent Date</option>
                                             <option value="t.ReturnDate">Return Date</option>
                                             <option value="t.Problems">Problems</option>
+                                        </select>
+                                    </div>*@
+                                    <div class="col-md-3">
+                                        <label>Field to Search:</label>
+                                        <select name="FieldtoSearch" id="FieldtoSearch" class="form-control">
+                                            @foreach (WorldServiceOrganization.Models.SearchField List in @ViewBag.SearchFields)
+                                            {
+                                                <option value="@List.SearchField1">@List.SearchFieldName</option>
+                                            }
                                         </select>
                                     </div>
                                     <div class="col-md-1">
