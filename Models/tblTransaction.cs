@@ -18,10 +18,10 @@ namespace WorldServiceOrganization.Models
         public string IDCode { get; set; }
         public Nullable<double> Cost { get; set; }
         public Nullable<int> Quantity { get; set; }
-        public System.DateTime ApplicationDate { get; set; }
-        public System.DateTime IssueDate { get; set; }
-        public System.DateTime SentDate { get; set; }
-        public System.DateTime ReturnDate { get; set; }
+        public string ApplicationDate { get; set; }
+        public string IssueDate { get; set; }
+        public string SentDate { get; set; }
+        public string ReturnDate { get; set; }
         public string Problems { get; set; }
         public Nullable<int> ProductIDNumber { get; set; }
         public Nullable<int> PersonIDNumber { get; set; }

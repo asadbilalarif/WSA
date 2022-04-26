@@ -17,10 +17,10 @@ namespace WorldServiceOrganization.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblCountry()
         {
+            this.tblAddresses = new HashSet<tblAddress>();
             this.tblPersons = new HashSet<tblPerson>();
             this.tblPersons1 = new HashSet<tblPerson>();
             this.tblPersons2 = new HashSet<tblPerson>();
-            this.tblAddresses = new HashSet<tblAddress>();
         }
     
         public int CountryId { get; set; }
@@ -35,12 +35,12 @@ namespace WorldServiceOrganization.Models
         public Nullable<bool> isActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblAddress> tblAddresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPerson> tblPersons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPerson> tblPersons1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPerson> tblPersons2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblAddress> tblAddresses { get; set; }
     }
 }

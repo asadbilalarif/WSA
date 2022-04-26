@@ -1,0 +1,3063 @@
+﻿@model  WorldServiceOrganization.Models.tblPerson
+@{
+
+
+
+
+
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string WSA = cookieObj["WSA"];
+    string DateFormat = cookieObj["ReportsDateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+
+
+    string Succ = ViewBag.Success;
+    string Update = ViewBag.Update;
+    string Delete = ViewBag.Delete;
+    string CreatedDate = DateTime.Now.ToString(@DateFormat);
+
+    int PersonId = 0;
+    string FirstName = "";
+    string LastName = "";
+    string CityOfBirth = "";
+    string Phone = "";
+    string Fax = "";
+    string EMail = "";
+    string Website = "";
+    string ImgSig = "/Content/assets/img/sig.png";
+    string ImgImg = "/Content/assets/img/user-image.png";
+    string ImgCer = "/Content/assets/img/file.png";
+    string DateOfBirth = "";
+    int? BirthDay = 0;
+    int? BirthMonth = 0;
+    int? BirthYear = 0;
+    string Marks = "";
+    string FatherName = "";
+    string MotherName = "";
+    int? WSANumber = 0;
+    int? WSANumberC = 0;
+
+    WSANumber = Int32.Parse(ViewBag.WSA);
+    WSANumberC = Int32.Parse(ViewBag.WSA);
+    //if (ViewBag.WAS == null)
+    //{
+    //    WSANumber = Int16.Parse(WSA) + 1;
+    //    WSANumberC = Int16.Parse(WSA) + 1;
+    //}
+    //else
+    //{
+    //    WSANumber = ViewBag.WAS;
+    //    WSANumberC = ViewBag.WAS;
+    //}
+
+    string Comments = "";
+    string Title = "";
+    double? Height = 0.0;
+    int? HeightUnit = 1;
+    int? CountryApplicationId = 0;
+    int? CountryBirthId = 0;
+    int? CountryOfBirthStatistical = 0;
+    int? EyeId = 0;
+    int? OccupationId = 0;
+    int? SexId = 0;
+    int? StatusId = 0;
+    int? TransactionCount = 0;
+    DateTime? CreateDate = DateTime.Now;
+    int? CreateBy = 0;
+    DateTime? EditDate = DateTime.Now;
+    int? EditBy = 0;
+    string CIni = "";
+    string EIni = "";
+    var TransactionIDNumber = 0;
+
+    if (Model.PersonIDNumber > 0)
+    {
+
+        if (Model.WSANumber != null)
+        {
+            WSANumberC = Model.WSANumber;
+        }
+        else
+        {
+            WSANumberC = Int32.Parse(ViewBag.WSA);
+        }
+        PersonId = Model.PersonIDNumber;
+        FirstName = Model.FatherName;
+        LastName = Model.LastName;
+        CityOfBirth = Model.CityOfBirth;
+        Phone = Model.Phone;
+        Fax = Model.Fax;
+        EMail = Model.EMail;
+        Website = Model.Website;
+        ImgSig = Model.SignaturePath;
+        ImgImg = Model.Photo;
+        ImgCer = Model.Certification;
+        DateOfBirth = Model.DateOfBirth;
+        BirthDay = Model.BirthDay;
+        BirthMonth = Model.BirthMonth;
+        BirthYear = Model.BirthYear;
+        Marks = Model.Marks;
+        FatherName = Model.FatherName;
+        MotherName = Model.MotherName;
+        WSANumber = Model.WSANumber;
+
+        Comments = Model.Comments;
+        Title = Model.Title;
+        Height = Model.Height;
+        HeightUnit = Model.HeightUnit;
+        CountryApplicationId = Model.CountryOfApplication;
+        CountryBirthId = Model.CountryOfBirth;
+        CountryOfBirthStatistical = Model.CountryOfBirthStatistical;
+        EyeId = Model.Eyes;
+        OccupationId = Model.OccupationCode;
+        SexId = Model.Sex;
+        StatusId = Model.Status;
+        TransactionCount = ViewBag.TransCount;
+        CreateDate = Model.EntryDate;
+        CreateBy = Model.CreatedBy;
+        EditDate = Model.LastModifiedDate;
+        EditBy = Model.LastEditedBy;
+        CIni = Model.tblUser.Initials;
+        EIni = Model.tblUser.Initials;
+
+    }
+}
+
+
+<head>
+
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+
+        button.close {
+            padding: 3px 6px;
+            position: absolute;
+            z-index: 1;
+            color: white !important;
+            font-size: 30px;
+            font-weight: bold !important;
+        }
+
+        .document {
+            /*border: 1px solid;
+            padding: 6px;
+            margin-top: 2%;
+            border-radius: 10px;*/
+        }
+
+        }
+
+        .icon-bar a {
+            display: block;
+            text-align: center;
+            padding: 4px;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 15px;
+        }
+
+        .upload-images {
+            position: relative;
+        }
+
+            .upload-images img {
+                border-radius: 4px;
+                height: 100px;
+                width: 100px;
+            }
+
+        .btn-icon {
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            text-align: center;
+            position: absolute;
+            padding: 0;
+            font-size: 15px;
+            width: 20px;
+            height: 20px;
+            display: -webkit-inline-box;
+            display: -ms-inline-flexbox;
+            display: inline-flex;
+            right: 3px;
+            top: 3px;
+            justify-content: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+        }
+
+        .btn-danger {
+            background-color: #ff0100;
+            border: 1px solid #ff0100;
+        }
+    </style>
+
+
+
+</head>
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+    @if (Model.PersonIDNumber == 0)
+    {
+        <div class="row">
+            <div class="col-md-12">
+
+                @using (Html.BeginForm("CreatePerson", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {@Html.AntiForgeryToken()
+                <div class="card">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="breadcrumb-bar">
+                                <div class="container-fluid">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-6 col-6">
+
+                                            <h5 class="breadcrumb-title">Create Person</h5>
+
+                                        </div>
+                                        <div class="col-md-6 col-6 text-right" id="CreatePersonB">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-body">
+                        <span style="color:red;">@ViewBag.Error</span>
+
+
+
+
+                        <div class="row">
+
+                            <div class="col-md-8">
+                                <div class="form-row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>WSA#</label>&nbsp;&nbsp;
+                                            <input type="text" class="form-control" style="display:none;" id="WSANumberCopy" value="@WSANumberC">
+                                            <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-row" style="margin-top:5%">
+                                            <div class="col-md-4 ">
+                                                <p>
+
+                                                </p>
+                                            </div>
+                                            <div class="col-md-8 text-right">
+                                                <p>
+                                                    @*<button type="button" class="btn btn-primary btn-sm">One Record</button>
+                                                        <button type="button" class="btn btn-secondary btn-sm">Label</button>
+                                                        <button type="button" class="btn btn-success btn-sm">Routing Slip</button>*@
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Last Name<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="LastName" name="LastName" value="@LastName" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>First and Middle Names<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="FirstName" name="FirstName" value="@FirstName" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" style="display:none;" name="PersonIDNumber" value="@PersonId" required>
+                                            <label>Country of Application<span style="color:red;">*</span></label>
+                                            <select class="form-control" id="CountryOfApplication" name="CountryOfApplication" required>
+                                                <option value="">Select Country</option>
+                                                @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                                {
+                                                    if (Countries.CountryId == CountryApplicationId)
+                                                    {
+                                                        <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                    }
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>City of Birth<span style="color:red;">*</span></label>
+                                            <input type="text" class="form-control" id="CityOfBirth" name="CityOfBirth" value="@CityOfBirth" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Country of Birth<span style="color:red;">*</span></label>
+                                            &nbsp;&nbsp;
+                                            <select class="form-control" id="CountryOfBirth" name="CountryOfBirth" required>
+                                                <option value="">Select Country</option>
+                                                @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                                {
+                                                    if (Countries.CountryId == CountryBirthId)
+                                                    {
+                                                        <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                    }
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Country of Birth Statistical<span style="color:red;">*</span></label>
+                                            &nbsp;&nbsp;
+                                            <select class="form-control" id="CountryOfBirthStatistical" name="CountryOfBirthStatistical" required>
+                                                <option value="">Select Country</option>
+                                                @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                                {
+                                                    if (Countries.CountryId == CountryOfBirthStatistical)
+                                                    {
+                                                        <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                    }
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            &nbsp;&nbsp;
+                                            <input type="text" class="form-control" id="Phone" name="Phone" value="@Phone">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Occupation Code</label>&nbsp;&nbsp;
+                                            <select class="form-control" id="OccupationCode" name="OccupationCode">
+                                                <option value="">Select Occupation</option>
+                                                @foreach (WorldServiceOrganization.Models.tblOccupation Occupation in @ViewBag.Occupation)
+                                                {
+                                                    if (Occupation.OccupationId == OccupationId)
+                                                    {
+                                                        <option value="@Occupation.OccupationId" selected>@Occupation.Code - @Occupation.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Occupation.OccupationId">@Occupation.Code - @Occupation.Name</option>
+                                                    }
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Title</label>&nbsp;&nbsp;
+                                            <input type="text" class="form-control" id="Title" name="Title" value="@Title">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Fax</label>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <input type="text" class="form-control" id="Fax" name="Fax" value="@Fax">
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>E-Mail</label>
+                                            <div>
+                                                <input type="text" class="form-control" id="EMail" name="EMail" value="@EMail">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div>
+                                                <label>Website</label>&nbsp;&nbsp;
+                                                <input type="text" class="form-control" id="Website" name="Website" value="@Website">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Date of Birth</label>
+                                            @*<div class='  date' id='datetimepicker1'>
+                                                    <label>Date of Birth</label>
+                                                    &nbsp;&nbsp;
+                                                    <input type='text' class="form-control" id="DateOfBirth" name="DateOfBirth" value="@DateOfBirth" required />
+                                                    <span class="input-group-addon">Date of Birth
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>*@
+
+                                            @*<label>Date of Birth<span style="color:red;">*</span></label>
+                                                &nbsp;&nbsp;
+                                                <input type="text" class="form-control" id="DateOfBirth" name="DateOfBirth" placeholder="@DateFormat" value="@DateOfBirth" required>*@
+
+                                            <div class="row">
+
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Day<span style="color:red;"></span></label>
+                                                        <select class="form-control" style="padding:0px !important" name="BirthDay">
+                                                            <option value="">xx</option>
+                                                            @for (int i = 1; i <= 31; i++)
+                                                            {
+                                                                <option value="@i">@i</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Month<span style="color:red;"></span></label>
+                                                        <select class="form-control" style="padding:0px !important" name="BirthMonth">
+                                                            <option value="">xxx</option>
+                                                            @for (int i = 1; i <= 12; i++)
+                                                            {
+                                                                <option value="@i">@i</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Year<span style="color:red;"></span></label>
+                                                        <select class="form-control" style="padding:0px !important" name="BirthYear" id="CdropdownYear">
+                                                            <option value="">xxxx</option>
+                                                            @foreach (var item in @ViewBag.Year)
+                                                            {
+                                                                <option value="@item">@item</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Sex<span style="color:red;">*</span></label>
+                                            <select class="form-control" id="SexD" name="Sex" required>
+                                                <option value="">Select Sex</option>
+                                                @foreach (WorldServiceOrganization.Models.tblSex Sex in @ViewBag.Sex)
+                                                {
+                                                    if (Sex.SexId == SexId)
+                                                    {
+                                                        <option value="@Sex.SexId" selected>@Sex.Code - @Sex.Name</option>
+                                                    }
+                                                    else
+                                                    {
+                                                        <option value="@Sex.SexId">@Sex.Code - @Sex.Name</option>
+                                                    }
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-7">
+                                                    <label>Height</label><br />
+                                                    <input type="text" class="form-control" id="Height" name="Height" value="@Height">
+                                                </div>
+                                                <div class="col-md-5">
+                                                    <br />
+                                                    <select class="form-control" id="HeightUnit" name="HeightUnit">
+                                                        @if (@HeightUnit == 1)
+                                                        {
+                                                            <option value="1" selected>ft</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="1">ft</option>
+                                                        }
+                                                        @if (@HeightUnit == 2)
+                                                        {
+                                                            <option value="2" selected>m</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="2">m</option>
+                                                        }
+
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div>
+                                                <label>Eyes</label>&nbsp;&nbsp;
+                                                <select class="form-control" id="Eyes" name="Eyes">
+                                                    <option value="">Select Eyes</option>
+                                                    @foreach (WorldServiceOrganization.Models.tblEye Eye in @ViewBag.Eye)
+                                                    {
+                                                        if (Eye.EyeId == EyeId)
+                                                        {
+                                                            <option value="@Eye.EyeId" selected>@Eye.Code - @Eye.Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Eye.EyeId">@Eye.Code - @Eye.Name</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Marks</label>
+                                            &nbsp;&nbsp;
+                                            <input type="text" class="form-control" id="Marks" name="Marks" value="@Marks">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div>
+                                                <label>Status<span style="color:red;">*</span></label>&nbsp;&nbsp;
+                                                <select class="form-control" id="StatusD" name="Status" required>
+                                                    <option value="">Select Status</option>
+                                                    @foreach (WorldServiceOrganization.Models.tblStatus Status in @ViewBag.Status)
+                                                    {
+                                                        if (Status.StatusId == StatusId)
+                                                        {
+                                                            <option value="@Status.StatusId" selected>@Status.Code - @Status.Name</option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@Status.StatusId">@Status.Code - @Status.Name</option>
+                                                        }
+                                                    }
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <div>
+                                                <label>Father</label>&nbsp;&nbsp;
+                                                <input type="text" class="form-control" id="FatherName" name="FatherName" value="@FatherName">
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Mother</label>
+                                            &nbsp;&nbsp;
+                                            <input type="text" class="form-control" id="MotherName" name="MotherName" value="@MotherName">
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Comments</label>
+                                            <textarea type="text" class="form-control" id="Comments" name="Comments" value="@Comments"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-row">
+                                    <div class="col-md-12">
+                                        <div class="change-avatar">
+                                            <div class="row">
+                                                <div class="col-md-6 text-right">
+                                                    <div class="upload-images">
+
+                                                        <img id="ImgImg" src="@ImgImg" alt="your image" name="ImgImg" />
+                                                        <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i></a>
+                                                        <input type="text" id="DeleteImageText" style="display:none;">
+                                                        <input type="text" name="Photo" value="@ImgImg" hidden>
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="upload-img">
+                                                        <div class="change-photo-btn">
+                                                            <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                                            <input type="file" class="upload" name="Image" id="Image" accept="image/*" onchange="showPreviewImg(event);" value="Upload Photo">
+                                                        </div>
+                                                        @*<a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveImage"><i class="fa fa-download"></i> Save</a>
+                                                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i> Delete</a>
+                                                            <input type="text" name="Photo" id="DeleteImageText" style="display:none;">*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+                                <br>
+                                <div class="form-row">
+                                    <div class="col-md-12">
+
+                                        <div class="change-avatar">
+                                            <div class="row">
+                                                <div class="col-md-6 text-right">
+
+                                                    <div class="upload-images">
+
+                                                        <img id="ImgSig" src="@ImgSig" alt="your image" name="ImgSig" />
+                                                        <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i></a>
+                                                        <input type="text" id="DeleteSigText" style="display:none;">
+                                                        <input type="text" name="SignaturePath" value="@ImgSig" hidden>
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-6">
+                                                    <div class="upload-img">
+                                                        <div class="change-sing-btn">
+                                                            <span><i class="fa fa-upload"></i> Upload Signature</span>
+                                                            <input type="file" class="upload" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Photo">
+                                                        </div>
+                                                        @*<a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveSig"><i class="fa fa-download"></i> Save</a>
+                                                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i> Delete</a>
+                                                            <input type="text" name="SignaturePath" id="DeleteSigText" style="display:none;">*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+                                <br>
+                                @*<div class="form-row">
+                                        <div class="col-md-12">
+                                            <div class="change-avatar">
+                                                <div class="row">
+                                                    <div class="col-md-6 text-right">
+                                                        <div class="profile-img">
+
+                                                            <img id="ImgCer" src="@ImgCer" alt="your image" />
+
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="upload-img">
+                                                            <div class="change-doc-btn">
+                                                                <span><i class="fa fa-upload"></i> Upload Document</span>
+                                                                <input type="file" class="upload" name="CertificationFile" id="CertificationFile" accept="image/*" onchange="showPreviewCer(event);" value="Upload Photo">
+                                                            </div>
+                                                            <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveCer"><i class="fa fa-download"></i> Save</a>
+                                                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteCer"><i class="fa fa-trash"></i> Delete</a>
+                                                            <input type="text" name="Certification" id="DeleteCerText" style="display:none;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>*@
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+
+
+                            <div class="col-md-12 text-right">
+                                <div class="form-group">
+                                    <label></label>
+                                    <button class="btn btn-primary" type="submit">Save</button>
+                                    <a href="@Url.Action("CreatePerson","Person")"><input class="btn btn-danger" type="button" value="Cancel"></a>
+                                    <a href="@Url.Action("Persons","Person")" class="btn btn-secondary"><i class="fa fa-list"></i>List</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <label>Transaction Count: @TransactionCount</label>
+
+                            </div>
+
+                            <div class="col-md-5">
+                                <label>Date of Entry: @CreateDate</label>&nbsp;&nbsp;
+                                <label>Initials @CIni</label>
+                            </div>
+
+                            <div class="col-md-5">
+                                <label>Date Changed: @EditDate</label>&nbsp;&nbsp;
+                                <label>Initials @EIni</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+
+
+            }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs nav-tabs-solid">
+                    <li class="nav-item"><a class="nav-link active" href="#solid-tab1" data-toggle="tab" id="Tab1">Person Info</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#solid-tab2" data-toggle="tab" id="Tab2">Transaction</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#solid-tab3" data-toggle="tab" id="Tab3">Address</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#solid-tab4" data-toggle="tab" id="Tab4">Child</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane show  active" id="solid-tab1">
+
+
+                        @using (Html.BeginForm("CreatePerson", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                        {@Html.AntiForgeryToken()
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="breadcrumb-bar">
+                                        <div class="container-fluid">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-6 col-6">
+                                                    @if (Model == null)
+                                                    {
+                                                        <h5 class="breadcrumb-title">Create Person</h5>
+                                                    }
+                                                    else
+                                                    {
+                                                        <h5 class="breadcrumb-title">Edit Person Info</h5>
+                                                    }
+                                                </div>
+                                                <div class="col-md-6 col-6 text-right" id="CreatePersonB">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-body">
+                                <span style="color:red;">@ViewBag.Error</span>
+
+
+
+
+                                <div class="row">
+
+                                    <div class="col-md-8">
+                                        <div class="form-row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>WSA#</label>&nbsp;&nbsp;
+                                                    <input type="text" class="form-control" style="display:none;" id="WSANumberCopy" value="@WSANumberC">
+                                                    <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="form-row" style="margin-top:5%">
+                                                    <div class="col-md-4 ">
+                                                        <p>
+
+                                                        </p>
+                                                    </div>
+                                                    <div class="col-md-8 text-right">
+                                                        <p>
+                                                            <a href="@Url.Action("OneRecord","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-primary btn-sm">One Record</button></a>
+                                                            <button type="button" class="btn btn-secondary btn-sm" onclick="window.location.href='@Url.Action("AddressLabel","Person",new {id=@Model.PersonIDNumber })';">Label</button>
+                                                            <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">Routing Slip</button></a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Last Name<span style="color:red;">*</span></label>
+                                                    <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>First and Middle Names<span style="color:red;">*</span></label>
+                                                    <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <input type="text" class="form-control" style="display:none;" name="PersonIDNumber" value="@PersonId" required>
+                                                    <label>Country of Application<span style="color:red;">*</span></label>
+                                                    <select class="form-control" id="CountryOfApplication" name="CountryOfApplication" required>
+                                                        <option value="">Select Country</option>
+                                                        @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                                        {
+                                                            if (Countries.CountryId == CountryApplicationId)
+                                                            {
+                                                                <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>City of Birth<span style="color:red;">*</span></label>
+                                                    <input type="text" class="form-control" id="CityOfBirth" name="CityOfBirth" value="@CityOfBirth" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Country of Birth<span style="color:red;">*</span></label>
+                                                    &nbsp;&nbsp;
+                                                    <select class="form-control" id="CountryOfBirth" name="CountryOfBirth" required>
+                                                        <option value="">Select Country</option>
+                                                        @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                                        {
+                                                            if (Countries.CountryId == CountryBirthId)
+                                                            {
+                                                                <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Country of Birth Statistical<span style="color:red;">*</span></label>
+                                                    &nbsp;&nbsp;
+                                                    <select class="form-control" id="CountryOfBirthStatistical" name="CountryOfBirthStatistical" required>
+                                                        <option value="">Select Country</option>
+                                                        @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
+                                                        {
+                                                            if (Countries.CountryId == CountryOfBirthStatistical)
+                                                            {
+                                                                <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Phone</label>
+                                                    &nbsp;&nbsp;
+                                                    <input type="text" class="form-control" id="Phone" name="Phone" value="@Phone">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Occupation Code</label>&nbsp;&nbsp;
+                                                    <select class="form-control" id="OccupationCode" name="OccupationCode">
+                                                        <option value="">Select Occupation</option>
+                                                        @foreach (WorldServiceOrganization.Models.tblOccupation Occupation in @ViewBag.Occupation)
+                                                        {
+                                                            if (Occupation.OccupationId == OccupationId)
+                                                            {
+                                                                <option value="@Occupation.OccupationId" selected>@Occupation.Code - @Occupation.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Occupation.OccupationId">@Occupation.Code - @Occupation.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Title</label>&nbsp;&nbsp;
+                                                    <input type="text" class="form-control" id="Title" name="Title" value="@Title">
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Fax</label>
+                                                    &nbsp;&nbsp;&nbsp;
+                                                    <input type="text" class="form-control" id="Fax" name="Fax" value="@Fax">
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>E-Mail</label>
+                                                    <div>
+                                                        <input type="text" class="form-control" id="EMail" name="EMail" value="@EMail">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label>Website</label>&nbsp;&nbsp;
+                                                        <input type="text" class="form-control" id="Website" name="Website" value="@Website">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Date of Birth</label>
+                                                    <div class="row">
+
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Day<span style="color:red;"></span></label>
+                                                                <select class="form-control" style="padding:0px !important" name="BirthDay">
+                                                                    <option value="">xx</option>
+                                                                    @for (int i = 1; i <= 31; i++)
+                                                                    {
+                                                                        if (Model.BirthDay == i)
+                                                                        {
+                                                                            <option selected value="@i">@i</option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@i">@i</option>
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Month<span style="color:red;"></span></label>
+                                                                <select class="form-control" style="padding:0px !important" name="BirthMonth">
+                                                                    <option value="">xxx</option>
+                                                                    @for (int i = 1; i <= 12; i++)
+                                                                    {
+                                                                        if (Model.BirthMonth == i)
+                                                                        {
+                                                                            <option selected value="@i">@i</option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@i">@i</option>
+                                                                        }
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="form-group">
+                                                                <label>Year<span style="color:red;"></span></label>
+                                                                <select class="form-control" style="padding:0px !important" name="BirthYear" id="CdropdownYear">
+                                                                    <option value="">xxxx</option>
+                                                                    @foreach (var item in @ViewBag.Year)
+                                                                    {
+                                                                        if (Model.BirthYear == Convert.ToInt32(@item))
+                                                                        {
+                                                                            <option selected value="@item">@item</option>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <option value="@item">@item</option>
+                                                                        }
+
+                                                                    }
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Sex<span style="color:red;">*</span></label>
+                                                    <select class="form-control" id="SexD" name="Sex" required>
+                                                        <option value="">Select Sex</option>
+                                                        @foreach (WorldServiceOrganization.Models.tblSex Sex in @ViewBag.Sex)
+                                                        {
+                                                            if (Sex.SexId == SexId)
+                                                            {
+                                                                <option value="@Sex.SexId" selected>@Sex.Code - @Sex.Name</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@Sex.SexId">@Sex.Code - @Sex.Name</option>
+                                                            }
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <div class="row">
+                                                        <div class="col-md-7">
+                                                            <label>Height</label><br />
+                                                            <input type="text" class="form-control" id="Height" name="Height" value="@Height">
+                                                        </div>
+                                                        <div class="col-md-5">
+                                                            <br />
+                                                            <select class="form-control" id="HeightUnit" name="HeightUnit">
+                                                                @if (@HeightUnit == 1)
+                                                                {
+                                                                    <option value="1" selected>ft</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="1">ft</option>
+                                                                }
+                                                                @if (@HeightUnit == 2)
+                                                                {
+                                                                    <option value="2" selected>m</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="2">m</option>
+                                                                }
+
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label>Eyes</label>&nbsp;&nbsp;
+                                                        <select class="form-control" id="Eyes" name="Eyes">
+                                                            <option value="">Select Eyes</option>
+                                                            @foreach (WorldServiceOrganization.Models.tblEye Eye in @ViewBag.Eye)
+                                                            {
+                                                                if (Eye.EyeId == EyeId)
+                                                                {
+                                                                    <option value="@Eye.EyeId" selected>@Eye.Code - @Eye.Name</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Eye.EyeId">@Eye.Code - @Eye.Name</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Marks</label>
+                                                    &nbsp;&nbsp;
+                                                    <input type="text" class="form-control" id="Marks" name="Marks" value="@Marks">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label>Status<span style="color:red;">*</span></label>&nbsp;&nbsp;
+                                                        <select class="form-control" id="StatusD" name="Status" required>
+                                                            <option value="">Select Status</option>
+                                                            @foreach (WorldServiceOrganization.Models.tblStatus Status in @ViewBag.Status)
+                                                            {
+                                                                if (Status.StatusId == StatusId)
+                                                                {
+                                                                    <option value="@Status.StatusId" selected>@Status.Code - @Status.Name</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="@Status.StatusId">@Status.Code - @Status.Name</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <div>
+                                                        <label>Father</label>&nbsp;&nbsp;
+                                                        <input type="text" class="form-control" id="FatherName" name="FatherName" value="@FatherName">
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Mother</label>
+                                                    &nbsp;&nbsp;
+                                                    <input type="text" class="form-control" id="MotherName" name="MotherName" value="@MotherName">
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Comments</label>
+                                                    <textarea type="text" class="form-control" id="Comments" name="Comments" value="@Comments"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+                                                <div class="change-avatar">
+                                                    <div class="row">
+                                                        <div class="col-md-6 text-right">
+                                                            <div class="upload-images">
+
+                                                                <img id="ImgImg" src="@ImgImg" alt="your image" name="ImgImg" />
+                                                                <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i></a>
+                                                                <input type="text" id="DeleteImageText" style="display:none;">
+                                                                <input type="text" name="Photo" value="@ImgImg" hidden>
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="upload-img">
+                                                                <div class="change-photo-btn">
+                                                                    <span><i class="fa fa-upload"></i> Upload Photo</span>
+                                                                    <input type="file" class="upload" name="Image" id="Image" accept="image/*" onchange="showPreviewImg(event);" value="Upload Photo">
+                                                                </div>
+                                                                @*<a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveImage"><i class="fa fa-download"></i> Save</a>
+                                                                    <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i> Delete</a>
+                                                                    <input type="text" name="Photo" id="DeleteImageText" style="display:none;">*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+                                        <br>
+                                        <div class="form-row">
+                                            <div class="col-md-12">
+
+                                                <div class="change-avatar">
+                                                    <div class="row">
+                                                        <div class="col-md-6 text-right">
+
+                                                            <div class="upload-images">
+
+                                                                <img id="ImgSig" src="@ImgSig" alt="your image" name="ImgSig" />
+                                                                <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i></a>
+                                                                <input type="text" id="DeleteSigText" style="display:none;">
+                                                                <input type="text" name="SignaturePath" value="@ImgSig" hidden>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="upload-img">
+                                                                <div class="change-sing-btn">
+                                                                    <span><i class="fa fa-upload"></i> Upload Signature</span>
+                                                                    <input type="file" class="upload" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Photo">
+                                                                </div>
+                                                                @*<a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveSig"><i class="fa fa-download"></i> Save</a>
+                                                                    <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i> Delete</a>
+                                                                    <input type="text" name="SignaturePath" id="DeleteSigText" style="display:none;">*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+                                        </div>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div style="" id="Imagesboxes">
+
+                                                    <div class="change-doc-btn">
+                                                        <span><i class="fa fa-upload"></i> Upload Documents</span>
+                                                        <input type="file" class="upload" id="TemplateImages" name="TemplateImages" onchange="showPreviewCer(event);" value="Upload Photo">
+                                                    </div>
+                                                    @*<input class="form-control" type="file" id="TemplateImages" name="TemplateImages" accept="image/jpeg, image/png, image/gif,">
+                                                        <small class="form-text text-muted">Allowed images: jpg, gif, png. Maximum 10 images only.</small>*@
+                                                    <div id="Alertdiv">
+                                                        <label id="Message"></label>
+                                                    </div>
+
+
+                                                    <div class="upload-wrap" id="Products_Image_Div">
+                                                        @{int ImageId = 0;}
+
+
+
+                                                        @if (ViewBag.DocImg != null)
+                                                        {
+                                                            <ul style="list-style-type:none;">
+
+                                                                @foreach (var item in ViewBag.DocImg)
+                                                                {
+                                                                    ImageId = @item.DocumentImgId;
+
+                                                                    <li class="document">
+                                                                        <div class="upload-images">
+
+                                                                            @*<img style="border: 1px solid black!important; width: 130px; height: 120px!important" id="product_img"
+                                                                                alt="Blog Image" src="@item.ImgPath">*@
+                                                                            <a href="@item.ImgPath" id="product_img">@item.FileName</a>
+                                                                            @*<button style="color: black!important; font-size: 10px; background-color: red!important" onclick="DeleteImage('@ImageId')" type="button" class="close">
+                                                                                    <span style="color: white">×</span>
+                                                                                </button>*@
+                                                                            <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" onclick="DeleteImage('@ImageId')"><i class="fa fa-trash"></i></a>
+                                                                        </div>
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        }
+
+
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<div class="form-row">
+                                                <div class="col-md-12">
+                                                    <div class="change-avatar">
+                                                        <div class="row">
+                                                            <div class="col-md-6 text-right">
+                                                                <div class="profile-img">
+
+                                                                    <img id="ImgCer" src="@ImgCer" alt="your image" name="ImgCer" />
+                                                                    <input type="text" name="Certification" value="@ImgCer" hidden>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="upload-img">
+                                                                    <div class="change-doc-btn">
+                                                                        <span><i class="fa fa-upload"></i> Upload Document</span>
+                                                                        <input type="file" class="upload" name="CertificationFile" id="CertificationFile" accept="image/*" onchange="showPreviewCer(event);" value="Upload Photo">
+                                                                    </div>
+                                                                    <a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveCer"><i class="fa fa-download"></i> Save</a>
+                                                                    <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteCer"><i class="fa fa-trash"></i> Delete</a>
+                                                                    <input type="text" name="Certification" id="DeleteCerText" style="display:none;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                </div>
+
+                                            </div>*@
+
+
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+
+
+                                    <div class="col-md-12 text-right">
+                                        <div class="form-group">
+                                            <label></label>
+                                            <button class="btn btn-primary" type="submit">Save</button>
+                                            <a href="@Url.Action("CreatePerson","Person")"><input class="btn btn-danger" type="button" value="Cancel"></a>
+                                            <a href="@Url.Action("Persons","Person")" class="btn btn-secondary"><i class="fa fa-list"></i>List</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label>Transaction Count: @TransactionCount</label>
+
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <label>Date of Entry: @CreateDate</label>&nbsp;&nbsp;
+                                        <label>Initials @CIni</label>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <label>Date Changed: @EditDate</label>&nbsp;&nbsp;
+                                        <label>Initials @EIni</label>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    }
+
+                    </div>
+                    <div class="tab-pane" id="solid-tab2">
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="breadcrumb-bar">
+                                        <div class="container-fluid">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-6 col-6">
+                                                    <h5 class="breadcrumb-title">Transaction List</h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div style="display:none;" class="alert alert-success alert-dismissible fade show SuccessAlert" id="SuccessAlert" role="alert">
+                                <strong>Success!</strong> @Succ
+                            </div>
+                            <div style="display:none;" class="alert alert-info alert-dismissible fade show UpdateAlert" id="UpdateAlert" role="alert">
+                                <strong>Success!</strong> @Update
+                            </div>
+                            <div style="display:none;" class="alert alert-warning alert-dismissible fade show DeleteAlert" id="DeleteAlert" role="alert">
+                                <strong>Success!</strong> @Delete
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>WSA #</label>
+                                            <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@Model.WSANumber" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Status</label><br />
+                                            <input type="text" class="form-control" id="Name" name="Name" value="@Model.tblStatu.Name" readonly>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="table-responsive" style="height:200px">
+                                    <table class="table table-hover table-center mb-0" id="TransactionTable" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="display:none;">Person ID</th>
+                                                <th style="display:none;">Transaction ID</th>
+                                                <th>Product</th>
+                                                <th style="display:none;">Product</th>
+                                                <th>Appl Date</th>
+                                                <th>Issue Date</th>
+                                                <th>Sent Date</th>
+                                                <th>Return Date</th>
+                                                <th>ID Code</th>
+                                                <th>Cost</th>
+                                                <th>Qty</th>
+                                                <th>Problems</th>
+
+                                                <th style="display:none;">Create Date</th>
+                                                <th style="display:none;">Edit Date</th>
+
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (WorldServiceOrganization.Models.tblTransaction Transaction in ViewBag.Transaction)
+                                            {
+                                                <tr>
+                                                    <td style="display:none;">@Transaction.PersonIDNumber</td>
+                                                    <td style="display:none;">@Transaction.TransactionIDNumber</td>
+                                                    <td>@Transaction.tblProduct.Name</td>
+                                                    <td style="display:none;">@Transaction.ProductIDNumber</td>
+                                                    <td>@Transaction.ApplicationDate</td>
+
+                                                    @if (@Transaction.IssueDate == "")
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Transaction.IssueDate</td>
+                                                    }
+                                                    @if (@Transaction.SentDate == "")
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Transaction.SentDate</td>
+                                                    }
+                                                    @if (@Transaction.ReturnDate == "")
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Transaction.ReturnDate</td>
+                                                    }
+
+                                                    <td>@Transaction.IDCode</td>
+                                                    <td>@Transaction.Cost</td>
+                                                    <td>@Transaction.Quantity</td>
+                                                    <td>@Transaction.Problems</td>
+                                                    <td style="display:none;">@Transaction.CreatedDate.ToString("dd-MM-yyyy")</td>
+                                                    <td style="display:none;">@Transaction.EditDate.ToString("dd-MM-yyyy")</td>
+
+                                                    <td class="text-end">
+                                                        <div class="actions">
+                                                            <a href="#" id="EditTransaction" class="text-black">
+                                                                <i class="fa fa-edit"></i> @*Edit*@
+                                                            </a>
+                                                            <a class="text-danger" href="#" data-toggle="modal" data-target="#TransactionDelete" id="DeleteTransaction">
+                                                                <i class="fa fa-trash"></i> @*Delete*@
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                @*</div>*@
+                                <div class="row">
+                                    <div class="col-md-7">
+                                        <label>Number of Transactions Listed <b>@ViewBag.Count</b></label>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label style="margin-left: 5%;">Total Cost <b>@ViewBag.Sum</b></label>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        @using (Html.BeginForm("CreateTransaction", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                        {@Html.AntiForgeryToken()
+                                        <span style="color:red;">@ViewBag.Error</span>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Product</label>
+                                                            <input type="text" id="EditMode" hidden value="0">
+                                                            <input type="text" class="form-control" id="CheckEdit" name="" hidden value="" required readonly>
+                                                            <select class="form-control" id="ProductD" name="ProductIDNumber" required>
+                                                                <option value="">Select Product</option>
+                                                                @foreach (WorldServiceOrganization.Models.tblProduct Product in @ViewBag.Product)
+                                                                {
+                                                                    <option value="@Product.ProductId">@Product.Code - @Product.Name</option>
+                                                                }
+                                                            </select>
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <input style="display:none;" type="text" class="form-control" id="PersonIDNumber" name="PersonIDNumber" value="@Model.PersonIDNumber">
+                                                            <input style="display:none;" type="text" class="form-control" id="TransactionIDNumber" name="TransactionIDNumber" value="@TransactionIDNumber">
+                                                            <label>ID Code <small style="display:none;color:red;" id="IDCodeError">Exist</small></label>
+                                                            <input type="text" class="form-control" id="IDCode" name="IDCode" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Cost</label>
+                                                            <input type="text" class="form-control" id="Cost" name="Cost" value="" required readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Quantity</label><br />
+                                                            <input type="number" class="form-control" id="Quantity" name="Quantity" value="" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="form-group">
+                                                            <label>Total Cost</label>
+                                                            <input type="text" class="form-control" id="TotalCost" name="" value="" required readonly>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Problems</label><br />
+                                                            <textarea type="text" class="form-control" id="Problems" name="Problems" value=""></textarea>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Application Date</label>
+                                                            <input type="text" class="form-control" id="ApplicationDate" name="ApplicationDate" value="" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Issue Date</label><br />
+                                                            <input type="text" class="form-control" id="IssueDate" name="IssueDate" value="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Sent Date</label><br />
+                                                            <input type="text" class="form-control" id="SentDate" name="SentDate" value="">
+
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12">
+                                                        <div class="form-group">
+                                                            <label>Return Date</label><br />
+                                                            <input type="text" class="form-control" id="ReturnDate" name="ReturnDate" value="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-12 text-right">
+                                                <button class="btn btn-primary" type="submit" id="SaveB">Save</button>
+                                                <a href="@Url.Action("CreatePerson","Person", new {id=Model.PersonIDNumber})"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                                                <a href="@Url.Action("Persons","Person")" class="btn btn-secondary"><i class="fa fa-list"></i>List</a>
+                                            </div>
+
+                                        </div>
+                                    }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <p class="col-md-12 text-right">
+                                                <button type="button" id="PassportLabel" class="btn btn-primary btn-sm" style="width:50%">Passport Label</button>
+                                                <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-secondary btn-sm" style="margin-top:2px; width:50%">Routing Slip</button></a>
+                                            </p>
+                                            <div class="col-md-12 text-center">
+                                                <div class="form-group row">
+                                                    <label class="col-lg-6 col-form-label">Date of Entry</label>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="CreatedDate" value="@CreatedDate" readonly>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="form-group row">
+                                                    <label class="col-lg-6 col-form-label">Date Changed</label>
+                                                    <div class="col-lg-6">
+                                                        <input type="text" class="form-control" id="EditDate" value="" readonly>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="solid-tab3">
+
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="breadcrumb-bar">
+                                        <div class="container-fluid">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-6 col-6">
+                                                    <h5 class="breadcrumb-title">Address List</h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div style="display:none;" class="alert alert-success alert-dismissible fade show SuccessAlert" id="SuccessAlert" role="alert">
+                                <strong>Success!</strong> @Succ
+                            </div>
+                            <div style="display:none;" class="alert alert-info alert-dismissible fade show UpdateAlert" id="UpdateAlert" role="alert">
+                                <strong>Success!</strong> @Update
+                            </div>
+                            <div style="display:none;" class="alert alert-warning alert-dismissible fade show DeleteAlert" id="DeleteAlert" role="alert">
+                                <strong>Success!</strong> @Delete
+                            </div>
+
+
+
+
+
+
+
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>WSA #</label>
+                                            <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@Model.WSANumber" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Status</label><br />
+                                            <input type="text" class="form-control" id="Name" name="Name" value="@Model.tblStatu.Name" readonly>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+
+                                <div class="table-responsive" style="height:200px">
+                                    <table class="table table-hover table-center mb-0" id="AddressTables" style="width:100%">
+                                        <thead style="background-color:#1b5a90 ; color:white">
+                                            <tr>
+                                                <th style="display:none;">Person ID</th>
+                                                <th style="display:none;">Address ID</th>
+                                                <th>Label</th>
+                                                <th>Care Of</th>
+                                                <th>Address</th>
+                                                <th>City</th>
+                                                <th>State</th>
+                                                <th>Zip</th>
+                                                <th>Country</th>
+                                                <th style="display:none;">Country</th>
+
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (WorldServiceOrganization.Models.tblAddress Address in ViewBag.Address)
+                                            {
+                                                <tr>
+                                                    <td style="display:none;">@Address.PersonIDNumber</td>
+                                                    <td style="display:none;">@Address.AddressIDNumber</td>
+                                                    @if (Address.Label == true)
+                                                    {
+                                                        <td><input type="checkbox" name="Label" value="true" checked onclick="return false;"></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td><input type="checkbox" name="Label" value="false" onclick="return false;"></td>
+                                                    }
+                                                    <td>@Address.CareOf</td>
+                                                    <td>@Address.Address1</td>
+                                                    <td>@Address.City</td>
+                                                    <td>@Address.State</td>
+                                                    <td>@Address.PostalCode</td>
+                                                    <td>@Address.tblCountry.Name</td>
+                                                    <td style="display:none;">@Address.Country</td>
+
+                                                    <td class="text-end">
+                                                        <div class="actions">
+                                                            <a href="#" id="EditAddress" class="text-black">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            <a class="text-danger" href="#" data-toggle="modal" data-target="#AddressDelete" id="DeleteAddress">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9">
+
+                                <div class="card">
+                                    <div class="card-body">
+                                        @using (Html.BeginForm("CreateAddress", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                        {@Html.AntiForgeryToken()
+                                        <span style="color:red;">@ViewBag.Error</span>
+
+
+
+                                        <div class="row">
+
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <input style="display:none;" type="text" class="form-control" id="PersonIDNumber" name="PersonIDNumber" value="@Model.PersonIDNumber">
+                                                    <input style="display:none;" type="text" class="form-control" id="AddressId" name="AddressIDNumber" value="">
+                                                    <label>Care of</label>
+                                                    <input type="text" class="form-control" id="CareOf" name="CareOf" value="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    <input type="text" class="form-control" id="Address1" name="Address1" value="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>City</label><br />
+                                                    <input type="text" class="form-control" id="City" name="City" value="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>State</label><br />
+                                                    <input type="text" class="form-control" id="State" name="State" value="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Zip</label><br />
+                                                    <input type="text" class="form-control" id="PostalCode" name="PostalCode" value="" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Country</label>
+                                                    <select class="form-control" id="CountryD" name="Country" required>
+                                                        <option value="">Select Country</option>
+                                                        @foreach (WorldServiceOrganization.Models.tblCountry Country in @ViewBag.Country)
+                                                        {
+                                                            <option value="@Country.CountryId">@Country.Code - @Country.Name</option>
+                                                        }
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <input type="checkbox" id="Label" name="Label" value="true">
+                                                    <label for="Label">Label</label><br>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-8 text-right">
+                                                <button class="btn btn-primary" type="submit">Save</button>
+                                                <a href="@Url.Action("CreatePerson","Person",new { id=Model.PersonIDNumber}))"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                                                <a href="@Url.Action("Persons","Person")" class="btn btn-secondary"><i class="fa fa-list"></i>List</a>
+
+                                            </div>
+
+                                        </div>
+
+
+
+                                    }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+
+                                            <div class="col-md-12 text-center">
+
+                                                <p>
+                                                    <a href="@Url.Action("OneRecord","Person",new {id=@Model.PersonIDNumber })" target="_blank"> <button type="button" class="btn btn-primary btn-sm" style="width:50%">One Record</button></a><br>
+                                                    <button type="button" class="btn btn-secondary btn-sm" onclick="window.location.href='@Url.Action("AddressLabel","Person",new {id=@Model.PersonIDNumber })';" style="margin-top:2px; width:50%">Label</button><br>
+                                                    <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm" style="margin-top:2px;width:50%">Routing Slip</button></a><br>
+
+                                                    <button type="button" class="btn btn-warning btn-sm" onclick="window.location.href='@Url.Action("AlphaLabel","Person",new {id=@Model.PersonIDNumber })';" style="margin-top:2px;width:50%;color:white">Alpha Label</button>
+
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="solid-tab4">
+
+                        <div class="card">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="breadcrumb-bar">
+                                        <div class="container-fluid">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-6 col-6">
+                                                    <h5 class="breadcrumb-title">Child List</h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div style="display:none;" class="alert alert-success alert-dismissible fade show SuccessAlert" id="SuccessAlert" role="alert">
+                                <strong>Success!</strong> @Succ
+                            </div>
+                            <div style="display:none;" class="alert alert-info alert-dismissible fade show UpdateAlert" id="UpdateAlert" role="alert">
+                                <strong>Success!</strong> @Update
+                            </div>
+                            <div style="display:none;" class="alert alert-warning alert-dismissible fade show DeleteAlert" id="DeleteAlert" role="alert">
+                                <strong>Success!</strong> @Delete
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>WSA #</label>
+                                            <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@Model.WSANumber" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Status</label><br />
+                                            <input type="text" class="form-control" id="Name" name="Name" value="@Model.tblStatu.Name" readonly>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                @using (Html.BeginForm("CreateChild", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {@Html.AntiForgeryToken()
+                                <span style="color:red;">@ViewBag.Error</span>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <input style="display:none;" type="text" class="form-control" id="PersonIDNumber" name="PersonIDNumber" value="@Model.PersonIDNumber">
+                                            <input style="display:none;" type="text" class="form-control" id="ChildId" name="ChildId" value="">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control" id="ChildName" name="Name" value="" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Gender</label>
+                                            <select class="form-control" id="SexId" name="SexId" required>
+                                                <option value="">Select Gender</option>
+                                                @foreach (WorldServiceOrganization.Models.tblSex Sex in @ViewBag.Sex)
+                                                {
+                                                    <option value="@Sex.SexId">@Sex.Code / @Sex.Name</option>
+                                                }
+                                            </select>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Birth Date<span style="color:red;">*</span></label>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Day<span style="color:red;"></span></label>
+                                                        <select class="form-control" style="padding:0px !important" name="BirthDay" id="ChildBirthDay">
+                                                            <option value="">xx</option>
+                                                            @for (int i = 1; i <= 31; i++)
+                                                            {
+                                                                <option value="@i">@i</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Month<span style="color:red;"></span></label>
+                                                        <select class="form-control" style="padding:0px !important" name="BirthMonth" id="ChildBirthMonth">
+                                                            <option value="">xxx</option>
+                                                            @for (int i = 1; i < 13; i++)
+                                                            {
+                                                                <option value="@i">@i</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label>Year<span style="color:red;"></span></label>
+
+                                                        <select class="form-control" style="padding:0px !important" name="BirthYear" id="ChilddropdownYear">
+                                                            <option value="">xxxx</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label></label>
+                                            <button class="btn btn-primary" type="submit" style="margin-top:10%;">Save</button>
+                                            <a href="@Url.Action("CreatePerson","Person",new { id=Model.PersonIDNumber})"> <input class="btn btn-danger" type="button" style="margin-top:10%;" value="Cancel"></a>
+                                            <a href="@Url.Action("Persons","Person")" class="btn btn-secondary" style="margin-top:10%;"><i class="fa fa-list"></i>List</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+
+                                <div class="table-responsive" style="height:200px">
+                                    <table class="table table-hover table-center mb-0" id="ChildTable" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="display:none;">Person ID</th>
+                                                <th style="display:none;">Child ID</th>
+                                                <th>Name</th>
+                                                <th hidden>Day</th>
+                                                <th hidden>Month</th>
+                                                <th hidden>Year</th>
+                                                <th>Birth Date</th>
+                                                <th>Gender</th>
+                                                <th style="display:none;">Gender</th>
+                                                <th>Action</th>
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (WorldServiceOrganization.Models.tblChild Child in ViewBag.Child)
+                                            {
+                                                <tr>
+
+                                                    <td style="display:none;">@Child.PersonIDNumber</td>
+                                                    <td style="display:none;">@Child.ChildId</td>
+                                                    <td>@Child.Name</td>
+                                                    <td hidden>@Child.BirthDay</td>
+                                                    <td hidden>@Child.BirthMonth</td>
+                                                    <td hidden>@Child.BirthYear</td>
+                                                    @if (@DateFormat == "MMM-dd-yyyy")
+                                                    {
+                                                        if (Child.BirthMonth != null)
+                                                        {
+                                                            if (Child.BirthYear != null)
+                                                            {
+                                                                <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(Child.BirthMonth ?? 13) @Child.BirthDay,@Child.BirthYear</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(Child.BirthMonth ?? 13) @Child.BirthDay </td>
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            if (Child.BirthYear != null)
+                                                            {
+                                                                <td> @Child.BirthDay,@Child.BirthYear</td>
+                                                            }
+                                                            else
+                                                            {
+                                                                <td> @Child.BirthDay @Child.BirthYear</td>
+                                                            }
+
+                                                        }
+
+                                                    }
+                                                    else
+                                                    {
+                                                        if (Child.BirthMonth != null)
+                                                        {
+                                                            <td>@Child.BirthDay @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(@Child.BirthMonth ?? 0) @Child.BirthYear</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>@Child.BirthDay @Child.BirthYear</td>
+                                                        }
+
+                                                    }
+                                                    <td>@Child.tblSex.Name</td>
+                                                    <td style="display:none;">@Child.SexId</td>
+                                                    <td class="text-end">
+                                                        <div class="actions">
+                                                            <a href="#" id="EditChild" class="text-black">
+                                                                <i class="fa fa-edit"></i>
+                                                            </a>
+                                                            <a class="text-danger" href="#" data-toggle="modal" data-target="#ChildDelete" id="DeleteChild">
+                                                                <i class="fa fa-trash"></i>
+                                                            </a>
+                                                        </div>
+                                                    </td>
+
+
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<div id="TransactionDelete" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
+                <input class="form-control" type="text" id="DeleteTransactionID" style="display:none;">
+                <input class="form-control" type="text" id="DeletePersonID" style="display:none;">
+                <h5>Are you sure want to delete this transaction?</h5>
+                <div class="m-t-20">
+                    <p id="ConfigDerror" style="color:red;"></p>
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <input type="button" class="btn btn-danger" id="CDeleteTransaction" value="Delete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="AddressDelete" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
+                <input class="form-control" type="text" id="DeleteAddressID" style="display:none;">
+                <input class="form-control" type="text" id="DeletePersonID" style="display:none;">
+                <h5>Are you sure want to delete this address?</h5>
+                <div class="m-t-20">
+                    <p id="ConfigDerror" style="color:red;"></p>
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <input type="button" class="btn btn-danger" id="CDeleteAddress" value="Delete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ChildDelete" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
+                <input class="form-control" type="text" id="DeleteChildID" style="display:none;">
+                <input class="form-control" type="text" id="DeletePersonID" style="display:none;">
+                <h5>Are you sure want to delete this Child?</h5>
+                <div class="m-t-20">
+                    <p id="ConfigDerror" style="color:red;"></p>
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <input type="button" class="btn btn-danger" id="CDeleteChild" value="Delete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /Page Wrapper -->
+@*<script src="~/Content/assets/js/jquery-3.5.1.js"></script>*@
+@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.3/js/bootstrap-datetimepicker.min.js"></script>*@
+
+
+
+@*<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>*@
+
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <link rel="Stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css" />
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>*@
+
+
+
+
+<script>
+
+
+    @*$('#CdropdownYear,#EdropdownYear').each(function () {
+
+        var year = (new Date()).getFullYear();
+        var current = year;
+        year -= 122;
+        for (var i = 0; i < 123; i++) {
+            if ((year + i) == current) {
+                $(this).append('<option selected value="' + (year + i) + '">' + (year + i) + '</option>');
+            }
+            else if (@Model.BirthYear!= null && @Model.BirthYear == (year + i)) {
+                $(this).append('<option selected value="' + (year + i) + '">' + (year + i) + '</option>');
+            }
+            else {
+                $(this).append('<option value="' + (year + i) + '">' + (year + i) + '</option>');
+            }
+
+        }
+
+    });*@
+
+
+    $('#ChilddropdownYear').each(function () {
+
+        var year = (new Date()).getFullYear();
+        var current = year;
+        year -= 122;
+        for (var i = 0; i < 123; i++) {
+            if ((year + i) == current ) {
+                $(this).append('<option selected value="' + (year + i) + '">' + (year + i) + '</option>');
+            }
+            else {
+                $(this).append('<option value="' + (year + i) + '">' + (year + i) + '</option>');
+            }
+        }
+    });
+
+    $("#HeightUnit").change(function () {
+        var type = this.value;
+        var firstDropVal = $('#Height').val();
+        if (type == 1) {
+            $('#Height').val((firstDropVal * 3.281).toFixed(3));
+        }
+        else if (type == 2) {
+            $('#Height').val((firstDropVal / 3.281).toFixed(3));
+        }
+
+    });
+    $(function () {
+        var Formate = "@DateFormat"
+        //$('#DateOfBirth').datepicker({
+            //format: Formate.toLowerCase() ,
+            //format: "mm-dd-yyyy" ,
+        //});
+        $('#ApplicationDate').datepicker({
+            //format: Formate.toLowerCase() ,
+            format: "mm-dd-yyyy",
+        });
+        $('#IssueDate').datepicker({
+            //format: Formate.toLowerCase() ,
+            format: "mm-dd-yyyy",
+        });
+        $('#SentDate').datepicker({
+            //format: Formate.toLowerCase() ,
+            format: "mm-dd-yyyy",
+        });
+        $('#ReturnDate').datepicker({
+            //format: Formate.toLowerCase() ,
+            format: "mm-dd-yyyy",
+        });
+        //$('#BirthDate').datepicker({
+        //    format: Formate.toLowerCase() ,
+        //});
+    });
+
+    //$(function () {
+    //    var bindDatePicker = function () {
+    //        $(".date").datetimepicker({
+    //            format: 'YYYY-MM-DD',
+    //            icons: {
+    //                time: "fa fa-clock-o",
+    //                date: "fa fa-calendar",
+    //                up: "fa fa-arrow-up",
+    //                down: "fa fa-arrow-down"
+    //            }
+    //        }).find('input:first').on("blur", function () {
+    //            // check if the date is correct. We can accept dd-mm-yyyy and yyyy-mm-dd.
+    //            // update the format if it's yyyy-mm-dd
+    //            var date = parseDate($(this).val());
+
+    //            if (!isValidDate(date)) {
+    //                //create date based on momentjs (we have that)
+    //                date = moment().format('YYYY-MM-DD');
+    //            }
+
+    //            $(this).val(date);
+    //        });
+    //    }
+
+    //    var isValidDate = function (value, format) {
+    //        format = format || false;
+    //        // lets parse the date to the best of our knowledge
+    //        if (format) {
+    //            value = parseDate(value);
+    //        }
+
+    //        var timestamp = Date.parse(value);
+
+    //        return isNaN(timestamp) == false;
+    //    }
+
+    //    var parseDate = function (value) {
+    //        var m = value.match(/^(\d{1,2})(\/|-)?(\d{1,2})(\/|-)?(\d{4})$/);
+    //        if (m)
+    //            value = m[5] + '-' + ("00" + m[3]).slice(-2) + '-' + ("00" + m[1]).slice(-2);
+
+    //        return value;
+    //    }
+
+    //    bindDatePicker();
+    //});
+
+
+
+
+    $('#IDCode').change(function (e) {
+
+        var IdCode = $("#IDCode").val();
+        var model = {
+            IDCode: IdCode,
+        };
+
+
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Person/CheckIDCode",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == 1) {
+                    $('#IDCodeError').hide();
+                    $('#SaveB').attr("disabled", false);
+                }
+                else {
+                    $('#IDCodeError').show();
+                    $('#SaveB').attr("disabled", true);
+                }
+            }
+        });
+    });
+
+    $('#TemplateImages').change(function (e) {
+
+        if (window.FormData !== undefined) {
+
+        var fileUpload = $("#TemplateImages").get(0);
+        var files = fileUpload.files;
+
+        var fileData = new FormData();
+        //var TemplateCardID = parseInt($('#TemplateCardID').val());
+
+        //if (TemplateCardID >= 10) // Selected images with in 10 count
+        //{
+        //    alert(TemplateCardID);
+        //    document.getElementById("Message").innerHTML = "Limit Reached! 10 Images";
+        //    document.getElementById("Message").style.color = "white";
+        //    document.getElementById("Alertdiv").style.backgroundColor = '#ef0255';
+        //    document.getElementById("Alertdiv").style.borderColor = "#ef0255";
+        //    $("#Alertdiv").fadeIn();
+        //    $("#Alertdiv").fadeOut(8000);
+        //    return;
+        //}
+            for (var i = 0; i < files.length; i++) {
+                fileData.append(files[i].name, files[i]);
+            }
+            var PersonIDNumber = @Model.PersonIDNumber;
+            // Adding one more key to FormData object
+            fileData.append('PersonIDNumber', PersonIDNumber);
+
+    $.ajax({
+            url: '@Url.Action("UploadImages", "Person")',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: fileData,
+            success: function (result) {
+            //$("#TemplateCardID").val(TemplateCardID + 1);
+            $("#Products_Image_Div ul ").remove();
+            var ImageDiv;
+            var LiDiv="";
+
+                if (result != null || result.length > 0) {
+                    ImageDiv = "<ul style='list-style-type: none;'>";
+                    for (var i = 0; i < result.length; i++) {
+                    var img = document.createElement('img');
+                        img.src = result[i].ImgPath ;
+
+                        LiDiv += "<li class='document'> <div class='upload-images'> \
+                         <a href="+ result[i].ImgPath + "  id='product_img' >" + result[i].FileName +"</a>\
+                        <a href='javascript:void(0);' class='btn btn-icon btn-danger btn-sm' onclick='DeleteImage("+ result[i].DocumentImgId+")'><i class='fa fa-trash'></i></a>\
+                    </div>   </li>";
+
+                            }
+                            var LiUlDiv = ImageDiv + LiDiv+"</ul>";
+                            $('#Products_Image_Div').append(LiUlDiv);
+                    }
+
+                    },
+                    error: function (err) {
+                    /alert(err.statusText);/
+                    }
+                    });
+            } else {
+            alert("FormData is not supported.");
+            }
+     });
+
+
+    function DeleteImage(ImageId) {
+
+        var PersonIDNumber = @Model.PersonIDNumber;
+        var DocumentImgId = ImageId;
+        $.ajax({
+            url: '@Url.Action("DeleteImage", "Person")',
+            type: "POST",
+            dataType: 'JSON',
+                data: { PersonIDNumber: PersonIDNumber, DocumentImgId: DocumentImgId },
+            success: function (result) {
+            //var TemplateCardID = parseInt($('#TemplateCardID').val());
+            //$("#TemplateCardID").val(TemplateCardID - 1);
+            $("#Products_Image_Div ul ").remove();
+                var ImageDiv;
+                var LiDiv = "";
+
+                if (result != null || result.length > 0) {
+                    ImageDiv = "<ul style='list-style-type: none;'>";
+                    for (var i = 0; i < result.length; i++) {
+                        var img = document.createElement('img');
+                        img.src = result[i].ImgPath;
+
+                        LiDiv += "<li class='document'> <div class='upload-images'> \
+                 <a href="+ result[i].ImgPath + "  id='product_img' >" + result[i].FileName + "</a>\
+                <a href='javascript:void(0);' class='btn btn-icon btn-danger btn-sm' onclick='DeleteImage("+ result[i].DocumentImgId + ")'><i class='fa fa-trash'></i></a>\
+            </div>   </li>";
+
+                    }
+                    var LiUlDiv = ImageDiv + LiDiv + "</ul>";
+                    $('#Products_Image_Div').append(LiUlDiv);
+
+            }
+
+
+            },
+            error: function (err) {
+            /alert(err.statusText);/
+            }
+        });
+    }
+
+
+
+    $("body").on("click", "#EditChild", function () {
+
+        var currentRow = $(this).closest("tr");
+        $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
+        $("#ChildId").val(currentRow.find("td:eq(1)").text());
+        $("#ChildName").val(currentRow.find("td:eq(2)").text());
+        //var fromDate = new Date(currentRow.find("td:eq(3)").text()).toDateString();
+        //$("#BirthDate").val(formatDate(fromDate));
+        $("#BirthDate").val(currentRow.find("td:eq(3)").text());
+        text = currentRow.find("td:eq(3)").text()
+        const myArray = text.split("-");
+        $("#ChildBirthDay").val(currentRow.find("td:eq(3)").text()).change();
+        $("#ChildBirthMonth").val(currentRow.find("td:eq(4)").text()).change();
+        $("#ChilddropdownYear").val(currentRow.find("td:eq(5)").text()).change();
+        $("#SexId").val(currentRow.find("td:eq(8)").text()).change();
+    });
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+
+
+    $("body").on("click", "#DeleteChild", function () {
+        $("#ConfigDerror").text("");
+        $("#CDeleteChild").attr("disabled", false);
+        var currentRow = $(this).closest("tr");
+        $("#DeletePersonID").val(currentRow.find("td:eq(0)").text());
+        $("#DeleteChildID").val(currentRow.find("td:eq(1)").text());
+        //alert($("#DeleteChildID").val());
+    });
+
+    $("#CDeleteChild").on("click", function () {
+
+
+        $("#CDeleteChild").attr("disabled", true);
+
+        var ID = $("#DeleteChildID").val();
+
+        var model = {
+            ChildId: ID,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Person/DeleteChild",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == 1) {
+
+                    var url = window.location.origin;
+                    url += '/Person/CreatePerson?Delete=Child has been delete successfully.&id=' + $("#DeletePersonID").val() + '&&tab=' + 3 + '';
+                    window.location.href = url;
+                }
+                //alert(r + " record(s) inserted.");
+            }
+        });
+
+    });
+
+    $("body").on("click", "#EditAddress", function () {
+
+        var currentRow = $(this).closest("tr");
+        $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
+        $("#AddressId").val(currentRow.find("td:eq(1)").text());
+        if (currentRow.find("input").val() == "true") {
+            $("#Label").prop('checked', true);
+        }
+        else {
+            $("#Label").prop('checked', false);
+        }
+        $("#CareOf").val(currentRow.find("td:eq(3)").text());
+        $("#Address1").val(currentRow.find("td:eq(4)").text());
+        $("#City").val(currentRow.find("td:eq(5)").text());
+        $("#State").val(currentRow.find("td:eq(6)").text());
+        $("#PostalCode").val(currentRow.find("td:eq(7)").text());
+        $("#CountryD").val(currentRow.find("td:eq(9)").text()).change();
+
+    });
+
+
+    $("body").on("click", "#DeleteAddress", function () {
+        $("#ConfigDerror").text("");
+        $("#CDeleteAddress").attr("disabled", false);
+        var currentRow = $(this).closest("tr");
+        $("#DeletePersonID").val(currentRow.find("td:eq(0)").text());
+        $("#DeleteAddressID").val(currentRow.find("td:eq(1)").text());
+        //alert($("#DeleteAddressID").val());
+    });
+
+    $("#CDeleteAddress").on("click", function () {
+
+
+        $("#CDeleteAddress").attr("disabled", true);
+
+        var ID = $("#DeleteAddressID").val();
+
+        var model = {
+            AddressId: ID,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Person/DeleteAddress",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == 1) {
+
+                    var url = window.location.origin;
+                    url += '/Person/CreatePerson?Delete=Address has been delete successfully.&id=' + $("#DeletePersonID").val() + '&&tab=' + 2 + '';
+                    window.location.href = url;
+                }
+                //alert(r + " record(s) inserted.");
+            }
+        });
+
+    });
+
+
+    $("body").on("change", "#Cost", function () {
+        var Qty = $("#Quantity");
+        var Cost = $("#Cost");
+        var Res = 0;
+        if (Qty.val() != 0) {
+            Res = Cost.val() * Qty.val();
+            $("#TotalCost").val(Res);
+        }
+        else {
+            $("#TotalCost").val(Cost.val());
+        }
+    });
+
+    $("body").on("change", "#Quantity", function () {
+        var Qty = $("#Quantity");
+        var Cost = $("#Cost");
+        var Res = 0;
+        if (Cost.val() != 0) {
+            Res = Cost.val() * Qty.val();
+            $("#TotalCost").val(Res);
+        }
+        else {
+            $("#TotalCost").val(Qty.val());
+        }
+    });
+
+        $("body").on("click", "#PassportLabel", function () {
+            var url = window.location.origin;
+            url += '/Person/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + $("#TransactionIDNumber").val() +'';
+            window.location.href = url;
+
+        });
+
+
+
+
+    $("body").on("click", "#EditTransaction", function () {
+
+        $("#CheckEdit").val(1);
+        $("#EditMode").val(1);
+        $("#IDCode").attr('readonly', true);
+        $("#ApplicationDate").attr('readonly', true);
+        $("#Cost").attr('readonly', true);
+        $("#ProductD").attr('readonly', true);
+        $("#PassportLabel").attr("disabled", false);
+        var currentRow = $(this).closest("tr");
+        $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
+        $("#TransactionIDNumber").val(currentRow.find("td:eq(1)").text());
+        $("#ProductD").val(currentRow.find("td:eq(3)").text()).change();
+        //var fromDate = new Date(currentRow.find("td:eq(4)").text()).toDateString();
+        //$("#ApplicationDate").val(formatDate(fromDate));
+        //fromDate = new Date(currentRow.find("td:eq(5)").text()).toDateString();
+        //$("#IssueDate").val(formatDate(fromDate));
+        //fromDate = new Date(currentRow.find("td:eq(6)").text()).toDateString();
+        //$("#SentDate").val(formatDate(fromDate));
+        //fromDate = new Date(currentRow.find("td:eq(7)").text()).toDateString();
+        //alert(Convert.toDateString(currentRow.find("td:eq(7)").text()));
+        //$("#ReturnDate").val(formatDate(fromDate));
+        $("#ApplicationDate").val(currentRow.find("td:eq(4)").text()).change();
+        $("#IssueDate").val(currentRow.find("td:eq(5)").text()).change();
+        $("#SentDate").val(currentRow.find("td:eq(6)").text());
+        $("#ReturnDate").val(currentRow.find("td:eq(7)").text());
+        $("#IDCode").val(currentRow.find("td:eq(8)").text());
+        $("#Cost").val(currentRow.find("td:eq(9)").text());
+        $("#Quantity").val(currentRow.find("td:eq(10)").text());
+        $("#Problems").val(currentRow.find("td:eq(11)").text());
+        //fromDate = new Date(currentRow.find("td:eq(12)").text()).toDateString();
+        //$("#CreatedDate").val(fromDate);
+        //fromDate = new Date(currentRow.find("td:eq(13)").text()).toDateString();
+        //$("#EditDate").val(fromDate);
+        $("#CreatedDate").val(currentRow.find("td:eq(12)").text());
+        $("#EditDate").val(currentRow.find("td:eq(13)").text());
+        $("#TotalCost").val($("#Quantity").val() * $("#Cost").val());
+        //alert($("#DeleteDeviceInfoID").val());
+    });
+
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+    $("body").on("click", "#DeleteTransaction", function () {
+        $("#ConfigDerror").text("");
+        $("#CDeleteTransaction").attr("disabled", false);
+        var currentRow = $(this).closest("tr");
+        $("#DeletePersonID").val(currentRow.find("td:eq(0)").text());
+        $("#DeleteTransactionID").val(currentRow.find("td:eq(1)").text());
+        //alert($("#DeleteTransactionID").val());
+    });
+
+    $("#CDeleteTransaction").on("click", function () {
+
+
+        $("#CDeleteTransaction").attr("disabled", true);
+
+        var ID = $("#DeleteTransactionID").val();
+
+        var model = {
+            TransactionId: ID,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Person/DeleteTransaction",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == 1) {
+
+                    var url = window.location.origin;
+                    url += '/Person/CreatePerson?Delete=Transaction has been delete successfully.&&id=' + $("#DeletePersonID").val() + '&&tab=' + 1 +'';
+                    window.location.href = url;
+                }
+                //alert(r + " record(s) inserted.");
+            }
+        });
+
+    });
+
+    $("#ProductD").on("change", function () {
+        if ($("#CheckEdit").val() == 1) {
+            $("#CheckEdit").val(0);
+        }
+        else {
+            var ID = $(this).val();
+
+            var model = {
+                id: ID,
+            };
+            console.log(model);
+
+            $.ajax({
+                type: "POST",
+                url: "/Person/GetProduct",
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (ProductList) {
+                    $("#Cost").val(ProductList.ProductList);
+
+                    if (ProductList.IdCode != "") {
+                        $("#IDCode").val(ProductList.IdCode);
+                        $("#IDCode").attr('readonly', true);
+
+                    }
+                    else {
+                        $("#IDCode").val(ProductList.IdCode);
+                        $("#IDCode").attr('readonly', false);
+                    }
+                    $("#Quantity").val("");
+                    $("#TotalCost").val("");
+
+                },
+            });
+        }
+
+
+    });
+
+
+
+    function showPreviewImg(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("ImgImg");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+    function showPreviewSig(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("ImgSig");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+    function showPreviewCer(event) {
+        if (event.target.files.length > 0) {
+            var src = URL.createObjectURL(event.target.files[0]);
+            var preview = document.getElementById("ImgCer");
+            preview.src = src;
+            preview.style.display = "block";
+        }
+    }
+
+
+    $("body").on("click", "#DeleteImage", function () {
+        $("#DeleteImageText").val("\\Uploading\\user-image.png");
+        $("#ImgImg").attr("src", "/Content/assets/img/user-image.png");
+        //alert($("#DeleteImageText").val());
+    });
+    $("body").on("click", "#DeleteSig", function () {
+        $("#DeleteSigText").val("\\Uploading\\sig.png");
+        $("#ImgSig").attr("src", "/Content/assets/img/sig.png");
+        //alert($("#DeleteSigText").val());
+    });
+    $("body").on("click", "#DeleteCer", function () {
+        $("#DeleteCerText").val("\\Uploading\\file.png");
+        $("#ImgCer").attr("src", "/Content/assets/img/file.png");
+        //alert($("#DeleteCerText").val());
+    });
+
+
+    $("body").on("click", "#SaveImage", function () {
+        var Src = $('#ImgImg').attr('src');
+        window.open(Src, '_blank');
+        //alert($("#DeleteImageText").val());
+    });
+    $("body").on("click", "#SaveSig", function () {
+        var Src = $('#ImgSig').attr('src');
+        window.open(Src, '_blank');
+        //alert($("#DeleteSigText").val());
+    });
+    $("body").on("click", "#SaveCer", function () {
+
+        var Src = $('#ImgCer').attr('src');
+        window.open(Src, '_blank');
+        //alert($('img').attr('src'));
+    });
+
+
+
+
+
+        //$("#CountryOfApplicationCode").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: "/Person/GetCountryCode",
+        //            type: "POST",
+        //            dataType: "json",
+        //            data: { Prefix: request.term },
+        //            success: function (data) {
+        //                response($.map(data, function (CountryList) {
+        //                    return { label: CountryList.CountryList, value: CountryList };
+        //                }))
+        //            }
+        //        })
+        //    },
+        //    //messages: {
+        //    //    noResults: "", results: ""
+        //    //},
+        //    select: function (event, ui) {
+        //        var text = ui.item.label
+        //        const myArray = text.split(",");
+
+        //        $('#CountryOfApplicationCode').val(myArray[0]);
+        //        $('#CountryOfApplicationName').val(myArray[1]);
+        //        $('#CountryOfApplication').val(myArray[2]);
+
+
+        //    }
+        //});
+        //$("#CountryOfBirthCode").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: "/Person/GetCountryCode",
+        //            type: "POST",
+        //            dataType: "json",
+        //            data: { Prefix: request.term },
+        //            success: function (data) {
+        //                response($.map(data, function (CountryList) {
+        //                    return { label: CountryList.CountryList, value: CountryList };
+        //                }))
+        //            }
+        //        })
+        //    },
+        //    //messages: {
+        //    //    noResults: "", results: ""
+        //    //},
+        //    select: function (event, ui) {
+        //        var text = ui.item.label
+        //        const myArray = text.split(",");
+
+        //        $('#CountryOfBirthCode').val(myArray[0]);
+        //        $('#CountryOfBirthName').val(myArray[1]);
+        //        $('#CountryOfBirth').val(myArray[2]);
+
+
+        //    }
+        //});
+        //$("#EyesCode").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: "/Person/GetEyeCode",
+        //            type: "POST",
+        //            dataType: "json",
+        //            data: { Prefix: request.term },
+        //            success: function (data) {
+        //                response($.map(data, function (CountryList) {
+        //                    return { label: CountryList.CountryList, value: CountryList };
+        //                }))
+        //            }
+        //        })
+        //    },
+        //    //messages: {
+        //    //    noResults: "", results: ""
+        //    //},
+        //    select: function (event, ui) {
+        //        var text = ui.item.label
+        //        const myArray = text.split(",");
+
+        //        $('#EyesCode').val(myArray[0]);
+        //        $('#EyesName').val(myArray[1]);
+        //        $('#Eyes').val(myArray[2]);
+
+
+        //    }
+        //});
+
+
+    $(document).ready(function () {
+
+
+
+        $('#StatusD').change(function (e) {
+            if ($(this).val()==1) {
+                $('#WSANumber').val("");
+            }
+            else {
+                $('#WSANumber').val($('#WSANumberCopy').val());
+            }
+        });
+
+        if (@ViewBag.tab== 1) {
+            $("#solid-tab1").removeClass("active");
+            $("#Tab1").removeClass("active");
+            $('#solid-tab2').addClass('active');
+            $('#Tab2').addClass('active');
+        }
+        else if (@ViewBag.tab== 2) {
+            $("#solid-tab1").removeClass("active");
+            $("#Tab1").removeClass("active");
+            $('#solid-tab3').addClass('active');
+            $('#Tab3').addClass('active');
+        }
+        else if (@ViewBag.tab==3) {
+            $("#solid-tab1").removeClass("active");
+            $("#Tab1").removeClass("active");
+            $('#solid-tab4').addClass('active');
+            $('#Tab4').addClass('active');
+        }
+
+
+             $("#PassportLabel").attr("disabled", true);
+
+            $('#ChildTable').DataTable({
+
+                "bInfo": false,
+
+                searching: false, paging: false
+            });
+
+        $('#AddressTables').DataTable({
+            "bInfo": false,
+
+            searching: false, paging: false
+
+        });
+
+            if ("@Succ"!="") {
+                $('.SuccessAlert').fadeIn();
+                $('.SuccessAlert').fadeOut(6000);
+            }
+            else {
+                $('.SuccessAlert').fadeOut();
+            }
+            if ("@Update" != "") {
+                $('.UpdateAlert').fadeIn();
+                $('.UpdateAlert').fadeOut(6000);
+            }
+            else {
+                $('.UpdateAlert').fadeOut();
+            }
+            if ("@Delete" != "") {
+                $('.DeleteAlert').fadeIn();
+                $('.DeleteAlert').fadeOut(6000);
+            }
+            else {
+                $('.DeleteAlert').fadeOut();
+            }
+
+        $('#TransactionTable').DataTable({
+
+                "binfo": false,
+                searching: false, paging: false
+            });
+
+            $("#CountryOfApplication").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#CountryOfBirth").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#Eyes").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#OccupationCode").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#SexD").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+            $("#StatusD").select2({
+                dropdownCssClass: 'bigdrop'
+
+
+            });
+
+    });
+
+
+
+
+</script>

@@ -17,9 +17,9 @@ namespace WorldServiceOrganization.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblSex()
         {
+            this.tblAddresses = new HashSet<tblAddress>();
             this.tblPersons = new HashSet<tblPerson>();
             this.tblChilds = new HashSet<tblChild>();
-            this.tblAddresses = new HashSet<tblAddress>();
         }
     
         public int SexId { get; set; }
@@ -34,10 +34,10 @@ namespace WorldServiceOrganization.Models
         public Nullable<bool> isActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblAddress> tblAddresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPerson> tblPersons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblChild> tblChilds { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblAddress> tblAddresses { get; set; }
     }
 }

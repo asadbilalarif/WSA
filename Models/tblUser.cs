@@ -22,6 +22,8 @@ namespace WorldServiceOrganization.Models
             this.tblPersons2 = new HashSet<tblPerson>();
             this.tblTransactions = new HashSet<tblTransaction>();
             this.tblTransactions1 = new HashSet<tblTransaction>();
+            this.tblPassportLabelSettings = new HashSet<tblPassportLabelSetting>();
+            this.tblPassportLabelSettings1 = new HashSet<tblPassportLabelSetting>();
         }
     
         public int UserId { get; set; }
@@ -60,5 +62,9 @@ namespace WorldServiceOrganization.Models
         public virtual ICollection<tblTransaction> tblTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblTransaction> tblTransactions1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPassportLabelSetting> tblPassportLabelSettings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPassportLabelSetting> tblPassportLabelSettings1 { get; set; }
     }
 }

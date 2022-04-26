@@ -29,5 +29,11 @@ namespace WorldServiceOrganization.Models
         public string FontStyle { get; set; }
         public string FontSize { get; set; }
         public string LetterCase { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string SMTP { get; set; }
+        public string Port { get; set; }
+        public Nullable<bool> IsActive1 { get; set; }
+        public string ReportsDateFormat { get; set; }
     }
 }

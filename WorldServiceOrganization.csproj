@@ -136,11 +136,24 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CountryController.cs" />
+    <Compile Include="Controllers\EyeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OccupationController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ProductpackageController.cs" />
+    <Compile Include="Controllers\ProductTypeController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\SettingController.cs" />
+    <Compile Include="Controllers\SexController.cs" />
+    <Compile Include="Controllers\StatusController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CountrySummaryList_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CustomSearchLeftJoin_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
@@ -161,21 +174,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\PersonList_Result1.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductProductPackage.cs" />
     <Compile Include="Models\ProductUnionPackage_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ReportList.cs" />
     <Compile Include="Models\SearchField.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblAccessLevel.cs">
@@ -200,6 +207,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblOccupation.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblPassportLabelSetting.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPerson.cs">
@@ -233,6 +243,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblUser.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TransactionSummaryList_Result2.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -274,10 +287,8 @@
     <Content Include="Content\assets\img\favicon.png" />
     <Content Include="Content\assets\img\features\feature-01.jpg" />
     <Content Include="Content\assets\img\features\feature-02.jpg" />
-    <Content Include="Content\assets\img\img-01.jpg" />
+    <Content Include="Content\assets\img\file.png" />
     <Content Include="Content\assets\img\logo-small.png" />
-    <Content Include="Content\assets\img\logo-white.png" />
-    <Content Include="Content\assets\img\logo.png" />
     <Content Include="Content\assets\img\patients\patient1.jpg" />
     <Content Include="Content\assets\img\patients\patient10.jpg" />
     <Content Include="Content\assets\img\patients\patient11.jpg" />
@@ -300,6 +311,7 @@
     <Content Include="Content\assets\img\profiles\avatar-04.jpg" />
     <Content Include="Content\assets\img\profiles\avatar-17.jpg" />
     <Content Include="Content\assets\img\sent.png" />
+    <Content Include="Content\assets\img\sig.png" />
     <Content Include="Content\assets\img\specialities\specialities-01.png" />
     <Content Include="Content\assets\img\specialities\specialities-02.png" />
     <Content Include="Content\assets\img\specialities\specialities-03.png" />
@@ -409,6 +421,37 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="TemplateImages\1\0010188_cadbury-dairy-milk-chocolate-bar-165-g_510.jpeg" />
+    <Content Include="TemplateImages\1\5f11c471f0f419303616a1fe.jpg" />
+    <Content Include="TemplateImages\1\Poromo.PNG" />
+    <Content Include="TemplateImages\1\Screenshot 2020-10-28 152304.png" />
+    <Content Include="Uploading\0010188_cadbury-dairy-milk-chocolate-bar-165-g_510.jpeg" />
+    <Content Include="Uploading\1138507-1.jpg" />
+    <Content Include="Uploading\267225338_4329037017219750_2092798745402539115_n.jpg" />
+    <Content Include="Uploading\5f11c471f0f419303616a1fe.jpg" />
+    <Content Include="Uploading\94222149_2773510956090552_553504860775907328_o.jpg" />
+    <Content Include="Uploading\back.png" />
+    <Content Include="Uploading\backblue.gif" />
+    <Content Include="Uploading\Capture.PNG" />
+    <Content Include="Uploading\download.jpg" />
+    <Content Include="Uploading\fabian-grohs-597395-unsplash.jpg" />
+    <Content Include="Uploading\file.png" />
+    <Content Include="Uploading\Poromo.PNG" />
+    <Content Include="Uploading\pp.jpg" />
+    <Content Include="Uploading\QRCode\1.jpg" />
+    <Content Include="Uploading\QRCode\17.jpg" />
+    <Content Include="Uploading\QRCode\18.jpg" />
+    <Content Include="Uploading\QRCode\19.jpg" />
+    <Content Include="Uploading\QRCode\20.jpg" />
+    <Content Include="Uploading\QRCode\21.jpg" />
+    <Content Include="Uploading\Screenshot 2020-10-28 152304.png" />
+    <Content Include="Uploading\sig.png" />
+    <Content Include="Uploading\technosols.png" />
+    <Content Include="Uploading\user-image.png" />
+    <Content Include="Uploading\WhatsApp Image 2022-01-04 at 6.49.24 PM.jpeg" />
+    <Content Include="Uploading\WhatsApp Image 2022-01-31 at 12.34.13 PM.jpeg" />
+    <Content Include="Uploading\WhatsApp Image 2022-01-31 at 12.36.04 PM.jpeg" />
+    <Content Include="Uploading\WIN_20171117_18_34_23_Pro.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -458,6 +501,25 @@
     <Content Include="Views\Report\CountrySummary.cshtml" />
     <Content Include="Views\Report\TransactionSummary.cshtml" />
     <Content Include="Views\Home\AlphaLabel.cshtml" />
+    <Content Include="Uploading\mps-converted.pdf" />
+    <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Person\Persons.cshtml" />
+    <Content Include="Views\Person\CreatePerson.cshtml" />
+    <Content Include="Views\Person\AddressLabel.cshtml" />
+    <Content Include="Views\Person\OneRecord.cshtml" />
+    <Content Include="Views\Person\RoutingSlip.cshtml" />
+    <Content Include="Views\Person\PassportLabel.cshtml" />
+    <Content Include="Views\Person\AlphaLabel.cshtml" />
+    <Content Include="Views\Country\Countries.cshtml" />
+    <Content Include="Views\Eye\Eyes.cshtml" />
+    <Content Include="Views\Occupation\Occupations.cshtml" />
+    <Content Include="Views\Product\Products.cshtml" />
+    <Content Include="Views\ProductType\ProductTypes.cshtml" />
+    <Content Include="Views\Status\Status.cshtml" />
+    <Content Include="Views\Sex\Sex.cshtml" />
+    <Content Include="Views\Productpackage\Productpackages.cshtml" />
+    <Content Include="Views\Productpackage\CreateProductPackage.cshtml" />
+    <Content Include="Views\Setting\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

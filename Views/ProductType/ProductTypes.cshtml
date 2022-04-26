@@ -1,0 +1,410 @@
+﻿@model IEnumerable<WorldServiceOrganization.Models.tblProductType>
+
+@{
+    ViewData["Title"] = "Users";
+    string Succ = @ViewBag.Success;
+    string Update = @ViewBag.Update;
+    string Delete = @ViewBag.Delete;
+    string FError = @ViewBag.FError;
+}
+
+
+<head>
+
+    <style>
+
+
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+
+
+</head>
+
+
+
+
+
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">Product Type List</h5>
+                                    </div>
+                                    <div class="col-md-6 col-6 text-right">
+                                        <a href="#" class="btn btn-primary " data-toggle="modal" data-target="#ProductTypeModal" style="float:right;" id="CreateProductTypeB"><i class="fa fa-plus"></i> Create New Product Type</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:none;" class="alert alert-success alert-dismissible fade show" id="SuccessAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Success
+                </div>
+                <div style="display:none;" class="alert alert-info alert-dismissible fade show" id="UpdateAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Update
+                </div>
+                <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Delete
+                </div>
+                <div style="display:none;" class="alert alert-danger alert-dismissible fade show" id="FErroeAlert" role="alert">
+                    @ViewBag.FError
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <div class="table-responsive">
+                            <table class="cell-border table table-hover table-center  mb-0 " id="ProductTypeTable">
+                                <thead>
+                                    <tr>
+                                        <th style="display:none;">User ID</th>
+                                        <th>Code</th>
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (WorldServiceOrganization.Models.tblProductType ProductType in Model)
+                                    {
+                                        <tr>
+                                            <td style="display:none;">@ProductType.ProductTypeId</td>
+                                            <td>@ProductType.Code</td>
+                                            <td>@ProductType.Name</td>
+
+                                            <td class="text-end">
+                                                <div class="actions">
+                                                    <a href="#" id="EditProductType" data-toggle="modal" data-target="#ProductTypeModal" class="text-black">
+                                                        <i class="fa fa-edit"></i> Edit
+                                                    </a>
+                                                    <a class="text-danger" href="#" data-toggle="modal" data-target="#DeleteProductTypeM" id="DeleteProductType">
+                                                        <i class="fa fa-trash"></i> Delete
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="ProductTypeModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" style="display:none;" id="CHeading">Create ProductType</h4>
+                <h4 class="modal-title" style="display:none;" id="EHeading">Edit ProductType</h4>
+
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <form>
+                            <span id="ProductTypeerror"></span>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <input class="form-control" style="display:none;" type="text" id="ProductTypeID">
+                                        <label>Code <small id="LblProductTypeCodeError" style="display:none; color:red;">Code Must be filled!!!</small></label>
+                                        <input class="form-control" type="text" id="ECode">
+                                        <label>Name <small id="LblProductTypeNameError" style="display:none; color:red;">Name Must be filled!!!</small></label>
+                                        <input class="form-control" type="text" id="EName">
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+
+                @*<div id="ProductTypeloading" style="display:none;margin: 0 auto; text-decoration-color:cornflowerblue;">
+                        <div class="spinner-border text-success" id="display_loading" style="margin: 0 auto;"></div>
+                        <div class="spinner-border text-success" id="display_loading" style="display:none;margin: 0 auto;">
+                        </div> Loading...
+                    </div>*@
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="ProductTypeSubmit"><span style="display:none;" class="spinner-border spinner-border-sm mr-2" role="status" id="ProductTypeloading"></span>Save</button>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="DeleteProductTypeM" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
+                <input class="form-control" type="text" id="DeleteProductTypeID" style="display:none;">
+                <h5>Are you sure want to delete this product type?</h5>
+                <div class="m-t-20">
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <input type="button" class="btn btn-danger" id="CDeleteProductType" value="Delete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>
+@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+<script>
+
+
+
+
+    $("body").on("click", "#CreateProductTypeB", function () {
+        var error = $("#ProductTypeerror");
+        error.text('');
+        $("#EHeading").hide();
+        $("#CHeading").show();
+        $("#ProductTypeID").val('');
+        $("#ECode").val('');
+        $("#EName").val('');
+        $("#LblProductTypeCodeError").fadeOut();
+        $("#LblProductTypeNameError").fadeOut();
+    });
+
+    $("body").on("click", "#EditProductType", function () {
+        var error = $("#ProductTypeerror");
+        error.text('');
+        var currentRow = $(this).closest("tr");
+        $("#EHeading").show();
+        $("#CHeading").hide();
+        $("#ProductTypeID").val(currentRow.find("td:eq(0)").text());
+        $("#ECode").val(currentRow.find("td:eq(1)").text());
+        $("#EName").val(currentRow.find("td:eq(2)").text());
+
+        $("#LblProductTypeCodeError").fadeOut();
+        $("#LblProductTypeNameError").fadeOut();
+
+        //alert($("#ProductTypeID").val());
+    });
+
+
+    $("#ProductTypeSubmit").on("click", function () {
+
+        var error = $("#ProductTypeerror");
+        if ($("#ECode").val() != "" && $("#EName").val() != "") {
+            error.text('');
+            $("#ProductTypeSubmit").attr("disabled", true);
+            $("#ProductTypeloading").show();
+
+
+            var UId = $("#ProductTypeID").val();
+            var UCode = $("#ECode").val();
+            var UName = $("#EName").val();
+            var CheckMessage = 0;
+
+            if (UId != 0) {
+                var model = {
+                    ProductTypeId: UId,
+                    Name: UName,
+                    Code: UCode,
+                };
+                CheckMessage = 1;
+            }
+            else {
+                var model = {
+
+                    Name: UName,
+                    Code: UCode,
+                };
+                CheckMessage = 2;
+            }
+
+
+
+            console.log(model);
+
+
+            //Send the JSON array to Controller using AJAX.
+
+            $.ajax({
+                type: "POST",
+                url: "/ProductType/CreateProductType",
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    if (r == 1) {
+                        error.text('  *ProductType Already Exsist!!!  ');
+                        $("#ProductTypeSubmit").attr("disabled", false);
+                        error.css('color', 'red');
+                        $("#ProductTypeloading").hide();
+                    }
+                    else
+                    {
+                        if (CheckMessage == 1) {
+                            var url = window.location.origin;
+                            url += '/ProductType/ProductTypes?Update=ProductType has been update successfully.';
+                            window.location.href = url;
+                        }
+                        else {
+                            var url = window.location.origin;
+                            url += '/ProductType/ProductTypes?Success=ProductType has been add successfully.';
+                            window.location.href = url;
+                        }
+                    }
+                }
+            });
+
+        }
+        else {
+            error.text('');
+            error.css('color', 'red');
+            if ($("#ECode").val() == "") {
+
+                //text = error.text('  *Name must be filled!!!  ');
+                $("#LblProductTypeCodeError").fadeIn();
+
+            }
+            else {
+                $("#LblProductTypeCodeError").fadeOut();
+            }
+            if ($("#EName").val() == "") {
+                //text = error.append('  *Email must be filled!!!  ');
+                $("#LblProductTypeNameError").fadeIn();
+            }
+            else {
+                $("#LblProductTypeNameError").fadeOut();
+            }
+
+        }
+
+    });
+
+
+                $("body").on("click", "#DeleteProductType", function () {
+                    var currentRow = $(this).closest("tr");
+                    $("#DeleteProductTypeID").val(currentRow.find("td:eq(0)").text());
+                    //alert($("#DeleteProductTypeID").val());
+                });
+
+            $("#CDeleteProductType").on("click", function () {
+
+
+                $("#CDeleteProductType").attr("disabled", true);
+
+                var ID = $("#DeleteProductTypeID").val();
+
+                var model = {
+                    ProductTypeId: ID,
+                };
+                console.log(model);
+
+
+                //Send the JSON array to Controller using AJAX.
+                $.ajax({
+                    type: "POST",
+                    url: "/ProductType/DeleteProductType",
+                    data: JSON.stringify(model),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        if (r == 2) {
+                            var url = window.location.origin;
+                            url += '/ProductType/ProductTypes?FError=Type could not be delete because it is use in products.';
+                            window.location.href = url;
+                        }
+                        else {
+                            var url = window.location.origin;
+                            url += '/ProductType/ProductTypes?Delete=Product Type has been delete successfully.';
+                            window.location.href = url;
+                        }
+
+                    }
+                });
+
+            });
+
+
+
+
+
+
+
+            $(document).ready(function () {
+
+                if ("@Succ"!="") {
+                    $('#SuccessAlert').fadeIn();
+                    $('#SuccessAlert').fadeOut(6000);
+                }
+                else {
+                    $('#SuccessAlert').fadeOut();
+                }
+                if ("@Update" != "") {
+                    $('#UpdateAlert').fadeIn();
+                    $('#UpdateAlert').fadeOut(6000);
+                }
+                else {
+                    $('#UpdateAlert').fadeOut();
+                }
+                if ("@Delete" != "") {
+                    $('#DeleteAlert').fadeIn();
+                    $('#DeleteAlert').fadeOut(6000);
+                }
+                else {
+                    $('#DeleteAlert').fadeOut();
+                }
+                if ("@FError" != "") {
+                    $('#FErroeAlert').fadeIn();
+                    $('#FErroeAlert').fadeOut(6000);
+                }
+                else {
+                    $('#FErroeAlert').fadeOut();
+                }
+
+                $('#ProductTypeTable').DataTable({
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'excel',
+                            exportOptions: {
+                                columns: [1, 2]
+                            }
+
+                        }
+                    ],
+                    searching: true, paging: true
+                });
+
+              //$(".nav li").removeClass("active");
+              //  $('#ProductType').addClass('active');
+              //  $('#RC').addClass('active subdrop');
+                $(".nav li ul li").removeClass("active");
+                $('#ProductType').addClass('active');
+                $('#RC a').addClass('subdrop');
+                $("#RC  ul").first().css('display', 'block');
+            });
+
+
+
+
+</script>

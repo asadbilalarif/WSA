@@ -12,6 +12,12 @@ namespace WorldServiceOrganization.Controllers
     public class AccountController : Controller
     {
         // GET: Account
+
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         public ActionResult Login()
         {
             FormsAuthentication.SignOut();
@@ -26,6 +32,7 @@ namespace WorldServiceOrganization.Controllers
             HttpCookie cookie = new HttpCookie("Settings");
 
             cookie["DateFormat"] = DB.tblSettings.Select(r => r.DateFormat).FirstOrDefault();
+            cookie["ReportsDateFormat"] = DB.tblSettings.Select(r => r.ReportsDateFormat).FirstOrDefault();
             cookie["WSA"] = DB.tblSettings.Select(r => r.NextWSA).FirstOrDefault();
             cookie["Retrieves"] = DB.tblSettings.Select(r => r.NumberOfRetrieves).FirstOrDefault();
             // This cookie will remain  for one month.
@@ -99,10 +106,11 @@ namespace WorldServiceOrganization.Controllers
             {
                 if(DB.tblUsers.Where(x=>x.Email==Email).FirstOrDefault()!=null)
                 {
-                    string SenderEmail = System.Configuration.ConfigurationManager.AppSettings["SenderEmail"].ToString();
-                    string SenderPassword = System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
-                    SmtpClient Client = new SmtpClient("smtp.gmail.com", 587);
-                    Client.EnableSsl = true;
+                    tblSetting setting = DB.tblSettings.Find(1);
+                    string SenderEmail = setting.Email;//System.Configuration.ConfigurationManager.AppSettings["SenderEmail"].ToString();
+                    string SenderPassword = setting.Password;//System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
+                    SmtpClient Client = new SmtpClient(setting.SMTP, Convert.ToInt32(setting.Port));
+                    Client.EnableSsl = Convert.ToBoolean(setting.IsActive1);
                     Client.Timeout = 100000;
                     Client.DeliveryMethod = SmtpDeliveryMethod.Network;
                     Client.UseDefaultCredentials = false;
@@ -209,7 +217,7 @@ namespace WorldServiceOrganization.Controllers
                     }
 
                     Data.PIN = pass;
-                    Data.EditDate = DateTime.Now;
+                    Data.EditDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                     DB.Entry(Data);
                     DB.SaveChanges();
                     ViewBag.Success = "Password has been change successfully!!!";
@@ -282,7 +290,7 @@ namespace WorldServiceOrganization.Controllers
                     }
 
                     Data.PIN = pass;
-                    Data.EditDate = DateTime.Now;
+                    Data.EditDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                     DB.Entry(Data);
                     DB.SaveChanges();
                     return RedirectToAction("Login", "Account");

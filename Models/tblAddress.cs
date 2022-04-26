@@ -35,7 +35,7 @@ namespace WorldServiceOrganization.Models
         public Nullable<bool> isActive { get; set; }
     
         public virtual tblCountry tblCountry { get; set; }
-        public virtual tblPerson tblPerson { get; set; }
         public virtual tblSex tblSex { get; set; }
+        public virtual tblPerson tblPerson { get; set; }
     }
 }

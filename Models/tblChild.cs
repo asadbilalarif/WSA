@@ -16,7 +16,7 @@ namespace WorldServiceOrganization.Models
     {
         public int ChildId { get; set; }
         public string Name { get; set; }
-        public System.DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
         public Nullable<int> SexId { get; set; }
         public Nullable<int> PersonIDNumber { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -26,6 +26,9 @@ namespace WorldServiceOrganization.Models
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Nullable<bool> isActive { get; set; }
+        public Nullable<int> BirthDay { get; set; }
+        public Nullable<int> BirthMonth { get; set; }
+        public Nullable<int> BirthYear { get; set; }
     
         public virtual tblPerson tblPerson { get; set; }
         public virtual tblSex tblSex { get; set; }

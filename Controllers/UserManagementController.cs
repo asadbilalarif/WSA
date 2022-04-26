@@ -66,7 +66,7 @@ namespace WorldServiceOrganization.Controllers
                         EncDataBtye = System.Text.Encoding.UTF8.GetBytes(User.PIN);
                         Data.PIN = Convert.ToBase64String(EncDataBtye);
                         Data.Initials = Ini;
-                        Data.CreatedDate = DateTime.Now;
+                        Data.CreatedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                         Data.isActive = true;
                         DB.tblUsers.Add(Data);
                         DB.SaveChanges();
@@ -110,7 +110,7 @@ namespace WorldServiceOrganization.Controllers
                             Data.PIN = Convert.ToBase64String(EncDataBtye);
                         }
                         Data.Initials = Ini;
-                        Data.EditDate = DateTime.Now;
+                        Data.EditDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                         DB.Entry(Data);
                         DB.SaveChanges();
                         return RedirectToAction("Users", new { Update = "User has been Update successfully." });
@@ -234,7 +234,7 @@ namespace WorldServiceOrganization.Controllers
                         
                         Data.Role = Role;
                         Data.isActive = isActive;
-                        Data.EditDate = DateTime.Now;
+                        Data.EditDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                         DB.Entry(Data);
                         DB.SaveChanges();
                     }
@@ -252,7 +252,7 @@ namespace WorldServiceOrganization.Controllers
                     {
                         Data.Role = Role;
                         Data.isActive = isActive;
-                        Data.CreatedDate = DateTime.Now;
+                        Data.CreatedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                         DB.tblRoles.Add(Data);
                         DB.SaveChanges();
 
@@ -292,7 +292,7 @@ namespace WorldServiceOrganization.Controllers
 
                 foreach (tblAccessLevel AccessLevel in Items)
                 {
-                    AccessLevel.CreatedDate = DateTime.Now;
+                    AccessLevel.CreatedDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                     AccessLevel.tblMenu = DB.tblMenus.Select(r => r).Where(x => x.MenuId == AccessLevel.MenuId).FirstOrDefault();
                     AccessLevel.tblRole = DB.tblRoles.Select(r => r).Where(x => x.RoleId == AccessLevel.RoleId).FirstOrDefault();
                     DB.tblAccessLevels.Add(AccessLevel);

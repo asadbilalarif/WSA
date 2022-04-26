@@ -17,10 +17,10 @@ namespace WorldServiceOrganization.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblPerson()
         {
-            this.tblChilds = new HashSet<tblChild>();
             this.tblAddresses = new HashSet<tblAddress>();
-            this.tblTransactions = new HashSet<tblTransaction>();
             this.tblDocumentImgs = new HashSet<tblDocumentImg>();
+            this.tblChilds = new HashSet<tblChild>();
+            this.tblTransactions = new HashSet<tblTransaction>();
         }
     
         public int PersonIDNumber { get; set; }
@@ -33,12 +33,13 @@ namespace WorldServiceOrganization.Models
         public string Fax { get; set; }
         public string EMail { get; set; }
         public string Website { get; set; }
-        public System.DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         public Nullable<int> BirthDay { get; set; }
         public Nullable<int> BirthMonth { get; set; }
         public Nullable<int> BirthYear { get; set; }
         public Nullable<int> Sex { get; set; }
         public Nullable<double> Height { get; set; }
+        public Nullable<int> HeightUnit { get; set; }
         public Nullable<int> Eyes { get; set; }
         public string Marks { get; set; }
         public Nullable<int> OccupationId { get; set; }
@@ -54,7 +55,9 @@ namespace WorldServiceOrganization.Models
         public string Photo { get; set; }
         public byte[] Photograph { get; set; }
         public byte[] Signature { get; set; }
+        public string Certification { get; set; }
         public Nullable<int> CountryOfBirthStatistical { get; set; }
+        public string QRCode { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public System.DateTime EntryDate { get; set; }
         public Nullable<int> LastEditedBy { get; set; }
@@ -62,13 +65,14 @@ namespace WorldServiceOrganization.Models
         public Nullable<int> DeletedBy { get; set; }
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Nullable<bool> isActive { get; set; }
-        public string Certification { get; set; }
-        public Nullable<int> HeightUnit { get; set; }
-        public string QRCode { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblAddress> tblAddresses { get; set; }
         public virtual tblCountry tblCountry { get; set; }
         public virtual tblCountry tblCountry1 { get; set; }
         public virtual tblCountry tblCountry2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblDocumentImg> tblDocumentImgs { get; set; }
         public virtual tblEye tblEye { get; set; }
         public virtual tblOccupation tblOccupation { get; set; }
         public virtual tblSex tblSex { get; set; }
@@ -79,10 +83,6 @@ namespace WorldServiceOrganization.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblChild> tblChilds { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblAddress> tblAddresses { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblTransaction> tblTransactions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblDocumentImg> tblDocumentImgs { get; set; }
     }
 }
