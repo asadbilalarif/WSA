@@ -761,6 +761,7 @@
           <Parameter Name="FieldtoSearch" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="SearchValue" Type="nvarchar(max)" Mode="In" />
         </Function>
+        <Function Name="PersonExportData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="PersonList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SearchValue" Type="nvarchar(max)" Mode="In" />
         </Function>
@@ -1094,8 +1095,9 @@
             <End Role="tblPassportLabelSetting" EntitySet="tblPassportLabelSettings" />
           </AssociationSet>
           <FunctionImport Name="TransactionSummaryList" ReturnType="Collection(WorldServiceOrganizationModel.TransactionSummaryList_Result2)">
-            <Parameter Name="SearchValue" Mode="In" Type="String" />
+          <Parameter Name="SearchValue" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="PersonExportData" ReturnType="Collection(WorldServiceOrganizationModel.PersonExportData_Result)" />
         </EntityContainer>
         <EntityType Name="tblRole">
           <Key>
@@ -2000,6 +2002,57 @@
           <Property Type="Boolean" Name="isActive" Nullable="true" />
           <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="PersonExportData_Result">
+          <Property Type="Int32" Name="PersonIDNumber" Nullable="false" />
+          <Property Type="String" Name="LastName" Nullable="true" />
+          <Property Type="String" Name="FirstName" Nullable="true" />
+          <Property Type="Int32" Name="CountryOfApplication" Nullable="true" />
+          <Property Type="String" Name="CityOfBirth" Nullable="true" />
+          <Property Type="Int32" Name="CountryOfBirth" Nullable="true" />
+          <Property Type="String" Name="Phone" Nullable="true" />
+          <Property Type="String" Name="Fax" Nullable="true" />
+          <Property Type="String" Name="EMail" Nullable="true" />
+          <Property Type="String" Name="Website" Nullable="true" />
+          <Property Type="String" Name="DateOfBirth" Nullable="true" />
+          <Property Type="Int32" Name="BirthDay" Nullable="true" />
+          <Property Type="Int32" Name="BirthMonth" Nullable="true" />
+          <Property Type="Int32" Name="BirthYear" Nullable="true" />
+          <Property Type="Int32" Name="Sex" Nullable="true" />
+          <Property Type="Double" Name="Height" Nullable="true" />
+          <Property Type="Int32" Name="HeightUnit" Nullable="true" />
+          <Property Type="Int32" Name="Eyes" Nullable="true" />
+          <Property Type="String" Name="Marks" Nullable="true" />
+          <Property Type="Int32" Name="OccupationId" Nullable="true" />
+          <Property Type="Int32" Name="OccupationCode" Nullable="true" />
+          <Property Type="String" Name="Title" Nullable="true" />
+          <Property Type="String" Name="FatherName" Nullable="true" />
+          <Property Type="String" Name="MotherName" Nullable="true" />
+          <Property Type="Int32" Name="WSANumber" Nullable="true" />
+          <Property Type="String" Name="Comments" Nullable="true" />
+          <Property Type="Int32" Name="Status" Nullable="true" />
+          <Property Type="Int32" Name="TransactionCount" Nullable="true" />
+          <Property Type="String" Name="SignaturePath" Nullable="true" />
+          <Property Type="String" Name="Photo" Nullable="true" />
+          <Property Type="Binary" Name="Photograph" Nullable="true" MaxLength="Max" />
+          <Property Type="Binary" Name="Signature" Nullable="true" MaxLength="Max" />
+          <Property Type="String" Name="Certification" Nullable="true" />
+          <Property Type="Int32" Name="CountryOfBirthStatistical" Nullable="true" />
+          <Property Type="String" Name="QRCode" Nullable="true" />
+          <Property Type="Int32" Name="CreatedBy" Nullable="true" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="LastEditedBy" Nullable="true" />
+          <Property Type="DateTime" Name="LastModifiedDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="DeletedBy" Nullable="true" />
+          <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="isActive" Nullable="true" />
+          <Property Type="String" Name="CountryOfApplicationName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CountryOfBirthName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CountryOfBirthStatisticalName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="OccupationName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="EyeName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SexName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="StatusName" Nullable="true" MaxLength="50" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2578,6 +2631,61 @@
                 <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
                 <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PersonExportData" FunctionName="WorldServiceOrganizationModel.Store.PersonExportData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="WorldServiceOrganizationModel.PersonExportData_Result">
+                <ScalarProperty Name="PersonIDNumber" ColumnName="PersonIDNumber" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="CountryOfApplication" ColumnName="CountryOfApplication" />
+                <ScalarProperty Name="CityOfBirth" ColumnName="CityOfBirth" />
+                <ScalarProperty Name="CountryOfBirth" ColumnName="CountryOfBirth" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="BirthMonth" ColumnName="BirthMonth" />
+                <ScalarProperty Name="BirthYear" ColumnName="BirthYear" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="HeightUnit" ColumnName="HeightUnit" />
+                <ScalarProperty Name="Eyes" ColumnName="Eyes" />
+                <ScalarProperty Name="Marks" ColumnName="Marks" />
+                <ScalarProperty Name="OccupationId" ColumnName="OccupationId" />
+                <ScalarProperty Name="OccupationCode" ColumnName="OccupationCode" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="WSANumber" ColumnName="WSANumber" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TransactionCount" ColumnName="TransactionCount" />
+                <ScalarProperty Name="SignaturePath" ColumnName="SignaturePath" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="Photograph" ColumnName="Photograph" />
+                <ScalarProperty Name="Signature" ColumnName="Signature" />
+                <ScalarProperty Name="Certification" ColumnName="Certification" />
+                <ScalarProperty Name="CountryOfBirthStatistical" ColumnName="CountryOfBirthStatistical" />
+                <ScalarProperty Name="QRCode" ColumnName="QRCode" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="LastEditedBy" ColumnName="LastEditedBy" />
+                <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="CountryOfApplicationName" ColumnName="CountryOfApplicationName" />
+                <ScalarProperty Name="CountryOfBirthName" ColumnName="CountryOfBirthName" />
+                <ScalarProperty Name="CountryOfBirthStatisticalName" ColumnName="CountryOfBirthStatisticalName" />
+                <ScalarProperty Name="OccupationName" ColumnName="OccupationName" />
+                <ScalarProperty Name="EyeName" ColumnName="EyeName" />
+                <ScalarProperty Name="SexName" ColumnName="SexName" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -118,10 +118,13 @@
 
                                 <div class="col-sm-3">
                                     <a href="@Url.Action("Persons","Person")"><input class="btn btn-primary" type="button" value="Cancel"></a>
-                                    <button id="myButtonControlID">Export Table data into Excel</button>
+                                    
                                 </div>
 
                             </div>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="@Url.Action("ExportToExcel","Person")"><input class="btn btn-primary" type="button" value="Export for Card Exchange "></a>
                         </div>
                     </div>
 
@@ -286,10 +289,7 @@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
 
-    $("[id$=myButtonControlID]").click(function (e) {
-        window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('div[id$=divTableDataHolder]').html()));
-        e.preventDefault();
-    });
+   
 
 
     function RecordType(sel)
@@ -663,14 +663,14 @@
             ],
             buttons: [
             'pageLength',
-                {
+                //{
 
 
-                    extend: 'excel',
-                    exportOptions: {
-                        columns: [ 1, 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
-                    }
-                }
+                //    extend: 'excel',
+                //    exportOptions: {
+                //        columns: [ 1, 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
+                //    }
+                //}
             ],
             "lengthMenu": [@Retrieves],
 

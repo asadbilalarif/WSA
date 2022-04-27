@@ -93,5 +93,10 @@ namespace WorldServiceOrganization.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransactionSummaryList_Result2>("TransactionSummaryList", searchValueParameter);
         }
+    
+        public virtual ObjectResult<PersonExportData_Result> PersonExportData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PersonExportData_Result>("PersonExportData");
+        }
     }
 }

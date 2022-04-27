@@ -756,6 +756,7 @@
     <Parameter Name="FieldtoSearch" Type="nvarchar(max)" Mode="In" />
     <Parameter Name="SearchValue" Type="nvarchar(max)" Mode="In" />
   </Function>
+  <Function Name="PersonExportData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="PersonList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SearchValue" Type="nvarchar(max)" Mode="In" />
   </Function>

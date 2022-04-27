@@ -1,10 +1,16 @@
-﻿using System;
+﻿using ClosedXML.Excel;
+using Syncfusion.XlsIO;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using WorldServiceOrganization.Models;
@@ -1224,6 +1230,156 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
+        public ActionResult ExportToExcel()
+        {
+            //Instantiate the spreadsheet creation engine
+            using (ExcelEngine excelEngine = new ExcelEngine())
+            {
+                //Instantiate the Excel application object
+                IApplication application = excelEngine.Excel;
+
+                //Create a new workbook and add a worksheet
+                IWorkbook workbook = application.Workbooks.Create(1);
+                IWorksheet worksheet = workbook.Worksheets[0];
+
+                //Add the header text and assign cell style
+                worksheet["A3"].Text = "LastName";
+                worksheet["B3"].Text = "FirstName";
+                worksheet["C3"].Text = "City Of Birth";
+                worksheet["D3"].Text = "Photograph";
+                worksheet["E3"].Text = "Phone";
+                worksheet["F3"].Text = "Fax";
+                worksheet["G3"].Text = "Signature";
+                worksheet["H3"].Text = "Height";
+                worksheet["I3"].Text = "Marks";
+                worksheet["J3"].Text = "Title";
+                worksheet["K3"].Text = "Father Name";
+                worksheet["L3"].Text = "Mother Name";
+                worksheet["M3"].Text = "WSANumber";
+                worksheet["N3"].Text = "Comments";
+                worksheet["O3"].Text = "EMail";
+                worksheet["P3"].Text = "Website";
+                worksheet["Q3"].Text = "Eye";
+                worksheet["R3"].Text = "Country Of Application";
+                worksheet["S3"].Text = "Country Of Birth";
+                worksheet["T3"].Text = "Country Of Birth Statistical";
+                worksheet["U3"].Text = "Occupation";
+                worksheet["V3"].Text = "Sex";
+                worksheet["W3"].Text = "Status";
+                worksheet["X3"].Text = "Birth Month";
+                worksheet["Y3"].Text = "Birth Day";
+                worksheet["Z3"].Text = "Birth Year";
+                worksheet["A3:Z3"].CellStyle.Font.Bold = true;
+
+                worksheet["A4"].Text = "%PersonExportData_Result.LastName";
+                worksheet["B4"].Text = "%PersonExportData_Result.FirstName";
+                worksheet["C4"].Text = "%PersonExportData_Result.CityOfBirth";
+                worksheet["D4"].Text = "%PersonExportData_Result.Photograph";
+                worksheet["E4"].Text = "%PersonExportData_Result.Phone";
+                worksheet["F4"].Text = "%PersonExportData_Result.Fax";
+                worksheet["G4"].Text = "%PersonExportData_Result.Signature";
+                worksheet["H4"].Text = "%PersonExportData_Result.Height";
+                worksheet["I4"].Text = "%PersonExportData_Result.Marks";
+                worksheet["J4"].Text = "%PersonExportData_Result.Title";
+                worksheet["K4"].Text = "%PersonExportData_Result.FatherName";
+                worksheet["L4"].Text = "%PersonExportData_Result.MotherName";
+                worksheet["M4"].Text = "%PersonExportData_Result.WSANumber";
+                worksheet["N4"].Text = "%PersonExportData_Result.Comments";
+                worksheet["O4"].Text = "%PersonExportData_Result.EMail";
+                worksheet["P4"].Text = "%PersonExportData_Result.Website";
+                worksheet["Q4"].Text = "%PersonExportData_Result.EyeName";
+                worksheet["R4"].Text = "%PersonExportData_Result.CountryOfApplicationName";
+                worksheet["S4"].Text = "%PersonExportData_Result.CountryOfBirthName";
+                worksheet["T4"].Text = "%PersonExportData_Result.CountryOfBirthStatisticalName";
+                worksheet["U4"].Text = "%PersonExportData_Result.OccupationName";
+                worksheet["V4"].Text = "%PersonExportData_Result.SexName";
+                worksheet["W4"].Text = "%PersonExportData_Result.StatusName";
+                worksheet["X4"].Text = "%PersonExportData_Result.BirthMonth";
+                worksheet["Y4"].Text = "%PersonExportData_Result.BirthDay";
+                worksheet["Z4"].Text = "%PersonExportData_Result.BirthYear";
+
+                //Create template marker processor
+                ITemplateMarkersProcessor marker = workbook.CreateTemplateMarkersProcessor();
+
+                WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+                
+
+                List<PersonExportData_Result> Data = DB.PersonExportData().ToList();
+
+                foreach (var item in Data)
+                {
+                    byte[] image1 = System.IO.File.ReadAllBytes(Server.MapPath(item.Photo));
+                    byte[] image2 = System.IO.File.ReadAllBytes(Server.MapPath(item.SignaturePath));
+                    item.Photograph = image1;
+                    item.Signature = image2;
+                }
+
+                //Add marker variable
+                marker.AddVariable("PersonExportData_Result", Data);
+
+                //Apply markers
+                marker.ApplyMarkers();
+
+                //Autofit the columns
+                worksheet["B1:D10"].AutofitColumns();
+
+                //Save the workbook
+                workbook.SaveAs("Output.xlsx");
+
+                System.Diagnostics.Process.Start("Output.xlsx");
+            }
+
+            return RedirectToAction("Persons");
+        }
+
+        //private static List<tblPerson> GetEmployeeDetails()
+        //{
+        //    //Get the images from folder
+        //        byte[] image1 = System.IO.File.ReadAllBytes(@"E:\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\Data\Man2.png");
+        //    byte[] image2 = System.IO.File.ReadAllBytes(@"E:\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\Data\Man2.png");
+        //    byte[] image3 = System.IO.File.ReadAllBytes(@"E:\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\Data\Woman1.jpg");
+        //    byte[] image4 = System.IO.File.ReadAllBytes(@"E:\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\Data\Woman1.jpg");
+
+        //    //Instantiate employee list
+        //    List<tblPerson> employeeList = new List<tblPerson>();
+
+        //    //Set the details of employee and into employee list
+        //    tblPerson emp = new tblPerson();
+        //    emp.Image = image1;
+        //    emp.Name = "Andy Bernardsss";
+        //    emp.Id = 1011;
+        //    emp.Age = 35;
+        //    employeeList.Add(emp);
+
+        //    //Set the details of employee and into employee list
+        //    emp = new Employee();
+        //    emp.Image = image2;
+        //    emp.Name = "Karen Fillippelli";
+        //    emp.Id = 1012;
+        //    emp.Age = 26;
+        //    employeeList.Add(emp);
+
+        //    //Set the details of employee and into employee list
+        //    emp = new Employee();
+        //    emp.Image = image3;
+        //    emp.Name = "Patricia Mckenna";
+        //    emp.Id = 1013;
+        //    emp.Age = 28;
+        //    employeeList.Add(emp);
+
+        //    //Set the details of employee and into employee list
+        //    emp = new Employee();
+        //    emp.Image = image4;
+        //    emp.Name = "nstall the Syncfusion.XlsIO.WinForms NuGet package as reference to your .NET Framework application from";
+        //    emp.Id = 1025;
+        //    emp.Age = 35;
+        //    employeeList.Add(emp);
+
+        //    //Return the employee list
+        //    return employeeList;
+        //}
+
+
         public ActionResult OneRecord(int? id)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
@@ -1384,6 +1540,67 @@ namespace WorldServiceOrganization.Controllers
                 string Line1 = null;
                 string Line2 = null;
                 int Len;
+                if(Persons.FirstName.Contains(","))
+                {
+                    Persons.FirstName = Persons.FirstName.Replace(",", "<<");
+                }
+                if(Persons.FirstName.Contains("-"))
+                {
+                    Persons.FirstName = Persons.FirstName.Replace("-", "<");
+                }
+                if(Persons.FirstName.Contains(' '))
+                {
+                    Persons.FirstName= Persons.FirstName.Replace(" ", "<");
+                }
+
+                if(Persons.LastName.Contains(","))
+                {
+                    Persons.LastName= Persons.LastName.Replace(",", "<<");
+                }
+                if(Persons.LastName.Contains("-"))
+                {
+                    Persons.LastName = Persons.LastName.Replace("-", "<");
+                }
+                if(Persons.LastName.Contains(' '))
+                {
+                    Persons.LastName = Persons.LastName.Replace(" ", "<");
+                }
+                StringBuilder sb = new StringBuilder(Persons.FirstName);
+                for (int i = 0; i < Persons.FirstName.Length; i++)
+                {
+                    if((Persons.FirstName[i]>='A'&& Persons.FirstName[i] <= 'Z')|| (Persons.FirstName[i] >= 'a' && Persons.FirstName[i] <= 'z'))
+                    {
+
+                    }
+                    else
+                    {
+                        char R = Persons.FirstName[i];
+                        if(R!= '<')
+                        {
+                            Persons.FirstName = Persons.FirstName.Replace(R, ' ');
+                            Persons.FirstName = Persons.FirstName.Replace(" ", "");
+                        }
+                        
+                        //sb[i] = '';
+                    }
+                }
+                for (int i = 0; i < Persons.LastName.Length; i++)
+                {
+                    if((Persons.LastName[i]>='A'&& Persons.LastName[i] <= 'Z')|| (Persons.LastName[i] >= 'a' && Persons.LastName[i] <= 'z'))
+                    {
+
+                    }
+                    else
+                    {
+                        char R = Persons.LastName[i];
+                        if(R!= '<')
+                        {
+                            Persons.LastName = Persons.LastName.Replace(R, ' ');
+                            Persons.LastName = Persons.LastName.Replace(" ", "");
+                        }
+                    }
+                }
+
                 if (Persons.FirstName.Contains(' '))
                 {
                     string[] Arr = Persons.FirstName.Split(' ');
