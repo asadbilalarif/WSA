@@ -1227,41 +1227,6 @@
             Dispose a ArabicShapeRenderer instance.
             </summary>
         </member>
-        <member name="T:Syncfusion.Office.FallbackFont">
-            <summary>
-            FallbackFont class used to represent a start, end Unicode ranges and font names of fall back font.
-            </summary>
-        </member>
-        <member name="M:Syncfusion.Office.FallbackFont.#ctor(System.UInt32,System.UInt32,System.String)">
-            <summary>
-            Create a instance of FallbackFont class.
-            </summary>
-            <param name=" startUnicodeRange ">Represent a start Unicode range of fall back font.</param>
-            <param name=" endUnicodeRange ">Represent a end Unicode range of fall back font.</param>
-            <param name="fontNames">Represent a fall back font name or names (split by comma).</param>
-        </member>
-        <member name="M:Syncfusion.Office.FallbackFont.IsWithInRange(System.String)">
-            <summary>
-            Check whether any character of input text is with in the start and end Unicode ranges.
-            </summary>
-            <param name="inputText">Represent a input text to check.</param>
-            <returns>Returns true, if any character of input text is in-between start and end Unicode range; Otherwise false.</returns>
-        </member>
-        <member name="P:Syncfusion.Office.FallbackFont.StartUnicodeRange">
-            <summary>
-            Gets or Sets a Unicode range of start character which use a fall back font.
-            </summary>
-        </member>
-        <member name="P:Syncfusion.Office.FallbackFont.EndUnicodeRange">
-            <summary>
-            Gets or Sets a Unicode range of end character which use a fall back font.
-            </summary>
-        </member>
-        <member name="P:Syncfusion.Office.FallbackFont.FontNames">
-            <summary>
-            Gets or Sets a fall back font names (split by comma).
-            </summary>
-        </member>
         <member name="T:Syncfusion.Office.TextSplitter">
             <summary>
             Represent a text splitter class and it can be used to split the input text based on the FontScriptType.
@@ -1370,6 +1335,41 @@
             </summary>
             <param name="character">Specify the character</param>
             <returns>Return true if the specified character is Chinese character</returns>
+        </member>
+        <member name="T:Syncfusion.Office.FallbackFont">
+            <summary>
+            FallbackFont class used to represent a start, end Unicode ranges and font names of fall back font.
+            </summary>
+        </member>
+        <member name="M:Syncfusion.Office.FallbackFont.#ctor(System.UInt32,System.UInt32,System.String)">
+            <summary>
+            Create a instance of FallbackFont class.
+            </summary>
+            <param name=" startUnicodeRange ">Represent a start Unicode range of fall back font.</param>
+            <param name=" endUnicodeRange ">Represent a end Unicode range of fall back font.</param>
+            <param name="fontNames">Represent a fall back font name or names (split by comma).</param>
+        </member>
+        <member name="M:Syncfusion.Office.FallbackFont.IsWithInRange(System.String)">
+            <summary>
+            Check whether any character of input text is with in the start and end Unicode ranges.
+            </summary>
+            <param name="inputText">Represent a input text to check.</param>
+            <returns>Returns true, if any character of input text is in-between start and end Unicode range; Otherwise false.</returns>
+        </member>
+        <member name="P:Syncfusion.Office.FallbackFont.StartUnicodeRange">
+            <summary>
+            Gets or Sets a Unicode range of start character which use a fall back font.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.FallbackFont.EndUnicodeRange">
+            <summary>
+            Gets or Sets a Unicode range of end character which use a fall back font.
+            </summary>
+        </member>
+        <member name="P:Syncfusion.Office.FallbackFont.FontNames">
+            <summary>
+            Gets or Sets a fall back font names (split by comma).
+            </summary>
         </member>
         <member name="T:Syncfusion.Office.LocaleIDs">
             <summary>

@@ -631,5 +631,15 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="tblMRZTranslations">
+      <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblMRZTranslation">
+        <MappingFragment StoreEntitySet="tblMRZTranslation">
+          <ScalarProperty Name="RecommendedTransliteration" ColumnName="RecommendedTransliteration" />
+          <ScalarProperty Name="NationalCharacter" ColumnName="NationalCharacter" />
+          <ScalarProperty Name="Unicode" ColumnName="Unicode" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

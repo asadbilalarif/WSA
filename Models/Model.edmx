@@ -140,6 +140,15 @@
           <Property Name="isActive" Type="bit" />
           <Property Name="ElementId" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tblMRZTranslation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Unicode" Type="nvarchar" MaxLength="50" />
+          <Property Name="NationalCharacter" Type="nvarchar" MaxLength="50" />
+          <Property Name="RecommendedTransliteration" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="tblOccupation">
           <Key>
             <PropertyRef Name="OccupationId" />
@@ -778,6 +787,7 @@
           <EntitySet Name="tblDocumentImg" EntityType="Self.tblDocumentImg" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEye" EntityType="Self.tblEye" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblMenu" EntityType="Self.tblMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblMRZTranslation" EntityType="Self.tblMRZTranslation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOccupation" EntityType="Self.tblOccupation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPassportLabelSetting" EntityType="Self.tblPassportLabelSetting" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPerson" EntityType="Self.tblPerson" Schema="dbo" store:Type="Tables" />
@@ -1098,6 +1108,7 @@
           <Parameter Name="SearchValue" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="PersonExportData" ReturnType="Collection(WorldServiceOrganizationModel.PersonExportData_Result)" />
+          <EntitySet Name="tblMRZTranslations" EntityType="WorldServiceOrganizationModel.tblMRZTranslation" />
         </EntityContainer>
         <EntityType Name="tblRole">
           <Key>
@@ -2053,6 +2064,15 @@
           <Property Type="String" Name="SexName" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="StatusName" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="tblMRZTranslation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Unicode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NationalCharacter" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RecommendedTransliteration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2689,6 +2709,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblMRZTranslations">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblMRZTranslation">
+              <MappingFragment StoreEntitySet="tblMRZTranslation">
+                <ScalarProperty Name="RecommendedTransliteration" ColumnName="RecommendedTransliteration" />
+                <ScalarProperty Name="NationalCharacter" ColumnName="NationalCharacter" />
+                <ScalarProperty Name="Unicode" ColumnName="Unicode" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

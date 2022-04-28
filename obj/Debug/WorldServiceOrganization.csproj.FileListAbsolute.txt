@@ -564,7 +564,6 @@ C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Antlr3.Runtime
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.xml
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\zxing.presentation.xml
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csprojAssemblyReference.cache
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CoreCompileInputs.cache
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csproj.CopyComplete
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.dll
@@ -583,8 +582,8 @@ C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\ClosedXML.xml
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\DocumentFormat.OpenXml.xml
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\ExcelNumberFormat.xml
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Syncfusion.Compression.Base.dll
-C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Syncfusion.Licensing.dll
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Syncfusion.XlsIO.Base.dll
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Syncfusion.Compression.Base.xml
-C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Syncfusion.Licensing.xml
 C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Syncfusion.XlsIO.Base.xml
+C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\obj\Debug\WorldServiceOrganization.csprojAssemblyReference.cache
+C:\Eazisols\WorldServiceOrganization\WorldServiceOrganization\bin\Syncfusion.Licensing.dll

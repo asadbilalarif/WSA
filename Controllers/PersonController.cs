@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -1241,71 +1242,71 @@ namespace WorldServiceOrganization.Controllers
                 //Create a new workbook and add a worksheet
                 IWorkbook workbook = application.Workbooks.Create(1);
                 IWorksheet worksheet = workbook.Worksheets[0];
-
+          
                 //Add the header text and assign cell style
-                worksheet["A3"].Text = "LastName";
-                worksheet["B3"].Text = "FirstName";
-                worksheet["C3"].Text = "City Of Birth";
-                worksheet["D3"].Text = "Photograph";
-                worksheet["E3"].Text = "Phone";
-                worksheet["F3"].Text = "Fax";
-                worksheet["G3"].Text = "Signature";
-                worksheet["H3"].Text = "Height";
-                worksheet["I3"].Text = "Marks";
-                worksheet["J3"].Text = "Title";
-                worksheet["K3"].Text = "Father Name";
-                worksheet["L3"].Text = "Mother Name";
-                worksheet["M3"].Text = "WSANumber";
-                worksheet["N3"].Text = "Comments";
-                worksheet["O3"].Text = "EMail";
-                worksheet["P3"].Text = "Website";
-                worksheet["Q3"].Text = "Eye";
-                worksheet["R3"].Text = "Country Of Application";
-                worksheet["S3"].Text = "Country Of Birth";
-                worksheet["T3"].Text = "Country Of Birth Statistical";
-                worksheet["U3"].Text = "Occupation";
-                worksheet["V3"].Text = "Sex";
-                worksheet["W3"].Text = "Status";
-                worksheet["X3"].Text = "Birth Month";
-                worksheet["Y3"].Text = "Birth Day";
-                worksheet["Z3"].Text = "Birth Year";
-                worksheet["A3:Z3"].CellStyle.Font.Bold = true;
+                worksheet["A1"].Text = "LastName";
+                worksheet["B1"].Text = "FirstName";
+                worksheet["C1"].Text = "City Of Birth";
+                worksheet["D1"].Text = "Photograph";
+                worksheet["E1"].Text = "Phone";
+                worksheet["F1"].Text = "Fax";
+                worksheet["G1"].Text = "Signature";
+                worksheet["H1"].Text = "Height";
+                worksheet["I1"].Text = "Marks";
+                worksheet["J1"].Text = "Title";
+                worksheet["K1"].Text = "Father Name";
+                worksheet["L1"].Text = "Mother Name";
+                worksheet["M1"].Text = "WSANumber";
+                worksheet["N1"].Text = "Comments";
+                worksheet["O1"].Text = "EMail";
+                worksheet["P1"].Text = "Website";
+                worksheet["Q1"].Text = "Eye";
+                worksheet["R1"].Text = "Country Of Application";
+                worksheet["S1"].Text = "Country Of Birth";
+                worksheet["T1"].Text = "Country Of Birth Statistical";
+                worksheet["U1"].Text = "Occupation";
+                worksheet["V1"].Text = "Sex";
+                worksheet["W1"].Text = "Status";
+                worksheet["X1"].Text = "Birth Month";
+                worksheet["Y1"].Text = "Birth Day";
+                worksheet["Z1"].Text = "Birth Year";
+                worksheet["A1:Z1"].CellStyle.Font.Bold = true;
 
-                worksheet["A4"].Text = "%PersonExportData_Result.LastName";
-                worksheet["B4"].Text = "%PersonExportData_Result.FirstName";
-                worksheet["C4"].Text = "%PersonExportData_Result.CityOfBirth";
-                worksheet["D4"].Text = "%PersonExportData_Result.Photograph";
-                worksheet["E4"].Text = "%PersonExportData_Result.Phone";
-                worksheet["F4"].Text = "%PersonExportData_Result.Fax";
-                worksheet["G4"].Text = "%PersonExportData_Result.Signature";
-                worksheet["H4"].Text = "%PersonExportData_Result.Height";
-                worksheet["I4"].Text = "%PersonExportData_Result.Marks";
-                worksheet["J4"].Text = "%PersonExportData_Result.Title";
-                worksheet["K4"].Text = "%PersonExportData_Result.FatherName";
-                worksheet["L4"].Text = "%PersonExportData_Result.MotherName";
-                worksheet["M4"].Text = "%PersonExportData_Result.WSANumber";
-                worksheet["N4"].Text = "%PersonExportData_Result.Comments";
-                worksheet["O4"].Text = "%PersonExportData_Result.EMail";
-                worksheet["P4"].Text = "%PersonExportData_Result.Website";
-                worksheet["Q4"].Text = "%PersonExportData_Result.EyeName";
-                worksheet["R4"].Text = "%PersonExportData_Result.CountryOfApplicationName";
-                worksheet["S4"].Text = "%PersonExportData_Result.CountryOfBirthName";
-                worksheet["T4"].Text = "%PersonExportData_Result.CountryOfBirthStatisticalName";
-                worksheet["U4"].Text = "%PersonExportData_Result.OccupationName";
-                worksheet["V4"].Text = "%PersonExportData_Result.SexName";
-                worksheet["W4"].Text = "%PersonExportData_Result.StatusName";
-                worksheet["X4"].Text = "%PersonExportData_Result.BirthMonth";
-                worksheet["Y4"].Text = "%PersonExportData_Result.BirthDay";
-                worksheet["Z4"].Text = "%PersonExportData_Result.BirthYear";
+                worksheet["A2"].Text = "%PersonExportData_Result.LastName";
+                worksheet["B2"].Text = "%PersonExportData_Result.FirstName";
+                worksheet["C2"].Text = "%PersonExportData_Result.CityOfBirth";
+                worksheet["D2"].Text = "%PersonExportData_Result.Photograph";
+                worksheet["E2"].Text = "%PersonExportData_Result.Phone";
+                worksheet["F2"].Text = "%PersonExportData_Result.Fax";
+                worksheet["G2"].Text = "%PersonExportData_Result.Signature";
+                worksheet["H2"].Text = "%PersonExportData_Result.Height";
+                worksheet["I2"].Text = "%PersonExportData_Result.Marks";
+                worksheet["J2"].Text = "%PersonExportData_Result.Title";
+                worksheet["K2"].Text = "%PersonExportData_Result.FatherName";
+                worksheet["L2"].Text = "%PersonExportData_Result.MotherName";
+                worksheet["M2"].Text = "%PersonExportData_Result.WSANumber";
+                worksheet["N2"].Text = "%PersonExportData_Result.Comments";
+                worksheet["O2"].Text = "%PersonExportData_Result.EMail";
+                worksheet["P2"].Text = "%PersonExportData_Result.Website";
+                worksheet["Q2"].Text = "%PersonExportData_Result.EyeName";
+                worksheet["R2"].Text = "%PersonExportData_Result.CountryOfApplicationName";
+                worksheet["S2"].Text = "%PersonExportData_Result.CountryOfBirthName";
+                worksheet["T2"].Text = "%PersonExportData_Result.CountryOfBirthStatisticalName";
+                worksheet["U2"].Text = "%PersonExportData_Result.OccupationName";
+                worksheet["V2"].Text = "%PersonExportData_Result.SexName";
+                worksheet["W2"].Text = "%PersonExportData_Result.StatusName";
+                worksheet["X2"].Text = "%PersonExportData_Result.BirthMonth";
+                worksheet["Y2"].Text = "%PersonExportData_Result.BirthDay";
+                worksheet["Z2"].Text = "%PersonExportData_Result.BirthYear";
 
                 //Create template marker processor
                 ITemplateMarkersProcessor marker = workbook.CreateTemplateMarkersProcessor();
 
                 WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
-                
 
+                List<PersonExportData_Result> Data1 = new List<PersonExportData_Result>();
                 List<PersonExportData_Result> Data = DB.PersonExportData().ToList();
-
+                PersonExportData_Result emp;
                 foreach (var item in Data)
                 {
                     byte[] image1 = System.IO.File.ReadAllBytes(Server.MapPath(item.Photo));
@@ -1313,9 +1314,40 @@ namespace WorldServiceOrganization.Controllers
                     item.Photograph = image1;
                     item.Signature = image2;
                 }
+                foreach (var item in Data)
+                {
+                    emp = new PersonExportData_Result();
+                    emp.LastName=item.LastName;
+                    emp.FirstName=item.FirstName;
+                    emp.CityOfBirth=item.CityOfBirth;
+                    emp.Photograph=item.Photograph;
+                    emp.Phone=item.Phone;
+                    emp.Fax=item.Fax;
+                    emp.Signature=item.Signature;
+                    emp.Height=item.Height;
+                    emp.Marks=item.Marks;
+                    emp.Title=item.Title;
+                    emp.FatherName=item.FatherName;
+                    emp.MotherName=item.MotherName;
+                    emp.WSANumber=item.WSANumber;
+                    emp.Comments=item.Comments;
+                    emp.EMail="davis@gmail.com";
+                    emp.Website=item.Website;
+                    emp.EyeName=item.EyeName;
+                    emp.CountryOfApplicationName=item.CountryOfApplicationName;
+                    emp.CountryOfBirthName=item.CountryOfBirthName;
+                    emp.CountryOfBirthStatisticalName=item.CountryOfBirthStatisticalName;
+                    emp.OccupationName=item.OccupationName;
+                    emp.SexName=item.SexName;
+                    emp.StatusName=item.StatusName;
+                    emp.BirthMonth=item.BirthMonth;
+                    emp.BirthDay=item.BirthDay;
+                    emp.BirthYear=item.BirthYear;
+                    Data1.Add(emp);
+                }
 
                 //Add marker variable
-                marker.AddVariable("PersonExportData_Result", Data);
+                marker.AddVariable("PersonExportData_Result", Data1);
 
                 //Apply markers
                 marker.ApplyMarkers();
@@ -1511,6 +1543,36 @@ namespace WorldServiceOrganization.Controllers
 
         }
 
+        public string UnicodeToString(string text)
+        {
+            if (string.IsNullOrEmpty(text)) return null;
+
+            string temp = null;
+            bool flag = false;
+
+            int len = text.Length / 4;
+            if (text.StartsWith("0x") || text.StartsWith("0X"))
+            {
+                len = text.Length / 6;//0x in Unicode string
+                flag = true;
+            }
+
+            StringBuilder sb = new StringBuilder(len);
+            for (int i = 0; i < len; i++)
+            {
+                if (flag)
+                    temp = text.Substring(i * 6, 6).Substring(2);
+                else
+                    temp = text.Substring(i * 4, 4);
+               string c= temp.Substring(2, 2);
+                byte[] bytes = new byte[2];
+                bytes[1] = byte.Parse(int.Parse(temp.Substring(0, 2), NumberStyles.HexNumber).ToString());
+                bytes[0] = byte.Parse(int.Parse(temp.Substring(2, 2), NumberStyles.HexNumber).ToString());
+                sb.Append(Encoding.Unicode.GetString(bytes));
+            }
+            return sb.ToString();
+        }
+
         public ActionResult PassportLabel(string Success, string Update, int? id, int? tid)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
@@ -1525,7 +1587,10 @@ namespace WorldServiceOrganization.Controllers
                 ViewBag.Update = Update;
                 ViewBag.PersonId = id;
                 ViewBag.tid = tid;
-
+                string input = "ژ";
+                var result = input.Select(t => $"U+{Convert.ToUInt16(t):X4} ").ToList();
+                string A=UnicodeToString("0698");
+                var Translate = DB.tblMRZTranslations.ToList();
                 var data = DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
                 if (ViewBag.TL.IssueDate != "")
                 {
@@ -1540,76 +1605,121 @@ namespace WorldServiceOrganization.Controllers
                 string Line1 = null;
                 string Line2 = null;
                 int Len;
-                if(Persons.FirstName.Contains(","))
+                string FirstName = Persons.FirstName;
+                string LastName = Persons.LastName;
+
+                var NationalCharacter = Translate.Select(s => s.NationalCharacter.ToLower()).ToList();
+                for (int i = 0; i < FirstName.Length; i++)
                 {
-                    Persons.FirstName = Persons.FirstName.Replace(",", "<<");
-                }
-                if(Persons.FirstName.Contains("-"))
-                {
-                    Persons.FirstName = Persons.FirstName.Replace("-", "<");
-                }
-                if(Persons.FirstName.Contains(' '))
-                {
-                    Persons.FirstName= Persons.FirstName.Replace(" ", "<");
+                    if (NationalCharacter.Contains(FirstName[i].ToString().ToLower()) == true)
+                    {
+                        string R = FirstName[i].ToString();
+                        string W = Translate.Where(x => x.NationalCharacter.ToLower() == FirstName[i].ToString().ToLower()).Select(s => s.RecommendedTransliteration).FirstOrDefault();
+                        FirstName=FirstName.Replace(R, W);
+                    }
                 }
 
-                if(Persons.LastName.Contains(","))
+                for (int i = 0; i < LastName.Length; i++)
                 {
-                    Persons.LastName= Persons.LastName.Replace(",", "<<");
+                    if (NationalCharacter.Contains(LastName[i].ToString().ToLower()) == true)
+                    {
+                        string R = LastName[i].ToString();
+                        string W = Translate.Where(x => x.NationalCharacter.ToLower() == LastName[i].ToString().ToLower()).Select(s => s.RecommendedTransliteration).FirstOrDefault();
+                        LastName=LastName.Replace(R, W);
+                    }
                 }
-                if(Persons.LastName.Contains("-"))
+
+                if (FirstName.Contains(", "))
                 {
-                    Persons.LastName = Persons.LastName.Replace("-", "<");
+                    FirstName = FirstName.Replace(", ", "<");
                 }
-                if(Persons.LastName.Contains(' '))
+                if(FirstName.Contains(","))
                 {
-                    Persons.LastName = Persons.LastName.Replace(" ", "<");
+                    FirstName = FirstName.Replace(",", "<<");
                 }
-                StringBuilder sb = new StringBuilder(Persons.FirstName);
-                for (int i = 0; i < Persons.FirstName.Length; i++)
+                if(FirstName.Contains("-"))
                 {
-                    if((Persons.FirstName[i]>='A'&& Persons.FirstName[i] <= 'Z')|| (Persons.FirstName[i] >= 'a' && Persons.FirstName[i] <= 'z'))
+                    FirstName = FirstName.Replace("-", "<");
+                }
+                if(FirstName.Contains(' '))
+                {
+                    FirstName= FirstName.Replace(" ", "<");
+                }
+
+                if(LastName.Contains(", "))
+                {
+                    LastName= LastName.Replace(", ", "<");
+                }
+
+                if(LastName.Contains(","))
+                {
+                    LastName= LastName.Replace(",", "<<");
+                }
+                if(LastName.Contains("-"))
+                {
+                    LastName =LastName.Replace("-", "<");
+                }
+                if(LastName.Contains(' '))
+                {
+                    LastName = LastName.Replace(" ", "<");
+                }
+                //StringBuilder sb = new StringBuilder(Persons.FirstName);
+                for (int i = 0; i < FirstName.Length; i++)
+                {
+                    if((FirstName[i]>='A'&& FirstName[i] <= 'Z')|| (FirstName[i] >= 'a' && FirstName[i] <= 'z'))
                     {
 
                     }
                     else
                     {
-                        char R = Persons.FirstName[i];
+                        char R = FirstName[i];
                         if(R!= '<')
                         {
-                            Persons.FirstName = Persons.FirstName.Replace(R, ' ');
-                            Persons.FirstName = Persons.FirstName.Replace(" ", "");
+                            FirstName = FirstName.Replace(R, ' ');
+                            FirstName = FirstName.Replace(" ", "");
                         }
                         
                         //sb[i] = '';
                     }
                 }
-                for (int i = 0; i < Persons.LastName.Length; i++)
+                for (int i = 0; i < LastName.Length; i++)
                 {
-                    if((Persons.LastName[i]>='A'&& Persons.LastName[i] <= 'Z')|| (Persons.LastName[i] >= 'a' && Persons.LastName[i] <= 'z'))
+                    if((LastName[i]>='A'&& LastName[i] <= 'Z')|| (LastName[i] >= 'a' && LastName[i] <= 'z'))
                     {
 
                     }
                     else
                     {
-                        char R = Persons.LastName[i];
+                        char R = LastName[i];
                         if(R!= '<')
                         {
-                            Persons.LastName = Persons.LastName.Replace(R, ' ');
-                            Persons.LastName = Persons.LastName.Replace(" ", "");
+                            LastName = LastName.Replace(R, ' ');
+                            LastName = LastName.Replace(" ", "");
                         }
                     }
                 }
 
-                if (Persons.FirstName.Contains(' '))
+                
+
+                //foreach (var item in FirstName)
+                //{
+                //    if (NationalCharacter.Contains(item.ToString())==true)
+                //    {
+                //        Translate.Where(x=>x.NationalCharacter== item.ToString()).Select(s => s.RecommendedTransliteration).FirstOrDefault()
+                //    }
+                //}
+
+                
+
+                if (FirstName.Contains(' '))
                 {
-                    string[] Arr = Persons.FirstName.Split(' ');
+                    string[] Arr = FirstName.Split(' ');
                     Len = Arr.Length;
-                    Line1 += "P<WSA" + Persons.LastName + "<<" + Arr[0] + "<" + Arr[1] + "<";
+                    Line1 += "P<WSA" + LastName.ToUpper() + "<<" + Arr[0].ToUpper() + "<" + Arr[1].ToUpper() + "<";
                 }
                 else
                 {
-                    Line1 += "P<WSA" + Persons.LastName + "<<" + Persons.FirstName + "<";
+                    Line1 += "P<WSA" + LastName.ToUpper() + "<<" + FirstName.ToUpper() + "<";
                 }
                 while (Line1.Length < 44)
                 {

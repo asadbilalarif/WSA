@@ -48,6 +48,7 @@ namespace WorldServiceOrganization.Models
         public virtual DbSet<tblSetting> tblSettings { get; set; }
         public virtual DbSet<tblTransaction> tblTransactions { get; set; }
         public virtual DbSet<tblPassportLabelSetting> tblPassportLabelSettings { get; set; }
+        public virtual DbSet<tblMRZTranslation> tblMRZTranslations { get; set; }
     
         public virtual ObjectResult<ProductUnionPackage_Result> ProductUnionPackage()
         {

@@ -190,6 +190,7 @@
       <Parameter Name="SearchValue" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="PersonExportData" ReturnType="Collection(WorldServiceOrganizationModel.PersonExportData_Result)" />
+    <EntitySet Name="tblMRZTranslations" EntityType="WorldServiceOrganizationModel.tblMRZTranslation" />
   </EntityContainer>
   <EntityType Name="tblRole">
     <Key>
@@ -1145,4 +1146,13 @@
     <Property Type="String" Name="SexName" Nullable="true" MaxLength="50" />
     <Property Type="String" Name="StatusName" Nullable="true" MaxLength="50" />
   </ComplexType>
+  <EntityType Name="tblMRZTranslation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Unicode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NationalCharacter" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RecommendedTransliteration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>
