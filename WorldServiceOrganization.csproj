@@ -552,6 +552,7 @@
     <Content Include="Views\Productpackage\Productpackages.cshtml" />
     <Content Include="Views\Productpackage\CreateProductPackage.cshtml" />
     <Content Include="Views\Setting\Settings.cshtml" />
+    <Content Include="Views\Person\BirthCertificate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

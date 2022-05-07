@@ -1,0 +1,681 @@
+﻿@model  WorldServiceOrganization.Models.tblPerson
+
+@{
+    ViewData["Title"] = "Addresss";
+
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["ReportsDateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+
+    double? TotalCost = 0;
+    double? GrandCost = 0;
+
+}
+
+
+<head>
+
+    <style>
+        p {
+            margin-top: 0;
+            margin-bottom: 0rem;
+        }
+    </style>
+
+    <script src="http://www.openjs.com/scripts/events/keyboard_shortcuts/shortcut.js"></script>
+    <script language="javascript" type="text/javascript">
+
+        shortcut.add("ctrl+p", function () {
+
+            var db = document.body.getElementsByTagName('div');
+            var myDiv = document.getElementById("section").innerHTML;
+
+            document.body.innerHTML =
+                "<html><head><title></title></head><body>" +
+                myDiv + "</body>";
+            window.print();
+
+            var url = window.location.origin;
+            url += '/Home/OneRecord?id='+@Model.PersonIDNumber+'';
+            window.location.href = url;
+        });
+
+    </script>
+
+</head>
+
+
+
+
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">One Record</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    @*<div class="row">
+                            <div class="col-md-4">
+                                <label for="SeparateLine">WSA Number</label><br>
+                                <input type="radio" id="SeparateLine" name="WSADisplay" value="1" checked>
+                                <label for="SeparateLine">Separate Line</label><br>
+                                <input type="radio" id="SameLineName" name="WSADisplay" value="2">
+                                <label for="SameLineName">Same Line as Name</label><br>
+                                <input type="radio" id="WSASuppress" name="WSADisplay" value="3">
+                                <label for="WSASuppress">Suppress</label>
+
+                            </div>
+                            <div class="col-md-4">
+                                <label for="SeparateLine">Country</label><br>
+                                <input type="radio" id="Display" name="CountryDisplay" value="1" checked>
+                                <label for="Display">Display</label><br>
+                                <input type="radio" id="CountrySuppress" name="CountryDisplay" value="2">
+                                <label for="CountrySuppress">Suppress</label><br />
+
+                            </div>
+                            <div class="col-md-4">
+                                <a href="@Url.Action("AddressLabel", "Home",new { id=@ViewBag.id })"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                                <a href="@Url.Action("CreatePerson","Home",new { id=@ViewBag.id })" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
+                                <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
+                                <a href="#" id="PDFBtn" class="btn btn-success"><i class="fa fa-print"></i> PDF</a>
+                            </div>
+
+                        </div>*@
+                    <div class="row">
+                        <div class="col-md-2">
+                            <label>Letter Case</label>
+                            <select name="LetterCase" class="form-control" id="LetterCase">
+                                <option value=""> Select Letter Case</option>
+                                <option value="1">lowercase</option>
+                                <option value="2">UPPERCASE</option>
+                                <option value="3">Capitalize Each Word</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label>Font Size</label>
+                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="16" />
+                        </div>
+                        <div class="col-md-2">
+                            <label>Width %</label>
+                            <input type="number" class="form-control" name="FontWidth" id="FontWidth" value="100" />
+                        </div>
+                        <div class="col-md-2">
+                            <label>QR Code</label><br />
+                            <input type="radio" id="MRZSuppress" name="MRZSuppress" value="1">
+                            <label for="MRZSuppress">Suppress</label><br />
+                            <input type="radio" id="MRZUnSuppress" name="MRZSuppress" value="2" checked>
+                            <label for="MRZUnSuppress">Unsuppress</label>
+                        </div>
+
+                        <div class="col-md-4">
+                            @*<label>Font Style</label>
+                                <input type="text" class="form-control" name="FontStyle" id="FontStyle" value="" />*@
+                            <br />
+                            @*<a href="@Url.Action("AddressLabel", "Home",new { id=@ViewBag.id })"> <input class="btn btn-danger" type="button" value="Cancel"></a>*@
+                            <a href="@Url.Action("Persons","Home",new { id=@ViewBag.id })" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
+                            <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
+                            <a href="#" id="PDFBtn" class="btn btn-success"><i class="fa fa-print"></i> PDF</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <section id="section">
+                <div id="ID">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p>World Service Authority Database Report</p>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <div id="MRZHide">
+                                        <img src="@Model.QRCode" alt="Alternate Text" />
+                                    </div>
+                                    <p>@DateTime.Now.ToString(@DateFormat)</p>
+                                    <p>@DateTime.Now.ToString("T")</p>
+                                </div>
+                            </div>
+                            <div class="row" style="border-bottom:solid">
+                                <div class="col-md-6">
+                                    <p>Search: one person</p>
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    <p></p>
+                                </div>
+                            </div><br />
+                            <!-- /Page Header -->
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p>Last Name</p>
+                                            <p>System#</p>
+                                            <p>Country of Appl</p>
+                                            <p>City of Birth</p>
+                                            <p>Date of Birth</p>
+                                            <p>Sex</p>
+                                            <p>Height</p>
+                                            <p>Eye</p>
+                                            <p>Marks</p>
+                                            <p>Occupation Code</p>
+                                            <p>Father</p>
+                                            <p>Phone</p>
+                                            <p>E-Mail</p>
+                                            <p>Date Entered</p>
+                                        </div>
+                                        <div class="col-md-6 ">
+                                            @if (@Model.LastName != null)
+                                            {
+                                                <p><b>@Model.LastName</b></p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.WSANumber != null)
+                                            {
+                                                <p>@Model.WSANumber</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.tblCountry != null)
+                                            {
+                                                <p>@Model.tblCountry.Name</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.CityOfBirth != null)
+                                            {
+                                                <p>@Model.CityOfBirth</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (DateFormat == "MMM-dd-yyyy")
+                                            {
+                                                <p>@ViewBag.MonthName-@ViewBag.CodeDay-@ViewBag.CodeYear</p>
+                                            }
+                                            else
+                                            {
+                                                <p>@ViewBag.CodeDay-@ViewBag.MonthName-@ViewBag.CodeYear</p>
+                                            }
+
+                                            @if (@Model.tblSex != null)
+                                            {
+                                                <p>@Model.tblSex.Name</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.Height != null)
+                                            {
+                                                <p>@Model.Height</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+
+
+                                            @if (Model.Eyes > 0)
+                                            {
+
+                                                <p>@Model.tblEye.Name</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.Marks != null)
+                                            {
+                                                <p>@Model.Marks</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+
+                                            @if (Model.OccupationId > 0)
+                                            {
+                                                <p>@Model.tblOccupation.Name</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.FatherName != null)
+                                            {
+                                                <p>@Model.FatherName</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.Phone != null)
+                                            {
+                                                <p>@Model.Phone</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.EMail != null)
+                                            {
+                                                <p>@Model.EMail</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            <p>@Model.EntryDate.ToString(@DateFormat)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <div class="row">
+                                        <div class="col-md-6 ">
+                                            <p>First Name</p>
+                                            <p>Status</p>
+                                            <p>Country of Birth</p>
+                                            <p>Mother</p>
+                                            <p>Fax</p>
+                                            <p>Date Modified</p>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            @if (@Model.FirstName != null)
+                                            {
+                                                <p><b>@Model.FirstName</b></p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.tblStatu != null)
+                                            {
+                                                <p>@Model.tblStatu.Name</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.tblCountry1 != null)
+                                            {
+                                                <p>@Model.tblCountry1.Name</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.MotherName != null)
+                                            {
+                                                <p>@Model.MotherName</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            @if (@Model.Fax != null)
+                                            {
+                                                <p>@Model.Fax</p>
+                                            }
+                                            else
+                                            {
+                                                <p>--</p>
+                                            }
+                                            <p>@Model.LastModifiedDate.ToString(@DateFormat)</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><br />
+                            @if (ViewBag.LabelAddress != null)
+                            {
+                                <div class="row" style="border:solid;">
+                                    <div class="col-sm-2">
+                                        <p>Send To</p>
+                                        <p>CareOf</p>
+                                        <p>Address</p>
+                                        <p>City</p>
+                                        <p>State</p>
+                                        <p>Zip</p>
+                                        <p>Country</p>
+
+                                    </div>
+                                    <div class="col-sm-10 text-left">
+                                        <br />
+
+                                        <p>@ViewBag.LabelAddress.CareOf</p>
+                                        <p>@ViewBag.LabelAddress.Address1</p>
+                                        <p>@ViewBag.LabelAddress.City</p>
+                                        <p>@ViewBag.LabelAddress.State</p>
+                                        <p>@ViewBag.LabelAddress.PostalCode</p>
+                                        <p>@ViewBag.LabelAddress.tblCountry.Name</p>
+
+                                    </div>
+                                </div>
+                            }<br />
+                            @foreach (WorldServiceOrganization.Models.tblAddress Address in @ViewBag.AltAddress)
+                            {
+                                <div class="row" style="border:solid;">
+                                    <div class="col-sm-2">
+                                        <p>Alternate Address</p>
+                                        <p>CareOf</p>
+                                        <p>Address</p>
+                                        <p>City</p>
+                                        <p>State</p>
+                                        <p>Zip</p>
+                                        <p>Country</p>
+
+                                    </div>
+                                    <div class="col-sm-10 text-left">
+                                        <br />
+                                        <p>@Address.CareOf</p>
+                                        <p>@Address.Address1</p>
+                                        <p>@Address.City</p>
+                                        <p>@Address.State</p>
+                                        <p>@Address.PostalCode</p>
+                                        <p>@Address.tblCountry.Name</p>
+
+                                    </div>
+                                </div><br />
+                            }
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <p><b>Comment:</b></p>
+                                        </div>
+                                        <div class="col-sm-10 text-left">
+                                            <p>@Model.Comments</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <p>Entered By: <b>@Model.tblUser.Initials</b> </p>
+                                </div>
+                            </div><br />
+
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <p>Product Code</p>
+                                </div>
+                                <div class="col-md-1">
+                                    <p>Product Name</p>
+                                </div>
+                                <div class="col-md-1">
+                                    <p>Unit Cost</p>
+                                </div>
+                                <div class="col-md-1">
+                                    <p>Qty</p>
+                                </div>
+                                <div class="col-md-1">
+                                    <p>Total Cost</p>
+                                </div>
+                                <div class="col-md-1 ">
+                                    <p>Document ID</p>
+                                </div>
+                                <div class="col-sm-2">
+                                    <p>Application Date</p>
+                                </div>
+                                <div class="col-sm-2 ">
+                                    <p>Issue Date</p>
+                                </div>
+                                <div class="col-sm-2 ">
+                                    <p>Sent Date</p>
+                                </div>
+                            </div>
+                            <div style="border:solid;">
+                                @foreach (WorldServiceOrganization.Models.tblTransaction Transaction in @ViewBag.Transaction)
+                                {
+                                    {
+                                        TotalCost = @Transaction.tblProduct.Price * @Transaction.Quantity;
+                                        GrandCost += TotalCost;
+                                    }
+                                    <div class="row">
+                                        <div class="col-md-1">
+                                            <p>@Transaction.tblProduct.Code</p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <p>@Transaction.tblProduct.Name</p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <p>@Transaction.tblProduct.Price</p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <p>@Transaction.Quantity</p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <p>@TotalCost</p>
+                                        </div>
+                                        <div class="col-md-1 ">
+                                            <p>@Transaction.IDCode</p>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <p>@Convert.ToDateTime(Transaction.ApplicationDate).ToString(@DateFormat)</p>
+                                        </div>
+                                        @if (Transaction.IssueDate == null || Transaction.IssueDate == "")
+                                        {
+                                            <div class="col-sm-2 ">
+                                                <p></p>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-sm-2 ">
+                                                <p>@Convert.ToDateTime(Transaction.IssueDate).ToString(@DateFormat)</p>
+                                            </div>
+                                        }
+                                        @if (Transaction.SentDate == null || Transaction.SentDate == "")
+                                        {
+                                            <div class="col-sm-2 ">
+                                                <p></p>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="col-sm-2 ">
+                                                <p>@Convert.ToDateTime(Transaction.SentDate).ToString(@DateFormat)</p>
+                                            </div>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <p>Total for <b>@ViewBag.Count</b> Transaction</p>
+                                </div>
+                                <div class="col-md-8">
+                                    <p><b>$ @GrandCost</b></p>
+                                </div>
+
+                            </div><br />
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- /Page Wrapper -->
+<!-- jQuery -->
+
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+
+
+
+@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+<script>
+    $(document).ready(function () {
+        $('input:radio[name="MRZSuppress"]').change(function () {
+
+            if ($(this).val() == 1) {
+                $("#MRZHide").hide();
+            }
+            else {
+                $("#MRZHide").show();
+            }
+        });
+
+        $("p").css("margin-top", '0rem');
+        $("p").css("margin-bottom", '0rem');
+    });
+    $("#FontStyle").change(function () {
+        $("#ID").css("font-family", $("#FontStyle").val());
+    });
+    $("#FontWidth").change(function () {
+        $("#ID").css("width", $("#FontWidth").val() + '%');
+    });
+    $("#FontSize").change(function () {
+        $("#ID").css("font-size", $("#FontSize").val()+'px');
+    });
+
+    $('#LetterCase').change(function () {
+        if ($(this).val() == 1) {
+            $('#ID').css('textTransform', 'lowercase');
+            //document.getElementsByTagName("section").setAttribute('textTransform', 'lowercase');
+        }
+        else if ($(this).val() == 2) {
+            $('#ID').css('textTransform', 'uppercase');
+
+            //document.getElementById("ID").setAttribute('style', 'textTransform:uppercase');
+        }
+        else {
+            $('#ID').css('textTransform', 'capitalize');
+        }
+    });
+
+
+    $('input:radio[name="WSADisplay"]').change(function () {
+
+        if ($(this).val() == 1) {
+            $("#WSAShowSeparate").show();
+            $("#WSAShowName").hide();
+
+        }
+        else if ($(this).val() == 2) {
+            $("#WSAShowName").show();
+            $("#WSAShowSeparate").hide();
+        }
+        else {
+            $("#WSAShowName").hide();
+            $("#WSAShowSeparate").hide();
+        }
+    });
+
+    $('input:radio[name="CountryDisplay"]').change(function () {
+
+        if ($(this).val() == 1) {
+            $(".CountryShow").show();
+
+        }
+        else {
+            $(".CountryShow").hide();
+        }
+    });
+
+    $('#PrintBtn').click(function () {
+        var myDiv = document.getElementById("section").innerHTML;
+
+            document.body.innerHTML =
+                "<html><head><title></title></head><body>" +
+                myDiv + "</body>";
+            window.print();
+
+            var url = window.location.origin;
+        url += '/Home/OneRecord?id='+@Model.PersonIDNumber+'';
+            window.location.href = url;
+    });
+
+    $('#PDFBtn').click(function () {
+        var myDiv = document.getElementById("section").innerHTML;
+
+            document.body.innerHTML =
+                "<html><head><title></title></head><body>" +
+                myDiv + "</body>";
+            window.print();
+
+            var url = window.location.origin;
+        url += '/Home/OneRecord?id='+@Model.PersonIDNumber+'';
+            window.location.href = url;
+    });
+
+
+
+
+
+
+    $(document).ready(function () {
+
+
+
+        @*if (@ViewBag.State== 1) {
+            $("#SeparateLine").attr('checked', 'checked');
+            $("#WSAShowSeparate").show();
+            $("#WSAShowName").hide();
+        }
+        if (@ViewBag.State== 2) {
+            $("#SameLineName").attr('checked', 'checked');
+            $("#WSAShowName").show();
+            $("#WSAShowSeparate").hide();
+        }
+        if (@ViewBag.State== 3) {
+            $("#WSASuppress").attr('checked', 'checked');
+            $("#WSAShowName").hide();
+            $("#WSAShowSeparate").hide();
+        }
+
+        if (@ViewBag.CState== 1) {
+            $("#SeparateLine").attr('checked', 'checked');
+            $("#Display").show();
+        }
+        if (@ViewBag.CState== 2) {
+            $("#CountrySuppress").attr('checked', 'checked');
+            $("#CountryShow").hide();
+        }*@
+
+
+
+
+
+
+    });
+
+
+
+
+</script>

@@ -1,0 +1,322 @@
+﻿@model  IEnumerable<WorldServiceOrganization.Models.PersonList_Result1>
+
+@{
+    ViewData["Title"] = "Transactions";
+
+
+    string CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
+
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["DateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+    //string EDate = DateTime.Now.ToString(DateFormat);
+    //string BDate = DateTime.Now.ToString(DateFormat);
+
+    //string EEDate = ViewBag.EDate.ToString(DateFormat);
+    //string BBDate = ViewBag.BDate.ToString(DateFormat);
+    string EDate = ViewBag.EDate;
+    string BDate = ViewBag.BDate;
+}
+
+<head>
+
+    <style>
+        .select2-container {
+            width: 100% !important;
+        }
+    </style>
+
+
+
+</head>
+
+
+
+
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">Person List</h5>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="card-body">
+                    @using (Html.BeginForm("ProductList", "Report", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {@Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                
+                                <div class="col-md-6">
+                                    <label>Select Report</label>
+                                    <select name="SelectReport" id="SelectReport" class="form-control">
+                                        <option value="1">Daily</option>
+                                        <option value="2">Date Range</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label >Status</label>
+                                    <select name="SelectStatus" id="SelectStatus" class="form-control">
+                                        @foreach (WorldServiceOrganization.Models.tblStatus Status in @ViewBag.Status)
+                                        {
+                                            <option value=@Status.StatusId>@Status.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                                    
+
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6" style="display:none;" id="SBD">
+                            <div class="row">
+
+                                <div class="col-md-4"  >
+                                    <label>Search by Date</label>
+                                    <select name="SearchByDate" id="SearchByDate" class="form-control">
+                                        <option value="1">Date Entered</option>
+                                        <option value="2">Date Changed</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4"  id="BEDate">
+                                    <label>Begin:</label>
+                                    <input type="text" id="BDate" name="BDate" value="@BDate" class="form-control">
+                                   
+                                </div>
+                                <div class="col-md-4" id="BEDate">
+                                  
+                                    <label>End:</label>
+                                    <input type="text" id="EDate" name="EDate" value="@EDate" class="form-control">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div><br />
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button class="btn btn-primary" type="submit" id="btnSearch">OK</button>
+                            <a href="@Url.Action("ProductList", "Report")"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                        </div>
+                        <div class="col-md-1 text-right">
+                            
+                        </div>
+                        
+                    </div><br />
+                    @*<div class="row">
+                                    <div class="col-md-4">
+                                        <label>Letter Case</label>
+                                        <select name="LetterCase" class="form-control" id="LetterCase">
+                                            <option value=""> Select Letter Case</option>
+                                            <option value="1">lowercase</option>
+                                            <option value="2">UPPERCASE</option>
+                                            <option value="3">Capitalize Each Word</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Font Size</label>
+                                        <input type="number" class="form-control" name="FontSize" id="FontSize" value="" />
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Font Style</label>
+                                        <input type="text" class="form-control" name="FontStyle" id="FontStyle" value="" />
+                                    </div>
+                     </div><br />*@
+                }
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="cell-border table" id="ListTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Status</th>
+                                            <th>Last Name</th>
+                                            <th>First Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ID">
+                                        @if (Model != null)
+                                        {
+                                            foreach (WorldServiceOrganization.Models.PersonList_Result1 List in Model)
+                                            {
+                                                <tr>
+                                                    <td>@List.Name</td>
+                                                    <td>@List.LastName</td>
+                                                    <td>@List.FirstName</td>
+                                                </tr>
+                                            }
+                                        }
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- /Page Wrapper -->
+<!-- jQuery -->
+
+<script src="~/Content/assets/js/jquery-3.5.1.js"></script>
+
+
+@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+<script>
+
+     
+
+    $("#FontStyle").change(function () {
+        $("#ID").css("font-family", $("#FontStyle").val());
+    });
+
+    $("#FontSize").change(function () {
+        $("#ID").css("font-size", $("#FontSize").val() + 'px');
+    });
+
+    $('#LetterCase').change(function () {
+
+        if ($(this).val() == 1) {
+            $('#ID').css('textTransform', 'lowercase');
+            //document.getElementsByTagName("section").setAttribute('textTransform', 'lowercase');
+        }
+        else if ($(this).val() == 2) {
+            $('#ID').css('textTransform', 'uppercase');
+
+            //document.getElementById("ID").setAttribute('style', 'textTransform:uppercase');
+        }
+        else {
+            $('#ID').css('textTransform', 'capitalize');
+        }
+    });
+
+
+    $('#SelectReport').change(function () {
+        var Val = $(this).val();
+        if (Val == 2) {
+            $('#BEDate').show();
+            $('#SBD').show();
+        }
+        else {
+            $('#BEDate').hide();
+            $('#SBD').hide();
+        }
+    });
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
+
+    $(document).ready(function () {
+
+        $(function () {
+            var Formate = "@DateFormat"
+             $('#BDate').datepicker({
+                //format: Formate.toLowerCase() ,
+                 format: "mm-dd-yyyy",
+            });
+             $('#EDate').datepicker({
+                //format: Formate.toLowerCase() ,
+                 format: "mm-dd-yyyy",
+            });
+        
+        });
+
+        var SelectReport=@ViewBag.SelectReport;
+        if (SelectReport!=0) {
+            $("#SelectReport").val(@ViewBag.SelectReport).change();
+            $("#SelectStatus").val(@ViewBag.SelectStatus).change();
+        }
+        
+
+        var SelectReport=@ViewBag.SelectReport;
+        if (SelectReport== 2) {
+            $('#BEDate').show();
+            $('#SBD').show();
+            $("#SearchByDate").val(@ViewBag.SearchByDate).change();
+
+            @*var BBDate =@BBDate;
+            var EEDate =@EEDate;
+
+            $("#BDate").val(@BBDate);
+            $("#EDate").val(@EEDate);*@
+
+        }
+
+
+        $('#ListTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excel',
+                    exportoptions: {
+                        columns: [0, 1, 2]
+                    }
+
+                },
+                {
+                    extend: 'pdf',
+                    exportoptions: {
+                        columns: [0,1, 2]
+                    }
+
+                }
+            ]
+            //"bInfo": false,
+            //"scrollY": "110px",
+            //"scrollCollapse": true,
+            //searching: false, paging: false,
+        });
+
+
+        $(".nav li ul li").removeClass("active");
+        $('#PList').addClass('active');
+        $('#Rep a').addClass('subdrop');
+        $("#Rep  ul").first().css('display', 'block');
+    });
+
+
+
+
+</script>

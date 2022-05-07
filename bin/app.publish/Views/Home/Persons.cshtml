@@ -1,0 +1,658 @@
+﻿@model IEnumerable<WorldServiceOrganization.Models.tblPerson>
+
+@{
+    ViewData["Title"] = "Persons";
+    string Succ = @ViewBag.Success;
+    string Update = @ViewBag.Update;
+    string Delete = @ViewBag.Delete;
+
+    
+
+    HttpCookie cookieObj = Request.Cookies["Settings"];
+    string DateFormat = cookieObj["ReportsDateFormat"];
+    string Retrieves = cookieObj["Retrieves"];
+
+
+}
+
+
+<head>
+
+    <style>
+        .filters {
+            background-color: white !important;
+            /*color: white !important;*/
+        }
+
+        .select2-container {
+            width: 100% !important;
+        }
+
+        /*tfoot input {
+            width: 100%;
+            padding: 3px;
+            box-sizing: border-box;
+        }*/
+
+    </style>
+
+
+
+</head>
+
+
+
+
+<!-- Page Wrapper -->
+<div class="content container-fluid">
+
+    <!-- Page Header -->
+    <!-- /Page Header -->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="breadcrumb-bar">
+                            <div class="container-fluid">
+                                <div class="row align-items-center">
+                                    <div class="col-md-6 col-6">
+                                        <h5 class="breadcrumb-title">Person List</h5>
+                                    </div>
+                                    <div class="col-md-6 col-6 text-right" id="CreatePersonB">
+                                        <a href="@Url.Action("CreatePerson","Home")" class="btn btn-primary " style="float:right;"><i class="fa fa-plus"></i> Create New Person</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div style="display:none;" class="alert alert-success alert-dismissible fade show" id="SuccessAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Success
+                </div>
+                <div style="display:none;" class="alert alert-info alert-dismissible fade show" id="UpdateAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Update
+                </div>
+                <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
+                    <strong>Success!</strong> @ViewBag.Delete
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group row">
+                                <div class="col-md-3 text-right">
+                                    <label>Record Type</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control" id="RecordType" name="RecordType" onChange="RecordType(this);">
+                                        <option value="0">Select Record Type</option>
+                                        @if (ViewBag.RecordType == "All")
+                                        {
+                                            <option value="1" selected>All</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="1">All</option>
+                                        }
+                                        @if (ViewBag.RecordType == "WSA Only")
+                                        {
+                                            <option value="2" selected>WSA Only</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="2">WSA Only</option>
+                                        }
+                                        @if (ViewBag.RecordType == "Information Only")
+                                        {
+                                            <option value="3" selected>Information Only</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="3">Information Only</option>
+                                        }
+                                    </select>
+
+                                </div>
+                                
+                                <div class="col-sm-3">
+                                    <a href="@Url.Action("Persons","Home")"><input class="btn btn-primary" type="button" value="Cancel"></a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                        
+
+                        <div class="table-responsive">
+                            <div class="table-responsive">
+                                <table class="cell-border table table-hover table-center  mb-0 display" id="PersonTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="display:none;">Person ID</th>
+                                            <th>Status</th>
+                                            <th>WSA #</th>
+                                            <th>Last Name</th>
+                                            <th>First and Middle Names</th>
+                                            <th>Country</th>
+                                            <th>DOB</th>
+
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (WorldServiceOrganization.Models.tblPerson Person in Model)
+                                        {
+                                        <tr>
+                                            <td style="display:none;">@Person.PersonIDNumber</td>
+                                            <td>@Person.tblStatu.Name</td>
+                                            <td>@Person.WSANumber</td>
+                                            <td>@Person.LastName</td>
+                                            <td>@Person.FirstName</td>
+                                            <td>@Person.tblCountry.Name</td>
+                                            @if (@DateFormat == "MMM-dd-yyyy")
+                                            {
+                                                if (@Person.BirthMonth != null)
+                                                {
+                                                    if (@Person.BirthYear != null)
+                                                    {
+                                                        <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(@Person.BirthMonth ?? 13) @Person.BirthDay,@Person.BirthYear</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(@Person.BirthMonth ?? 13) @Person.BirthDay </td>
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    if (@Person.BirthYear != null)
+                                                    {
+                                                        <td>@Person.BirthDay,@Person.BirthYear</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td>@Person.BirthDay @Person.BirthYear</td>
+                                                    }
+                                                }
+
+                                            }
+                                            else
+                                            {
+
+                                                if (@Person.BirthMonth != null)
+                                                {
+                                                    <td>@Person.BirthDay @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(@Person.BirthMonth ?? 1) @Person.BirthYear</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Person.BirthDay @Person.BirthYear</td>
+                                                }
+
+                                            }
+
+
+
+                                            <td class="text-end">
+                                                <div class="actions">
+                                                    <a href="@Url.Action("CreatePerson","Home",new {id=Person.PersonIDNumber })" class="text-black" title="Edit"><i class="fa fa-edit" id="EditPerson"></i> Edit</a>
+                                                    <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#PersonDelete" id="DeletePersonRecord"><i class="fa fa-trash"></i> Delete</a>
+                                                    @*<a href="@Url.Action("CreateTransaction","Home",new {id=Person.PersonIDNumber })" class="text-dark " title="Transaction"><i class="fa fa-credit-card"></i> Transaction</a>
+                <a href="@Url.Action("CreateAddress","Home",new {id=Person.PersonIDNumber })" class="text-info  " title="Address"><i class="fa fa-map"></i> Address</a>
+                <a href="@Url.Action("CreateChild","Home",new {id=Person.PersonIDNumber })" class="text-warning " title="Child"><i class="fa fa-user"></i> Child</a>*@
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        }
+                                    </tbody>
+                                    @*<tfoot>
+                        <tr>
+                            <th>Status</th>
+                            <th>WSA #</th>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>Country</th>
+                            <th>DOB</th>
+                        </tr>
+                    </tfoot>*@
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="PersonDelete" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
+                <input class="form-control" type="text" id="DeletePersonID" style="display:none;">
+                <h5>Are you sure want to delete this device Information?</h5>
+                <div class="m-t-20">
+                    <p id="ConfigDerror" style="color:red;"></p>
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <input type="button" class="btn btn-danger" id="CDeletePerson" value="Delete">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /Page Wrapper -->
+<!-- jQuery -->
+
+<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>
+
+
+
+@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+<script>
+
+
+    function RecordType(sel)
+    {
+        var Selected = sel.options[sel.selectedIndex].text;
+        var url = window.location.origin;
+        url += '/Home/Persons?RecordType='+Selected+'';
+        window.location.href = url;
+    }
+
+
+    $("body").on("click", "#DeletePersonRecord", function () {
+        $("#ConfigDerror").text("");
+        $("#CDeletePerson").attr("disabled", false);
+        var currentRow = $(this).closest("tr");
+        $("#DeletePersonID").val(currentRow.find("td:eq(0)").text());
+        //alert($("#DeletePersonID").val());
+    });
+
+    $("#CDeletePerson").on("click", function () {
+
+
+        $("#CDeletePerson").attr("disabled", true);
+
+        var ID = $("#DeletePersonID").val();
+        var model = {
+            PersonId: ID,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Home/DeletePerson",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r == 1) {
+
+                    var url = window.location.origin;
+                    url += '/Home/Persons?Delete=Person has been delete successfully.';
+                    window.location.href = url;
+                }
+                //alert(r + " record(s) inserted.");
+            }
+        });
+
+    });
+
+
+
+
+    $("body").on("click", "#CreateChildB", function () {
+        var error = $("#Childerror");
+        error.text('');
+        $("#EHeading").hide();
+        $("#CHeading").show();
+        $("#ChildID").val('');
+        $("#ECode").val('');
+        $("#EName").val('');
+        $("#EPrice").val('');
+        $("#ChildTypeD").val(0).change();
+        $("#LblChildCodeError").fadeOut();
+        $("#LblChildNameError").fadeOut();
+        $("#LblChildTypeError").fadeOut();
+        $("#LblPriceError").fadeOut();
+    });
+
+    $("body").on("click", "#EditChild", function () {
+        var error = $("#Childerror");
+        error.text('');
+        var currentRow = $(this).closest("tr");
+        $("#EHeading").show();
+        $("#CHeading").hide();
+        $("#ChildID").val(currentRow.find("td:eq(0)").text());
+        $("#ECode").val(currentRow.find("td:eq(1)").text());
+        $("#EName").val(currentRow.find("td:eq(2)").text());
+        $("#ChildTypeD").val(currentRow.find("td:eq(3)").text()).change();
+        $("#EPrice").val(currentRow.find("td:eq(5)").text());
+
+        $("#LblChildCodeError").fadeOut();
+        $("#LblChildNameError").fadeOut();
+        $("#LblChildTypeError").fadeOut();
+        $("#LblPriceError").fadeOut();
+
+        //alert($("#ChildID").val());
+    });
+
+
+    $("#ChildSubmit").on("click", function () {
+
+        var error = $("#Childerror");
+        if ($("#ECode").val() != "" && $("#EName").val() != "" && $("#ChildTypeD").val() != "0" && $("#EPrice").val() != "") {
+            error.text('');
+            $("#ChildSubmit").attr("disabled", true);
+            $("#Childloading").show();
+            var CheckMessage = 0;
+
+            var UId = $("#ChildID").val();
+            var UCode = $("#ECode").val();
+            var UName = $("#EName").val();
+            var UPrice = $("#EPrice").val();
+            var UChildTypeId = $("#ChildTypeD").val();
+
+
+            if (UId != 0) {
+                var model = {
+                    ChildId: UId,
+                    Name: UName,
+                    Code: UCode,
+                    Price: UPrice,
+                    ChildTypeId: UChildTypeId,
+                };
+                CheckMessage = 1;
+            }
+            else {
+                var model = {
+
+                    Name: UName,
+                    Code: UCode,
+                    Price: UPrice,
+                    ChildTypeId: UChildTypeId,
+                };
+                CheckMessage = 2;
+            }
+
+
+
+            console.log(model);
+
+
+            //Send the JSON array to Controller using AJAX.
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/CreateChild",
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (r) {
+                    if (r == 1) {
+                        error.text('  *Child Already Exsist!!!  ');
+                        $("#ChildSubmit").attr("disabled", false);
+                        error.css('color', 'red');
+                        $("#Childloading").hide();
+                    }
+                    else {
+                        if (CheckMessage == 1) {
+                            var url = window.location.origin;
+                            url += '/Home/Childs?Update=Child has been update successfully.';
+                            window.location.href = url;
+                        }
+                        else {
+                            var url = window.location.origin;
+                            url += '/Home/Childs?Success=Child has been add successfully.';
+                            window.location.href = url;
+                        }
+                    }
+                }
+            });
+
+        }
+        else {
+            error.text('');
+            error.css('color', 'red');
+            if ($("#ECode").val() == "") {
+
+                //text = error.text('  *Name must be filled!!!  ');
+                $("#LblChildCodeError").fadeIn();
+
+            }
+            else {
+                $("#LblChildCodeError").fadeOut();
+            }
+            if ($("#EName").val() == "") {
+                //text = error.append('  *Email must be filled!!!  ');
+                $("#LblChildNameError").fadeIn();
+            }
+            else {
+                $("#LblChildNameError").fadeOut();
+            }
+            if ($("#EPrice").val() == "") {
+                //text = error.append('  *Email must be filled!!!  ');
+                $("#LblPriceError").fadeIn();
+            }
+            else {
+                $("#LblPriceError").fadeOut();
+            }
+            if ($("#ChildTypeD").val() == "0") {
+                //text = error.append('  *Email must be filled!!!  ');
+                $("#LblChildTypeError").fadeIn();
+            }
+            else {
+                $("#LblChildTypeError").fadeOut();
+            }
+
+        }
+
+    });
+
+
+    $("body").on("click", "#DeleteChild", function () {
+        var currentRow = $(this).closest("tr");
+        $("#DeleteChildID").val(currentRow.find("td:eq(0)").text());
+        //alert($("#DeleteChildID").val());
+    });
+
+    $("#CDeleteChild").on("click", function () {
+
+
+        $("#CDeleteChild").attr("disabled", true);
+
+        var ID = $("#DeleteChildID").val();
+
+        var model = {
+            ChildId: ID,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Home/DeleteChild",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                var url = window.location.origin;
+                url += '/Home/Childs?Delete=Child has been delete successfully.';
+                window.location.href = url;
+            }
+        });
+
+    });
+
+
+
+    $(document).ready(function () {
+
+        //$('#PersonTable tfoot th').each(function () {
+        //    var title = $(this).text();
+        //    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        //});
+
+
+        // Setup - add a text input to each footer cell
+            //$('#PersonTable thead tr')
+            //    .clone(true)
+            //    .addClass('filters')
+            //    .appendTo('#PersonTable thead');
+
+        @*var tbl = $('#PersonTable').DataTable({
+
+            destroy:true,
+            dom: 'Bfrtip',
+            //lengthMenu: [
+            //    [10, 25, 50, -1],
+            //    ['10 rows', '25 rows', '50 rows', 'Show all']
+            //],
+            buttons: [
+            'pageLength',
+                {
+
+
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [ 1, 2,3,4,5,6,7,8,9,10,11,12,13,14]
+                    }
+                }
+            ],
+            "lengthMenu": [@Retrieves],
+            orderCellsTop: true,
+            fixedHeader: true,
+            initComplete: function () {
+                var api = this.api();
+
+                // For each column
+                api
+                    .columns()
+                    .eq(0)
+                    .each(function (colIdx) {
+                        // Set the header cell to contain the input element
+                        var cell = $('.filters th').eq(
+                            $(api.column(colIdx).header()).index()
+                        );
+                        var title = $(cell).text();
+                        $(cell).html('<input type="text" placeholder="' + title + '" />');
+
+                        // On every keypress in this input
+                        $(
+                            'input',
+                            $('.filters th').eq($(api.column(colIdx).header()).index())
+                        )
+                            .off('keyup change')
+                            .on('keyup change', function (e) {
+                                e.stopPropagation();
+
+                                // Get the search value
+                                $(this).attr('title', $(this).val());
+                                var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                var cursorPosition = this.selectionStart;
+                                // Search the column for that value
+                                api
+                                    .column(colIdx)
+                                    .search(
+                                        this.value != ''
+                                            ? regexr.replace('{search}', '(((' + this.value + ')))')
+                                            : '',
+                                        this.value != '',
+                                        this.value == ''
+                                    )
+                                    .draw();
+
+                                $(this)
+                                    .focus()[0]
+                                    .setSelectionRange(cursorPosition, cursorPosition);
+                            });
+                    });
+            },
+            //language: {
+            //    'search': '검색' /*Empty to remove the label*/,
+            //    paginate: {
+            //        previous: '이전',
+            //        next: '다음'
+            //    },
+            //},
+
+            searching: true, paging: true, Sorting: false,
+            //"lengthMenu": [[1000, 10, 25, 50, -1], [1000, 10, 25, 50, "All"]],
+            "order": [],
+            autoWidth: false,
+            columnDefs: [
+                { width: '20%', targets: 0 }
+            ],
+            fixedColumns: true
+        });*@
+
+
+        if ("@Succ"!="") {
+            $('#SuccessAlert').fadeIn();
+            $('#SuccessAlert').fadeOut(6000);
+        }
+        else {
+            $('#SuccessAlert').fadeOut();
+        }
+        if ("@Update" != "") {
+            $('#UpdateAlert').fadeIn();
+            $('#UpdateAlert').fadeOut(6000);
+        }
+        else {
+            $('#UpdateAlert').fadeOut();
+        }
+        if ("@Delete" != "") {
+            $('#DeleteAlert').fadeIn();
+            $('#DeleteAlert').fadeOut(6000);
+        }
+        else {
+            $('#DeleteAlert').fadeOut();
+        }
+
+       var table = $('#PersonTable').DataTable({
+            destroy:true,
+            dom: 'Bfrtip',
+            lengthMenu: [
+                [10, 25, 50, -1],
+                ['10 rows', '25 rows', '50 rows', 'Show all']
+            ],
+            buttons: [
+            'pageLength',
+                {
+
+
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [ 1, 2,3,4,5,6]
+                    }
+                }
+            ],
+            "lengthMenu": [@Retrieves],
+            
+
+        });
+
+        
+
+        //$(".nav li a").removeClass("active");
+        //$('#Persons').addClass('active');
+        //$('#Per').addClass('active subdrop');
+        $(".nav li ul li").removeClass("active");
+        $('#Person').addClass('active');
+        $('#Per a').addClass('subdrop');
+        $("#Per  ul").first().css('display', 'block');
+    });
+
+
+
+
+</script>

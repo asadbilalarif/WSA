@@ -189,6 +189,8 @@
     <FunctionImport Name="TransactionSummaryList" ReturnType="Collection(WorldServiceOrganizationModel.TransactionSummaryList_Result2)">
       <Parameter Name="SearchValue" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="PersonExportData" ReturnType="Collection(WorldServiceOrganizationModel.PersonExportData_Result)" />
+    <EntitySet Name="tblMRZTranslations" EntityType="WorldServiceOrganizationModel.tblMRZTranslation" />
   </EntityContainer>
   <EntityType Name="tblRole">
     <Key>
@@ -1093,4 +1095,64 @@
     <Property Type="Boolean" Name="isActive" Nullable="true" />
     <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
   </ComplexType>
+  <ComplexType Name="PersonExportData_Result">
+    <Property Type="Int32" Name="PersonIDNumber" Nullable="false" />
+    <Property Type="String" Name="LastName" Nullable="true" />
+    <Property Type="String" Name="FirstName" Nullable="true" />
+    <Property Type="Int32" Name="CountryOfApplication" Nullable="true" />
+    <Property Type="String" Name="CityOfBirth" Nullable="true" />
+    <Property Type="Int32" Name="CountryOfBirth" Nullable="true" />
+    <Property Type="String" Name="Phone" Nullable="true" />
+    <Property Type="String" Name="Fax" Nullable="true" />
+    <Property Type="String" Name="EMail" Nullable="true" />
+    <Property Type="String" Name="Website" Nullable="true" />
+    <Property Type="String" Name="DateOfBirth" Nullable="true" />
+    <Property Type="Int32" Name="BirthDay" Nullable="true" />
+    <Property Type="Int32" Name="BirthMonth" Nullable="true" />
+    <Property Type="Int32" Name="BirthYear" Nullable="true" />
+    <Property Type="Int32" Name="Sex" Nullable="true" />
+    <Property Type="Double" Name="Height" Nullable="true" />
+    <Property Type="Int32" Name="HeightUnit" Nullable="true" />
+    <Property Type="Int32" Name="Eyes" Nullable="true" />
+    <Property Type="String" Name="Marks" Nullable="true" />
+    <Property Type="Int32" Name="OccupationId" Nullable="true" />
+    <Property Type="Int32" Name="OccupationCode" Nullable="true" />
+    <Property Type="String" Name="Title" Nullable="true" />
+    <Property Type="String" Name="FatherName" Nullable="true" />
+    <Property Type="String" Name="MotherName" Nullable="true" />
+    <Property Type="Int32" Name="WSANumber" Nullable="true" />
+    <Property Type="String" Name="Comments" Nullable="true" />
+    <Property Type="Int32" Name="Status" Nullable="true" />
+    <Property Type="Int32" Name="TransactionCount" Nullable="true" />
+    <Property Type="String" Name="SignaturePath" Nullable="true" />
+    <Property Type="String" Name="Photo" Nullable="true" />
+    <Property Type="Binary" Name="Photograph" Nullable="true" MaxLength="Max" />
+    <Property Type="Binary" Name="Signature" Nullable="true" MaxLength="Max" />
+    <Property Type="String" Name="Certification" Nullable="true" />
+    <Property Type="Int32" Name="CountryOfBirthStatistical" Nullable="true" />
+    <Property Type="String" Name="QRCode" Nullable="true" />
+    <Property Type="Int32" Name="CreatedBy" Nullable="true" />
+    <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="LastEditedBy" Nullable="true" />
+    <Property Type="DateTime" Name="LastModifiedDate" Nullable="false" Precision="23" />
+    <Property Type="Int32" Name="DeletedBy" Nullable="true" />
+    <Property Type="DateTime" Name="DeletedDate" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="isActive" Nullable="true" />
+    <Property Type="String" Name="CountryOfApplicationName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CountryOfBirthName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CountryOfBirthStatisticalName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="OccupationName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="EyeName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SexName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="StatusName" Nullable="true" MaxLength="50" />
+  </ComplexType>
+  <EntityType Name="tblMRZTranslation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Unicode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NationalCharacter" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="RecommendedTransliteration" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
 </Schema>

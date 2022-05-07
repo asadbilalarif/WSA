@@ -106,7 +106,7 @@ namespace WorldServiceOrganization.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreatePerson(tblPerson Person, HttpPostedFileBase Image, HttpPostedFileBase SigImage, HttpPostedFileBase CertificationFile)
+        public ActionResult CreatePerson(tblPerson Person, HttpPostedFileBase Image, HttpPostedFileBase CImage, HttpPostedFileBase SigImage, HttpPostedFileBase CertificationFile)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             tblPerson Data = new tblPerson();
@@ -118,7 +118,7 @@ namespace WorldServiceOrganization.Controllers
                 //string[] FormatCheck = DateFormat.Split('-');
                 ViewBag.User = Session["User"];
 
-
+                
 
 
                 if (Person.PersonIDNumber == 0)
@@ -126,7 +126,49 @@ namespace WorldServiceOrganization.Controllers
                     //if (DB.tblPersons.Select(r => r).Where(x => x.EMail==Person.EMail).FirstOrDefault() == null)
                     //{
                     Data = Person;
+                    byte[] bytes;
 
+
+                    //if (Image != null)
+                    //{
+                    //    using (BinaryReader br = new BinaryReader(Image.InputStream))
+                    //    {
+                    //        bytes = br.ReadBytes(Image.ContentLength);
+                    //    }
+                    //    Data.Photograph = bytes;
+                    //}
+                    //if (SigImage != null)
+                    //{
+                    //    using (BinaryReader br = new BinaryReader(SigImage.InputStream))
+                    //    {
+                    //        bytes = br.ReadBytes(SigImage.ContentLength);
+                    //    }
+                    //    Data.Signature = bytes;
+                    //}
+
+                    MemoryStream target = new MemoryStream();
+                    if (Image != null)
+                    {
+                        Image.InputStream.CopyTo(target);
+                        Data.Photograph = target.ToArray();
+                    }
+                    if (SigImage != null)
+                    {
+                        SigImage.InputStream.CopyTo(target);
+                        Data.Signature = target.ToArray();
+                    }
+
+                    //MemoryStream target = new MemoryStream();
+                    //if (Image != null)
+                    //{
+                    //    Image.InputStream.CopyTo(target);
+                    //    Data.Photograph = target.ToArray();
+                    //}
+                    //if (SigImage != null)
+                    //{
+                    //    SigImage.InputStream.CopyTo(target);
+                    //    Data.Signature = target.ToArray();
+                    //}
                     //if (FormatCheck[0] == "yyyy")
                     //{
                     //    if (DateSplit[0] != "xx" && DateSplit[0] != "xxx")
@@ -201,9 +243,10 @@ namespace WorldServiceOrganization.Controllers
                         Directory.CreateDirectory(folder);
                     }
                     string path = null;
+                  
                     if (Image != null)
                     {
-                        path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(Image.FileName));
+                        path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(Image.FileName));                      
                         Image.SaveAs(path);
                         path = Path.Combine("\\Uploading", Path.GetFileName(Image.FileName));
                         Data.Photo = path;
@@ -212,6 +255,7 @@ namespace WorldServiceOrganization.Controllers
                     {
                         Data.Photo = "\\Uploading\\user-image.png";
                     }
+                    
                     if (SigImage != null)
                     {
                         path = Path.Combine(Server.MapPath("~/Uploading"), Path.GetFileName(SigImage.FileName));
@@ -400,6 +444,19 @@ namespace WorldServiceOrganization.Controllers
                     //        Data.BirthDay = null;
                     //    }
                     //}
+                    MemoryStream target = new MemoryStream();
+                    if(Image!=null)
+                    {
+                        Image.InputStream.CopyTo(target);
+                        Data.Photograph = target.ToArray();
+                    }
+                    if(SigImage != null)
+                    {
+                        SigImage.InputStream.CopyTo(target);
+                        Data.Signature = target.ToArray();
+                    }
+                    
+                    
                     Data.FirstName = Person.FirstName;
                     Data.LastName = Person.LastName;
                     Data.CityOfBirth = Person.CityOfBirth;
@@ -530,6 +587,25 @@ namespace WorldServiceOrganization.Controllers
             return View(Person);
         }
 
+        public ActionResult RetrieveImage(int id)
+        {
+            byte[] cover = GetImageFromDataBase(id);
+            if (cover != null)
+            {
+                return File(cover, "image/jpg");
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public byte[] GetImageFromDataBase(int Id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            var q = DB.tblPersons.Where(x=>x.PersonIDNumber==Id).Select(s=>s.Photograph).FirstOrDefault();
+            byte[] cover = q;
+            return cover;
+        }
         private string GenerateQRCode(string qrcodeText, int Name)
         {
             string folderPath = "~/Uploading/QRCode/";
@@ -1233,135 +1309,143 @@ namespace WorldServiceOrganization.Controllers
 
         public ActionResult ExportToExcel()
         {
-            //Instantiate the spreadsheet creation engine
-            using (ExcelEngine excelEngine = new ExcelEngine())
+            try
             {
-                //Instantiate the Excel application object
-                IApplication application = excelEngine.Excel;
-
-                //Create a new workbook and add a worksheet
-                IWorkbook workbook = application.Workbooks.Create(1);
-                IWorksheet worksheet = workbook.Worksheets[0];
-          
-                //Add the header text and assign cell style
-                worksheet["A1"].Text = "LastName";
-                worksheet["B1"].Text = "FirstName";
-                worksheet["C1"].Text = "City Of Birth";
-                worksheet["D1"].Text = "Photograph";
-                worksheet["E1"].Text = "Phone";
-                worksheet["F1"].Text = "Fax";
-                worksheet["G1"].Text = "Signature";
-                worksheet["H1"].Text = "Height";
-                worksheet["I1"].Text = "Marks";
-                worksheet["J1"].Text = "Title";
-                worksheet["K1"].Text = "Father Name";
-                worksheet["L1"].Text = "Mother Name";
-                worksheet["M1"].Text = "WSANumber";
-                worksheet["N1"].Text = "Comments";
-                worksheet["O1"].Text = "EMail";
-                worksheet["P1"].Text = "Website";
-                worksheet["Q1"].Text = "Eye";
-                worksheet["R1"].Text = "Country Of Application";
-                worksheet["S1"].Text = "Country Of Birth";
-                worksheet["T1"].Text = "Country Of Birth Statistical";
-                worksheet["U1"].Text = "Occupation";
-                worksheet["V1"].Text = "Sex";
-                worksheet["W1"].Text = "Status";
-                worksheet["X1"].Text = "Birth Month";
-                worksheet["Y1"].Text = "Birth Day";
-                worksheet["Z1"].Text = "Birth Year";
-                worksheet["A1:Z1"].CellStyle.Font.Bold = true;
-
-                worksheet["A2"].Text = "%PersonExportData_Result.LastName";
-                worksheet["B2"].Text = "%PersonExportData_Result.FirstName";
-                worksheet["C2"].Text = "%PersonExportData_Result.CityOfBirth";
-                worksheet["D2"].Text = "%PersonExportData_Result.Photograph";
-                worksheet["E2"].Text = "%PersonExportData_Result.Phone";
-                worksheet["F2"].Text = "%PersonExportData_Result.Fax";
-                worksheet["G2"].Text = "%PersonExportData_Result.Signature";
-                worksheet["H2"].Text = "%PersonExportData_Result.Height";
-                worksheet["I2"].Text = "%PersonExportData_Result.Marks";
-                worksheet["J2"].Text = "%PersonExportData_Result.Title";
-                worksheet["K2"].Text = "%PersonExportData_Result.FatherName";
-                worksheet["L2"].Text = "%PersonExportData_Result.MotherName";
-                worksheet["M2"].Text = "%PersonExportData_Result.WSANumber";
-                worksheet["N2"].Text = "%PersonExportData_Result.Comments";
-                worksheet["O2"].Text = "%PersonExportData_Result.EMail";
-                worksheet["P2"].Text = "%PersonExportData_Result.Website";
-                worksheet["Q2"].Text = "%PersonExportData_Result.EyeName";
-                worksheet["R2"].Text = "%PersonExportData_Result.CountryOfApplicationName";
-                worksheet["S2"].Text = "%PersonExportData_Result.CountryOfBirthName";
-                worksheet["T2"].Text = "%PersonExportData_Result.CountryOfBirthStatisticalName";
-                worksheet["U2"].Text = "%PersonExportData_Result.OccupationName";
-                worksheet["V2"].Text = "%PersonExportData_Result.SexName";
-                worksheet["W2"].Text = "%PersonExportData_Result.StatusName";
-                worksheet["X2"].Text = "%PersonExportData_Result.BirthMonth";
-                worksheet["Y2"].Text = "%PersonExportData_Result.BirthDay";
-                worksheet["Z2"].Text = "%PersonExportData_Result.BirthYear";
-
-                //Create template marker processor
-                ITemplateMarkersProcessor marker = workbook.CreateTemplateMarkersProcessor();
-
-                WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
-
-                List<PersonExportData_Result> Data1 = new List<PersonExportData_Result>();
-                List<PersonExportData_Result> Data = DB.PersonExportData().ToList();
-                PersonExportData_Result emp;
-                foreach (var item in Data)
+                using (ExcelEngine excelEngine = new ExcelEngine())
                 {
-                    byte[] image1 = System.IO.File.ReadAllBytes(Server.MapPath(item.Photo));
-                    byte[] image2 = System.IO.File.ReadAllBytes(Server.MapPath(item.SignaturePath));
-                    item.Photograph = image1;
-                    item.Signature = image2;
+                    //Instantiate the Excel application object
+                    IApplication application = excelEngine.Excel;
+
+                    //Create a new workbook and add a worksheet
+                    IWorkbook workbook = application.Workbooks.Create(1);
+                    IWorksheet worksheet = workbook.Worksheets[0];
+
+                    //Add the header text and assign cell style
+                    worksheet["A1"].Text = "LastName";
+                    worksheet["B1"].Text = "FirstName";
+                    worksheet["C1"].Text = "City Of Birth";
+                    worksheet["D1"].Text = "Photograph";
+                    worksheet["E1"].Text = "Phone";
+                    worksheet["F1"].Text = "Fax";
+                    worksheet["G1"].Text = "Signature";
+                    worksheet["H1"].Text = "Height";
+                    worksheet["I1"].Text = "Marks";
+                    worksheet["J1"].Text = "Title";
+                    worksheet["K1"].Text = "Father Name";
+                    worksheet["L1"].Text = "Mother Name";
+                    worksheet["M1"].Text = "WSANumber";
+                    worksheet["N1"].Text = "Comments";
+                    worksheet["O1"].Text = "EMail";
+                    worksheet["P1"].Text = "Website";
+                    worksheet["Q1"].Text = "Eye";
+                    worksheet["R1"].Text = "Country Of Application";
+                    worksheet["S1"].Text = "Country Of Birth";
+                    worksheet["T1"].Text = "Country Of Birth Statistical";
+                    worksheet["U1"].Text = "Occupation";
+                    worksheet["V1"].Text = "Sex";
+                    worksheet["W1"].Text = "Status";
+                    worksheet["X1"].Text = "Birth Month";
+                    worksheet["Y1"].Text = "Birth Day";
+                    worksheet["Z1"].Text = "Birth Year";
+                    worksheet["A1:Z1"].CellStyle.Font.Bold = true;
+
+                    worksheet["A2"].Text = "%PersonExportData_Result.LastName";
+                    worksheet["B2"].Text = "%PersonExportData_Result.FirstName";
+                    worksheet["C2"].Text = "%PersonExportData_Result.CityOfBirth";
+                    worksheet["D2"].Text = "%PersonExportData_Result.Photograph";
+                    worksheet["E2"].Text = "%PersonExportData_Result.Phone";
+                    worksheet["F2"].Text = "%PersonExportData_Result.Fax";
+                    worksheet["G2"].Text = "%PersonExportData_Result.Signature";
+                    worksheet["H2"].Text = "%PersonExportData_Result.Height";
+                    worksheet["I2"].Text = "%PersonExportData_Result.Marks";
+                    worksheet["J2"].Text = "%PersonExportData_Result.Title";
+                    worksheet["K2"].Text = "%PersonExportData_Result.FatherName";
+                    worksheet["L2"].Text = "%PersonExportData_Result.MotherName";
+                    worksheet["M2"].Text = "%PersonExportData_Result.WSANumber";
+                    worksheet["N2"].Text = "%PersonExportData_Result.Comments";
+                    worksheet["O2"].Text = "%PersonExportData_Result.EMail";
+                    worksheet["P2"].Text = "%PersonExportData_Result.Website";
+                    worksheet["Q2"].Text = "%PersonExportData_Result.EyeName";
+                    worksheet["R2"].Text = "%PersonExportData_Result.CountryOfApplicationName";
+                    worksheet["S2"].Text = "%PersonExportData_Result.CountryOfBirthName";
+                    worksheet["T2"].Text = "%PersonExportData_Result.CountryOfBirthStatisticalName";
+                    worksheet["U2"].Text = "%PersonExportData_Result.OccupationName";
+                    worksheet["V2"].Text = "%PersonExportData_Result.SexName";
+                    worksheet["W2"].Text = "%PersonExportData_Result.StatusName";
+                    worksheet["X2"].Text = "%PersonExportData_Result.BirthMonth";
+                    worksheet["Y2"].Text = "%PersonExportData_Result.BirthDay";
+                    worksheet["Z2"].Text = "%PersonExportData_Result.BirthYear";
+
+                    //Create template marker processor
+                    ITemplateMarkersProcessor marker = workbook.CreateTemplateMarkersProcessor();
+
+                    WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+                    List<PersonExportData_Result> Data1 = new List<PersonExportData_Result>();
+                    List<PersonExportData_Result> Data = DB.PersonExportData().ToList();
+                    PersonExportData_Result emp;
+                    foreach (var item in Data)
+                    {
+                        byte[] image1 = System.IO.File.ReadAllBytes(Server.MapPath(item.Photo));
+                        byte[] image2 = System.IO.File.ReadAllBytes(Server.MapPath(item.SignaturePath));
+                        item.Photograph = image1;
+                        item.Signature = image2;
+                    }
+                    foreach (var item in Data)
+                    {
+                        emp = new PersonExportData_Result();
+                        emp.LastName = item.LastName;
+                        emp.FirstName = item.FirstName;
+                        emp.CityOfBirth = item.CityOfBirth;
+                        emp.Photograph = item.Photograph;
+                        emp.Phone = item.Phone;
+                        emp.Fax = item.Fax;
+                        emp.Signature = item.Signature;
+                        emp.Height = item.Height;
+                        emp.Marks = item.Marks;
+                        emp.Title = item.Title;
+                        emp.FatherName = item.FatherName;
+                        emp.MotherName = item.MotherName;
+                        emp.WSANumber = item.WSANumber;
+                        emp.Comments = item.Comments;
+                        emp.EMail = item.EMail;
+                        emp.Website = item.Website;
+                        emp.EyeName = item.EyeName;
+                        emp.CountryOfApplicationName = item.CountryOfApplicationName;
+                        emp.CountryOfBirthName = item.CountryOfBirthName;
+                        emp.CountryOfBirthStatisticalName = item.CountryOfBirthStatisticalName;
+                        emp.OccupationName = item.OccupationName;
+                        emp.SexName = item.SexName;
+                        emp.StatusName = item.StatusName;
+                        emp.BirthMonth = item.BirthMonth;
+                        emp.BirthDay = item.BirthDay;
+                        emp.BirthYear = item.BirthYear;
+                        Data1.Add(emp);
+                    }
+
+                    //Add marker variable
+                    marker.AddVariable("PersonExportData_Result", Data1);
+
+                    //Apply markers
+                    marker.ApplyMarkers();
+
+                    //Autofit the columns
+                    worksheet["B1:D10"].AutofitColumns();
+
+                    //Save the workbook
+                    workbook.SaveAs("Output.xlsx");
+
+                    System.Diagnostics.Process.Start("Output.xlsx");
                 }
-                foreach (var item in Data)
-                {
-                    emp = new PersonExportData_Result();
-                    emp.LastName=item.LastName;
-                    emp.FirstName=item.FirstName;
-                    emp.CityOfBirth=item.CityOfBirth;
-                    emp.Photograph=item.Photograph;
-                    emp.Phone=item.Phone;
-                    emp.Fax=item.Fax;
-                    emp.Signature=item.Signature;
-                    emp.Height=item.Height;
-                    emp.Marks=item.Marks;
-                    emp.Title=item.Title;
-                    emp.FatherName=item.FatherName;
-                    emp.MotherName=item.MotherName;
-                    emp.WSANumber=item.WSANumber;
-                    emp.Comments=item.Comments;
-                    emp.EMail="davis@gmail.com";
-                    emp.Website=item.Website;
-                    emp.EyeName=item.EyeName;
-                    emp.CountryOfApplicationName=item.CountryOfApplicationName;
-                    emp.CountryOfBirthName=item.CountryOfBirthName;
-                    emp.CountryOfBirthStatisticalName=item.CountryOfBirthStatisticalName;
-                    emp.OccupationName=item.OccupationName;
-                    emp.SexName=item.SexName;
-                    emp.StatusName=item.StatusName;
-                    emp.BirthMonth=item.BirthMonth;
-                    emp.BirthDay=item.BirthDay;
-                    emp.BirthYear=item.BirthYear;
-                    Data1.Add(emp);
-                }
 
-                //Add marker variable
-                marker.AddVariable("PersonExportData_Result", Data1);
-
-                //Apply markers
-                marker.ApplyMarkers();
-
-                //Autofit the columns
-                worksheet["B1:D10"].AutofitColumns();
-
-                //Save the workbook
-                workbook.SaveAs("Output.xlsx");
-
-                System.Diagnostics.Process.Start("Output.xlsx");
+                return RedirectToAction("Persons");
             }
-
-            return RedirectToAction("Persons");
+            catch (Exception ex)
+            {
+                return RedirectToAction("Persons");
+            }
+            //Instantiate the spreadsheet creation engine
+           
         }
 
         //private static List<tblPerson> GetEmployeeDetails()
@@ -1464,6 +1548,27 @@ namespace WorldServiceOrganization.Controllers
 
 
                 return View(Persons);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+            return View();
+
+        }
+
+
+        public ActionResult BirthCertificate(int? id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            try
+            {
+                var Person = DB.tblPersons.Where(x=>x.PersonIDNumber==id).FirstOrDefault();
+
+
+                return View(Person);
             }
             catch (Exception ex)
             {
@@ -1587,9 +1692,9 @@ namespace WorldServiceOrganization.Controllers
                 ViewBag.Update = Update;
                 ViewBag.PersonId = id;
                 ViewBag.tid = tid;
-                string input = "ژ";
-                var result = input.Select(t => $"U+{Convert.ToUInt16(t):X4} ").ToList();
-                string A=UnicodeToString("0698");
+                //string input = "ژ";
+                //var result = input.Select(t => $"U+{Convert.ToUInt16(t):X4} ").ToList();
+                //string A=UnicodeToString("0698");
                 var Translate = DB.tblMRZTranslations.ToList();
                 var data = DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
                 if (ViewBag.TL.IssueDate != "")

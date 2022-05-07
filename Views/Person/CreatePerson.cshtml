@@ -619,6 +619,7 @@
                                                         <div class="change-photo-btn">
                                                             <span><i class="fa fa-upload"></i> Upload Photo</span>
                                                             <input type="file" class="upload" name="Image" id="Image" accept="image/*" onchange="showPreviewImg(event);" value="Upload Photo">
+
                                                         </div>
                                                         @*<a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveImage"><i class="fa fa-download"></i> Save</a>
                                                             <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i> Delete</a>
@@ -655,7 +656,7 @@
                                                     <div class="upload-img">
                                                         <div class="change-sing-btn">
                                                             <span><i class="fa fa-upload"></i> Upload Signature</span>
-                                                            <input type="file" class="upload" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Photo">
+                                                            <input type="file" class="upload" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Signature">
                                                         </div>
                                                         @*<a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveSig"><i class="fa fa-download"></i> Save</a>
                                                             <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i> Delete</a>
@@ -820,6 +821,7 @@
                                                             <a href="@Url.Action("OneRecord","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-primary btn-sm">One Record</button></a>
                                                             <button type="button" class="btn btn-secondary btn-sm" onclick="window.location.href='@Url.Action("AddressLabel","Person",new {id=@Model.PersonIDNumber })';">Label</button>
                                                             <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">Routing Slip</button></a>
+                                                            <a href="@Url.Action("BirthCertificate","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">Routing Slip</button></a>
                                                         </p>
                                                     </div>
                                                 </div>
@@ -1228,7 +1230,7 @@
                                                             <div class="upload-img">
                                                                 <div class="change-sing-btn">
                                                                     <span><i class="fa fa-upload"></i> Upload Signature</span>
-                                                                    <input type="file" class="upload" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Photo">
+                                                                    <input type="file" class="upload" name="SigImage" id="SignaturePath" accept="image/*" onchange="showPreviewSig(event);" value="Upload Signature">
                                                                 </div>
                                                                 @*<a href="javascript:void(0);" class="btn btn-icon btn-primary btn-sm" id="SaveSig"><i class="fa fa-download"></i> Save</a>
                                                                     <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i> Delete</a>
@@ -1250,7 +1252,7 @@
 
                                                     <div class="change-doc-btn">
                                                         <span><i class="fa fa-upload"></i> Upload Documents</span>
-                                                        <input type="file" class="upload" id="TemplateImages" name="TemplateImages" onchange="showPreviewCer(event);" value="Upload Photo">
+                                                        <input type="file" class="upload" id="TemplateImages" name="TemplateImages" onchange="showPreviewCer(event);" value="Upload Documents">
                                                     </div>
                                                     @*<input class="form-control" type="file" id="TemplateImages" name="TemplateImages" accept="image/jpeg, image/png, image/gif,">
                                                         <small class="form-text text-muted">Allowed images: jpg, gif, png. Maximum 10 images only.</small>*@
@@ -2798,6 +2800,7 @@
 
 
     function showPreviewImg(event) {
+        alert("here");
         if (event.target.files.length > 0) {
             var src = URL.createObjectURL(event.target.files[0]);
             var preview = document.getElementById("ImgImg");
@@ -3034,6 +3037,11 @@
 
 
             });
+        $("#CountryOfBirthStatistical").select2({
+            dropdownCssClass: 'bigdrop'
+
+
+        });
             $("#Eyes").select2({
                 dropdownCssClass: 'bigdrop'
 
