@@ -11,6 +11,7 @@ using System.Drawing.Imaging;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -117,8 +118,11 @@ namespace WorldServiceOrganization.Controllers
                 //string[] DateSplit = Person.DateOfBirth.Split('-');
                 //string[] FormatCheck = DateFormat.Split('-');
                 ViewBag.User = Session["User"];
-
-                
+                WebClient wc = new WebClient();
+                byte[] Ibytes = wc.DownloadData(Server.MapPath("~\\Content\\assets\\img\\user-image.png"));
+                byte[] Sbytes = wc.DownloadData(Server.MapPath("~\\Content\\assets\\img\\sig.png"));
+                MemoryStream Ims = new MemoryStream(Ibytes);
+                MemoryStream Sms = new MemoryStream(Sbytes);
 
 
                 if (Person.PersonIDNumber == 0)
@@ -126,7 +130,6 @@ namespace WorldServiceOrganization.Controllers
                     //if (DB.tblPersons.Select(r => r).Where(x => x.EMail==Person.EMail).FirstOrDefault() == null)
                     //{
                     Data = Person;
-                    byte[] bytes;
 
 
                     //if (Image != null)
@@ -152,10 +155,18 @@ namespace WorldServiceOrganization.Controllers
                         Image.InputStream.CopyTo(target);
                         Data.Photograph = target.ToArray();
                     }
+                    else
+                    {
+                        Data.Photograph = Ims.ToArray();
+                    }
                     if (SigImage != null)
                     {
                         SigImage.InputStream.CopyTo(target);
                         Data.Signature = target.ToArray();
+                    }
+                    else
+                    {
+                        Data.Signature = Sms.ToArray();
                     }
 
                     //MemoryStream target = new MemoryStream();
@@ -450,13 +461,21 @@ namespace WorldServiceOrganization.Controllers
                         Image.InputStream.CopyTo(target);
                         Data.Photograph = target.ToArray();
                     }
+                    else if(Person.Photo == "\\Uploading\\user-image.png" || Person.Photo== "/Content/assets/img/user-image.png")
+                    {
+                        Data.Photograph = Ims.ToArray();
+                    }
                     if(SigImage != null)
                     {
                         SigImage.InputStream.CopyTo(target);
                         Data.Signature = target.ToArray();
                     }
-                    
-                    
+                    else if (Person.SignaturePath == "\\Uploading\\sig.png"|| Person.SignaturePath == "/Content/assets/img/sig.png")
+                    {
+                        Data.Signature = Sms.ToArray();
+                    }
+
+
                     Data.FirstName = Person.FirstName;
                     Data.LastName = Person.LastName;
                     Data.CityOfBirth = Person.CityOfBirth;
@@ -1448,52 +1467,7 @@ namespace WorldServiceOrganization.Controllers
            
         }
 
-        //private static List<tblPerson> GetEmployeeDetails()
-        //{
-        //    //Get the images from folder
-        //        byte[] image1 = System.IO.File.ReadAllBytes(@"E:\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\Data\Man2.png");
-        //    byte[] image2 = System.IO.File.ReadAllBytes(@"E:\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\Data\Man2.png");
-        //    byte[] image3 = System.IO.File.ReadAllBytes(@"E:\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\Data\Woman1.jpg");
-        //    byte[] image4 = System.IO.File.ReadAllBytes(@"E:\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\ExportDataTableToExcelInMVC4\Data\Woman1.jpg");
-
-        //    //Instantiate employee list
-        //    List<tblPerson> employeeList = new List<tblPerson>();
-
-        //    //Set the details of employee and into employee list
-        //    tblPerson emp = new tblPerson();
-        //    emp.Image = image1;
-        //    emp.Name = "Andy Bernardsss";
-        //    emp.Id = 1011;
-        //    emp.Age = 35;
-        //    employeeList.Add(emp);
-
-        //    //Set the details of employee and into employee list
-        //    emp = new Employee();
-        //    emp.Image = image2;
-        //    emp.Name = "Karen Fillippelli";
-        //    emp.Id = 1012;
-        //    emp.Age = 26;
-        //    employeeList.Add(emp);
-
-        //    //Set the details of employee and into employee list
-        //    emp = new Employee();
-        //    emp.Image = image3;
-        //    emp.Name = "Patricia Mckenna";
-        //    emp.Id = 1013;
-        //    emp.Age = 28;
-        //    employeeList.Add(emp);
-
-        //    //Set the details of employee and into employee list
-        //    emp = new Employee();
-        //    emp.Image = image4;
-        //    emp.Name = "nstall the Syncfusion.XlsIO.WinForms NuGet package as reference to your .NET Framework application from";
-        //    emp.Id = 1025;
-        //    emp.Age = 35;
-        //    employeeList.Add(emp);
-
-        //    //Return the employee list
-        //    return employeeList;
-        //}
+       
 
 
         public ActionResult OneRecord(int? id)
@@ -1561,6 +1535,48 @@ namespace WorldServiceOrganization.Controllers
 
 
         public ActionResult BirthCertificate(int? id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            try
+            {
+                var Person = DB.tblPersons.Where(x=>x.PersonIDNumber==id).FirstOrDefault();
+
+
+                return View(Person);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+            return View();
+
+        }
+
+
+        public ActionResult WorldMarriageCertificate(int? id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            try
+            {
+                var Person = DB.tblPersons.Where(x=>x.PersonIDNumber==id).FirstOrDefault();
+
+
+                return View(Person);
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+            return View();
+
+        }
+
+
+        public ActionResult WorldCitizenCertificate(int? id)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             try

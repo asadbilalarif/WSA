@@ -155,7 +155,7 @@
                                         <th hidden>FatherName</th>
                                         <th hidden>MotherName</th>
                                         <th hidden>Comments</th>
-                                        <th>Image</th>
+                                        @*<th>Image</th>*@
                                         <th hidden>Signature</th>
 
                                         <th>Action</th>
@@ -225,11 +225,11 @@
                                         <td hidden> @Person.FatherName</td>
                                         <td hidden> @Person.MotherName</td>
                                         <td hidden> @Person.Comments</td>
-                                        @{ 
+                                        @*@{ 
                                             var base64 = Convert.ToBase64String(@Person.Photograph);
                                             var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                        }
-                                        <td><img src="@imgSrc"  / style="width:30%"> </td>
+                                        }*@
+                                        @*<td><img src="@imgSrc"  / style="width:30%"> </td>*@
                                         <td hidden>@Person.SignaturePath</td>
 
                                         <td class="text-end">
