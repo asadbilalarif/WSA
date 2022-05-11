@@ -36,7 +36,7 @@
             window.print();
 
             var url = window.location.origin;
-            url += '/Person/WorldCitizenCertificate?id='+@Model.PersonIDNumber+'';
+            url += '/Person/WorldCitizenCertificate?id='+@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
             window.location.href = url;
         });
 
@@ -155,6 +155,7 @@
                                     </div>
                                     <p>Number • Nombro • Numéro •</p>
                                     <p>Numero • Номер • 编号 • رقم</p>
+                                    <p>@Model.WSANumber</p>
                                 </div>
                             </div>
                             <br />
@@ -180,7 +181,7 @@
                             <br />
                             <br />
                             <div class="row" style="font-size:20px;">
-                                <div class="col-md-6">
+                                <div class="col-md-3">
                                     <p><b>This certifies that</b></p>
                                     <p><b>Ĉi tio atestas</b></p>
                                     <p><b>Ceci certifie que</b></p>
@@ -189,7 +190,12 @@
                                     <p><b>这证明了</b></p>
                                     <p><b>هذا يثبت ذلك</b></p>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-5">
+                                    <br />
+                                    <br />
+                                    <p>@Model.FirstName</p>
+                                </div>
+                                <div class="col-md-4">
                                     <p><b>is a</b></p>
                                     <p><b>estas</b></p>
                                     <p><b>est un/e</b></p>
@@ -218,7 +224,7 @@
 
                                 </div>
 
-                                <div class="col-md-6 ">
+                                <div class="col-md-2 ">
                                     <p>On the date:</p>
                                     <p>En la dato:</p>
                                     <p>À la date:</p>
@@ -226,6 +232,11 @@
                                     <p>На дату:</p>
                                     <p>日期:</p>
                                     <p>:في التاريخ المحدد</p>
+                                </div>
+                                <div class="col-md-2">
+                                    <br />
+                                    <br />
+                                    @ViewBag.TL.IssueDate
                                 </div>
                             </div>
                             <br />
@@ -361,7 +372,7 @@
             window.print();
 
             var url = window.location.origin;
-        url += '/Person/WorldCitizenCertificate?id='+@Model.PersonIDNumber+'';
+        url += '/Person/WorldCitizenCertificate?id='+@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
             window.location.href = url;
     });
 
@@ -374,7 +385,7 @@
             window.print();
 
             var url = window.location.origin;
-        url += '/Person/WorldCitizenCertificate?id='+@Model.PersonIDNumber+'';
+        url += '/Person/WorldCitizenCertificate?id='+@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
             window.location.href = url;
     });
 

@@ -1534,13 +1534,13 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult BirthCertificate(int? id)
+        public ActionResult BirthCertificate(int? id, int? tid)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             try
             {
                 var Person = DB.tblPersons.Where(x=>x.PersonIDNumber==id).FirstOrDefault();
-
+                ViewBag.TL = DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
 
                 return View(Person);
             }
@@ -1555,13 +1555,14 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult WorldMarriageCertificate(int? id)
+        public ActionResult WorldMarriageCertificate(string SecondName,int? id, int? tid)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             try
             {
                 var Person = DB.tblPersons.Where(x=>x.PersonIDNumber==id).FirstOrDefault();
-
+                ViewBag.TL = DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
+                ViewBag.SecondName = SecondName;
 
                 return View(Person);
             }
@@ -1576,13 +1577,13 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        public ActionResult WorldCitizenCertificate(int? id)
+        public ActionResult WorldCitizenCertificate(int? id, int? tid)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             try
             {
                 var Person = DB.tblPersons.Where(x=>x.PersonIDNumber==id).FirstOrDefault();
-
+                ViewBag.TL = DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
 
                 return View(Person);
             }
@@ -1724,6 +1725,7 @@ namespace WorldServiceOrganization.Controllers
                     ViewBag.ExpAppend = null;
                 }
                 string Line1 = null;
+                string ALine1 = null;
                 string Line2 = null;
                 int Len;
                 string FirstName = Persons.FirstName;
@@ -1837,14 +1839,17 @@ namespace WorldServiceOrganization.Controllers
                     string[] Arr = FirstName.Split(' ');
                     Len = Arr.Length;
                     Line1 += "P<WSA" + LastName.ToUpper() + "<<" + Arr[0].ToUpper() + "<" + Arr[1].ToUpper() + "<";
+                    ALine1 += "P<XXX" + LastName.ToUpper() + "<<" + Arr[0].ToUpper() + "<" + Arr[1].ToUpper() + "<";
                 }
                 else
                 {
                     Line1 += "P<WSA" + LastName.ToUpper() + "<<" + FirstName.ToUpper() + "<";
+                    ALine1 += "P<XXX" + LastName.ToUpper() + "<<" + FirstName.ToUpper() + "<";
                 }
                 while (Line1.Length < 44)
                 {
                     Line1 += "<";
+                    ALine1 += "<";
                 }
                 DateTime date = new DateTime();
                 string CodeYear = "";
@@ -1895,6 +1900,7 @@ namespace WorldServiceOrganization.Controllers
                 }
                 Line2 += "08";
                 ViewBag.Line1 = Line1;
+                ViewBag.ALine1 = ALine1;
                 ViewBag.Line2 = Line2;
 
                 //data.tblProduct.tblProductType.Name

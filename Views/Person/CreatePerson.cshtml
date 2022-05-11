@@ -806,9 +806,9 @@
                                                     <a href="@Url.Action("OneRecord","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-primary btn-sm">One Record</button></a>
                                                     <button type="button" class="btn btn-secondary btn-sm" onclick="window.location.href='@Url.Action("AddressLabel","Person",new {id=@Model.PersonIDNumber })';">Label</button>
                                                     <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">Routing Slip</button></a>
-                                                    <a href="@Url.Action("BirthCertificate","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">World Birth Certificate</button></a>
+                                                    @*<a href="@Url.Action("BirthCertificate","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">World Birth Certificate</button></a>
                                                     <a href="@Url.Action("WorldMarriageCertificate","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">World Marriage Certificate</button></a>
-                                                    <a href="@Url.Action("WorldCitizenCertificate","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">World Citizen Certificate</button></a>
+                                                    <a href="@Url.Action("WorldCitizenCertificate","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">World Citizen Certificate</button></a>*@
                                                 </p>
                                             </div>
                                         </div>
@@ -1644,10 +1644,21 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <p class="col-md-12 text-right">
-                                                <button type="button" id="PassportLabel" class="btn btn-primary btn-sm" style="width:50%">Passport Label</button>
-                                                <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-secondary btn-sm" style="margin-top:2px; width:50%">Routing Slip</button></a>
-                                            </p>
+                                                   <p class="col-md-12 text-right">
+                                                        <button type="button" id="MarriageCertificate" data-toggle="modal" data-target="#MarriageCertificateModal" class="btn btn-success btn-sm">World Marriage Certificate</button>
+                                                    </p>
+                                                    <p class="col-md-12 text-right"">
+                                                        <button type="button" id="CitizenCertificate" class="btn btn-success btn-sm">World Citizen Certificate</button>
+                                                    </p>
+                                                    <p class="col-md-12 text-right"">
+                                                        <button type="button" id="BirthCertificate" class="btn btn-success btn-sm">World Birth Certificate</button>
+                                                    </p>
+                                                    <p class="col-md-12 text-right"">
+                                                        <button type="button" id="PassportLabel" class="btn btn-primary btn-sm" style="width:50%">Passport Label</button>
+                                                    </p>
+                                                    <p class="col-md-12 text-right"">
+                                                        <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-secondary btn-sm" style="margin-top:2px; width:50%">Routing Slip</button></a>
+                                                    </p>
                                             <div class="col-md-12 text-center">
                                                 <div class="form-group row">
                                                     <label class="col-lg-6 col-form-label">Date of Entry</label>
@@ -2152,6 +2163,23 @@
 
 </div>
 
+<div id="MarriageCertificateModal" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <label>Second Name</label>
+                <input class="form-control" type="text" id="SecondName" >
+                <div class="m-t-20">
+                    <p id="ConfigDerror" style="color:red;"></p>
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <input type="button" class="btn btn-primary" id="MarriageCertificateConFirm" value="OK">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div id="TransactionDelete" class="modal fade delete-modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -2349,6 +2377,8 @@
 
     //    bindDatePicker();
     //});
+
+   
 
 
 
@@ -2664,6 +2694,37 @@
 
         });
 
+    $("body").on("click", "#BirthCertificate", function () {
+            var url = window.location.origin;
+        url += '/Person/BirthCertificate?id=' +@Model.PersonIDNumber+'&&tid=' + $("#TransactionIDNumber").val() +'';
+            window.location.href = url;
+
+    });
+
+    $('#SecondName').keyup(function (e) {
+
+        if ($('#SecondName').val() != "") {
+            $("#MarriageCertificateConFirm").attr("disabled", false);
+        }
+        else {
+            $("#MarriageCertificateConFirm").attr("disabled", true);
+        }
+    });
+
+    $("body").on("click", "#MarriageCertificateConFirm", function () {
+            var url = window.location.origin;
+        url += '/Person/WorldMarriageCertificate?id=' +@Model.PersonIDNumber+'&&tid=' + $("#TransactionIDNumber").val() + '&&SecondName=' + $("#SecondName").val() +'';
+            window.location.href = url;
+
+    });
+
+    $("body").on("click", "#CitizenCertificate", function () {
+            var url = window.location.origin;
+        url += '/Person/WorldCitizenCertificate?id=' +@Model.PersonIDNumber+'&&tid=' + $("#TransactionIDNumber").val() +'';
+            window.location.href = url;
+
+    });
+
 
 
 
@@ -2676,6 +2737,9 @@
         $("#Cost").attr('readonly', true);
         $("#ProductD").attr('readonly', true);
         $("#PassportLabel").attr("disabled", false);
+        $("#BirthCertificate").attr("disabled", false);
+        $("#MarriageCertificate").attr("disabled", false);
+        $("#CitizenCertificate").attr("disabled", false);
         var currentRow = $(this).closest("tr");
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
         $("#TransactionIDNumber").val(currentRow.find("td:eq(1)").text());
@@ -2993,8 +3057,11 @@
             $('#Tab4').addClass('active');
         }
 
-
-             $("#PassportLabel").attr("disabled", true);
+        $("#PassportLabel").attr("disabled", true);
+        $("#BirthCertificate").attr("disabled", true);
+        $("#MarriageCertificate").attr("disabled", true);
+        $("#CitizenCertificate").attr("disabled", true);
+        $("#MarriageCertificateConFirm").attr("disabled", true);
 
             $('#ChildTable').DataTable({
 
