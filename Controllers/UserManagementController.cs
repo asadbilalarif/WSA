@@ -52,7 +52,7 @@ namespace WorldServiceOrganization.Controllers
             {
                 if(User.UserId==0)
                 {
-                    if (DB.tblUsers.Select(r => r).Where(x => x.username == User.username && x.Email == User.Email).FirstOrDefault() == null)
+                    if (DB.tblUsers.Select(r => r).Where(x => x.username == User.username || x.Email == User.Email).FirstOrDefault() == null)
                     {
                         string FN = User.FirstName.Substring(0, 1);
                         string LN = User.LastName.Substring(0, 1);

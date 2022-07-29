@@ -43,12 +43,13 @@ namespace WorldServiceOrganization.Models
         public virtual DbSet<tblAddress> tblAddresses { get; set; }
         public virtual DbSet<tblDocumentImg> tblDocumentImgs { get; set; }
         public virtual DbSet<SearchField> SearchFields { get; set; }
-        public virtual DbSet<tblPerson> tblPersons { get; set; }
         public virtual DbSet<tblChild> tblChilds { get; set; }
         public virtual DbSet<tblSetting> tblSettings { get; set; }
         public virtual DbSet<tblTransaction> tblTransactions { get; set; }
         public virtual DbSet<tblPassportLabelSetting> tblPassportLabelSettings { get; set; }
         public virtual DbSet<tblMRZTranslation> tblMRZTranslations { get; set; }
+        public virtual DbSet<tblFontStyle> tblFontStyles { get; set; }
+        public virtual DbSet<tblPerson> tblPersons { get; set; }
     
         public virtual ObjectResult<ProductUnionPackage_Result> ProductUnionPackage()
         {
@@ -68,24 +69,6 @@ namespace WorldServiceOrganization.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CustomSearchLeftJoin_Result>("CustomSearchLeftJoin", fieldtoSearchParameter, searchValueParameter);
         }
     
-        public virtual ObjectResult<PersonList_Result1> PersonList(string searchValue)
-        {
-            var searchValueParameter = searchValue != null ?
-                new ObjectParameter("SearchValue", searchValue) :
-                new ObjectParameter("SearchValue", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PersonList_Result1>("PersonList", searchValueParameter);
-        }
-    
-        public virtual ObjectResult<CountrySummaryList_Result> CountrySummaryList(string searchValue)
-        {
-            var searchValueParameter = searchValue != null ?
-                new ObjectParameter("SearchValue", searchValue) :
-                new ObjectParameter("SearchValue", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CountrySummaryList_Result>("CountrySummaryList", searchValueParameter);
-        }
-    
         public virtual ObjectResult<TransactionSummaryList_Result2> TransactionSummaryList(string searchValue)
         {
             var searchValueParameter = searchValue != null ?
@@ -98,6 +81,45 @@ namespace WorldServiceOrganization.Models
         public virtual ObjectResult<PersonExportData_Result> PersonExportData()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PersonExportData_Result>("PersonExportData");
+        }
+    
+        public virtual ObjectResult<CountrySummaryList_Result2> CountrySummaryList(string searchValue)
+        {
+            var searchValueParameter = searchValue != null ?
+                new ObjectParameter("SearchValue", searchValue) :
+                new ObjectParameter("SearchValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CountrySummaryList_Result2>("CountrySummaryList", searchValueParameter);
+        }
+    
+        public virtual ObjectResult<PersonList_Result> PersonList(string searchValue)
+        {
+            var searchValueParameter = searchValue != null ?
+                new ObjectParameter("SearchValue", searchValue) :
+                new ObjectParameter("SearchValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PersonList_Result>("PersonList", searchValueParameter);
+        }
+    
+        public virtual ObjectResult<sp_PersonDataTableData_Result> sp_PersonDataTableData(Nullable<int> pageIndex, Nullable<int> pageSize, string filter, Nullable<int> recordType)
+        {
+            var pageIndexParameter = pageIndex.HasValue ?
+                new ObjectParameter("PageIndex", pageIndex) :
+                new ObjectParameter("PageIndex", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            var filterParameter = filter != null ?
+                new ObjectParameter("Filter", filter) :
+                new ObjectParameter("Filter", typeof(string));
+    
+            var recordTypeParameter = recordType.HasValue ?
+                new ObjectParameter("RecordType", recordType) :
+                new ObjectParameter("RecordType", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PersonDataTableData_Result>("sp_PersonDataTableData", pageIndexParameter, pageSizeParameter, filterParameter, recordTypeParameter);
         }
     }
 }

@@ -6,20 +6,32 @@
     HttpCookie cookieObj = Request.Cookies["Settings"];
     string DateFormat = cookieObj["DateFormat"];
     string Retrieves = cookieObj["Retrieves"];
+    string FontSize = cookieObj["FontSize"];
+    string FontFamily = cookieObj["FontStyle"];
 
+    string FontLink = "https://fonts.googleapis.com/css?family=" + @FontFamily;
 
 }
 
 
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css" integrity="sha384-{hash}" crossorigin="anonymous" />
+    <link rel="stylesheet" href="@FontLink" crossorigin="anonymous" />
 
     <style>
-
-        .form-control {
+        @*body {
+            font-family: @FontLink;
+            font-size: 48px;
+        }*@
+      /*  .form-control {
             padding: 0px !important
-        }
-
+        }*/
+        @*.PrintImg {
+            background-image: url(/Person/RetrieveImage/@Model.PersonIDNumber );
+            background-repeat: no-repeat ;
+            background-size: cover ;
+            background-position: center;
+        }*@
         .input-container {
             display: -ms-flexbox; /* IE10 */
             display: flex;
@@ -81,8 +93,6 @@
 
     </style>
 
-
-
 </head>
 
 
@@ -130,90 +140,116 @@
                             <strong>Success!</strong> @ViewBag.Update
                         </div>
                     }
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label><b>MRZ</b></label><br>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <input type="radio" id="MRZSuppress" name="MRZSuppress" value="1">
-                                    <label for="MRZSuppress">Suppress</label><br />
-                                    <input type="radio" id="MRZUnSuppress" name="MRZSuppress" value="2" checked>
-                                    <label for="MRZUnSuppress">Unsuppress</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="radio" id="MRZStandard" name="MRZStandard" value="1" checked>
-                                    <label for="MRZStandard">Standard</label><br />
-                                    <input type="radio" id="MRZNonStandard" name="MRZStandard" value="2">
-                                    <label for="MRZNonStandard">Non-Standard</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="radio" id="MRZMixed" name="MRZLetterCase" value="1">
-                                    <label for="MRZMixed">Mixed Case</label><br />
-                                    <input type="radio" id="MRZLower" name="MRZLetterCase" value="2">
-                                    <label for="MRZLower">All Lowercase</label><br />
-                                    <input type="radio" id="MRZUpper" name="MRZLetterCase" value="3">
-                                    <label for="MRZUpper">UPPERCASE</label>
-                                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label><b>MRZ</b></label><br>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="radio" id="MRZSuppress" name="MRZSuppress" value="1">
+                                <label for="MRZSuppress">Suppress</label><br />
+                                <input type="radio" id="MRZUnSuppress" name="MRZSuppress" value="2" checked>
+                                <label for="MRZUnSuppress">Unsuppress</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="radio" id="MRZStandard" name="MRZStandard" value="1" checked>
+                                <label for="MRZStandard">Standard</label><br />
+                                <input type="radio" id="MRZNonStandard" name="MRZStandard" value="2">
+                                <label for="MRZNonStandard">Non-Standard</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="radio" id="MRZMixed" name="MRZLetterCase" value="1">
+                                <label for="MRZMixed">Mixed Case</label><br />
+                                <input type="radio" id="MRZLower" name="MRZLetterCase" value="2">
+                                <label for="MRZLower">All Lowercase</label><br />
+                                <input type="radio" id="MRZUpper" name="MRZLetterCase" value="3">
+                                <label for="MRZUpper">UPPERCASE</label>
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <label><b>Issuer</b></label><br>
-                            <input type="radio" id="IssuerWSA" name="Issuer" value="1" checked>
-                            <label for="IssuerWSA">WSA</label><br />
-                            <input type="radio" id="IssuerICAO" name="Issuer" value="2">
-                            <label for="IssuerICAO">ICAO "XXX"</label>
-                        </div>
-                        <div class="col-md-2">
-                            <label><b>Date Format</b></label><br>
-                            <input type="radio" id="DateFormatName" name="DateFormat" value="1" checked>
-                            <label for="DateFormatName">01 Jan 2000</label><br>
-                            <input type="radio" id="DateFormatNumber" name="DateFormat" value="2">
-                            <label for="DateFormatNumber">01 01 2000</label><br />
-
-                        </div>
-                        <div class="col-md-2">
-                            <label>Font Size</label>
-                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="12" />
-                        </div>
-                        <div class="col-md-2">
-                            <label><b>QR Code</b></label><br />
-                            <input type="radio" id="QRSuppress" name="QRSuppress" value="1" checked>
-                            <label for="QRSuppress">Suppress</label><br />
-                            <input type="radio" id="QRUnSuppress" name="QRSuppress" value="2" >
-                            <label for="QRUnSuppress">Unsuppress</label>
-                        </div>
-                        <div class="col-md-2">
-                            <label>MRZ Font Size</label>
-                            <input type="number" class="form-control" name="" id="FontSize1" value="12" />
-                        </div>
-                        @*<div class="col-md-2">
-                            <label>MRZ Letter Spacing</label>
-                            <input type="number" class="form-control" name="" id="WordSpacing" value="0" />
-                        </div>*@
-                        <div class="col-md-8 text-right">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#PassportModal">Add field</button>
-                            <a href="@Url.Action("PassportLabel", "Person",new { id=Model.PersonIDNumber,tid= ViewBag.TL.TransactionIDNumber})"> <input class="btn btn-danger" type="button" value="Cancel"></a>
-                            <a href="@Url.Action("Persons","Person",new { id=Model.PersonIDNumber })" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
-                            <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
-                            <a href="#" id="PDFBtn" class="btn btn-success"><i class="fa fa-print"></i> PDF</a>
-                            <a href="@Url.Action("CreatePerson","Person",new { id=@Model.PersonIDNumber })" class="btn btn-info"><i class="fa fa-arrow-left"></i> Go Back</a>                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <label><b>Issuer</b></label><br>
+                        <input type="radio" id="IssuerWSA" name="Issuer" value="1" checked>
+                        <label for="IssuerWSA">WSA</label><br />
+                        <input type="radio" id="IssuerICAO" name="Issuer" value="2">
+                        <label for="IssuerICAO">ICAO "XXX"</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label><b>Date Format</b></label><br>
+                        <input type="radio" id="DateFormatName" name="DateFormat" value="1" checked>
+                        <label for="DateFormatName">01 Jan 2000</label><br>
+                        <input type="radio" id="DateFormatNumber" name="DateFormat" value="2">
+                        <label for="DateFormatNumber">01 01 2000</label><br />
 
                     </div>
+                    <div class="col-md-2">
+                        <label><b>QR Code</b></label><br />
+                        <input type="radio" id="QRSuppress" name="QRSuppress" value="1" checked>
+                        <label for="QRSuppress">Suppress</label><br />
+                        <input type="radio" id="QRUnSuppress" name="QRSuppress" value="2">
+                        <label for="QRUnSuppress">Unsuppress</label>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Font Family</label>
+                        <select class="form-control" id="FontFamily" name="FontStyle">
+                            @foreach (WorldServiceOrganization.Models.tblFontStyle item in @ViewBag.FontStyle)
+                            {
+                                if (FontFamily == @item.Name)
+                                {
+                                    <option value="@item.Name" selected>@item.Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@item.Name">@item.Name</option>
+                                }
+
+                            }
+                        </select>
+                        @*<input type="text" class="form-control" name="" id="FontFamily" value="@FontFamily" />*@
+                    </div>
+                    <div class="col-md-1">
+                        <label>Font Size</label>
+                        <input type="number" class="form-control" name="FontSize" id="FontSize" value="@FontSize" />
+                    </div>
+                    <div class="col-md-2">
+                        <label>MRZ Font Family</label>
+                        <input type="text" class="form-control" name="" id="FontFamily1" value="OCR-B" />
+                    </div>
+                    <div class="col-md-1">
+                        <label>Font Size</label>
+                        <input type="number" class="form-control" name="" id="FontSize1" value="14" />
+                    </div>
+
+
+                   
+                    @*<div class="col-md-2">
+            <label>MRZ Letter Spacing</label>
+            <input type="number" class="form-control" name="" id="WordSpacing" value="0" />
+        </div>*@
+                    <div class="col-md-6 text-right">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#PassportModal">Add field</button>
+                        <a href="@Url.Action("PassportLabel", "Person",new { id=Model.PersonIDNumber,tid= ViewBag.TL.TransactionIDNumber})"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                        <a href="@Url.Action("Persons","Person",new { id=Model.PersonIDNumber })" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
+                        <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
+                        <a href="#" id="PDFBtn" class="btn btn-success"><i class="fa fa-print"></i> PDF</a>
+                        <a href="@Url.Action("CreatePerson","Person",new { id=@Model.PersonIDNumber })" class="btn btn-info"><i class="fa fa-arrow-left"></i> Go Back</a>
+                    </div>
+
+                </div>
 
                 </div>
 
             </div>
             <div class="row">
-                <div class="col-md-8" id="FNdraggableArea">
+                <div class="col-md-7" id="" style="">
                     <section id="section">
-                        <div class="card">
-                            <div class="card-body" id="MRZCase" style="position:relative;">
+                        <div class="card" id="MRZCase">
+                            <div class="card-body " id="FNdraggableArea"  style="position: relative; padding: 5% 5% 5% 5%; z-index: 100 !important; ">
                                 <div class="row" style="margin-bottom:15px">
-                                    <div class="col-md-12" >
-                                        <img src="@Model.QRCode" class="FNdraggable" alt="Alternate Text" id="QRHide" style="float:right !important; display:none;" />
-                                    </div>
+                                    @*<div class="col-md-12">
+            <img src="@Model.QRCode" class="FNdraggable" alt="Alternate Text" id="QRHide" style="float:left !important; display:none;" />
+        </div>*@
                                     <div class="col-md-12">
-                                        <p class="text-center FNdraggable NotPrint" ><b id="LLLBel">WORLD GOVERNMENT OF WORLD CITIZENS</b></p><br />
+                                        <label class="text-center NotPrint" style="font-size: 14px !important; text-align: center; width: 100% !important;"><b id="LLLBel">WORLD GOVERNMENT OF WORLD CITIZENS</b></label><br />
                                     </div>
                                     <div class="col-md-3" style="">
                                         <p style="float:right !important; display:none;" class="FNdraggable NotPrint" id="LabelPassport">Passport/Passeport</p>
@@ -225,134 +261,158 @@
                                         </div>
 
                                     </div>
-                                    <div class="col-md-4" style="left:-20px;">
+                                    <div class="col-md-4" style="left:-19px;">
                                         <div style="display:none;" id="AuthorityCode">
                                             <p class="FNdraggable NotPrint">Authority code/Code d'authoritie</p>
                                             <p id="IssuerDisplay" class="FNdraggable NotPrint">WSA</p>
                                         </div>
                                     </div>
                                     <div class="col-md-3" style="">
+                                        <p class="FNdraggable NotPrint" style="display:none;" id="LabelPassportNo">Passport No./No de Passeport(8)</p>
                                         <div style="display:none;" id="PassportNo">
-                                            <p class="FNdraggable NotPrint">Passport No./No de Passeport(8)</p>
                                             <div id="" style="width: 100px; height:30px;">
                                                 <div id="" class=" FNdraggable">
-                                                    <p>@ViewBag.TL.IDCode</p>
+                                                    <p style=" position: absolute; z-index: 100;" class="NotLabel">@ViewBag.TL.IDCode</p>
                                                 </div>
                                             </div>
                                         </div>
 
 
                                     </div>
+                                    <div class="col-md-3 PrintImg" style="padding-left:0px !important;">
+                                        @if (Model.Photograph != null)
+                                        {
+                                            <img id="XYPhoto" src="/Person/RetrieveImage/@Model.PersonIDNumber" class=" FNdraggable" alt="your image" style="width: 170px; height: 195px;" />
+                                        }
+                                        else
+                                        {
 
-                                    <div class="col-md-3" @*style="margin-bottom: 9.63rem;"*@>
-
-                                        <div class="row">
-                                            <div class="col-md-12" id="XYPhoto">
-                                                
-                                                <img id="Photo" src="/Person/RetrieveImage/@Model.PersonIDNumber" class=" FNdraggable" alt="your image" style="width:100%; height:120%;" />
-                                                @*<img id="Photo" src="@Model.Photo" class=" FNdraggable" alt="your image" style="width:100%; height:120%;" />*@
-
-                                            </div>
-                                        </div>
+                                        }
+                                        @*<img id="Photo" src="@Model.Photo" class=" FNdraggable" alt="your image" style="width:100%; height:120%;" />*@
                                     </div>
 
                                     <div class="col-md-5">
 
-                                        <div class="col-md-12">
-                                            <div id="Name">
-                                                <p class="FNdraggable NotPrint1" style="display:none;" id="LabelLastName">Name/Nom(1)</p>
-
-                                                <div>
-                                                    <p class="FNdraggable" style="display:none;" id="LastName">@Model.LastName</p>
-                                                </div>
-                                            </div>
-                                            <div id="GivenName">
-                                                <p class="FNdraggable NotPrint1" style="display:none;" id="LabelFirstName">Given Names/Prenoms(2)</p>
-                                                <p class="FNdraggable" style="display:none;" id="FirstName">@Model.FirstName</p>
-                                            </div>
-                                            <div id="XYPlaceofBirth">
-                                                <p class="FNdraggable NotPrint1" style="display:none;" id="LabelPlaceofBirth">Place ofbirth/Lieu de nalssance(3)</p>
-                                                <p class="FNdraggable" style="display:none;" id="PlaceofBirth">@Model.CityOfBirth, @Model.tblCountry.Name</p>
-                                            </div>
-                                            <div id="DateofBirth">
-                                                <p class="FNdraggable NotPrint1" style="display:none;" id="LabelDateofBirth">Date ofbirth/Date de nalssance(4)</p>
-                                                <p id="BDateName" class="FNdraggable" style="display:none;">@ViewBag.CodeDay @ViewBag.MonthName @ViewBag.CodeYear </p>
-                                                <p id="BDateNumber" style="display:none;">@ViewBag.CodeDay @ViewBag.CodeMonth @ViewBag.CodeYear</p>
-                                            </div>
-                                            <div id="XYGender">
-                                                <p class="FNdraggable NotPrint1" id="LabelGender" style="display:none;">Gender/Sexe(5)</p>
-                                                <p class="FNdraggable" style="display:none;" id="Gender">@Model.tblSex.Name</p>
-                                            </div>
-                                            <div id="DateofIssue">
-                                                <p class="FNdraggable NotPrint1" style="display:none;" id="LabelDateofIssue">Date ofissue/Date de deliverance(6)</p>
-                                                @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
-                                                {
-                                                    <p class="FNdraggable" style="display:none;" id="IDateName">NILL</p>
-                                                    <p class="FNdraggable" style="display:none;" id="IDateNumber">NILL</p>
-                                                }
-                                                else
-                                                {
-                                                    <p id="IDateName" class="FNdraggable" style="display:none;"> @Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MMM yyyy")</p>
-                                                    <p id="IDateNumber" class="FNdraggable" style="display:none;">@Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MM yyyy")</p>
-
-                                                }
-                                            </div>
-                                            <div id="DateofExpiry">
-                                                <p class="FNdraggable NotPrint1" style="display:none;" id="LabelDateofExpiry">Date of expiry/Date de d'expiration(7)</p>
-                                                @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
-                                                {
-                                                    <p class="FNdraggable" style="display:none;" id="EDateName">NILL</p>
-                                                    <p class="FNdraggable" style="display:none;" id="EDateNumber">NILL</p>
-                                                }
-                                                else
-                                                {
-                                                    <p id="EDateName" class="FNdraggable" style="display:none;">@ViewBag.Exp.ToString("dd MMM yyyy")</p>
-                                                    <p id="EDateNumber" class="FNdraggable" style="display:none;">@ViewBag.Exp.ToString("dd MM yyyy")</p>
-
-                                                }
-                                            </div>
-
-
-
-
-
-
+                                        <p class="FNdraggable NotPrint" style="display:none;" id="LabelLastName">Name/Nom(1)</p>
+                                        <div id="Name">
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="LastName">@Model.LastName</p>
                                         </div>
+                                        <p class="FNdraggable NotPrint " style="display:none;" id="LabelFirstName">Given Names/Prenoms(2)</p>
+                                        <div id="GivenName">
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="FirstName">@Model.FirstName</p>
+                                        </div>
+                                        <p class="FNdraggable NotPrint" style="display:none;" id="LabelPlaceofBirth">Place ofbirth/Lieu de nalssance(3)</p>
+                                        <div id="XYPlaceofBirth">
+                                            @if (@Model.tblCountry != null)
+                                            {
+                                                <p class="FNdraggable NotLabel" style="display:none;" id="PlaceofBirth">@Model.CityOfBirth, @Model.tblCountry.Name</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="FNdraggable NotLabel" style="display:none;" id="PlaceofBirth">@Model.CityOfBirth</p>
+                                            }
+                                            
+                                        </div>
+                                        <p class="FNdraggable NotPrint" style="display:none;" id="LabelDateofBirth">Date ofbirth/Date de nalssance(4)</p>
+                                        <div id="DateofBirth">
+                                            <p id="BDateName" class="FNdraggable NotLabel" style="display:none;">@ViewBag.CodeDay @ViewBag.MonthName @ViewBag.CodeYear </p>
+                                            <p id="BDateNumber" class="NotLabel" style="display:none;">@ViewBag.CodeDay @ViewBag.CodeMonth @ViewBag.CodeYear</p>
+                                        </div>
+                                        <p class="FNdraggable NotPrint" id="LabelGender" style="display:none;">Gender/Sexe(5)</p>
+                                        <div id="XYGender">
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="Gender">@Model.tblSex.Name</p>
+                                        </div>
+                                        <p class="FNdraggable NotPrint" style="display:none;" id="LabelDateofIssue">Date ofissue/Date de deliverance(6)</p>
+                                        <div id="DateofIssue">
+                                            @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
+                                            {
+                                                <p class="FNdraggable NotLabel" style="display:none;" id="IDateName">NILL</p>
+                                                <p class="FNdraggable NotLabel" style="display:none;" id="IDateNumber">NILL</p>
+                                            }
+                                            else
+                                            {
+                                                <p id="IDateName" class="FNdraggable NotLabel" style="display:none;"> @Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MMM yyyy")</p>
+                                                <p id="IDateNumber" class="FNdraggable NotLabel" style="display:none;">@Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MM yyyy")</p>
+
+                                            }
+                                        </div>
+                                        <p class="FNdraggable NotPrint DateofExpiry" style="display:none;" id="LabelDateofExpiry">Date of expiry/Date de d'expiration(7)</p>
+                                        <div id="DateofExpiry">
+                                            @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
+                                            {
+                                                <p class="FNdraggable NotLabel" style="display:none;" id="EDateName">NILL</p>
+                                                <p class="FNdraggable NotLabel" style="display:none;" id="EDateNumber">NILL</p>
+                                            }
+                                            else
+                                            {
+                                                <p id="EDateName" class="FNdraggable NotLabel" style="display:none;">@ViewBag.Exp.ToString("dd MMM yyyy")</p>
+                                                <p id="EDateNumber" class="FNdraggable NotLabel" style="display:none;">@ViewBag.Exp.ToString("dd MM yyyy")</p>
+
+                                            }
+                                        </div>
+
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <img id="Photo" src="/Person/RetrieveImage/@Model.PersonIDNumber" class="FNdraggable" alt="your image" style="opacity: 0.5;width:40%; height:100%;float:right;" /><br />
-                                                @*<img id="Photo" src="@Model.Photo" class="FNdraggable" alt="your image" style="opacity: 0.5;width:40%; height:100%;float:right;" />*@<br />
-                                            </div>
-                                        </div>
-                                        <br>
-                                        <p class="FNdraggable NotPrint" style="color:white;" id="LabelExplanatoryNotes">Explanatory notes/Notes explicatives</p>
-                                        <p class="FNdraggable NotPrint" style="color:white;" id="ExplanatoryNotes">PAGE 5</p>
-                                        <p class="FNdraggable NotPrint" style="color:white;" id="LabelRenewal">Renewal/Propogation(9)</p>
-                                        <p class="FNdraggable NotPrint" style="color:white;" id="Renewal">PAGE 3</p>
+                                    <div class="col-md-4" style="padding: 0px !important;">
+
+                                        <img src="@Model.QRCode" class="FNdraggable" alt="Alternate Text" id="QRHide" style=" display: none; position: absolute; " />
+                                        @if (Model.Photograph != null)
+                                        {
+                                            <img id="Photo" src="/Person/RetrieveImage/@Model.PersonIDNumber" class="FNdraggable" alt="your image" style="opacity: 0.5; width: 80px; height: 80px;float:right;margin-top:4%; " /><br />
+                                        }
+                                        else
+                                        {
+
+                                        }
+                                        @*<img id="Photo" src="@Model.Photo" class="FNdraggable" alt="your image" style="opacity: 0.5;width:40%; height:100%;float:right;" />*@<br />
+                                        <br><br>
+                                        <p class="FNdraggable NotPrint " style="color:white;" id="LabelExplanatoryNotes">Explanatory notes/Notes explicatives</p>
+                                        <label class="FNdraggable NotPrint " style="color:white;font-size:14px !important;" id="ExplanatoryNotes">PAGE 5</label>
+                                        <p class="FNdraggable NotPrint" style="color:white;font-size:14px !important;" id="LabelRenewal">Renewal/Propogation(9)</p>
+                                        <label class="FNdraggable NotPrint " style="color: white; font-size: 14px !important;" id="Renewal">PAGE 3</label>
                                         <p class="FNdraggable NotPrint" style="color:white;" id="LabelAuthority">Authority/Authoritie(10)</p>
-                                        <p class="FNdraggable NotPrint" style="color:white;" id="Authority">WORLD SERVICE AUTHORITY</p>
+                                        <label class="FNdraggable NotPrint " style="color: white; font-size: 14px !important;" id="Authority">WORLD SERVICE AUTHORITY</label>
                                     </div>
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <p class="FNdraggable" style="display:none;" id="LabelCountryofApplication">Country Of Application</p>
-                                        <p class="FNdraggable" style="display:none;" id="CountryofApplications">@Model.tblCountry.Name</p>
+                                        @if (@Model.tblCountry != null)
+                                        {
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofApplications">@Model.tblCountry.Name</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofApplications"> </p>
+                                        }
                                         <p class="FNdraggable" style="display:none;" id="LabelCountryofBirth">Country Of Birth</p>
-                                        <p class="FNdraggable" style="display:none;" id="CountryofBirths">@Model.tblCountry1.Name</p>
+                                        @if (@Model.tblCountry1 != null)
+                                        {
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirths">@Model.tblCountry1.Name</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirths"> </p>
+                                        }
                                         <p class="FNdraggable" style="display:none;" id="LabelCountryofBirthStatistical">Country Of Birth Statistical</p>
-                                        <p class="FNdraggable" style="display:none;" id="CountryofBirthStatisticals">@Model.tblCountry2.Name</p>
+                                        @if (@Model.tblCountry2 != null)
+                                        {
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirthStatisticals">@Model.tblCountry2.Name</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirthStatisticals"> </p>
+                                        }
                                         <p class="FNdraggable" style="display:none;" id="LabelPhone">Phone</p>
-                                        <p class="FNdraggable" style="display:none;" id="Phone">@Model.Phone</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="Phone">@Model.Phone</p>
                                         <p class="FNdraggable" style="display:none;" id="LabelFax">Fax</p>
-                                        <p class="FNdraggable" style="display:none;" id="Fax">@Model.Fax</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="Fax">@Model.Fax</p>
                                         <p class="FNdraggable" style="display:none;" id="LabelEMail">Email</p>
-                                        <p class="FNdraggable" style="display:none;" id="EMail">@Model.EMail</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="EMail">@Model.EMail</p>
                                         <p class="FNdraggable" style="display:none;" id="LabelWebsite">Website</p>
-                                        <p class="FNdraggable" style="display:none;" id="Website">@Model.Website</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="Website">@Model.Website</p>
                                         <p class="FNdraggable" style="display:none;" id="LabelHeight">Height</p>
-                                        <p class="FNdraggable" style="display:none;" id="Height">
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="Height">
                                             @Model.Height
                                             @{
                                                 string Unit = "";
@@ -379,52 +439,49 @@
                                         @if (@Model.tblEye != null)
                                         {
                                             <p class="FNdraggable" style="display:none;" id="LabelEyes">Eyes</p>
-                                            <p class="FNdraggable" style="display:none;" id="Eyes">@Model.tblEye.Name</p>
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="Eyes">@Model.tblEye.Name</p>
                                         }
                                         <p class="FNdraggable" style="display:none;" id="LabelMarks">Marks</p>
-                                        <p class="FNdraggable" style="display:none;" id="Marks">@Model.Marks</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="Marks">@Model.Marks</p>
                                         @if (@Model.tblOccupation != null)
                                         {
                                             <p class="FNdraggable" style="display:none;" id="LabelOccupation">Occupation</p>
-                                            <p class="FNdraggable" style="display:none;" id="Occupation">@Model.tblOccupation.Name</p>
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="Occupation">@Model.tblOccupation.Name</p>
                                         }
                                         <p class="FNdraggable" style="display:none;" id="LabelTitle">Title</p>
-                                        <p class="FNdraggable" style="display:none;" id="Title">@Model.Title</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="Title">@Model.Title</p>
                                         <p class="FNdraggable" style="display:none;" id="LabelFatherName">Father Name</p>
-                                        <p class="FNdraggable" style="display:none;" id="FatherName">@Model.FatherName</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="FatherName">@Model.FatherName</p>
                                         <p class="FNdraggable" style="display:none;" id="LabelMotherName">Mother Name</p>
-                                        <p class="FNdraggable" style="display:none;" id="MotherName">@Model.MotherName</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="MotherName">@Model.MotherName</p>
                                         <p class="FNdraggable" style="display:none;" id="LabelComments">Comments</p>
-                                        <p class="FNdraggable" style="display:none;" id="Comments">@Model.Comments</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="Comments">@Model.Comments</p>
                                         <p class="FNdraggable" style="display:none;" id="LabelWSANumber">WSA #</p>
-                                        <p class="FNdraggable" style="display:none;" id="WSANumber">@Model.WSANumber</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="WSANumber">@Model.WSANumber</p>
                                         @if (@Model.tblStatu != null)
                                         {
                                             <p class="FNdraggable" style="display:none;" id="LabelStatus">Status</p>
-                                            <p class="FNdraggable" style="display:none;" id="Status">@Model.tblStatu.Name</p>
+                                            <p class="FNdraggable NotLabel" style="display:none;" id="Status">@Model.tblStatu.Name</p>
                                         }
                                     </div>
 
                                 </div>
-                                <br> <br>
-                                     <div class="row" id="MRZHide" style="position:relative;bottom:0; ">
-                                         @*<div class="col-md-1">
-        width:64.32px;height:446.4px;
-                                     </div>*@
-                                         <div class="col-md-12">
-                                             <div class="words">WORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITYWORLD</div>
-                                             <div class="words1" style="white-space: nowrap;">@ViewBag.Line1</div>
-                                             <div class="words2" style="white-space: nowrap;">@ViewBag.Line2</div>
-                                         </div>
-                                     </div>
-
-
+                                <div class="row" id="MRZHide" style="position:relative;bottom:0; ">
+                                    @*<div class="col-md-1">
+                                               width:64.32px;height:446.4px;
+                                        </div>*@
+                                    <div class="col-md-12" @*style="font-family:OCR-B !important;"*@>
+                                        <div class="words">WORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITYWORLD</div>
+                                        <div class="words1" style="white-space: nowrap;">@ViewBag.Line1</div>
+                                        <div class="words2" style="white-space: nowrap;">@ViewBag.Line2</div>
+                                    </div>
+                                </div>
 
                             </div>
 
                         </div>
                     </section>
-
+                    <div id="elementH"></div>
                 </div>
                 <div class="col-md-3">
                     <div class="card">
@@ -450,7 +507,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         X&nbsp;
-                                        <input class="form-control" type="number" id="XPassportNumber" name="XPassportNumber" value="-20" />
+                                        <input class="form-control" type="number" id="XPassportNumber" name="XPassportNumber" value="0" />
 
                                     </div>
 
@@ -474,7 +531,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         X&nbsp;
-                                        <input class="form-control" type="number" id="XName" name="XName" value="13" />
+                                        <input class="form-control" type="number" id="XName" name="XName" value="0" />
 
                                     </div>
 
@@ -499,7 +556,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         X&nbsp;
-                                        <input class="form-control" type="number" id="XGivenName" name="XGivenName" value="13" />
+                                        <input class="form-control" type="number" id="XGivenName" name="XGivenName" value="0" />
 
                                     </div>
 
@@ -509,7 +566,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         Y&nbsp;
-                                        <input class="form-control" type="number" id="YGivenName" name="YGivenName" value="36" />
+                                        <input class="form-control" type="number" id="YGivenName" name="YGivenName" value="0" />
 
                                     </div>
 
@@ -526,7 +583,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         X&nbsp;
-                                        <input class="form-control" type="number" id="XPlaceofBirth" name="XPlaceofBirth" value="13" />
+                                        <input class="form-control" type="number" id="XPlaceofBirth" name="XPlaceofBirth" value="0" />
 
                                     </div>
 
@@ -536,7 +593,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         Y&nbsp;
-                                        <input class="form-control" type="number" id="YPlaceofBirth" name="YPlaceofBirth" value="72" />
+                                        <input class="form-control" type="number" id="YPlaceofBirth" name="YPlaceofBirth" value="0" />
 
                                     </div>
 
@@ -552,7 +609,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         X&nbsp;
-                                        <input class="form-control" type="number" id="XDateofBirth" name="XDateofBirth" value="13" />
+                                        <input class="form-control" type="number" id="XDateofBirth" name="XDateofBirth" value="0" />
 
                                     </div>
 
@@ -563,7 +620,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         Y&nbsp;
-                                        <input class="form-control" type="number" id="YDateofBirth" name="YDateofBirth" value="108" />
+                                        <input class="form-control" type="number" id="YDateofBirth" name="YDateofBirth" value="0" />
 
                                     </div>
 
@@ -579,7 +636,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         X&nbsp;
-                                        <input class="form-control" type="number" id="XGender" name="XGender" value="13" />
+                                        <input class="form-control" type="number" id="XGender" name="XGender" value="0" />
 
                                     </div>
 
@@ -589,7 +646,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         Y&nbsp;
-                                        <input class="form-control" type="number" id="YGender" name="YGender" value="144" />
+                                        <input class="form-control" type="number" id="YGender" name="YGender" value="0" />
 
                                     </div>
 
@@ -605,7 +662,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         X&nbsp;
-                                        <input class="form-control" type="number" id="XDateofIssue" name="XDateofIssue" value="13" />
+                                        <input class="form-control" type="number" id="XDateofIssue" name="XDateofIssue" value="0" />
 
                                     </div>
 
@@ -615,7 +672,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         Y&nbsp;
-                                        <input class="form-control" type="number" id="YDateofIssue" name="YDateofIssue" value="180" />
+                                        <input class="form-control" type="number" id="YDateofIssue" name="YDateofIssue" value="0" />
 
                                     </div>
 
@@ -630,7 +687,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         X&nbsp;
-                                        <input class="form-control" type="number" id="XDateofExpiry" name="XDateofExpiry" value="13" />
+                                        <input class="form-control" type="number" id="XDateofExpiry" name="XDateofExpiry" value="0" />
 
                                     </div>
 
@@ -640,7 +697,7 @@
                                 <div class="col-md-6">
                                     <div class="input-container">
                                         Y&nbsp;
-                                        <input class="form-control" type="number" id="YDateofExpiry" name="YDateofExpiry" value="216" />
+                                        <input class="form-control" type="number" id="YDateofExpiry" name="YDateofExpiry" value="0" />
 
                                     </div>
 
@@ -666,7 +723,7 @@
 
                                     <div class="input-container">
                                         Y&nbsp;
-                                        <input class="form-control" type="number" id="YPhoto" name="YPhoto" value="12" />
+                                        <input class="form-control" type="number" id="YPhoto" name="YPhoto" value="0" />
 
                                     </div>
 
@@ -767,7 +824,7 @@
     <div class="modal-dialog">
 
         <!-- Modal content-->
-        <div class="modal-content" >
+        <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="EHeading">Select Fields</h5>
 
@@ -875,13 +932,22 @@
 <!-- jQuery -->
 @*<script src="~/Content/assets/js/jquery-3.5.1.js"></script>*@
 @*<script src="~/Content/assets/js/jquery-3.6.0.js"></script>*@
+@*<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+@*<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>*@
 <script src="~/Content/assets/js/shortcut.js"></script>
 <script src="~/Content/assets/js/jquery-ui.js"></script>
 
 
-
 @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+
+
+
+
+
+
+
 <script>
 
     $("body").on("click", "#LoadName", function () {
@@ -933,102 +999,102 @@
         $("#XYPhoto").css({ left: 0 + 'px' });
         $("#XPhoto").val("0");
         $("#DateofExpiry").css({ left: 13 + 'px', position: 'absolute' });
-        $("#XDateofExpiry").val("13");
+        $("#XDateofExpiry").val("0");
         $("#DateofIssue").css({ left: 13 + 'px', position: 'absolute' });
-        $("#XDateofIssue").val("13");
+        $("#XDateofIssue").val("0");
         $("#XYGender").css({ left: 13 + 'px', position: 'absolute' });
-        $("#XGender").val("13");
+        $("#XGender").val("0");
         $("#DateofBirth").css({ left: 13 + 'px', position: 'absolute' });
-        $("#XDateofBirth").val("13");
+        $("#XDateofBirth").val("0");
         $("#XYPlaceofBirth").css({ left: 13 + 'px', position: 'absolute' });
-        $("#XPlaceofBirth").val("13");
+        $("#XPlaceofBirth").val("0");
         $("#GivenName").css({ left: 13 + 'px', position: 'absolute' });
-        $("#XGivenName").val("13");
+        $("#XGivenName").val("0");
         $("#Name").css({ left: 13 + 'px', position: 'absolute' });
-        $("#XName").val("13");
-        $("#PassportNo").css({ left: -20 + 'px', position: 'absolute' });
-        $("#XPassportNumber").val("-20");
+        $("#XName").val("0");
+        $("#PassportNo").css({ left: 0 + 'px', position: 'absolute' });
+        $("#XPassportNumber").val("0");
     });
 
     $('#ResetY').click(function () {
-        $("#XYPhoto").css({ top: 12 + 'px' });
-        $("#YPhoto").val("12");
-        $("#DateofExpiry").css({ top: 216 + 'px', position: 'absolute' });
-        $("#YDateofExpiry").val("216");
-        $("#DateofIssue").css({ top: 180 + 'px', position: 'absolute' });
-        $("#YDateofIssue").val("180");
-        $("#XYGender").css({ top: 144 + 'px', position: 'absolute' });
-        $("#YGender").val("144");
-        $("#DateofBirth").css({ top: 108 + 'px', position: 'absolute' });
-        $("#YDateofBirth").val("108");
-        $("#XYPlaceofBirth").css({ top: 72 + 'px', position: 'absolute' });
-        $("#YPlaceofBirth").val("72");
-        $("#GivenName").css({ top: 36 + 'px', position: 'absolute' });
-        $("#YGivenName").val("36");
-        $("#Name").css({ top: 0 + 'px', position: 'absolute' });
+        $("#XYPhoto").css({ top: 4 + 'px' });
+        $("#YPhoto").val("0");
+        $("#DateofExpiry").css({ top: 190 + 'px', position: 'absolute' });
+        $("#YDateofExpiry").val("0");
+        $("#DateofIssue").css({ top: 160 +'px', position: 'absolute' });
+        $("#YDateofIssue").val("0");
+        $("#XYGender").css({ top: 130 + 'px', position: 'absolute' });
+        $("#YGender").val("0");
+        $("#DateofBirth").css({ top: 100 + 'px', position: 'absolute' });
+        $("#YDateofBirth").val("0");
+        $("#XYPlaceofBirth").css({ top: 70 + 'px', position: 'absolute' });
+        $("#YPlaceofBirth").val("0");
+        $("#GivenName").css({ top: 40 + 'px', position: 'absolute' });
+        $("#YGivenName").val("0");
+        $("#Name").css({ top: 10 + 'px', position: 'absolute' });
         $("#YName").val("0");
-        $("#PassportNo").css({ top: 0 + 'px', position: 'absolute' });
+        $("#PassportNo").css({ top: 10 + 'px', position: 'absolute' });
         $("#YPassportNumber").val("0");
     });
     $("#XPassportNumber,#YPassportNumber").change(function () {
         var XVal = $("#XPassportNumber").val();
-        var YVal = $("#YPassportNumber").val();
+        var YVal = parseInt($("#YPassportNumber").val())+10;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#PassportNo").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XName,#YName").change(function () {
-        var XVal = $("#XName").val();
-        var YVal = $("#YName").val();
+        var XVal = parseInt($("#XName").val()) + parseInt(13);
+        var YVal = parseInt($("#YName").val()) + parseInt(10);
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#Name").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XGivenName,#YGivenName").change(function () {
-        var XVal = $("#XGivenName").val();
-        var YVal = $("#YGivenName").val();
+        var XVal = parseInt($("#XGivenName").val())+13;
+        var YVal = parseInt($("#YGivenName").val())+40;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#GivenName").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XPlaceofBirth,#YPlaceofBirth").change(function () {
-        var XVal = $("#XPlaceofBirth").val();
-        var YVal = $("#YPlaceofBirth").val();
+        var XVal = parseInt($("#XPlaceofBirth").val())+13;
+        var YVal = parseInt($("#YPlaceofBirth").val())+70;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#XYPlaceofBirth").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XDateofBirth,#YDateofBirth").change(function () {
-        var XVal = $("#XDateofBirth").val();
-        var YVal = $("#YDateofBirth").val();
+        var XVal = parseInt($("#XDateofBirth").val())+13;
+        var YVal = parseInt($("#YDateofBirth").val())+100;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#DateofBirth").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XGender,#YGender").change(function () {
-        var XVal = $("#XGender").val();
-        var YVal = $("#YGender").val();
+        var XVal = parseInt($("#XGender").val())+13;
+        var YVal = parseInt($("#YGender").val())+130;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#XYGender").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XDateofIssue,#YDateofIssue").change(function () {
-        var XVal = $("#XDateofIssue").val();
-        var YVal = $("#YDateofIssue").val();
+        var XVal = parseInt($("#XDateofIssue").val())+13;
+        var YVal = parseInt($("#YDateofIssue").val())+160;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#DateofIssue").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XDateofExpiry,#YDateofExpiry").change(function () {
-        var XVal = $("#XDateofExpiry").val();
-        var YVal = $("#YDateofExpiry").val();
+        var XVal = parseInt($("#XDateofExpiry").val())+13;
+        var YVal = parseInt($("#YDateofExpiry").val())+190;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#DateofExpiry").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XPhoto,#YPhoto").change(function () {
-        var XVal = $("#XPhoto").val();
-        var YVal = $("#YPhoto").val();
+        var XVal = parseInt($("#XPhoto").val());
+        var YVal = parseInt($("#YPhoto").val())+4;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#XYPhoto").css({ top: YVal + 'px', left: XVal + 'px' });
@@ -1049,35 +1115,37 @@
     });
 
         shortcut.add("ctrl+p", function () {
-            $(".NotPrint1").css("display", "none");
-            $(".NotPrint").html("I have");
+
             $(".NotPrint").css("color", "transparent");
             $(".words").css("color", "transparent");
+            $("#XYPhoto").css({ width: 170 + 'px' });
+            $("#XYPhoto").css({ height: 195 + 'px' });
+            //$("#XYPhoto").css({ top: 20 + 'px', left: 0 + 'px' });
             //$(".NotPrint").text(" ");
             //$("#LLLBel").val("o");
             //alert($("#LLLBel").val());
             var db = document.body.getElementsByTagName('div');
             var myDiv = document.getElementById("section").innerHTML;
-
+            console.log(myDiv);
             document.body.innerHTML =
-                "<html><head><title></title></head><body><div class='row'><div class='col-md-7'>" +
-            myDiv + "</div></div></body>";
+                "<html><head><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title></head><body><div class='row'><div class='col-md-8'>" +
+                myDiv + "</div></div></body>";
             window.print();
-
             var url = window.location.origin;
             url += '/Person/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + @ViewBag.TL.TransactionIDNumber +'';
             window.location.href = url;
         });
 
     $('#PrintBtn').click(function () {
-        $(".NotPrint1").css("display", "none");
-        $(".NotPrint").html("I have");
         $(".NotPrint").css("color", "transparent");
         $(".words").css("color", "transparent");
+        $("#XYPhoto").css({ width: 170 + 'px' });
+        $("#XYPhoto").css({ height: 185 + 'px' });
+        $("#XYPhoto").css({ top: 10 + 'px', left: 0 + 'px' });
         var myDiv = document.getElementById("section").innerHTML;
 
             document.body.innerHTML =
-                "<html><head><title></title></head><body><div class='row'><div class='col-md-7'>" +
+            "<html><head><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title></head><body><div class='row'><div class='col-md-8'>" +
             myDiv + "</div></div></body>";
             window.print();
 
@@ -1089,17 +1157,45 @@
     $('#PDFBtn').click(function () {
         //$(".NotPrint").css("color", "transparent");
         //$(".words").css("color", "transparent");
+        //$("#XYPhoto").css({ width: 150 + 'px' });
+        $("#XYPhoto").css({ width: 170 + 'px' });
+        $("#XYPhoto").css({ height: 195 + 'px' });
+        //$("#XYPhoto").css({ top: 20 + 'px', left: 0 + 'px' });
         var myDiv = document.getElementById("section").innerHTML;
 
-        document.body.innerHTML =
-            "<html><head><title></title></head><body>" +
-            myDiv + "</body>";
-        window.print();
+            document.body.innerHTML =
+                "<html><head><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title></head><body><div class='row'><div class='col-md-8'>" +
+            myDiv + "</div></div></body>";
+            window.print();
 
             var url = window.location.origin;
         url += '/Person/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + @ViewBag.TL.TransactionIDNumber +'';
             window.location.href = url;
     });
+
+
+    //var doc = new jsPDF();
+    //var specialElementHandlers = {
+    //    '#elementH': function (element, renderer) {
+    //        return true;
+    //    }
+    //};
+
+
+
+
+    //$('#PDFBtn').click(function () {
+
+    //    var element = document.getElementById('MRZHide');
+    //    var worker = html2pdf().from(element).save();
+
+    //    //doc.fromHTML($('#MRZCase').html(), 15, 15, {
+    //    //    'width': 170,
+    //    //    'elementHandlers': specialElementHandlers
+    //    //});
+    //    //doc.save('sample-file.pdf');
+    //});
+
 
     $('#PassportSubmit').click(function () {
 
@@ -1371,24 +1467,38 @@
         }
         if ($("#MPassportNo").is(":checked") == true) {
             $("#PassportNo").show();
+            $("#LabelPassportNo").show();
         }
         else {
             $("#PassportNo").hide();
+            $("#LabelPassportNo").hide();
         }
         $("#PassportModal").modal('toggle');
 
     });
 
     $("#FontSize").change(function () {
-        $("p,.words,.words1,.words2").css("font-size", $("#FontSize").val() + 'px');
+        $(".NotLabel").css("font-size", $("#FontSize").val() + 'px');
+        //var Height = 250 + ($("#FontSize").val() - 12);
+        //$("#XYPhoto").height(Height);
+    });
+
+    $("#FontFamily").change(function () {
+        //alert($("#FontFamily").val());
+        $(".NotLabel").css("font-family", $("#FontFamily").val());
+
+    });
+
+    $("#FontFamily1").change(function () {
+        $(".words1,.words2").css("font-family", $("#FontFamily1").val());
     });
 
     $("#FontSize1").change(function () {
-        $(".words,.words1,.words2").css("font-size", $("#FontSize1").val() + 'px');
+        $(".words1,.words2").css("font-size", $("#FontSize1").val() + 'px');
     });
 
     $("#WordSpacing").change(function () {
-        $(".words,.words1,.words2").css("letter-spacing", $("#WordSpacing").val() + 'px');
+        $(".words1,.words2").css("letter-spacing", $("#WordSpacing").val() + 'px');
     });
 
     $('input:radio[name="MRZSuppress"]').change(function () {
@@ -1405,10 +1515,21 @@
 
         if ($(this).val() == 1) {
             $("#IssuerDisplay").text("WSA");
+            $(".words1").text($(".words1").text().replace("XXX","WSA"));
+            $(".words2").text($(".words2").text().replace("XXX","WSA"));
         }
         else {
             $("#IssuerDisplay").text("ICAO 'XXX'");
+            $(".words1").text($(".words1").text().replace("WSA", "XXX"));
+            $(".words2").text($(".words2").text().replace("WSA", "XXX"));
         }
+        const words1 = document.querySelector(".words1"),
+            wordsArray1 = words1.innerText.split("").map(e => " " == e ? "<div>&nbsp</div>" : "<div>" + e + "</div>");
+        words1.innerHTML = wordsArray1.join("");
+
+        const words2 = document.querySelector(".words2"),
+            wordsArray2 = words2.innerText.split("").map(e => " " == e ? "<div>&nbsp</div>" : "<div>" + e + "</div>");
+        words2.innerHTML = wordsArray2.join("");
     });
 
     $('input:radio[name="DateFormat"]').change(function () {
@@ -1484,18 +1605,27 @@
 
 
     $(document).ready(function () {
-        $(".alert-dismissible").fadeOut(10000);
 
+        $(".alert-dismissible").fadeOut(10000);
         //alert("X:" + $("#DateofExpiry").position().top + "Y: " + $("#DateofExpiry").position().left);
-        $("#DateofExpiry").css({ top: 214 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#DateofIssue").css({ top: 180 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#XYGender").css({ top: 144 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#DateofBirth").css({ top: 108 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#XYPlaceofBirth").css({ top: 72 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#GivenName").css({ top: 36 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#Name").css({ top: 0 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#PassportNo").css({ top: 0 + 'px', left: 0 + 'px', position: 'absolute' });
+        $("#LabelDateofExpiry").css({ top: 180 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#DateofExpiry").css({ top: 190 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelDateofIssue").css({ top: 150 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#DateofIssue").css({ top: 160 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelGender").css({ top: 120 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#XYGender").css({ top: 130 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelDateofBirth").css({ top: 90 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#DateofBirth").css({ top: 100 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelPlaceofBirth").css({ top: 60 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#XYPlaceofBirth").css({ top: 70 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelFirstName").css({ top: 30 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#GivenName").css({ top: 40 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelLastName").css({ top: 0 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#Name").css({ top: 10 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelPassportNo").css({ top: 0 + 'px', left: 0 + 'px', position: 'absolute' });
+        $("#PassportNo").css({ top: 10 + 'px', left: 0 + 'px', position: 'absolute' });
         //$("#MRZHide").css({ top: 252 + 'px', left: 0 + 'px', position: 'absolute' });
+        $("#XYPhoto").css({ top: 4 + 'px', left: 0 + 'px' });
 
         const words = document.querySelector(".words"),
             wordsArray = words.innerText.split("").map(e => " " == e ? "<div>&nbsp</div>" : "<div>" + e + "</div>");
@@ -1513,9 +1643,10 @@
         });
 
         $("#PassportModal").modal('toggle');
-        $("p").css("font-size", 12 + 'px');
-        
-        $("p").css("font-family", 'Passport');
+        $("p").css("font-size", 8 + 'px');
+        $(".NotLabel").css("font-family", '@FontSize');
+        $("p").css("font-family", 'sans serif');
+        $(".NotLabel").css("font-size", '@FontSize' + 'px');
         $(".words").css("font-family", 'OCR-B');
         $(".words1").css("font-family", 'OCR-B');
         $(".words2").css("font-family", 'OCR-B');
@@ -1524,6 +1655,7 @@
         $(".words2").css("font-size", 3.84 + 'px !important');
         $("p").css("margin-top", '0rem');
         $("p").css("margin-bottom", '0rem');
+        $("p").css("color", "black");
         //$(".letter").css("letter-spacing", '6.0px');
         //$(".letter1").css("letter-spacing", '6.5px');
         //$(".letter1").css("display", 'flex');
@@ -1557,9 +1689,9 @@
         $(".words2").css("justify-content", 'space-between');
 
 
-        $(".words").css("font-size", '12px');
-        $(".words1").css("font-size", '12px');
-        $(".words2").css("font-size", '12px');
+        $(".words").css("font-size", '14px');
+        $(".words1").css("font-size", '14px');
+        $(".words2").css("font-size", '14px');
 
 @*if (@ViewBag.State== 1) {
         $("#SeparateLine").attr('checked', 'checked');
@@ -1586,7 +1718,7 @@
         $("#CountryShow").hide();
     }*@
 
-
+        $(".NotLabel").css("font-family", '@FontFamily');
 
 
 

@@ -30,7 +30,7 @@ namespace WorldServiceOrganization.Models
         public Nullable<int> BirthMonth { get; set; }
         public Nullable<int> BirthYear { get; set; }
     
-        public virtual tblPerson tblPerson { get; set; }
         public virtual tblSex tblSex { get; set; }
+        public virtual tblPerson tblPerson { get; set; }
     }
 }

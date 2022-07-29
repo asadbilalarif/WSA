@@ -1,4 +1,4 @@
-﻿@model  IEnumerable<WorldServiceOrganization.Models.PersonList_Result1>
+﻿@model  IEnumerable<WorldServiceOrganization.Models.PersonList_Result>
 
 @{
     ViewData["Title"] = "Transactions";
@@ -158,7 +158,7 @@
                                     <tbody id="ID">
                                         @if (Model != null)
                                         {
-                                            foreach (WorldServiceOrganization.Models.PersonList_Result1 List in Model)
+                                            foreach (WorldServiceOrganization.Models.PersonList_Result List in Model)
                                             {
                                                 <tr>
                                                     <td>@List.Name</td>

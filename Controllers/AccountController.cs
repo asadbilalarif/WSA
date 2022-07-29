@@ -35,6 +35,8 @@ namespace WorldServiceOrganization.Controllers
             cookie["ReportsDateFormat"] = DB.tblSettings.Select(r => r.ReportsDateFormat).FirstOrDefault();
             cookie["WSA"] = DB.tblSettings.Select(r => r.NextWSA).FirstOrDefault();
             cookie["Retrieves"] = DB.tblSettings.Select(r => r.NumberOfRetrieves).FirstOrDefault();
+            cookie["FontStyle"] = DB.tblSettings.Select(r => r.FontStyle).FirstOrDefault();
+            cookie["FontSize"] = DB.tblSettings.Select(r => r.FontSize).FirstOrDefault();
             // This cookie will remain  for one month.
             cookie.Expires = DateTime.Now.AddMonths(1);
 

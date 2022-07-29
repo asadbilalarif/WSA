@@ -76,6 +76,7 @@
     <Property Name="CountryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Abbreviation" Type="nvarchar(max)" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="EditBy" Type="int" />
@@ -107,12 +108,26 @@
     <Property Name="EyeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Abbreviation" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="EditBy" Type="int" />
     <Property Name="EditDate" Type="datetime" />
     <Property Name="DeletedBy" Type="int" />
     <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="isActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="tblFontStyle">
+    <Key>
+      <PropertyRef Name="FontStyleId" />
+    </Key>
+    <Property Name="FontStyleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar(max)" />
+    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="EditBy" Type="int" />
+    <Property Name="EditDate" Type="datetime" />
     <Property Name="isActive" Type="bit" />
   </EntityType>
   <EntityType Name="tblMenu">
@@ -151,6 +166,7 @@
     <Property Name="OccupationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Abbreviation" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="EditBy" Type="int" />
@@ -203,9 +219,9 @@
     <Property Name="EMail" Type="nvarchar(max)" />
     <Property Name="Website" Type="nvarchar(max)" />
     <Property Name="DateOfBirth" Type="nvarchar(max)" />
-    <Property Name="BirthDay" Type="int" />
-    <Property Name="BirthMonth" Type="int" />
-    <Property Name="BirthYear" Type="int" />
+    <Property Name="BirthDay" Type="nvarchar" MaxLength="100" />
+    <Property Name="BirthMonth" Type="nvarchar" MaxLength="100" />
+    <Property Name="BirthYear" Type="nvarchar" MaxLength="100" />
     <Property Name="Sex" Type="int" />
     <Property Name="Height" Type="float" />
     <Property Name="HeightUnit" Type="int" />
@@ -242,6 +258,12 @@
     <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Abbreviation" Type="nvarchar" MaxLength="50" />
+    <Property Name="ProductTypeId" Type="int" />
+    <Property Name="Price" Type="float" />
+    <Property Name="ValidFor" Type="int" />
+    <Property Name="ProductSerialNum" Type="int" />
+    <Property Name="ProductVector" Type="int" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="EditBy" Type="int" />
@@ -249,11 +271,6 @@
     <Property Name="DeletedBy" Type="int" />
     <Property Name="DeletedDate" Type="datetime" />
     <Property Name="isActive" Type="bit" />
-    <Property Name="ProductTypeId" Type="int" />
-    <Property Name="Price" Type="float" />
-    <Property Name="ValidFor" Type="int" />
-    <Property Name="ProductSerialNum" Type="int" />
-    <Property Name="ProductVector" Type="int" />
   </EntityType>
   <EntityType Name="tblProductPackage">
     <Key>
@@ -292,6 +309,7 @@
     <Property Name="ProductTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Abbreviation" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="EditBy" Type="int" />
@@ -339,6 +357,9 @@
     <Property Name="SMTP" Type="nvarchar(max)" />
     <Property Name="Port" Type="nvarchar(max)" />
     <Property Name="IsActive1" Type="bit" />
+    <Property Name="NextMC" Type="nvarchar(max)" />
+    <Property Name="NextBC" Type="nvarchar(max)" />
+    <Property Name="NextCC" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="tblSex">
     <Key>
@@ -347,6 +368,7 @@
     <Property Name="SexId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Abbreviation" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="EditBy" Type="int" />
@@ -362,6 +384,7 @@
     <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Abbreviation" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedBy" Type="int" />
     <Property Name="CreatedDate" Type="datetime" />
     <Property Name="EditBy" Type="int" />
@@ -400,6 +423,7 @@
     <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="username" Type="nvarchar" MaxLength="50" />
     <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
     <Property Name="LastName" Type="nvarchar" MaxLength="50" />
     <Property Name="Initials" Type="nvarchar" MaxLength="5" />
     <Property Name="Organization" Type="nvarchar" MaxLength="50" />
@@ -698,6 +722,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tblFontStyle_tblUsers">
+    <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+    <End Role="tblFontStyle" Type="Self.tblFontStyle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUsers">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tblFontStyle">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tblFontStyle_tblUsers1">
+    <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
+    <End Role="tblFontStyle" Type="Self.tblFontStyle" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tblUsers">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="tblFontStyle">
+        <PropertyRef Name="EditBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tblPassportLabelSetting_tblUsers">
     <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="0..1" />
     <End Role="tblPassportLabelSetting" Type="Self.tblPassportLabelSetting" Multiplicity="*" />
@@ -770,6 +818,12 @@
     <Parameter Name="SearchValue" Type="nvarchar(max)" Mode="In" />
   </Function>
   <Function Name="ProductUnionPackage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_PersonDataTableData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PageIndex" Type="int" Mode="In" />
+    <Parameter Name="PageSize" Type="int" Mode="In" />
+    <Parameter Name="Filter" Type="varchar" Mode="In" />
+    <Parameter Name="RecordType" Type="int" Mode="In" />
+  </Function>
   <Function Name="TransactionSummaryList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="SearchValue" Type="nvarchar(max)" Mode="In" />
   </Function>
@@ -781,6 +835,7 @@
     <EntitySet Name="tblCountry" EntityType="Self.tblCountry" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblDocumentImg" EntityType="Self.tblDocumentImg" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblEye" EntityType="Self.tblEye" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblFontStyle" EntityType="Self.tblFontStyle" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblMenu" EntityType="Self.tblMenu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblMRZTranslation" EntityType="Self.tblMRZTranslation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblOccupation" EntityType="Self.tblOccupation" Schema="dbo" store:Type="Tables" />
@@ -887,6 +942,14 @@
     <AssociationSet Name="FK_tblAccessLevel_tblMenu" Association="Self.FK_tblAccessLevel_tblMenu">
       <End Role="tblMenu" EntitySet="tblMenu" />
       <End Role="tblAccessLevel" EntitySet="tblAccessLevel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblFontStyle_tblUsers" Association="Self.FK_tblFontStyle_tblUsers">
+      <End Role="tblUsers" EntitySet="tblUsers" />
+      <End Role="tblFontStyle" EntitySet="tblFontStyle" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tblFontStyle_tblUsers1" Association="Self.FK_tblFontStyle_tblUsers1">
+      <End Role="tblUsers" EntitySet="tblUsers" />
+      <End Role="tblFontStyle" EntitySet="tblFontStyle" />
     </AssociationSet>
     <AssociationSet Name="FK_tblPassportLabelSetting_tblUsers" Association="Self.FK_tblPassportLabelSetting_tblUsers">
       <End Role="tblUsers" EntitySet="tblUsers" />

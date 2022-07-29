@@ -5,6 +5,7 @@
     string Succ = @ViewBag.Success;
     string Update = @ViewBag.Update;
     string Delete = @ViewBag.Delete;
+    string Error = @ViewBag.Error;
 
 
 
@@ -78,6 +79,9 @@
                 <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
                     <strong>Success!</strong> @ViewBag.Delete
                 </div>
+                <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="ErrorAlert" role="alert">
+                    <strong>Error!</strong> @ViewBag.Error
+                </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
@@ -118,7 +122,7 @@
 
                                 <div class="col-sm-3">
                                     <a href="@Url.Action("Persons","Person")"><input class="btn btn-primary" type="button" value="Cancel"></a>
-                                    
+
                                 </div>
 
                             </div>
@@ -134,126 +138,174 @@
                             <table class="cell-border table table-hover table-center  mb-0 display" id="PersonTable">
                                 <thead>
                                     <tr>
-                                        <th style="display:none;">Person ID</th>
+                                        <th>Person ID</th>
                                         <th>Status</th>
                                         <th>WSA #</th>
                                         <th>Last Name</th>
                                         <th>First and Middle Names</th>
                                         <th>Country of Application</th>
-                                        <th>DOB</th>
+                                        @*<th>DOB</th>*@
 
-                                        <th hidden>City Of Birth</th>
-                                        <th hidden>Country of Birth</th>
-                                        <th hidden>Phone</th>
-                                        <th hidden>Title</th>
-                                        <th hidden>Fax</th>
-                                        <th hidden>EMail</th>
-                                        <th hidden>Website</th>
-                                        <th hidden>Sex</th>
-                                        <th hidden>Height</th>
-                                        <th hidden>Marks</th>
-                                        <th hidden>FatherName</th>
-                                        <th hidden>MotherName</th>
-                                        <th hidden>Comments</th>
+                                        @*<th hidden>City Of Birth</th>
+                                <th hidden>Country of Birth</th>
+                                <th hidden>Phone</th>
+                                <th hidden>Title</th>
+                                <th hidden>Fax</th>
+                                <th hidden>EMail</th>
+                                <th hidden>Website</th>
+                                <th hidden>Sex</th>
+                                <th hidden>Height</th>
+                                <th hidden>Marks</th>
+                                <th hidden>FatherName</th>
+                                <th hidden>MotherName</th>
+                                <th hidden>Comments</th>*@
                                         @*<th>Image</th>*@
-                                        <th hidden>Signature</th>
+                                        @*<th hidden>Signature</th>*@
 
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    @foreach (WorldServiceOrganization.Models.tblPerson Person in Model)
-                                    {
-                                    <tr>
-                                        <td style="display:none;">@Person.PersonIDNumber</td>
-                                        <td>@Person.tblStatu.Name</td>
-                                        <td>@Person.WSANumber</td>
-                                        <td>@Person.LastName</td>
-                                        <td>@Person.FirstName</td>
-                                        <td>@Person.tblCountry.Name</td>
-                                        @if (@DateFormat == "MMM-dd-yyyy")
-                                        {
-                                            if (@Person.BirthMonth != null)
-                                            {
-                                                if (@Person.BirthYear != null)
-                                                {
-                                                    <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(@Person.BirthMonth ?? 13) @Person.BirthDay,@Person.BirthYear</td>
-                                                }
-                                                else
-                                                {
-                                                    <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(@Person.BirthMonth ?? 13) @Person.BirthDay </td>
-                                                }
+                                @*<tbody>
+                                                    @foreach (WorldServiceOrganization.Models.tblPerson Person in Model)
+                                                    {
+                                                    <tr>
+                                                        <td style="display:none;">@Person.PersonIDNumber</td>
+                                                        <td>@Person.tblStatu.Name</td>
+                                                        <td>@Person.WSANumber</td>
+                                                        <td>@Person.LastName</td>
+                                                        <td>@Person.FirstName</td>
+                                                        @if (Person.tblCountry != null)
+                                                        {
+                                                            <td > @Person.tblCountry.Name</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td hidden> </td>
+                                                        }
+                                                        @if (@DateFormat == "MMM-dd-yyyy")
+                                                        {
+                                                            if (@Person.BirthMonth != null)
+                                                            {
+                                                                if (@Person.BirthYear != null)
+                                                                {
+                                                                    int? Month = 0;
+                                                                    int SMonth = 0;
+                                                                    bool isMonth = int.TryParse(@Person.BirthMonth, out SMonth);
+                                                                    if (isMonth == true)
+                                                                    {
+                                                                        Month = SMonth;
+                                                                        <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(Month ?? 13) @Person.BirthDay,@Person.BirthYear</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>@Person.BirthMonth  @Person.BirthDay,@Person.BirthYear</td>
+                                                                    }
 
-                                            }
-                                            else
-                                            {
-                                                if (@Person.BirthYear != null)
-                                                {
-                                                    <td>@Person.BirthDay,@Person.BirthYear</td>
-                                                }
-                                                else
-                                                {
-                                                    <td>@Person.BirthDay @Person.BirthYear</td>
-                                                }
-                                            }
+                                                                }
+                                                                else
+                                                                {
+                                                                    int? Month = 0;
+                                                                    int SMonth = 0;
+                                                                    bool isMonth = int.TryParse(@Person.BirthMonth, out SMonth);
+                                                                    if (isMonth == true)
+                                                                    {
+                                                                        Month = SMonth;
+                                                                        <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(Month ?? 13) @Person.BirthDay</td>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <td>@Person.BirthMonth @Person.BirthDay</td>
+                                                                    }
+                                                                }
 
-                                        }
-                                        else
-                                        {
+                                                            }
+                                                            else
+                                                            {
+                                                                if (@Person.BirthYear != null)
+                                                                {
+                                                                    <td>@Person.BirthDay,@Person.BirthYear</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>@Person.BirthDay @Person.BirthYear</td>
+                                                                }
+                                                            }
 
-                                            if (@Person.BirthMonth != null)
-                                            {
-                                                <td>@Person.BirthDay @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(@Person.BirthMonth ?? 1) @Person.BirthYear</td>
-                                            }
-                                            else
-                                            {
-                                                <td>@Person.BirthDay @Person.BirthYear</td>
-                                            }
+                                                        }
+                                                        else
+                                                        {
 
-                                        }
+                                                            if (@Person.BirthMonth != null)
+                                                            {
+                                                                int? Month = 0;
+                                                                int SMonth = 0;
+                                                                bool isMonth = int.TryParse(@Person.BirthMonth, out SMonth);
+                                                                if (isMonth == true)
+                                                                {
+                                                                    Month = SMonth;
+                                                                    <td>@Person.BirthDay @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(Month ?? 1) @Person.BirthYear</td>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <td>@Person.BirthDay @Person.BirthMonth @Person.BirthYear</td>
+                                                                }
+                                                            }
+                                                            else
+                                                            {
+                                                                <td>@Person.BirthDay @Person.BirthYear</td>
+                                                            }
 
-                                        <td hidden> @Person.CityOfBirth</td>
-                                        <td hidden> @Person.tblCountry1.Name</td>
-                                        <td hidden> @Person.Phone</td>
-                                        <td hidden> @Person.Title</td>
-                                        <td hidden> @Person.Fax</td>
-                                        <td hidden> @Person.EMail</td>
-                                        <td hidden> @Person.Website</td>
-                                        <td hidden> @Person.tblSex.Name</td>
-                                        <td hidden> @Person.Height @Person.HeightUnit</td>
-                                        <td hidden> @Person.Marks</td>
-                                        <td hidden> @Person.FatherName</td>
-                                        <td hidden> @Person.MotherName</td>
-                                        <td hidden> @Person.Comments</td>
-                                        @*@{ 
-                                            var base64 = Convert.ToBase64String(@Person.Photograph);
-                                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
-                                        }*@
-                                        @*<td><img src="@imgSrc"  / style="width:30%"> </td>*@
-                                        <td hidden>@Person.SignaturePath</td>
+                                                        }
 
-                                        <td class="text-end">
-                                            <div class="actions">
-                                                <a href="@Url.Action("CreatePerson","Person",new {id=Person.PersonIDNumber })" class="text-black" title="Edit"><i class="fa fa-edit" id="EditPerson"></i> Edit</a>
-                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#PersonDelete" id="DeletePersonRecord"><i class="fa fa-trash"></i> Delete</a>
-                                                @*<a href="@Url.Action("CreateTransaction","Home",new {id=Person.PersonIDNumber })" class="text-dark " title="Transaction"><i class="fa fa-credit-card"></i> Transaction</a>
-                <a href="@Url.Action("CreateAddress","Home",new {id=Person.PersonIDNumber })" class="text-info  " title="Address"><i class="fa fa-map"></i> Address</a>
-                <a href="@Url.Action("CreateChild","Home",new {id=Person.PersonIDNumber })" class="text-warning " title="Child"><i class="fa fa-user"></i> Child</a>*@
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    }
-                                </tbody>
+                                                        <td hidden> @Person.CityOfBirth</td>
+                                                        @if (Person.tblCountry1 != null)
+                                                        {
+                                                            <td hidden> @Person.tblCountry1.Name</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td hidden> </td>
+                                                        }
+                                                        <td hidden> @Person.Phone</td>
+                                                        <td hidden> @Person.Title</td>
+                                                        <td hidden> @Person.Fax</td>
+                                                        <td hidden> @Person.EMail</td>
+                                                        <td hidden> @Person.Website</td>
+                                                        <td hidden> @Person.tblSex.Name</td>
+                                                        <td hidden> @Person.Height @Person.HeightUnit</td>
+                                                        <td hidden> @Person.Marks</td>
+                                                        <td hidden> @Person.FatherName</td>
+                                                        <td hidden> @Person.MotherName</td>
+                                                        <td hidden> @Person.Comments</td>
+                                                        @{
+                            var base64 = Convert.ToBase64String(@Person.Photograph);
+                            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+                        }
+                                                        <td><img src="@imgSrc"  / style="width:30%"> </td>
+                                                        <td hidden>@Person.SignaturePath</td>
+
+                                                        <td class="text-end">
+                                                            <div class="actions">
+                                                                <a href="@Url.Action("CreatePerson","Person",new {id=Person.PersonIDNumber })" class="text-black" title="Edit"><i class="fa fa-edit" id="EditPerson"></i> Edit</a>
+                                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#PersonDelete" id="DeletePersonRecord"><i class="fa fa-trash"></i> Delete</a>
+                                                                <a href="@Url.Action("CreateTransaction","Home",new {id=Person.PersonIDNumber })" class="text-dark " title="Transaction"><i class="fa fa-credit-card"></i> Transaction</a>
+                                <a href="@Url.Action("CreateAddress","Home",new {id=Person.PersonIDNumber })" class="text-info  " title="Address"><i class="fa fa-map"></i> Address</a>
+                                <a href="@Url.Action("CreateChild","Home",new {id=Person.PersonIDNumber })" class="text-warning " title="Child"><i class="fa fa-user"></i> Child</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    }
+                                                </tbody>*@
                                 @*<tfoot>
-                                        <tr>
-                                            <th>Status</th>
-                                            <th>WSA #</th>
-                                            <th>Last Name</th>
-                                            <th>First Name</th>
-                                            <th>Country</th>
-                                            <th>DOB</th>
-                                        </tr>
-                                    </tfoot>*@
+                            <tr>
+                                <th>Status</th>
+                                <th>WSA #</th>
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                                <th>Country</th>
+                                <th>DOB</th>
+                            </tr>
+                        </tfoot>*@
                             </table>
                         </div>
                     </div>
@@ -293,7 +345,94 @@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
 
-   
+    function bindDatatable() {
+        
+        var Selected = $('select[name="RecordType"]').val();
+        var datatable = $('#PersonTable')
+            .DataTable({
+                //"sAjaxSource": "/Person/GetData",
+                "processing": true, // for show progress bar
+                "serverSide": true,
+                "ajax": {
+                    "url": "/Person/GetData?RecordType="+Selected+"",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                //"ajax": {
+                //    "url": "/Person/GetData",
+                //    "type": "POST",
+                //    "datatype": "json"
+                //},
+                //"bServerSide": true,
+                //"bProcessing": true,
+                //"bSearchable": true,
+                //"order": [[0, 'asc']],
+                //"ordering": false,
+                "language": {
+                    "emptyTable": "No record found.",
+                    "processing":
+                        '<i class="fa fa-spinner fa-spin fa-3x fa-fw" style="color:#2a2b2b;"></i><span class="sr-only">Loading...</span> '
+                },
+                aoColumnDefs: [{
+                     "aTargets": [6],    //Edit column
+                    "mData": "PersonIDNumber",  //Get value from RoleId column, I assumed you used "RoleId" as the name for RoleId in your JSON, in my case, I didn't assigned any name in code behind so i used "mData": "0"
+                    "mRender": function (data, row, type, full) {
+                        return ' <a href=' + '@Url.Action("CreatePerson", "Person")?id=' + type.PersonIDNumber + ' class="text-black" title="Edit" ><i class="fa fa-edit" id="EditPerson"></i> Edit</a><a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#PersonDelete" id="DeletePersonRecord"   onclick=DeletePerson(' + type.PersonIDNumber + '); style="border-left: 1px solid #EEF1FE;padding-left: 10px;margin-left: 10px;"><i class="fa fa-trash"></i> Delete</a>';
+
+
+                     }
+
+                }],
+
+
+                "columns": [
+                    {
+                        "data": "PersonIDNumber",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "StatusName",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "WSANumber",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "LastName",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "FirstName",
+                        "autoWidth": true,
+                        "searchable": true
+                    },
+                    {
+                        "data": "CountryOfApplicationName",
+                        "autoWidth": true,
+                        "searchable": true
+                    }
+                    //{
+                    //    "render": function (data, row) {
+                    //        console.log(row);
+                    //        return "<a href='#' class='btn btn-danger' onclick=DeletePerson('" + row.PersonIDNumber + "'); >Delete</a>";
+
+                    //    }
+                    //}
+                ],
+                "lengthMenu": [@Retrieves],
+            });
+        datatable.column(0).visible(false);
+    }
+
+
+
+
+
 
 
     function RecordType(sel)
@@ -305,13 +444,19 @@
     }
 
 
-    $("body").on("click", "#DeletePersonRecord", function () {
+    //$("body").on("click", "#DeletePersonRecord", function () {
+    //    $("#ConfigDerror").text("");
+    //    $("#CDeletePerson").attr("disabled", false);
+    //    var currentRow = $(this).closest("tr");
+    //    $("#DeletePersonID").val(currentRow.find("td:eq(0)").text());
+    //    //alert($("#DeletePersonID").val());
+    //});
+
+    function DeletePerson(ID) {
         $("#ConfigDerror").text("");
         $("#CDeletePerson").attr("disabled", false);
-        var currentRow = $(this).closest("tr");
-        $("#DeletePersonID").val(currentRow.find("td:eq(0)").text());
-        //alert($("#DeletePersonID").val());
-    });
+        $("#DeletePersonID").val(ID);
+    }
 
     $("#CDeletePerson").on("click", function () {
 
@@ -536,6 +681,8 @@
 
     $(document).ready(function () {
 
+        bindDatatable();
+
         //$('#PersonTable tfoot th').each(function () {
         //    var title = $(this).text();
         //    $(this).html('<input type="text" placeholder="Search ' + title + '" />');
@@ -657,8 +804,15 @@
         else {
             $('#DeleteAlert').fadeOut();
         }
+        if ("@Error" != "") {
+            $('#ErrorAlert').fadeIn();
+            $('#ErrorAlert').fadeOut(6000);
+        }
+        else {
+            $('#ErrorAlert').fadeOut();
+        }
 
-       var table = $('#PersonTable').DataTable({
+        @*var table = $('#PersonTable').DataTable({
             destroy:true,
             dom: 'Bfrtip',
             lengthMenu: [
@@ -679,7 +833,7 @@
             "lengthMenu": [@Retrieves],
 
 
-        });
+        });*@
 
 
 

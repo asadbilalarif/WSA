@@ -17,6 +17,7 @@ namespace WorldServiceOrganization.Controllers
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             var Data = DB.tblSettings.Where(x => x.isActive == true).FirstOrDefault();
+            ViewBag.FontStyle = DB.tblFontStyles.Where(x => x.isActive == true).ToList();
             if (isSuccess == 1)
             {
                 ViewBag.Error = "Record Successfully Updated!!!";
@@ -36,6 +37,7 @@ namespace WorldServiceOrganization.Controllers
             tblRole Foreign = new tblRole();
             try
             {
+                ViewBag.FontStyle = DB.tblFontStyles.Where(x => x.isActive == true).ToList();
                 if (Setting.IsActive1 == null)
                 {
                     Setting.IsActive1 = false;
@@ -56,9 +58,26 @@ namespace WorldServiceOrganization.Controllers
                 Data.Password = Setting.Password;
                 Data.SMTP = Setting.SMTP;
                 Data.Port = Setting.Port;
+                Data.NextCC = Setting.NextCC;
+                Data.NextBC = Setting.NextBC;
+                Data.NextMC = Setting.NextMC;
                 Data.IsActive1 = Setting.IsActive1;
                 DB.Entry(Data);
                 DB.SaveChanges();
+
+                HttpCookie cookie = new HttpCookie("Settings");
+
+                cookie["DateFormat"] = DB.tblSettings.Select(r => r.DateFormat).FirstOrDefault();
+                cookie["ReportsDateFormat"] = DB.tblSettings.Select(r => r.ReportsDateFormat).FirstOrDefault();
+                cookie["WSA"] = DB.tblSettings.Select(r => r.NextWSA).FirstOrDefault();
+                cookie["Retrieves"] = DB.tblSettings.Select(r => r.NumberOfRetrieves).FirstOrDefault();
+                cookie["FontStyle"] = DB.tblSettings.Select(r => r.FontStyle).FirstOrDefault();
+                cookie["FontSize"] = DB.tblSettings.Select(r => r.FontSize).FirstOrDefault();
+                // This cookie will remain  for one month.
+                cookie.Expires = DateTime.Now.AddMonths(1);
+
+                // Add it to the current web response.
+                Response.Cookies.Add(cookie);
 
             }
             catch (Exception ex)

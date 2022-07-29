@@ -83,6 +83,7 @@
     <Property Name="DeletedBy" Type="int" />
     <Property Name="DeletedDate" Type="datetime" />
     <Property Name="isActive" Type="bit" />
+    <Property Name="Abbreviation" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="tblDocumentImg">
     <Key>
@@ -105,6 +106,21 @@
       <PropertyRef Name="EyeId" />
     </Key>
     <Property Name="EyeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Code" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="CreatedBy" Type="int" />
+    <Property Name="CreatedDate" Type="datetime" />
+    <Property Name="EditBy" Type="int" />
+    <Property Name="EditDate" Type="datetime" />
+    <Property Name="DeletedBy" Type="int" />
+    <Property Name="DeletedDate" Type="datetime" />
+    <Property Name="isActive" Type="bit" />
+  </EntityType>
+  <EntityType Name="tblFontStyle">
+    <Key>
+      <PropertyRef Name="FontStyleId" />
+    </Key>
+    <Property Name="FontStyleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Code" Type="nvarchar" MaxLength="50" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" />
     <Property Name="CreatedBy" Type="int" />
@@ -203,9 +219,9 @@
     <Property Name="EMail" Type="nvarchar(max)" />
     <Property Name="Website" Type="nvarchar(max)" />
     <Property Name="DateOfBirth" Type="nvarchar(max)" />
-    <Property Name="BirthDay" Type="int" />
-    <Property Name="BirthMonth" Type="int" />
-    <Property Name="BirthYear" Type="int" />
+    <Property Name="BirthDay" Type="nvarchar" MaxLength="1000" />
+    <Property Name="BirthMonth" Type="nvarchar" MaxLength="1000" />
+    <Property Name="BirthYear" Type="nvarchar" MaxLength="1000" />
     <Property Name="Sex" Type="int" />
     <Property Name="Height" Type="float" />
     <Property Name="HeightUnit" Type="int" />
@@ -339,6 +355,9 @@
     <Property Name="SMTP" Type="nvarchar(max)" />
     <Property Name="Port" Type="nvarchar(max)" />
     <Property Name="IsActive1" Type="bit" />
+    <Property Name="NextMC" Type="nvarchar(max)" />
+    <Property Name="NextCC" Type="nvarchar(max)" />
+    <Property Name="NextBC" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="tblSex">
     <Key>
@@ -781,6 +800,7 @@
     <EntitySet Name="tblCountry" EntityType="Self.tblCountry" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblDocumentImg" EntityType="Self.tblDocumentImg" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblEye" EntityType="Self.tblEye" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tblFontStyle" EntityType="Self.tblFontStyle" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblMenu" EntityType="Self.tblMenu" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblMRZTranslation" EntityType="Self.tblMRZTranslation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tblOccupation" EntityType="Self.tblOccupation" Schema="dbo" store:Type="Tables" />

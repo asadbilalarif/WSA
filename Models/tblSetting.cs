@@ -35,5 +35,8 @@ namespace WorldServiceOrganization.Models
         public string Port { get; set; }
         public Nullable<bool> IsActive1 { get; set; }
         public string ReportsDateFormat { get; set; }
+        public string NextMC { get; set; }
+        public string NextBC { get; set; }
+        public string NextCC { get; set; }
     }
 }

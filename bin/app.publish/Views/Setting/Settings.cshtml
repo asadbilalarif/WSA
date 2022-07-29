@@ -13,6 +13,9 @@
     string Password = Model.Password;
     string SMTP = Model.SMTP;
     string Port = Model.Port;
+    string NextCC = Model.NextCC;
+    string NextBC = Model.NextBC;
+    string NextMC = Model.NextMC;
     bool? IsActive1 = Model.IsActive1;
     string Check = "True";
 
@@ -138,22 +141,55 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3" style="display:none">
+                                <div class="col-md-3" >
                                     <div class="form-group">
                                         <label>Font Style</label>
-                                        <input type="text" class="form-control" id="FontStyle" name="FontStyle" value="@FontStyle" required>
+                                        <select class="form-control" id="FontStyle" name="FontStyle">
+                                            @foreach (WorldServiceOrganization.Models.tblFontStyle item in @ViewBag.FontStyle)
+                                            {
+                                                if (@FontStyle == @item.Name)
+                                                {
+                                                    <option value="@item.Name" selected>@item.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Name">@item.Name</option>
+                                                }
+
+                                            }
+                                        </select>
+                                        @*<input type="text" class="form-control" id="FontStyle" name="FontStyle" value="@FontStyle" required>*@
                                     </div>
                                 </div>
-                                <div class="col-md-2" style="display:none">
+                                <div class="col-md-3" >
                                     <div class="form-group">
                                         <label>Font Size</label>
                                         <input type="number" class="form-control" id="FontSize" name="FontSize" value="@FontSize" required>
                                     </div>
                                 </div>
 
-                                <div class="col-md-1">
+                                <div class="col-md-3">
                                     <div class="form-group">
-                                        <button class="btn btn-primary" type="submit" id="SaveChanges" style="margin-top:11%;">Save</button>
+                                        <label>Next Marriage Certificate #</label>
+                                        <input type="number" class="form-control" id="NextMC" name="NextMC" value="@NextMC" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Next Citizen Certificate #</label>
+                                        <input type="number" class="form-control" id="NextCC" name="NextCC" value="@NextCC" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Next Birth Certificate #</label>
+                                        <input type="number" class="form-control" id="NextBC" name="NextBC" value="@NextBC" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-9 text-right">
+                                    <div class="form-group">
+                                        <button class="btn btn-primary" type="submit" id="SaveChanges" style="margin-top:2%;">Save</button>
                                     </div>
                                 </div>
                             </div>
@@ -206,9 +242,26 @@
 <script>
 
 
+    @*$.getJSON("https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyBQu5ABvd7AzlXGD5OcVw3cCr5338hAJUk", function (fonts) {
+        for (var i = 0; i < fonts.items.length; i++) {
+            if (fonts.items[i].family == "@FontStyle") {
+                $('#FontStyle')
+                    .append($("<option selected></option>")
+                        .attr("value", fonts.items[i].family)
+                        .text(fonts.items[i].family));
+            }
+            else {
+                $('#FontStyle')
+                    .append($("<option></option>")
+                        .attr("value", fonts.items[i].family)
+                        .text(fonts.items[i].family));
+            }
 
+        }
+    });*@
 
     $(document).ready(function () {
+        //$('#FontStyle').select2();
 
         $("#DateFormat").val("@DateFormat").change();
         $("#ReportsDateFormat").val("@ReportsDateFormat").change();

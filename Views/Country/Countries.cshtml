@@ -72,6 +72,7 @@
                                     <tr>
                                         <th style="display:none;">User ID</th>
                                         <th>Code</th>
+                                        <th>Abbreviation</th>
                                         <th>Name</th>
                                         @*<th>Active</th>*@
                                         <th>Action</th>
@@ -83,6 +84,7 @@
                                         <tr>
                                             <td style="display:none;">@Country.CountryId</td>
                                             <td>@Country.Code</td>
+                                            <td>@Country.Abbreviation</td>
                                             <td>@Country.Name</td>
                                             @*@if (@Country.isActive == true)
                                                 {
@@ -146,6 +148,8 @@
                                         <input class="form-control" type="text" id="CCode">
                                         <label>Name <small id="LblCountryNameError" style="display:none; color:red;">Name Must be filled!!!</small></label>
                                         <input class="form-control" type="text" id="CName">
+                                        <label>Abbreviation <small id="LblCountryAbbreviationError" style="display:none; color:red;">Abbreviation Must be filled!!!</small></label>
+                                        <input class="form-control" type="text" id="CAbbreviation">
 
                                     </div>
                                 </div>
@@ -201,8 +205,9 @@
         $("#CountryID").val('');
         $("#CCode").val('');
         $("#CName").val('');
+        $("#CAbbreviation").val('');
         $("#LblCountryCodeError").fadeOut();
-        $("#LblCountryNameError").fadeOut();
+        $("#LblCountryAbbreviationError").fadeOut();
 
 
 
@@ -217,10 +222,12 @@
         $("#CHeading").hide();
         $("#CountryID").val(currentRow.find("td:eq(0)").text());
         $("#CCode").val(currentRow.find("td:eq(1)").text());
-        $("#CName").val(currentRow.find("td:eq(2)").text());
+        $("#CAbbreviation").val(currentRow.find("td:eq(2)").text());
+        $("#CName").val(currentRow.find("td:eq(3)").text());
 
         $("#LblCountryCodeError").fadeOut();
         $("#LblCountryNameError").fadeOut();
+        $("#LblCountryAbbreviationError").fadeOut();
 
         //alert($("#CountryID").val());
     });
@@ -229,7 +236,7 @@
     $("#CountrySubmit").on("click", function () {
 
         var error = $("#Countryerror");
-        if ($("#CCode").val() != "" && $("#CName").val() != "") {
+        if ($("#CCode").val() != "" && $("#CName").val() != "" && $("#CAbbreviation").val() != "") {
             error.text('');
             $("#CountrySubmit").attr("disabled", true);
             $("#Countryloading").show();
@@ -238,12 +245,14 @@
             var UId = $("#CountryID").val();
             var UCode = $("#CCode").val();
             var UName = $("#CName").val();
+            var UAbbreviation = $("#CAbbreviation").val();
 
 
             if (UId != 0) {
                 var model = {
                     CountryId: UId,
                     Name: UName,
+                    Abbreviation: UAbbreviation,
                     Code: UCode,
                 };
                 CheckMessage = 1;
@@ -252,6 +261,7 @@
                 var model = {
 
                     Name: UName,
+                    Abbreviation: UAbbreviation,
                     Code: UCode,
                 };
                 CheckMessage = 2;
@@ -311,6 +321,13 @@
             }
             else {
                 $("#LblCountryNameError").fadeOut();
+            }
+            if ($("#CAbbreviation").val() == "") {
+                //text = error.append('  *Email must be filled!!!  ');
+                $("#LblCountryAbbreviationError").fadeIn();
+            }
+            else {
+                $("#LblCountryAbbreviationError").fadeOut();
             }
 
         }

@@ -155,7 +155,7 @@
                                         <th hidden>FatherName</th>
                                         <th hidden>MotherName</th>
                                         <th hidden>Comments</th>
-                                        <th>Image</th>
+                                        @*<th>Image</th>*@
                                         <th hidden>Signature</th>
 
                                         <th>Action</th>
@@ -164,80 +164,132 @@
                                 <tbody>
                                     @foreach (WorldServiceOrganization.Models.tblPerson Person in Model)
                                     {
-                                        <tr>
-                                            <td style="display:none;">@Person.PersonIDNumber</td>
-                                            <td>@Person.tblStatu.Name</td>
-                                            <td>@Person.WSANumber</td>
-                                            <td>@Person.LastName</td>
-                                            <td>@Person.FirstName</td>
-                                            <td>@Person.tblCountry.Name</td>
-                                            @if (@DateFormat == "MMM-dd-yyyy")
+                                    <tr>
+                                        <td style="display:none;">@Person.PersonIDNumber</td>
+                                        <td>@Person.tblStatu.Name</td>
+                                        <td>@Person.WSANumber</td>
+                                        <td>@Person.LastName</td>
+                                        <td>@Person.FirstName</td>
+                                        @if (Person.tblCountry != null)
+                                        {
+                                            <td > @Person.tblCountry.Name</td>
+                                        }
+                                        else
+                                        {
+                                            <td hidden> </td>
+                                        }
+                                        @if (@DateFormat == "MMM-dd-yyyy")
+                                        {
+                                            if (@Person.BirthMonth != null)
                                             {
-                                                if (@Person.BirthMonth != null)
+                                                if (@Person.BirthYear != null)
                                                 {
-                                                    if (@Person.BirthYear != null)
+                                                    int? Month = 0;
+                                                    int SMonth = 0;
+                                                    bool isMonth = int.TryParse(@Person.BirthMonth, out SMonth);
+                                                    if (isMonth == true)
                                                     {
-                                                        <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(@Person.BirthMonth ?? 13) @Person.BirthDay,@Person.BirthYear</td>
+                                                        Month = SMonth;
+                                                        <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(Month ?? 13) @Person.BirthDay,@Person.BirthYear</td>
                                                     }
                                                     else
                                                     {
-                                                        <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(@Person.BirthMonth ?? 13) @Person.BirthDay </td>
+                                                        <td>@Person.BirthMonth  @Person.BirthDay,@Person.BirthYear</td>
                                                     }
 
                                                 }
                                                 else
                                                 {
-                                                    if (@Person.BirthYear != null)
+                                                    int? Month = 0;
+                                                    int SMonth = 0;
+                                                    bool isMonth = int.TryParse(@Person.BirthMonth, out SMonth);
+                                                    if (isMonth == true)
                                                     {
-                                                        <td>@Person.BirthDay,@Person.BirthYear</td>
+                                                        Month = SMonth;
+                                                        <td>@System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(Month ?? 13) @Person.BirthDay</td>
                                                     }
                                                     else
                                                     {
-                                                        <td>@Person.BirthDay @Person.BirthYear</td>
+                                                        <td>@Person.BirthMonth @Person.BirthDay</td>
                                                     }
                                                 }
 
                                             }
                                             else
                                             {
-
-                                                if (@Person.BirthMonth != null)
+                                                if (@Person.BirthYear != null)
                                                 {
-                                                    <td>@Person.BirthDay @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(@Person.BirthMonth ?? 1) @Person.BirthYear</td>
+                                                    <td>@Person.BirthDay,@Person.BirthYear</td>
                                                 }
                                                 else
                                                 {
                                                     <td>@Person.BirthDay @Person.BirthYear</td>
                                                 }
-
                                             }
 
-                                            <td hidden> @Person.CityOfBirth</td>
-                                            <td hidden> @Person.tblCountry1.Name</td>
-                                            <td hidden> @Person.Phone</td>
-                                            <td hidden> @Person.Title</td>
-                                            <td hidden> @Person.Fax</td>
-                                            <td hidden> @Person.EMail</td>
-                                            <td hidden> @Person.Website</td>
-                                            <td hidden> @Person.tblSex.Name</td>
-                                            <td hidden> @Person.Height @Person.HeightUnit</td>
-                                            <td hidden> @Person.Marks</td>
-                                            <td hidden> @Person.FatherName</td>
-                                            <td hidden> @Person.MotherName</td>
-                                            <td hidden> @Person.Comments</td>
-                                            <td ><img src="data:image/png;base64," + @Person.Photograph  /> </td>
-                                            <td hidden>@Person.SignaturePath</td>
+                                        }
+                                        else
+                                        {
 
-                                            <td class="text-end">
-                                                <div class="actions">
-                                                    <a href="@Url.Action("CreatePerson","Person",new {id=Person.PersonIDNumber })" class="text-black" title="Edit"><i class="fa fa-edit" id="EditPerson"></i> Edit</a>
-                                                    <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#PersonDelete" id="DeletePersonRecord"><i class="fa fa-trash"></i> Delete</a>
-                                                    @*<a href="@Url.Action("CreateTransaction","Home",new {id=Person.PersonIDNumber })" class="text-dark " title="Transaction"><i class="fa fa-credit-card"></i> Transaction</a>
-                                                        <a href="@Url.Action("CreateAddress","Home",new {id=Person.PersonIDNumber })" class="text-info  " title="Address"><i class="fa fa-map"></i> Address</a>
-                                                        <a href="@Url.Action("CreateChild","Home",new {id=Person.PersonIDNumber })" class="text-warning " title="Child"><i class="fa fa-user"></i> Child</a>*@
-                                                </div>
-                                            </td>
-                                        </tr>
+                                            if (@Person.BirthMonth != null)
+                                            {
+                                                int? Month = 0;
+                                                int SMonth = 0;
+                                                bool isMonth = int.TryParse(@Person.BirthMonth, out SMonth);
+                                                if (isMonth == true)
+                                                {
+                                                    Month = SMonth;
+                                                    <td>@Person.BirthDay @System.Globalization.CultureInfo.CurrentCulture.DateTimeFormat.GetAbbreviatedMonthName(Month ?? 1) @Person.BirthYear</td>
+                                                }
+                                                else
+                                                {
+                                                    <td>@Person.BirthDay @Person.BirthMonth @Person.BirthYear</td>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <td>@Person.BirthDay @Person.BirthYear</td>
+                                            }
+
+                                        }
+
+                                        <td hidden> @Person.CityOfBirth</td>
+                                        @if (Person.tblCountry1 != null)
+                                        {
+                                            <td hidden> @Person.tblCountry1.Name</td>
+                                        }
+                                        else
+                                        {
+                                            <td hidden> </td>
+                                        }
+                                        <td hidden> @Person.Phone</td>
+                                        <td hidden> @Person.Title</td>
+                                        <td hidden> @Person.Fax</td>
+                                        <td hidden> @Person.EMail</td>
+                                        <td hidden> @Person.Website</td>
+                                        <td hidden> @Person.tblSex.Name</td>
+                                        <td hidden> @Person.Height @Person.HeightUnit</td>
+                                        <td hidden> @Person.Marks</td>
+                                        <td hidden> @Person.FatherName</td>
+                                        <td hidden> @Person.MotherName</td>
+                                        <td hidden> @Person.Comments</td>
+                                        @*@{
+            var base64 = Convert.ToBase64String(@Person.Photograph);
+            var imgSrc = String.Format("data:image/gif;base64,{0}", base64);
+        }*@
+                                        @*<td><img src="@imgSrc"  / style="width:30%"> </td>*@
+                                        <td hidden>@Person.SignaturePath</td>
+
+                                        <td class="text-end">
+                                            <div class="actions">
+                                                <a href="@Url.Action("CreatePerson","Person",new {id=Person.PersonIDNumber })" class="text-black" title="Edit"><i class="fa fa-edit" id="EditPerson"></i> Edit</a>
+                                                <a href="#" class="text-danger font-50" title="Delete" data-toggle="modal" data-target="#PersonDelete" id="DeletePersonRecord"><i class="fa fa-trash"></i> Delete</a>
+                                                @*<a href="@Url.Action("CreateTransaction","Home",new {id=Person.PersonIDNumber })" class="text-dark " title="Transaction"><i class="fa fa-credit-card"></i> Transaction</a>
+                <a href="@Url.Action("CreateAddress","Home",new {id=Person.PersonIDNumber })" class="text-info  " title="Address"><i class="fa fa-map"></i> Address</a>
+                <a href="@Url.Action("CreateChild","Home",new {id=Person.PersonIDNumber })" class="text-warning " title="Child"><i class="fa fa-user"></i> Child</a>*@
+                                            </div>
+                                        </td>
+                                    </tr>
                                     }
                                 </tbody>
                                 @*<tfoot>
@@ -663,14 +715,14 @@
             ],
             buttons: [
             'pageLength',
-                //{
+                {
 
 
-                //    extend: 'excel',
-                //    exportOptions: {
-                //        columns: [ 1, 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
-                //    }
-                //}
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: [ 1, 2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
+                    }
+                }
             ],
             "lengthMenu": [@Retrieves],
 

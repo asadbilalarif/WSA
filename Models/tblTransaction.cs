@@ -33,9 +33,9 @@ namespace WorldServiceOrganization.Models
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public Nullable<bool> isActive { get; set; }
     
-        public virtual tblPerson tblPerson { get; set; }
         public virtual tblProduct tblProduct { get; set; }
         public virtual tblUser tblUser { get; set; }
         public virtual tblUser tblUser1 { get; set; }
+        public virtual tblPerson tblPerson { get; set; }
     }
 }

@@ -46,6 +46,7 @@ namespace WorldServiceOrganization.Controllers
                         Data = DB.tblCountries.Select(r => r).Where(x => x.CountryId == Country.CountryId).FirstOrDefault();
 
                         Data.Name = Country.Name;
+                        Data.Abbreviation = Country.Abbreviation;
                         Data.Code = Country.Code;
                         Data.isActive = true;
                         Data.EditDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));

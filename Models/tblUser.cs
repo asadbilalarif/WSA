@@ -17,13 +17,15 @@ namespace WorldServiceOrganization.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblUser()
         {
-            this.tblPersons = new HashSet<tblPerson>();
-            this.tblPersons1 = new HashSet<tblPerson>();
-            this.tblPersons2 = new HashSet<tblPerson>();
             this.tblTransactions = new HashSet<tblTransaction>();
             this.tblTransactions1 = new HashSet<tblTransaction>();
             this.tblPassportLabelSettings = new HashSet<tblPassportLabelSetting>();
             this.tblPassportLabelSettings1 = new HashSet<tblPassportLabelSetting>();
+            this.tblFontStyles = new HashSet<tblFontStyle>();
+            this.tblFontStyles1 = new HashSet<tblFontStyle>();
+            this.tblPersons = new HashSet<tblPerson>();
+            this.tblPersons1 = new HashSet<tblPerson>();
+            this.tblPersons2 = new HashSet<tblPerson>();
         }
     
         public int UserId { get; set; }
@@ -50,14 +52,9 @@ namespace WorldServiceOrganization.Models
         public Nullable<bool> isActive { get; set; }
         public Nullable<int> RoleId { get; set; }
         public string Initials { get; set; }
+        public string MiddleName { get; set; }
     
         public virtual tblRole tblRole { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPerson> tblPersons { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPerson> tblPersons1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPerson> tblPersons2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblTransaction> tblTransactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -66,5 +63,15 @@ namespace WorldServiceOrganization.Models
         public virtual ICollection<tblPassportLabelSetting> tblPassportLabelSettings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPassportLabelSetting> tblPassportLabelSettings1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblFontStyle> tblFontStyles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblFontStyle> tblFontStyles1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPerson> tblPersons { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPerson> tblPersons1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblPerson> tblPersons2 { get; set; }
     }
 }

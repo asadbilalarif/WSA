@@ -28,9 +28,9 @@
     string ImgImg = "/Content/assets/img/user-image.png";
     string ImgCer = "/Content/assets/img/file.png";
     string DateOfBirth = "";
-    int? BirthDay = 0;
-    int? BirthMonth = 0;
-    int? BirthYear = 0;
+    string BirthDay = "";
+    string BirthMonth = "";
+    string BirthYear = "";
     string Marks = "";
     string FatherName = "";
     string MotherName = "";
@@ -280,17 +280,17 @@
                                         <div class="form-group">
                                             <input type="text" class="form-control" style="display:none;" name="PersonIDNumber" value="@PersonId" required>
                                             <label>Country of Application<span style="color:red;">*</span></label>
-                                            <select class="form-control" id="CountryOfApplication" name="CountryOfApplication" required>
-                                                <option value="">Select Country</option>
+                                            <select class="form-control" id="CountryOfApplication" name="CountryOfApplication" >
+                                                <option value=""></option>
                                                 @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
                                                 {
                                                     if (Countries.CountryId == CountryApplicationId)
                                                     {
-                                                        <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                        <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation"   selected>@Countries.Code - @Countries.Name</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                        <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation" >@Countries.Code - @Countries.Name</option>
                                                     }
                                                 }
                                             </select>
@@ -307,17 +307,17 @@
                                         <div class="form-group">
                                             <label>Country of Birth<span style="color:red;">*</span></label>
                                             &nbsp;&nbsp;
-                                            <select class="form-control" id="CountryOfBirth" name="CountryOfBirth" required>
-                                                <option value="">Select Country</option>
+                                            <select class="form-control" id="CountryOfBirth" name="CountryOfBirth" >
+                                                <option value=""></option>
                                                 @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
                                                 {
                                                     if (Countries.CountryId == CountryBirthId)
                                                     {
-                                                        <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                        <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation"   selected>@Countries.Code - @Countries.Name</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                        <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation"  >@Countries.Code - @Countries.Name</option>
                                                     }
                                                 }
                                             </select>
@@ -328,17 +328,17 @@
                                         <div class="form-group">
                                             <label>Country of Birth Statistical<span style="color:red;">*</span></label>
                                             &nbsp;&nbsp;
-                                            <select class="form-control" id="CountryOfBirthStatistical" name="CountryOfBirthStatistical" required>
-                                                <option value="">Select Country</option>
+                                            <select class="form-control" id="CountryOfBirthStatistical" name="CountryOfBirthStatistical" >
+                                                <option value=""></option>
                                                 @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
                                                 {
                                                     if (Countries.CountryId == CountryOfBirthStatistical)
                                                     {
-                                                        <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                        <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation"  selected>@Countries.Code - @Countries.Name</option>
                                                     }
                                                     else
                                                     {
-                                                        <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                        <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation" >@Countries.Code - @Countries.Name</option>
                                                     }
                                                 }
                                             </select>
@@ -427,37 +427,63 @@
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Day<span style="color:red;"></span></label>
-                                                        <select class="form-control" style="padding:0px !important" name="BirthDay">
+                                                        <input class="form-control" type="text" list="BirthDay" name="BirthDay" value="@BirthDay" style="width: 130%;" />
+                                                        <datalist id="BirthDay">
                                                             <option value="">xx</option>
                                                             @for (int i = 1; i <= 31; i++)
                                                             {
                                                                 <option value="@i">@i</option>
                                                             }
-                                                        </select>
+                                                        </datalist>
+                                                        @*<select class="form-control" style="padding:0px !important" name="BirthDay">
+
+                                                            <option value="">xx</option>
+                                                            @for (int i = 1; i <= 31; i++)
+                                                            {
+                                                                <option value="@i">@i</option>
+                                                            }
+                                                        </select>*@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Month<span style="color:red;"></span></label>
-                                                        <select class="form-control" style="padding:0px !important" name="BirthMonth">
+                                                        <input class="form-control" type="text" list="BirthMonth" name="BirthMonth" value="@BirthMonth" style="width: 130%;" />
+                                                        <datalist id="BirthMonth">
                                                             <option value="">xxx</option>
                                                             @for (int i = 1; i <= 12; i++)
                                                             {
                                                                 <option value="@i">@i</option>
                                                             }
-                                                        </select>
+                                                        </datalist>
+                                                        @*<select class="form-control" style="padding:0px !important" name="BirthMonth">
+                                                            <option value="">xxx</option>
+                                                            @for (int i = 1; i <= 12; i++)
+                                                            {
+                                                                <option value="@i">@i</option>
+                                                            }
+                                                        </select>*@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label>Year<span style="color:red;"></span></label>
-                                                        <select class="form-control" style="padding:0px !important" name="BirthYear" id="CdropdownYear">
+                                                        <input class="form-control" type="text" list="BirthYear" name="BirthYear" value="@BirthYear" style="width: 130%;" />
+                                                        <datalist id="BirthYear">
+                                                            <option value="">xxxx</option>
+                                                            @foreach (var item in @ViewBag.Year)
+                                                            {
+                                                                <option value="@item">@item</option>
+
+                                                            }
+                                                        </datalist>
+                                                        @*<select class="form-control" style="padding:0px !important" name="BirthYear" id="CdropdownYear">
                                                             <option value="">xxxx</option>
                                                             @foreach (var item in @ViewBag.Year)
                                                             {
                                                                 <option value="@item">@item</option>
                                                             }
-                                                        </select>
+                                                        </select>*@
                                                     </div>
                                                 </div>
                                             </div>
@@ -609,8 +635,7 @@
                                                         <img id="ImgImg" src="@ImgImg" alt="your image" name="ImgImg" />
                                                         <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i></a>
                                                         <input type="text" id="DeleteImageText" style="display:none;">
-                                                        <input type="text" name="Photo" value="@ImgImg" hidden>
-
+                                                        <input id="ImgImg1" type="text" name="Photo" value="@ImgImg" hidden>
 
                                                     </div>
                                                 </div>
@@ -647,7 +672,7 @@
                                                         <img id="ImgSig" src="@ImgSig" alt="your image" name="ImgSig" />
                                                         <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i></a>
                                                         <input type="text" id="DeleteSigText" style="display:none;">
-                                                        <input type="text" name="SignaturePath" value="@ImgSig" hidden>
+                                                        <input id="ImgSig1" type="text" name="SignaturePath" value="@ImgSig" hidden>
 
                                                     </div>
                                                 </div>
@@ -801,7 +826,7 @@
                                 <div class="row">
 
                                     <div class="col-md-8">
-                                        <div class="form-row">
+                                        <div class="form-row" style="margin-top:0%">
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>WSA#</label>&nbsp;&nbsp;
@@ -809,18 +834,27 @@
                                                     <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" readonly>
                                                 </div>
                                             </div>
-                                            <div class="col-md-8">
-                                                <div class="form-row" style="margin-top:5%">
-                                                    <div class="col-md-4 ">
-                                                        <p>
+                                            <div class="col-md-8 ">
+                                                <p style="float:right">
+                                                    <a href="@Url.Action("OneRecord","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-primary btn-sm">One Record</button></a>
+                                                    <button type="button" class="btn btn-secondary btn-sm" onclick="window.location.href='@Url.Action("AddressLabel","Person",new {id=@Model.PersonIDNumber })';">Label</button>
+                                                    <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">Routing Slip</button></a>
+                                                    @*<a href="@Url.Action("BirthCertificate","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">World Birth Certificate</button></a>
+                <a href="@Url.Action("WorldMarriageCertificate","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">World Marriage Certificate</button></a>
+                <a href="@Url.Action("WorldCitizenCertificate","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">World Citizen Certificate</button></a>*@
+                                                </p>
+                                            </div>
 
-                                                        </p>
-                                                    </div>
-                                                    <div class="col-md-8 text-right">
+
+                                            <div class="col-md-8">
+                                                <div class="form-row">
+                                                    <div class="col-md-12 ">
                                                         <p>
-                                                            <a href="@Url.Action("OneRecord","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-primary btn-sm">One Record</button></a>
-                                                            <button type="button" class="btn btn-secondary btn-sm" onclick="window.location.href='@Url.Action("AddressLabel","Person",new {id=@Model.PersonIDNumber })';">Label</button>
-                                                            <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">Routing Slip</button></a>
+                                                            @*<a href="@Url.Action("OneRecord","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-primary btn-sm">One Record</button></a>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="window.location.href='@Url.Action("AddressLabel","Person",new {id=@Model.PersonIDNumber })';">Label</button>
+                        <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">Routing Slip</button></a>
+                        <a href="@Url.Action("BirthCertificate","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">World Birth Certificate</button></a>
+                        <a href="@Url.Action("WorldMarriageCertificate","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-success btn-sm">World Marriage Certificate</button></a>*@
                                                         </p>
                                                     </div>
                                                 </div>
@@ -843,17 +877,17 @@
                                                 <div class="form-group">
                                                     <input type="text" class="form-control" style="display:none;" name="PersonIDNumber" value="@PersonId" required>
                                                     <label>Country of Application<span style="color:red;">*</span></label>
-                                                    <select class="form-control" id="CountryOfApplication" name="CountryOfApplication" required>
-                                                        <option value="">Select Country</option>
+                                                    <select class="form-control" id="CountryOfApplication" name="CountryOfApplication" >
+                                                        <option value=""></option>
                                                         @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
                                                         {
                                                             if (Countries.CountryId == CountryApplicationId)
                                                             {
-                                                                <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                                <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation"  selected>@Countries.Code - @Countries.Name</option>
                                                             }
                                                             else
                                                             {
-                                                                <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                                <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation" >@Countries.Code - @Countries.Name</option>
                                                             }
                                                         }
                                                     </select>
@@ -870,17 +904,17 @@
                                                 <div class="form-group">
                                                     <label>Country of Birth<span style="color:red;">*</span></label>
                                                     &nbsp;&nbsp;
-                                                    <select class="form-control" id="CountryOfBirth" name="CountryOfBirth" required>
-                                                        <option value="">Select Country</option>
+                                                    <select class="form-control" id="CountryOfBirth" name="CountryOfBirth" >
+                                                        <option value=""></option>
                                                         @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
                                                         {
                                                             if (Countries.CountryId == CountryBirthId)
                                                             {
-                                                                <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                                <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation"  selected>@Countries.Code - @Countries.Name</option>
                                                             }
                                                             else
                                                             {
-                                                                <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                                <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation" >@Countries.Code - @Countries.Name</option>
                                                             }
                                                         }
                                                     </select>
@@ -891,17 +925,17 @@
                                                 <div class="form-group">
                                                     <label>Country of Birth Statistical<span style="color:red;">*</span></label>
                                                     &nbsp;&nbsp;
-                                                    <select class="form-control" id="CountryOfBirthStatistical" name="CountryOfBirthStatistical" required>
-                                                        <option value="">Select Country</option>
+                                                    <select class="form-control" id="CountryOfBirthStatistical" name="CountryOfBirthStatistical" >
+                                                        <option value=""></option>
                                                         @foreach (WorldServiceOrganization.Models.tblCountry Countries in @ViewBag.Country)
                                                         {
                                                             if (Countries.CountryId == CountryOfBirthStatistical)
                                                             {
-                                                                <option value="@Countries.CountryId" selected>@Countries.Code - @Countries.Name</option>
+                                                                <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation"  selected>@Countries.Code - @Countries.Name</option>
                                                             }
                                                             else
                                                             {
-                                                                <option value="@Countries.CountryId">@Countries.Code - @Countries.Name</option>
+                                                                <option value="@Countries.CountryId" data-abbr="@Countries.Abbreviation" >@Countries.Code - @Countries.Name</option>
                                                             }
                                                         }
                                                     </select>
@@ -978,7 +1012,15 @@
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label>Day<span style="color:red;"></span></label>
-                                                                <select class="form-control" style="padding:0px !important" name="BirthDay">
+                                                                <input class="form-control" type="text" list="BirthDay"  name="BirthDay" value="@BirthDay" style="width: 130%;"/>
+                                                                <datalist id="BirthDay">
+                                                                    <option value="">xx</option>
+                                                                    @for (int i = 1; i <= 31; i++)
+                                                                    {
+                                                                        <option value="@i">@i</option>
+                                                                    }
+                                                                </datalist>
+                                                                @*<select class="form-control" style="padding:0px !important" name="BirthDay">
                                                                     <option value="">xx</option>
                                                                     @for (int i = 1; i <= 31; i++)
                                                                     {
@@ -991,13 +1033,21 @@
                                                                             <option value="@i">@i</option>
                                                                         }
                                                                     }
-                                                                </select>
+                                                                </select>*@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label>Month<span style="color:red;"></span></label>
-                                                                <select class="form-control" style="padding:0px !important" name="BirthMonth">
+                                                                <input class="form-control" type="text" list="BirthMonth" name="BirthMonth" value="@BirthMonth" style="width: 130%;"/>
+                                                                <datalist id="BirthMonth">
+                                                                    <option value="">xxx</option>
+                                                                    @for (int i = 1; i <= 12; i++)
+                                                                    {
+                                                                       <option value="@i">@i</option>
+                                                                    }
+                                                                </datalist>
+                                                                @*<select class="form-control" style="padding:0px !important" name="BirthMonth">
                                                                     <option value="">xxx</option>
                                                                     @for (int i = 1; i <= 12; i++)
                                                                     {
@@ -1010,28 +1060,37 @@
                                                                             <option value="@i">@i</option>
                                                                         }
                                                                     }
-                                                                </select>
+                                                                </select>*@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
                                                             <div class="form-group">
                                                                 <label>Year<span style="color:red;"></span></label>
-                                                                <select class="form-control" style="padding:0px !important" name="BirthYear" id="CdropdownYear">
+                                                                <input class="form-control" type="text" list="BirthYear" name="BirthYear" value="@BirthYear" style="width: 130%;" />
+                                                                <datalist id="BirthYear">
                                                                     <option value="">xxxx</option>
                                                                     @foreach (var item in @ViewBag.Year)
                                                                     {
-                                                                        if (Model.BirthYear == Convert.ToInt32(@item))
-                                                                        {
-                                                                            <option selected value="@item">@item</option>
-                                                                        }
-                                                                        else
-                                                                        {
-                                                                            <option value="@item">@item</option>
-                                                                        }
+                                                                        <option value="@item">@item</option>
 
                                                                     }
-                                                                </select>
-                                                            </div>
+                                                                </datalist>
+                                                                    @*<select class="form-control" style="padding:0px !important" name="BirthYear" id="CdropdownYear">
+                                                                        <option value="">xxxx</option>
+                                                                        @foreach (var item in @ViewBag.Year)
+                                                                        {
+                                                                            if (Model.BirthYear == Convert.ToInt32(@item))
+                                                                            {
+                                                                                <option selected value="@item">@item</option>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <option value="@item">@item</option>
+                                                                            }
+
+                                                                        }
+                                                                    </select>*@
+</div>
                                                         </div>
                                                     </div>
 
@@ -1183,7 +1242,7 @@
                                                                 <img id="ImgImg" src="@ImgImg" alt="your image" name="ImgImg" />
                                                                 <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteImage"><i class="fa fa-trash"></i></a>
                                                                 <input type="text" id="DeleteImageText" style="display:none;">
-                                                                <input type="text" name="Photo" value="@ImgImg" hidden>
+                                                                <input id="ImgImg1" type="text" name="Photo" value="@ImgImg" hidden>
 
 
                                                             </div>
@@ -1220,7 +1279,7 @@
                                                                 <img id="ImgSig" src="@ImgSig" alt="your image" name="ImgSig" />
                                                                 <a href="javascript:void(0);" class="btn btn-icon btn-danger btn-sm" id="DeleteSig"><i class="fa fa-trash"></i></a>
                                                                 <input type="text" id="DeleteSigText" style="display:none;">
-                                                                <input type="text" name="SignaturePath" value="@ImgSig" hidden>
+                                                                <input id="ImgSig1" type="text" name="SignaturePath" value="@ImgSig" hidden>
 
                                                             </div>
                                                         </div>
@@ -1636,10 +1695,21 @@
                                 <div class="card">
                                     <div class="card-body">
                                         <div class="row">
-                                            <p class="col-md-12 text-right">
-                                                <button type="button" id="PassportLabel" class="btn btn-primary btn-sm" style="width:50%">Passport Label</button>
-                                                <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-secondary btn-sm" style="margin-top:2px; width:50%">Routing Slip</button></a>
-                                            </p>
+                                                   <p class="col-md-6 ">
+                                                        <button type="button" id="MarriageCertificate" data-toggle="modal" data-target="#MarriageCertificateModal" class="btn btn-primary btn-sm" style="width:100%">Marriage Certificate</button>
+                                                    </p>
+                                                    <p class="col-md-6 ">
+                                                        <button type="button" id="CitizenCertificate" class="btn btn-primary btn-sm" style="width:100%">Citizen Certificate</button>
+                                                    </p>
+                                                    <p class="col-md-6 ">
+                                                        <button type="button" id="BirthCertificate" class="btn btn-primary btn-sm" style="width:100%">Birth Certificate</button>
+                                                    </p>
+                                                    <p class="col-md-6 ">
+                                                        <button type="button" id="PassportLabel" class="btn btn-primary btn-sm" style="width:100%">Passport Label</button>
+                                                    </p>
+                                                    <p class="col-md-12 text-right">
+                                                        <a href="@Url.Action("RoutingSlip","Person",new {id=@Model.PersonIDNumber })" target="_blank"><button type="button" class="btn btn-secondary btn-sm" style="margin-top:2px; width:50%">Routing Slip</button></a>
+                                                    </p>
                                             <div class="col-md-12 text-center">
                                                 <div class="form-group row">
                                                     <label class="col-lg-6 col-form-label">Date of Entry</label>
@@ -1817,7 +1887,7 @@
                                                     <input style="display:none;" type="text" class="form-control" id="PersonIDNumber" name="PersonIDNumber" value="@Model.PersonIDNumber">
                                                     <input style="display:none;" type="text" class="form-control" id="AddressId" name="AddressIDNumber" value="">
                                                     <label>Care of</label>
-                                                    <input type="text" class="form-control" id="CareOf" name="CareOf" value="" required>
+                                                    <input type="text" class="form-control" id="CareOf" name="CareOf" value="">
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -2144,6 +2214,23 @@
 
 </div>
 
+<div id="MarriageCertificateModal" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <label>Second Name</label>
+                <input class="form-control" type="text" id="SecondName" >
+                <div class="m-t-20">
+                    <p id="ConfigDerror" style="color:red;"></p>
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <input type="button" class="btn btn-primary" id="MarriageCertificateConFirm" value="OK">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div id="TransactionDelete" class="modal fade delete-modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -2261,10 +2348,10 @@
         var type = this.value;
         var firstDropVal = $('#Height').val();
         if (type == 1) {
-            $('#Height').val((firstDropVal * 3.281).toFixed(3));
+            $('#Height').val((firstDropVal * 3.281).toFixed(2));
         }
         else if (type == 2) {
-            $('#Height').val((firstDropVal / 3.281).toFixed(3));
+            $('#Height').val((firstDropVal / 3.281).toFixed(2));
         }
 
     });
@@ -2342,37 +2429,39 @@
     //    bindDatePicker();
     //});
 
-
-
-
-    $('#IDCode').change(function (e) {
-
-        var IdCode = $("#IDCode").val();
-        var model = {
-            IDCode: IdCode,
-        };
+   
 
 
 
 
-        $.ajax({
-            type: "POST",
-            url: "/Person/CheckIDCode",
-            data: JSON.stringify(model),
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (r) {
-                if (r == 1) {
-                    $('#IDCodeError').hide();
-                    $('#SaveB').attr("disabled", false);
-                }
-                else {
-                    $('#IDCodeError').show();
-                    $('#SaveB').attr("disabled", true);
-                }
-            }
-        });
-    });
+    //$('#IDCode').change(function (e) {
+
+    //    var IdCode = $("#IDCode").val();
+    //    var model = {
+    //        IDCode: IdCode,
+    //    };
+
+
+
+
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/Person/CheckIDCode",
+    //        data: JSON.stringify(model),
+    //        contentType: "application/json; charset=utf-8",
+    //        dataType: "json",
+    //        success: function (r) {
+    //            if (r == 1) {
+    //                $('#IDCodeError').hide();
+    //                $('#SaveB').attr("disabled", false);
+    //            }
+    //            else {
+    //                $('#IDCodeError').show();
+    //                $('#SaveB').attr("disabled", true);
+    //            }
+    //        }
+    //    });
+    //});
 
     $('#TemplateImages').change(function (e) {
 
@@ -2656,6 +2745,37 @@
 
         });
 
+    $("body").on("click", "#BirthCertificate", function () {
+            var url = window.location.origin;
+        url += '/Person/BirthCertificate?id=' +@Model.PersonIDNumber+'&&tid=' + $("#TransactionIDNumber").val() +'';
+            window.location.href = url;
+
+    });
+
+    $('#SecondName').keyup(function (e) {
+
+        if ($('#SecondName').val() != "") {
+            $("#MarriageCertificateConFirm").attr("disabled", false);
+        }
+        else {
+            $("#MarriageCertificateConFirm").attr("disabled", true);
+        }
+    });
+
+    $("body").on("click", "#MarriageCertificateConFirm", function () {
+            var url = window.location.origin;
+        url += '/Person/WorldMarriageCertificate?id=' +@Model.PersonIDNumber+'&&tid=' + $("#TransactionIDNumber").val() + '&&SecondName=' + $("#SecondName").val() +'';
+            window.location.href = url;
+
+    });
+
+    $("body").on("click", "#CitizenCertificate", function () {
+            var url = window.location.origin;
+        url += '/Person/WorldCitizenCertificate?id=' +@Model.PersonIDNumber+'&&tid=' + $("#TransactionIDNumber").val() +'';
+            window.location.href = url;
+
+    });
+
 
 
 
@@ -2663,11 +2783,14 @@
 
         $("#CheckEdit").val(1);
         $("#EditMode").val(1);
-        $("#IDCode").attr('readonly', true);
+        $("#IDCode").attr('readonly', false);
         $("#ApplicationDate").attr('readonly', true);
         $("#Cost").attr('readonly', true);
         $("#ProductD").attr('readonly', true);
         $("#PassportLabel").attr("disabled", false);
+        $("#BirthCertificate").attr("disabled", false);
+        $("#MarriageCertificate").attr("disabled", false);
+        $("#CitizenCertificate").attr("disabled", false);
         var currentRow = $(this).closest("tr");
         $("#PersonIDNumber").val(currentRow.find("td:eq(0)").text());
         $("#TransactionIDNumber").val(currentRow.find("td:eq(1)").text());
@@ -2779,7 +2902,7 @@
 
                     if (ProductList.IdCode != "") {
                         $("#IDCode").val(ProductList.IdCode);
-                        $("#IDCode").attr('readonly', true);
+                        $("#IDCode").attr('readonly', false);
 
                     }
                     else {
@@ -2799,7 +2922,7 @@
 
 
     function showPreviewImg(event) {
-        alert("here");
+        //alert("here");
         if (event.target.files.length > 0) {
             var src = URL.createObjectURL(event.target.files[0]);
             var preview = document.getElementById("ImgImg");
@@ -2828,11 +2951,15 @@
     $("body").on("click", "#DeleteImage", function () {
         $("#DeleteImageText").val("\\Uploading\\user-image.png");
         $("#ImgImg").attr("src", "/Content/assets/img/user-image.png");
+        $("#ImgImg1").val("/Content/assets/img/user-image.png");
+        $("#Image").val("");
         //alert($("#DeleteImageText").val());
     });
     $("body").on("click", "#DeleteSig", function () {
         $("#DeleteSigText").val("\\Uploading\\sig.png");
         $("#ImgSig").attr("src", "/Content/assets/img/sig.png");
+        $("#ImgSig1").val("/Content/assets/img/sig.png");
+        $("#SigImage").val("");
         //alert($("#DeleteSigText").val());
     });
     $("body").on("click", "#DeleteCer", function () {
@@ -2951,7 +3078,52 @@
 
     $(document).ready(function () {
 
+        
+        $('#CountryOfApplication')
+            .find('option').each(function () {
+                $(this).data('text', $(this).text());
+            })
+            .end()
+            .change(function () {
+                var $selOpt = $(this).find('option:selected');
+                $selOpt.text($selOpt.attr('data-abbr'))
+                    .siblings().each(function () {
+                        $(this).text($(this).data('text'));
+                    });
+                //$('#select2-CountryOfApplication-container').removeAttr("aria-readonly");
+                //$('#select2-CountryOfApplication-container').removeAttr("role");
+                //$('#select2-CountryOfApplication-container').removeAttr("title");
+                //alert($('#select2-CountryOfApplication-container').text());
+                //$('#select2-CountryOfApplication-container').text($selOpt.attr('data-abbr')).change();
+                //alert($('#select2-CountryOfApplication-container').text());
+               
+            });
+        $('#CountryOfBirth')
+            .find('option').each(function () {
+                $(this).data('text', $(this).text());
+            })
+            .end()
+            .change(function () {
+                var $selOpt = $(this).find('option:selected');
+                $selOpt.text($selOpt.attr('data-abbr'))
+                    .siblings().each(function () {
+                        $(this).text($(this).data('text'));
+                    });
 
+            });
+        $('#CountryOfBirthStatistical')
+            .find('option').each(function () {
+                $(this).data('text', $(this).text());
+            })
+            .end()
+            .change(function () {
+                var $selOpt = $(this).find('option:selected');
+                $selOpt.text($selOpt.attr('data-abbr'))
+                    .siblings().each(function () {
+                        $(this).text($(this).data('text'));
+                    });
+
+            });
 
         $('#StatusD').change(function (e) {
             if ($(this).val()==1) {
@@ -2981,8 +3153,11 @@
             $('#Tab4').addClass('active');
         }
 
-
-             $("#PassportLabel").attr("disabled", true);
+        $("#PassportLabel").attr("disabled", true);
+        $("#BirthCertificate").attr("disabled", true);
+        $("#MarriageCertificate").attr("disabled", true);
+        $("#CitizenCertificate").attr("disabled", true);
+        $("#MarriageCertificateConFirm").attr("disabled", true);
 
             $('#ChildTable').DataTable({
 
@@ -3026,21 +3201,28 @@
                 searching: false, paging: false
             });
 
-            $("#CountryOfApplication").select2({
-                dropdownCssClass: 'bigdrop'
+        //$("#CountryOfApplication").change(function () {
+        //    //alert($('#CountryOfApplication').find(':selected').text());
+        //    alert($('#select2-CountryOfApplication-container').text());
+        //    $('#select2-CountryOfApplication-container').text($('#CountryOfApplication').find(':selected').text())
+        //    alert($('#select2-CountryOfApplication-container').text());
+        //});
+
+            //$("#CountryOfApplication").select2({
+            //    dropdownCssClass: 'bigdrop'
 
 
-            });
-            $("#CountryOfBirth").select2({
-                dropdownCssClass: 'bigdrop'
+            //});
+        //    $("#CountryOfBirth").select2({
+        //        dropdownCssClass: 'bigdrop'
 
 
-            });
-        $("#CountryOfBirthStatistical").select2({
-            dropdownCssClass: 'bigdrop'
+        //    });
+        //$("#CountryOfBirthStatistical").select2({
+        //    dropdownCssClass: 'bigdrop'
 
 
-        });
+        //});
             $("#Eyes").select2({
                 dropdownCssClass: 'bigdrop'
 

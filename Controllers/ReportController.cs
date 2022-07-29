@@ -129,7 +129,7 @@ namespace WorldServiceOrganization.Controllers
         [HttpPost]
         public ActionResult ProductList(int SelectReport,int SelectStatus,int SearchByDate,string BDate, string EDate)
         {
-            List<PersonList_Result1> PL = new List<PersonList_Result1>();
+            List<PersonList_Result> PL = new List<PersonList_Result>();
             try
             {
 
@@ -144,7 +144,7 @@ namespace WorldServiceOrganization.Controllers
                 string Query = "";
                 if (SelectReport==1)
                 {
-                    Query = "where P.isActive = 1 and Cast(LastModifiedDate as date)=cast('" + DateTime.Now.ToString("MM-dd-yyyy") + "' as date ) and Status="+SelectStatus+"";
+                    Query = "where P.isActive = 1 and Cast(LastModifiedDate as date)=cast('" + DateTime.Now + "' as date ) and Status="+SelectStatus+"";
                     PL = DB.PersonList(Query).ToList();
                 }
                 else
@@ -200,7 +200,7 @@ namespace WorldServiceOrganization.Controllers
             ViewBag.BDate = DateTime.Now.ToString("MM-dd-yyyy");
             ViewBag.EDate = DateTime.Now.ToString("MM-dd-yyyy");
             string Query = "where P.isActive = 1 ";
-            var PL = DB.CountrySummaryList(Query).ToList();
+            var PL = DB.CountrySummaryList (Query).ToList();
             ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
             ViewBag.Country = DB.tblCountries.Where(x => x.isActive == true).ToList();
             
@@ -211,7 +211,7 @@ namespace WorldServiceOrganization.Controllers
         [HttpPost]
         public ActionResult CountrySummary( string BDate, string EDate,int SearchbyCountry= 0, int SelectReport = 0, int SearchByDate = 0)
         {
-            List<CountrySummaryList_Result> PL = new List<CountrySummaryList_Result>();
+            List<CountrySummaryList_Result2> PL = new List<CountrySummaryList_Result2>();
             try
             {
 

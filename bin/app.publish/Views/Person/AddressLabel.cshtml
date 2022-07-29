@@ -6,6 +6,8 @@
     HttpCookie cookieObj = Request.Cookies["Settings"];
     string DateFormat = cookieObj["DateFormat"];
     string Retrieves = cookieObj["Retrieves"];
+    string FontSize = cookieObj["FontSize"];
+    string FontFamily = cookieObj["FontStyle"];
 
 }
 
@@ -31,7 +33,7 @@
             var CState = $('input[name="CountryDisplay"]:checked').val();
             document.body.innerHTML =
                 "<html><head><title></title></head><body>" +
-            myDiv + "</body></html>";
+                myDiv + "</body></html>";   
             window.print();
 
             var url = window.location.origin;
@@ -71,7 +73,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <label for="SeparateLine">WSA Number</label><br>
                             <input type="radio" id="SeparateLine" name="WSADisplay" value="1" checked>
                             <label for="SeparateLine">Separate Line</label><br>
@@ -93,19 +95,11 @@
                             <label>QR Code</label><br />
                             <input type="radio" id="MRZSuppress" name="MRZSuppress" value="1" checked>
                             <label for="MRZSuppress">Suppress</label><br />
-                            <input type="radio" id="MRZUnSuppress" name="MRZSuppress" value="2" >
+                            <input type="radio" id="MRZUnSuppress" name="MRZSuppress" value="2">
                             <label for="MRZUnSuppress">Unsuppress</label>
                         </div>
-                        <div class="col-md-4">
-                            <a href="@Url.Action("AddressLabel", "Person",new { id=@ViewBag.id})"> <input class="btn btn-danger" type="button" value="Cancel"></a>
-                            <a href="@Url.Action("Persons","Person")" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
-                            <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
-                            <a href="#" id="PDFBtn" class="btn btn-success"><i class="fa fa-print"></i> PDF</a>
-                            
-                        </div>
 
-                    </div>
-                    <div class="row">
+
                         <div class="col-md-2">
                             <label>Letter Case</label>
                             <select name="LetterCase" class="form-control" id="LetterCase">
@@ -116,19 +110,39 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <label>Font Size</label>
-                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="14" />
-                        </div>
-                        <div class="col-md-2">
                             <label>Font Style</label>
-                            <input type="text" class="form-control" name="FontStyle" id="FontStyle" value="sans-serif" />
+                            <select class="form-control" id="FontStylea" name="FontStyle">
+                                @foreach (WorldServiceOrganization.Models.tblFontStyle item in @ViewBag.FontStyle)
+                                {
+                                    if (FontFamily == @item.Name)
+                                    {
+                                        <option value="@item.Name" selected>@item.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Name">@item.Name</option>
+                                    }
+
+                                }
+                            </select>
+                            @*<input type="text" class="form-control" name="FontStyle" id="FontStyle" value="@FontFamily" />*@
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
+                            <label>Font Size</label>
+                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="@FontSize" />
+                        </div>
+
+                        <div class="col-md-1">
                             <label>Width %</label>
-                            <input type="number" class="form-control" name="FontWidth" id="FontWidth" value="100" />
+                            <input type="number" class="form-control" name="FontWidth" id="FontWidth" value="28" />
                         </div>
-                        <div class="col-md-2" style="margin-top:2%;">
+                        <div class="col-md-12 text-right">
+                            <a href="@Url.Action("AddressLabel", "Person",new { id=@ViewBag.id})"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                            <a href="@Url.Action("Persons","Person")" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
+                            <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
+                            <a href="#" id="PDFBtn" class="btn btn-success"><i class="fa fa-print"></i> PDF</a>
                             <a href="@Url.Action("CreatePerson","Person",new { id=@ViewBag.id })" class="btn btn-info"><i class="fa fa-arrow-left"></i> Go Back</a>
+
                         </div>
 
                     </div>
@@ -139,15 +153,22 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <section id="section">
+                    <section id="ID">
 
-                        <div class="card" id="ID">
-                            <div class="card-body">
-                                <div id="MRZHide" style="float:right; display:none;">
-                                    <img src="@ViewBag.QRCode" alt="Alternate Text" />
-                                </div>
-                                <p class="text-center" id="WSAShowSeparate">@ViewBag.WSA</p>
-                                <p><span id="WSAShowName" style="display:none;">@ViewBag.WSA </span> @ViewBag.FName @ViewBag.LName </p>
+                        <div class="card" id="ApplyFontStyle">
+                            <div class="card-body" id="FNdraggableArea">
+                                @*<div class="row">
+                                    <div class="col-md-8">
+
+                                    </div>
+                                    <div class="col-md-4">
+                                        
+                                    </div>
+                                </div>*@
+                                <p class="text-right" id="WSAShowSeparate">@ViewBag.WSA</p>
+                                <p> @ViewBag.FName @ViewBag.LName <span id="WSAShowName" style="display:none; float:right;">@ViewBag.WSA </span></p>
+                                            <img src="@ViewBag.QRCode" alt="Alternate Text" id="MRZHide" class="FNdraggable" style="float:right; display: none; z-index: 100;" />
+                                
                                 @foreach (WorldServiceOrganization.Models.tblAddress Address in Model)
                                 {
                                     <p>c/o @Address.CareOf </p>
@@ -155,6 +176,7 @@
                                     <p> @Address.City, @Address.State @Address.PostalCode <span id="CountryShow" class="CountryShow">@Address.tblCountry.Name</span> </p>
                                     <br>
                                 }
+
                             </div>
 
                         </div>
@@ -176,36 +198,42 @@
 <!-- jQuery -->
 
 <script src="~/Content/assets/js/jquery-3.5.1.js"></script>
-
+<script src="~/Content/assets/js/shortcut.js"></script>
+<script src="~/Content/assets/js/jquery-ui.js"></script>
 
 
 @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
+    $(function () {
 
-    $("#FontStyle").change(function () {
-        $("#ID").css("font-family", $("#FontStyle").val());
+        $(".FNdraggable").draggable({
+            containment: "#FNdraggableArea"
+        });
+    });
+    $("#FontStylea").change(function () {
+        $("#ApplyFontStyle").css("font-family", $("#FontStylea").val());
     });
     $("#FontWidth").change(function () {
-        $("#ID").css("width", $("#FontWidth").val()+'%');
+        $("#ApplyFontStyle").css("width", $("#FontWidth").val()+'%');
     });
     $("#FontSize").change(function () {
-        $("#ID").css("font-size", $("#FontSize").val()+'px');
+        $("#ApplyFontStyle").css("font-size", $("#FontSize").val()+'px');
     });
 
     $('#LetterCase').change(function () {
 
         if ($(this).val() == 1) {
-            $('#ID').css('textTransform', 'lowercase');
+            $('#ApplyFontStyle').css('textTransform', 'lowercase');
             //document.getElementsByTagName("section").setAttribute('textTransform', 'lowercase');
         }
         else if ($(this).val() == 2) {
-            $('#ID').css('textTransform', 'uppercase');
+            $('#ApplyFontStyle').css('textTransform', 'uppercase');
 
             //document.getElementById("ID").setAttribute('style', 'textTransform:uppercase');
         }
         else {
-            $('#ID').css('textTransform', 'capitalize');
+            $('#ApplyFontStyle').css('textTransform', 'capitalize');
         }
     });
 
@@ -239,7 +267,7 @@
     });
 
     $('#PrintBtn').click(function () {
-        var myDiv = document.getElementById("section").innerHTML;
+        var myDiv = document.getElementById("ID").innerHTML;
             var State = $('input[name="WSADisplay"]:checked').val();
         var CState = $('input[name="CountryDisplay"]:checked').val();
         console.log(myDiv);
@@ -254,7 +282,7 @@
     });
 
     $('#PDFBtn').click(function () {
-        var myDiv = document.getElementById("section").innerHTML;
+        var myDiv = document.getElementById("ID").innerHTML;
             var State = $('input[name="WSADisplay"]:checked').val();
             var CState = $('input[name="CountryDisplay"]:checked').val();
             document.body.innerHTML =
@@ -281,8 +309,9 @@
 
 
     $(document).ready(function () {
-        $("#ID").css("font-size", 14 + 'px');
-
+        $("#ApplyFontStyle").css("width", 28 + '%');
+        $("#ApplyFontStyle").css("font-family", '@FontFamily');
+        $("#ApplyFontStyle").css("font-size", '@FontSize' + 'px');
         $("p").css("margin-top", '0rem');
         $("p").css("margin-bottom", '0rem');
 

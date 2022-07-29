@@ -73,33 +73,34 @@
                                         <th>Price</th>
                                         <th>Valid For</th>
                                         <th>Action</th>
+                                        <th style="display:none;">ProductSerialNum</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach (WorldServiceOrganization.Models.tblProduct Product in Model)
                                     {
-                                        <tr>
-                                            <td style="display:none;">@Product.ProductId</td>
-                                            <td>@Product.Code</td>
-                                            <td>@Product.Name</td>
-                                            <td style="display:none;">@Product.ProductTypeId</td>
-                                            <td>@Product.tblProductType.Name</td>
-                                            <td>@Product.Price</td>
-                                            <td>@Product.ValidFor</td>
+                                    <tr>
+                                        <td style="display:none;">@Product.ProductId</td>
+                                        <td>@Product.Code</td>
+                                        <td>@Product.Name</td>
+                                        <td style="display:none;">@Product.ProductTypeId</td>
+                                        <td>@Product.tblProductType.Name</td>
+                                        <td>@Product.Price</td>
+                                        <td>@Product.ValidFor</td>
+                                        <td style="display:none;">@Product.ProductSerialNum</td>
 
+                                        <td class="text-end">
+                                            <div class="actions">
+                                                <a href="#" id="EditProduct" data-toggle="modal" data-target="#ProductModal" class="text-black">
+                                                    <i class="fa fa-edit"></i> Edit
+                                                </a>
+                                                <a class="text-danger" href="#" data-toggle="modal" data-target="#DeleteProductM" id="DeleteProduct">
+                                                    <i class="fa fa-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
 
-                                            <td class="text-end">
-                                                <div class="actions">
-                                                    <a href="#" id="EditProduct" data-toggle="modal" data-target="#ProductModal" class="text-black">
-                                                        <i class="fa fa-edit"></i> Edit
-                                                    </a>
-                                                    <a class="text-danger" href="#" data-toggle="modal" data-target="#DeleteProductM" id="DeleteProduct">
-                                                        <i class="fa fa-trash"></i> Delete
-                                                    </a>
-                                                </div>
-                                            </td>
-
-                                        </tr>
+                                    </tr>
                                     }
                                 </tbody>
                             </table>
@@ -148,8 +149,15 @@
                                                 <option value="@item.ProductTypeId">@item.Name</option>
                                             }
                                         </select>
-
-
+                                        <br>
+                                        <input type="radio" id="Passport" name="ProductSerialNum" value="2" class="classProductSerialNum">
+                                        <label for="Passport">Passport</label><br>
+                                        <input type="radio" id="Marriage" name="ProductSerialNum" value="3" class="classProductSerialNum">
+                                        <label for="Marriage">Marriage Certificate</label><br>
+                                        <input type="radio" id="Birth" name="ProductSerialNum" value="4" class="classProductSerialNum">
+                                        <label for="Birth">Birth Certificate</label><br>
+                                        <input type="radio" id="Citizen" name="ProductSerialNum" value="5" class="classProductSerialNum">
+                                        <label for="Citizen">Citizen Certificate</label>
 
                                     </div>
                                 </div>
@@ -202,6 +210,7 @@
 
     $("body").on("click", "#CreateProductB", function () {
         var error = $("#Producterror");
+        $('.classProductSerialNum').prop('checked', false);
         error.text('');
         $("#EHeading").hide();
         $("#CHeading").show();
@@ -221,6 +230,7 @@
     $("body").on("click", "#EditProduct", function () {
         var error = $("#Producterror");
         error.text('');
+        $('.classProductSerialNum').prop('checked', false);
         var currentRow = $(this).closest("tr");
         $("#EHeading").show();
         $("#CHeading").hide();
@@ -231,6 +241,21 @@
         $("#EPrice").val(currentRow.find("td:eq(5)").text());
         $("#ValidFor").val(currentRow.find("td:eq(6)").text());
 
+        var prodSerialNum = currentRow.find("td:eq(7)").text();
+
+        if (prodSerialNum==2) {
+            $("#Passport").prop('checked', true);
+        }
+        if (prodSerialNum == 3) {
+            $("#Marriage").prop('checked', true);
+        }
+        if (prodSerialNum == 4) {
+            $("#Birth").prop('checked', true);
+        }
+        if (prodSerialNum == 5) {
+            $("#Citizen").prop('checked', true);
+        }
+        
         $("#LblProductCodeError").fadeOut();
         $("#LblProductNameError").fadeOut();
         $("#LblProductTypeError").fadeOut();
@@ -256,8 +281,8 @@
             var UPrice = $("#EPrice").val();
             var UValidFor = $("#ValidFor").val();
             var UProductTypeId = $("#ProductTypeD").val();
-
-
+            var ProductSerialNum = $('input[name="ProductSerialNum"]:checked').val();
+            
             if (UId != 0) {
                 var model = {
                     ProductId: UId,
@@ -266,6 +291,7 @@
                     Price: UPrice,
                     ValidFor: UValidFor,
                     ProductTypeId: UProductTypeId,
+                    ProductSerialNum: ProductSerialNum,
                 };
                 CheckMessage = 1;
             }
@@ -277,6 +303,7 @@
                     Price: UPrice,
                     ValidFor: UValidFor,
                     ProductTypeId: UProductTypeId,
+                    ProductSerialNum: ProductSerialNum,
                 };
                 CheckMessage = 2;
             }

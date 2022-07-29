@@ -49,6 +49,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.Code = Product.Code;
                         Data.Price = Product.Price;
                         Data.ValidFor = Product.ValidFor;
+                        Data.ProductSerialNum = Product.ProductSerialNum;
                         Data.isActive = true;
                         Data.EditDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                         DB.Entry(Data);

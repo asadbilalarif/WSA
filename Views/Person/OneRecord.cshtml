@@ -10,6 +10,11 @@
     double? TotalCost = 0;
     double? GrandCost = 0;
 
+    string FontSize = cookieObj["FontSize"];
+    string FontFamily = cookieObj["FontStyle"];
+
+    string Error = ViewBag.Error;
+
 }
 
 
@@ -49,7 +54,9 @@
 
 <!-- Page Wrapper -->
 <div class="content container-fluid">
-
+    <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="ErrorAlert" role="alert">
+        <strong>Error!</strong> @ViewBag.Error
+    </div>
     <!-- Page Header -->
     <!-- /Page Header -->
 
@@ -109,25 +116,42 @@
                             </select>
                         </div>
                         <div class="col-md-2">
-                            <label>Font Size</label>
-                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="16" />
+                            <label>Font Style</label>
+                            <select class="form-control" id="FontStylea" name="FontStyle">
+                                @foreach (WorldServiceOrganization.Models.tblFontStyle item in @ViewBag.FontStyle)
+                                {
+                                    if (FontFamily == @item.Name)
+                                    {
+                                        <option value="@item.Name" selected>@item.Name</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.Name">@item.Name</option>
+                                    }
+
+                                }
+                            </select>
+                            @*<input type="text" class="form-control" name="FontStyle" id="FontStyle" value="@FontFamily" />*@
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-1">
+                            <label>Font Size</label>
+                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="@FontSize" />
+                        </div>
+
+                        <div class="col-md-1">
                             <label>Width %</label>
                             <input type="number" class="form-control" name="FontWidth" id="FontWidth" value="100" />
                         </div>
+
                         <div class="col-md-2">
                             <label>QR Code</label><br />
                             <input type="radio" id="MRZSuppress" name="MRZSuppress" value="1" checked>
                             <label for="MRZSuppress">Suppress</label><br />
-                            <input type="radio" id="MRZUnSuppress" name="MRZSuppress" value="2" >
+                            <input type="radio" id="MRZUnSuppress" name="MRZSuppress" value="2">
                             <label for="MRZUnSuppress">Unsuppress</label>
                         </div>
 
-                        <div class="col-md-4">
-                            @*<label>Font Style</label>
-                                <input type="text" class="form-control" name="FontStyle" id="FontStyle" value="" />*@
-                            <br />
+                        <div class="col-md-4 text-right" style="float:right">
                             @*<a href="@Url.Action("AddressLabel", "Person",new { id=@ViewBag.id })"> <input class="btn btn-danger" type="button" value="Cancel"></a>*@
                             <a href="@Url.Action("Persons","Person",new { id=@ViewBag.id })" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
                             <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
@@ -142,16 +166,17 @@
             <section id="section">
                 <div id="ID">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body" id="FNdraggableArea">
 
                             <div class="row">
                                 <div class="col-md-6">
                                     <p>World Service Authority Database Report</p>
                                 </div>
-                                <div class="col-md-6 text-right">
-                                    <div id="MRZHide" style="display:none;">
-                                        <img src="@Model.QRCode" alt="Alternate Text" />
-                                    </div>
+                                <div class="col-md-4">
+
+                                </div>
+                                <div class="col-md-2 text-right ">
+
                                     <p>@DateTime.Now.ToString(@DateFormat)</p>
                                     <p>@DateTime.Now.ToString("T")</p>
                                 </div>
@@ -309,7 +334,7 @@
                                             <p>Fax</p>
                                             <p>Date Modified</p>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-3">
 
                                             @if (@Model.FirstName != null)
                                             {
@@ -352,6 +377,11 @@
                                                 <p>--</p>
                                             }
                                             <p>@Model.LastModifiedDate.ToString(@DateFormat)</p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div id="MRZHide" class="FNdraggable" style="display: none; position: absolute; z-index: 100;">
+                                                <img src="@Model.QRCode" alt="Alternate Text" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -535,12 +565,20 @@
 <!-- jQuery -->
 
 <script src="~/Content/assets/js/jquery-3.5.1.js"></script>
-
+<script src="~/Content/assets/js/shortcut.js"></script>
+<script src="~/Content/assets/js/jquery-ui.js"></script>
 
 
 @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
 @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 <script>
+    $(function () {
+
+        $(".FNdraggable").draggable({
+            containment: "#FNdraggableArea"
+        });
+    });
+
     $(document).ready(function () {
         $('input:radio[name="MRZSuppress"]').change(function () {
 
@@ -555,14 +593,19 @@
         $("p").css("margin-top", '0rem');
         $("p").css("margin-bottom", '0rem');
     });
-    $("#FontStyle").change(function () {
-        $("#ID").css("font-family", $("#FontStyle").val());
+
+    $('#FontStylea').change(function () {
+        $("#ID").css("font-family", $("#FontStylea").val());
     });
+
+
     $("#FontWidth").change(function () {
+        alert("here");
         $("#ID").css("width", $("#FontWidth").val() + '%');
     });
     $("#FontSize").change(function () {
         $("#ID").css("font-size", $("#FontSize").val()+'px');
+
     });
 
     $('#LetterCase').change(function () {
@@ -642,7 +685,8 @@
 
     $(document).ready(function () {
 
-
+        $("#ID").css("font-family", '@FontFamily');
+        $("#ID").css("font-size", '@FontSize' + 'px');
 
         @*if (@ViewBag.State== 1) {
             $("#SeparateLine").attr('checked', 'checked');
@@ -671,6 +715,13 @@
 
 
 
+            if ("@Error" != "") {
+                $('#ErrorAlert').fadeIn();
+                $('#ErrorAlert').fadeOut(6000);
+            }
+            else {
+                $('#ErrorAlert').fadeOut();
+            }
 
 
 

@@ -17,12 +17,13 @@ using System.Web;
 using System.Web.Mvc;
 using WorldServiceOrganization.Models;
 using ZXing;
+using ZXing.QrCode;
 
 namespace WorldServiceOrganization.Controllers
 {
-    [NoDirectAccess]
-    [AuthorizeAction1FilterAttribute]
-    [Authorize]
+    //[NoDirectAccess]
+    //[AuthorizeAction1FilterAttribute]
+    //[Authorize]
     public class PersonController : Controller
     {
         // GET: Person
@@ -30,84 +31,174 @@ namespace WorldServiceOrganization.Controllers
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             List<tblPerson> PersonList = new List<tblPerson>();
-            if (RecordType == "Information Only")
+            try
             {
+                //if (RecordType == "Information Only")
+                //{
 
-                PersonList = DB.tblPersons.Where(x => x.isActive == true && x.WSANumber == 0).ToList();
+                //    PersonList = DB.tblPersons.Where(x => x.isActive == true && x.WSANumber == 0).ToList();
+                //}
+                //else if (RecordType == "WSA Only")
+                //{
+                //    PersonList = DB.tblPersons.Where(x => x.isActive == true && x.WSANumber != 0).ToList();
+                //}
+                //else
+                //{
+                //    PersonList = DB.tblPersons.Where(x => x.isActive == true).ToList();
+                //}
+                ViewBag.RecordType = RecordType;
+                ViewBag.Success = Success;
+                ViewBag.Update = Update;
+                ViewBag.Delete = Delete;
+                return View(PersonList);
             }
-            else if (RecordType == "WSA Only")
+            catch (Exception ex)
             {
-                PersonList = DB.tblPersons.Where(x => x.isActive == true && x.WSANumber != 0).ToList();
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+            return View(PersonList);
+        }
+
+        [HttpPost]
+        public ActionResult GetData(int RecordType)
+        {
+            var draw = Request.Form.GetValues("draw").FirstOrDefault();
+            var start = Request.Form.GetValues("start").FirstOrDefault();
+            var length = Request.Form.GetValues("length").FirstOrDefault();
+            //Find Order Column
+            var sortColumn = Request.Form.GetValues("columns[" + Request.Form.GetValues("order[0][column]").FirstOrDefault() + "][name]").FirstOrDefault();
+            var sortColumnDir = Request.Form.GetValues("order[0][dir]").FirstOrDefault();
+            var searchValue = Request.Form["search[value]"].ToString();
+
+            int pageSize = length != null ? Convert.ToInt32(length) : 0;
+            int skip = start != null ? Convert.ToInt32(start) : 0;
+
+
+            //employees.ToList().ForEach(x => x.StartDateString = x.StartDate.ToString("dd'/'MM'/'yyyy"));
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            DB.Configuration.ProxyCreationEnabled = false;
+            DB.Configuration.LazyLoadingEnabled = false;
+            List<sp_PersonDataTableData_Result> employees = new List<sp_PersonDataTableData_Result>();
+            skip += 1;
+
+            if (/*!string.IsNullOrEmpty(searchValue.ToString())*/searchValue.ToString()!="")
+            {
+                employees = DB.sp_PersonDataTableData(skip, pageSize, searchValue.ToString(), RecordType).ToList();
             }
             else
             {
-                PersonList = DB.tblPersons.Where(x => x.isActive == true).ToList();
+                employees = DB.sp_PersonDataTableData(skip, pageSize, "", RecordType).ToList();
+                //employees = products;
             }
-            ViewBag.RecordType = RecordType;
-            ViewBag.Success = Success;
-            ViewBag.Update = Update;
-            ViewBag.Delete = Delete;
-            return View(PersonList);
+            int recordsTotal =employees.FirstOrDefault().TotalCount;
+            //var sortColumnIndex = Convert.ToInt32(HttpContext.Request.QueryString["iSortCol_0"]);
+            //var sortDirection = HttpContext.Request.QueryString["sSortDir_0"];
+
+            //if (sortColumnIndex == 3)
+            //{
+            //    employees = sortDirection == "asc" ? employees.OrderBy(c => c.LastName) : employees.OrderByDescending(c => c.LastName);
+            //}
+            //else if (sortColumnIndex == 4)
+            //{
+            //    employees = sortDirection == "asc" ? employees.OrderBy(c => c.StartDate) : employees.OrderByDescending(c => c.StartDate);
+            //}
+            //else if (sortColumnIndex == 5)
+            //{
+            //    employees = sortDirection == "asc" ? employees.OrderBy(c => c.Salary) : employees.OrderByDescending(c => c.Salary);
+            //}
+            //else
+            //{
+            //    Func<Employee, string> orderingFunction = e => sortColumnIndex == 0 ? e.Name :
+            //                                                   sortColumnIndex == 1 ? e.Position :
+            //                                                   e.Location;
+
+            //    employees = sortDirection == "asc" ? employees.OrderBy(orderingFunction) : employees.OrderByDescending(orderingFunction);
+            //}
+
+            //var displayResult = employees.Skip(param.iDisplayStart).Take(param.iDisplayLength).ToList();
+            //var totalRecords = DB.tblRoles.Count();
+
+            //return Json(new
+            //{
+            //    param.sEcho,
+            //    iTotalRecords = totalRecords,
+            //    iTotalDisplayRecords = totalRecords,
+            //    aaData = displayResult
+            //}, JsonRequestBehavior.AllowGet);
+
+            return Json(new { draw = draw, recordsFiltered = recordsTotal, recordsTotal = recordsTotal, data = employees }, JsonRequestBehavior.AllowGet);
+
         }
 
         public ActionResult CreatePerson(int? id, string Success, string Update, string Delete, int tab = 0)
         {
-            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
-            tblPerson Person = new tblPerson();
-            ViewBag.Country = DB.tblCountries.Where(x => x.isActive == true).ToList();
-            ViewBag.Eye = DB.tblEyes.Where(x => x.isActive == true).ToList();
-            ViewBag.Occupation = DB.tblOccupations.Where(x => x.isActive == true).ToList();
-            ViewBag.Sex = DB.tblSex.Where(x => x.isActive == true).ToList();
-            ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
-            ViewBag.tab = tab;
-            int CurrenYear = DateTime.Now.Year;
-            List<int> Years = new List<int>();
-            for (int i = 1930; i <= CurrenYear; i++)
+                tblPerson Person = new tblPerson();
+            try
             {
-                Years.Add(i);
-            }
-            ViewBag.Year = Years;
-            ViewBag.WSA = DB.tblSettings.Select(s => s.NextWSA).FirstOrDefault();
-
-            if (id != null && id != 0)
-            {
-                ViewBag.Child = DB.tblChilds.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
-
-                ViewBag.Address = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
-
-                ViewBag.Transaction = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
-                ViewBag.DocImg = DB.tblDocumentImgs.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
-
-                ViewBag.Success = Success;
-                ViewBag.Update = Update;
-                ViewBag.Delete = Delete;
-                ViewBag.Product = DB.tblProducts.Where(x => x.isActive == true).ToList();
-                ViewBag.Sum = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Select(s => s.Cost).Sum();
-                ViewBag.Count = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Count();
-
-                ViewBag.TransCount = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Count();
-                Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
-                if (DB.tblPersons.Max(s => s.WSANumber) != null)
+                WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+                ViewBag.Country = DB.tblCountries.Where(x => x.isActive == true).ToList();
+                ViewBag.Eye = DB.tblEyes.Where(x => x.isActive == true).ToList();
+                ViewBag.Occupation = DB.tblOccupations.Where(x => x.isActive == true).ToList();
+                ViewBag.Sex = DB.tblSex.Where(x => x.isActive == true).ToList();
+                ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
+                ViewBag.tab = tab;
+                int CurrenYear = DateTime.Now.Year;
+                List<int> Years = new List<int>();
+                for (int i = 1830; i <= CurrenYear; i++)
                 {
-                    ViewBag.WAS = DB.tblPersons.Max(s => s.WSANumber) + 1;
+                    Years.Add(i);
                 }
-                return View(Person);
-            }
-            else
-            {
-                ViewBag.WAS = null;
-                Person.PersonIDNumber = 0;
-                if (DB.tblPersons.Max(s => s.WSANumber) != null)
-                {
-                    ViewBag.WAS = DB.tblPersons.Max(s => s.WSANumber) + 1;
-                }
+                ViewBag.Year = Years;
+                ViewBag.WSA = DB.tblSettings.Select(s => s.NextWSA).FirstOrDefault();
 
-                return View(Person);
+                if (id != null && id != 0)
+                {
+                    ViewBag.Child = DB.tblChilds.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+
+                    ViewBag.Address = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+
+                    ViewBag.Transaction = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+                    ViewBag.DocImg = DB.tblDocumentImgs.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
+
+                    ViewBag.Success = Success;
+                    ViewBag.Update = Update;
+                    ViewBag.Delete = Delete;
+                    ViewBag.Product = DB.tblProducts.Where(x => x.isActive == true).ToList();
+                    ViewBag.Sum = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Select(s => s.Cost).Sum();
+                    ViewBag.Count = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Count();
+
+                    ViewBag.TransCount = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Count();
+                    Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
+                    if (DB.tblPersons.Max(s => s.WSANumber) != null)
+                    {
+                        ViewBag.WAS = DB.tblPersons.Max(s => s.WSANumber) + 1;
+                    }
+                    return View(Person);
+                }
+                else
+                {
+                    ViewBag.WAS = null;
+                    Person.PersonIDNumber = 0;
+                    if (DB.tblPersons.Max(s => s.WSANumber) != null)
+                    {
+                        ViewBag.WAS = DB.tblPersons.Max(s => s.WSANumber) + 1;
+                    }
+
+                    return View(Person);
+                }
             }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+            return View(Person);
         }
 
         [HttpPost]
-        public ActionResult CreatePerson(tblPerson Person, HttpPostedFileBase Image, HttpPostedFileBase CImage, HttpPostedFileBase SigImage, HttpPostedFileBase CertificationFile)
+        public ActionResult CreatePerson(tblPerson Person, HttpPostedFileBase Image, HttpPostedFileBase CImage, HttpPostedFileBase SigImage, HttpPostedFileBase CertificationFile,string BirthDayText,string BirthMonthText,string BirthYearText)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             tblPerson Data = new tblPerson();
@@ -598,7 +689,6 @@ namespace WorldServiceOrganization.Controllers
             }
             catch (Exception ex)
             {
-
                 ViewBag.Error = ex.Message;
                 Console.WriteLine("Error" + ex.Message);
             }
@@ -625,37 +715,76 @@ namespace WorldServiceOrganization.Controllers
             byte[] cover = q;
             return cover;
         }
+
+
+        public ActionResult RetrieveSig(int id)
+        {
+            byte[] cover = GetSigFromDataBase(id);
+            if (cover != null)
+            {
+                return File(cover, "image/jpg");
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public byte[] GetSigFromDataBase(int Id)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            var q = DB.tblPersons.Where(x => x.PersonIDNumber == Id).Select(s => s.Signature).FirstOrDefault();
+            byte[] cover = q;
+            return cover;
+        }
         private string GenerateQRCode(string qrcodeText, int Name)
         {
-            string folderPath = "~/Uploading/QRCode/";
-            string imagePath = "/Uploading/QRCode/" + Name + ".jpg";
-            // If the directory doesn't exist then create it.
-            if (!Directory.Exists(Server.MapPath(folderPath)))
+            try
             {
-                Directory.CreateDirectory(Server.MapPath(folderPath));
-            }
-            bool exists1 = (System.IO.File.Exists(Server.MapPath(imagePath)));
-            if (!exists1)
-            {
-                System.IO.File.Delete(Server.MapPath(imagePath));
-
-            }
-            var barcodeWriter = new BarcodeWriter();
-            barcodeWriter.Format = BarcodeFormat.QR_CODE;
-            var result = barcodeWriter.Write(qrcodeText);
-
-            string barcodePath = Server.MapPath(imagePath);
-            var barcodeBitmap = new Bitmap(result);
-            using (MemoryStream memory = new MemoryStream())
-            {
-                using (FileStream fs = new FileStream(barcodePath, FileMode.Create, FileAccess.ReadWrite))
+                string folderPath = "~/Uploading/QRCode/";
+                string imagePath = "/Uploading/QRCode/" + Name + ".jpg";
+                // If the directory doesn't exist then create it.
+                if (!Directory.Exists(Server.MapPath(folderPath)))
                 {
-                    barcodeBitmap.Save(memory, ImageFormat.Jpeg);
-                    byte[] bytes = memory.ToArray();
-                    fs.Write(bytes, 0, bytes.Length);
+                    Directory.CreateDirectory(Server.MapPath(folderPath));
                 }
+                bool exists1 = (System.IO.File.Exists(Server.MapPath(imagePath)));
+                if (exists1)
+                {
+                    System.IO.File.Delete(Server.MapPath(imagePath));
+
+                }
+                var width = 70; // width of the Qr Code
+                var height = 70; // height of the Qr Code
+                var margin = 0;
+                var barcodeWriter = new BarcodeWriter();
+                barcodeWriter.Format = BarcodeFormat.QR_CODE;
+                barcodeWriter.Options = new QrCodeEncodingOptions
+                {
+                    Height = height,
+                    Width = width,
+                    Margin = margin,
+                };
+                var result = barcodeWriter.Write(qrcodeText);
+
+                string barcodePath = Server.MapPath(imagePath);
+                var barcodeBitmap = new Bitmap(result);
+                using (MemoryStream memory = new MemoryStream())
+                {
+                    using (FileStream fs = new FileStream(barcodePath, FileMode.Create, FileAccess.ReadWrite))
+                    {
+                        barcodeBitmap.Save(memory, ImageFormat.Jpeg);
+                        byte[] bytes = memory.ToArray();
+                        fs.Write(bytes, 0, bytes.Length);
+                    }
+                }
+                return imagePath;
             }
-            return imagePath;
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+            return "";
         }
 
         [HttpPost]
@@ -696,8 +825,15 @@ namespace WorldServiceOrganization.Controllers
                 }
 
                 Data = DB.tblPersons.Select(r => r).Where(x => x.PersonIDNumber == PersonId).FirstOrDefault();
+                string QRPath = Data.QRCode;
                 DB.Entry(Data).State = EntityState.Deleted;
                 DB.SaveChanges();
+                bool exists1 = (System.IO.File.Exists(Server.MapPath(QRPath)));
+                if (exists1)
+                {
+                    System.IO.File.Delete(Server.MapPath(QRPath));
+
+                }
                 return Json(1);
             }
             catch (Exception ex)
@@ -715,23 +851,32 @@ namespace WorldServiceOrganization.Controllers
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             tblPerson Person = null;
-            ViewBag.Child = DB.tblChilds.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
-
-            ViewBag.Success = Success;
-            ViewBag.Update = Update;
-            ViewBag.Delete = Delete;
-
-            ViewBag.Sex = DB.tblSex.Where(x => x.isActive == true).ToList();
-            if (id != null && id != 0)
+            try
             {
+                ViewBag.Child = DB.tblChilds.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
 
-                Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
-                return View(Person);
+                ViewBag.Success = Success;
+                ViewBag.Update = Update;
+                ViewBag.Delete = Delete;
+
+                ViewBag.Sex = DB.tblSex.Where(x => x.isActive == true).ToList();
+                if (id != null && id != 0)
+                {
+
+                    Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
+                    return View(Person);
+                }
+                else
+                {
+                    return View(Person);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return View(Person);
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
             }
+            return View(Person);
         }
 
 
@@ -961,6 +1106,16 @@ namespace WorldServiceOrganization.Controllers
             {
                 string PassportNum = "";
                 ViewBag.User = Session["User"];
+                bool Already = false;
+                tblTransaction IDcodeCheck = DB.tblTransactions.Where(x => x.IDCode == Transaction.IDCode).FirstOrDefault();
+                if(IDcodeCheck==null)
+                {
+                    Already = false;
+                }
+                else
+                {
+                    Already = true;
+                }
                 if (Transaction.TransactionIDNumber == 0)
                 {
                     Data = Transaction;
@@ -1001,8 +1156,8 @@ namespace WorldServiceOrganization.Controllers
                     Data.EditBy = ViewBag.User.UserId;
                     Data.isActive = true;
                     PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
-                    var ID = DB.tblProducts.Where(x => x.ProductId == Transaction.ProductIDNumber).Select(s => s.ProductTypeId).FirstOrDefault();
-                    if (ID == 1 && PassportNum != null)
+                    var ID = DB.tblProducts.Where(x => x.ProductId == Transaction.ProductIDNumber).FirstOrDefault();
+                    if (ID.ProductTypeId == 1 && PassportNum != null && Already == false)
                     {
                         //PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
                         PassportNum = (Int32.Parse(PassportNum) + 1).ToString();
@@ -1014,7 +1169,7 @@ namespace WorldServiceOrganization.Controllers
                         DB.Entry(Data1);
                         DB.SaveChanges();
                     }
-                    else if (ID == 1 && PassportNum == null)
+                    else if (ID.ProductTypeId == 1 && PassportNum == null && Already == false)
                     {
 
                         PassportNum = (Int32.Parse(Data.IDCode) + 1).ToString();
@@ -1023,6 +1178,35 @@ namespace WorldServiceOrganization.Controllers
                         DB.Entry(Data1);
                         DB.SaveChanges();
                     }
+                    var NextNum = "";
+                    if (ID.ProductTypeId == 1005 && Already == false)
+                    {
+                        var Data1 = DB.tblSettings.FirstOrDefault();
+                        if (ID.ProductId == 1005)
+                        {
+                            NextNum = DB.tblSettings.Select(x => x.NextMC).FirstOrDefault();
+                            Data1.NextMC = (Int32.Parse(NextNum) + 1).ToString();
+                            DB.Entry(Data1);
+                            DB.SaveChanges();
+                        }
+                        else if (ID.ProductId == 1006)
+                        {
+                            NextNum = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
+                            NextNum = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
+                            Data1.NextCC = (Int32.Parse(NextNum) + 1).ToString();
+                            DB.Entry(Data1);
+                            DB.SaveChanges();
+                        }
+                        else
+                        {
+                            NextNum = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
+                            NextNum = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
+                            Data1.NextBC = (Int32.Parse(NextNum) + 1).ToString();
+                            DB.Entry(Data1);
+                            DB.SaveChanges();
+                        }
+                    }
+
                     DB.tblTransactions.Add(Data);
                     DB.SaveChanges();
 
@@ -1085,29 +1269,58 @@ namespace WorldServiceOrganization.Controllers
                     Data.EditBy = ViewBag.User.UserId;
 
 
-                    PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
-                    var ID = DB.tblProducts.Where(x => x.ProductId == Transaction.ProductIDNumber).Select(s => s.ProductTypeId).FirstOrDefault();
-                    if (ID == 1 && PassportNum != null)
-                    {
-                        //PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
-                        PassportNum = (Int32.Parse(PassportNum) + 1).ToString();
-                        Data.IDCode = PassportNum;
+                    //PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
+                    //var ID = DB.tblProducts.Where(x => x.ProductId == Transaction.ProductIDNumber).FirstOrDefault();
+                    //if (ID.ProductTypeId == 1 && PassportNum != null && Already == false)
+                    //{
+                    //    //PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
+                    //    PassportNum = (Int32.Parse(PassportNum) + 1).ToString();
+                    //    Data.IDCode = PassportNum;
 
-                        PassportNum = (Int32.Parse(PassportNum) + 1).ToString();
-                        var Data1 = DB.tblSettings.FirstOrDefault();
-                        Data1.NextPassport = PassportNum.ToString();
-                        DB.Entry(Data1);
-                        DB.SaveChanges();
-                    }
-                    else if (ID == 1 && PassportNum == null)
-                    {
+                    //    PassportNum = (Int32.Parse(PassportNum) + 1).ToString();
+                    //    var Data1 = DB.tblSettings.FirstOrDefault();
+                    //    Data1.NextPassport = PassportNum.ToString();
+                    //    DB.Entry(Data1);
+                    //    DB.SaveChanges();
+                    //}
+                    //else if (ID.ProductTypeId == 1 && PassportNum == null && Already == false)
+                    //{
 
-                        PassportNum = (Int32.Parse(Data.IDCode) + 1).ToString();
-                        var Data1 = DB.tblSettings.FirstOrDefault();
-                        Data1.NextPassport = PassportNum.ToString();
-                        DB.Entry(Data1);
-                        DB.SaveChanges();
-                    }
+                    //    PassportNum = (Int32.Parse(Data.IDCode) + 1).ToString();
+                    //    var Data1 = DB.tblSettings.FirstOrDefault();
+                    //    Data1.NextPassport = PassportNum.ToString();
+                    //    DB.Entry(Data1);
+                    //    DB.SaveChanges();
+                    //}
+
+                    //var NextNum = "";
+                    //if (ID.ProductTypeId == 1005 && Already == false)
+                    //{
+                    //    var Data1 = DB.tblSettings.FirstOrDefault();
+                    //    if (ID.ProductId == 1005)
+                    //    {
+                    //        NextNum = DB.tblSettings.Select(x => x.NextMC).FirstOrDefault();
+                    //        Data1.NextMC = (Int32.Parse(NextNum) + 1).ToString();
+                    //        DB.Entry(Data1);
+                    //        DB.SaveChanges();
+                    //    }
+                    //    else if (ID.ProductId == 1006)
+                    //    {
+                    //        NextNum = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
+                    //        NextNum = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
+                    //        Data1.NextCC = (Int32.Parse(NextNum) + 1).ToString();
+                    //        DB.Entry(Data1);
+                    //        DB.SaveChanges();
+                    //    }
+                    //    else
+                    //    {
+                    //        NextNum = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
+                    //        NextNum = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
+                    //        Data1.NextBC = (Int32.Parse(NextNum) + 1).ToString();
+                    //        DB.Entry(Data1);
+                    //        DB.SaveChanges();
+                    //    }
+                    //}
 
 
                     DB.Entry(Data);
@@ -1284,10 +1497,43 @@ namespace WorldServiceOrganization.Controllers
             string IdCode = "";
             var ProductList = DB.tblProducts.Where(q => q.ProductId == id).Select(s => s.Price).FirstOrDefault();
             var Product = DB.tblProducts.Where(q => q.ProductId == id).FirstOrDefault();
-            if (Product.tblProductType.ProductTypeId == 1)
+
+            if(Product.ProductSerialNum==2)
             {
                 IdCode = DB.tblSettings.Select(x => x.NextPassport).FirstOrDefault();
             }
+            if (Product.ProductSerialNum == 3)
+            {
+                IdCode = DB.tblSettings.Select(x => x.NextMC).FirstOrDefault();
+            }
+            if (Product.ProductSerialNum == 4)
+            {
+                IdCode = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
+            }
+            if (Product.ProductSerialNum == 5)
+            {
+                IdCode = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
+            }
+            //if (Product.tblProductType.ProductTypeId == 1)
+            //{
+            //    IdCode = DB.tblSettings.Select(x => x.NextPassport).FirstOrDefault();
+            //}
+            //else if(Product.tblProductType.ProductTypeId == 1005)
+            //{
+            //    if(Product.ProductId==1005)
+            //    {
+            //        IdCode = DB.tblSettings.Select(x => x.NextMC).FirstOrDefault();
+            //    }
+            //    else if(Product.ProductId == 1006)
+            //    {
+            //        IdCode = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
+            //    }
+            //    else
+            //    {
+            //        IdCode = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
+            //    }
+
+            //}
             return Json(new { ProductList = ProductList, IdCode = IdCode }, JsonRequestBehavior.AllowGet);
         }
 
@@ -1296,6 +1542,7 @@ namespace WorldServiceOrganization.Controllers
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             try
             {
+                ViewBag.FontStyle = DB.tblFontStyles.Where(x => x.isActive == true).ToList();
                 var Address = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == true).ToList();
                 if (Address.Count > 0)
                 {
@@ -1317,7 +1564,6 @@ namespace WorldServiceOrganization.Controllers
             }
             catch (Exception ex)
             {
-
                 ViewBag.Error = ex.Message;
                 Console.WriteLine("Error" + ex.Message);
             }
@@ -1461,10 +1707,11 @@ namespace WorldServiceOrganization.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Persons");
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
             }
             //Instantiate the spreadsheet creation engine
-           
+            return RedirectToAction("Persons");
         }
 
        
@@ -1475,6 +1722,7 @@ namespace WorldServiceOrganization.Controllers
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             try
             {
+                ViewBag.FontStyle = DB.tblFontStyles.Where(x => x.isActive == true).ToList();
                 var Persons = DB.tblPersons.Where(x => x.isActive == true && x.PersonIDNumber == id).FirstOrDefault();
                 ViewBag.LabelAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == true).FirstOrDefault();
                 ViewBag.AltAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == false).ToList();
@@ -1487,38 +1735,69 @@ namespace WorldServiceOrganization.Controllers
                 ViewBag.CodeDay = "xx";
                 ViewBag.CodeYear = "xxxx";
                 DateTime date = new DateTime();
-                if (Persons.BirthMonth != null)
+
+
+                int? Month = 0;
+                int SMonth = 0;
+                bool isMonth = int.TryParse(Persons.BirthMonth, out SMonth);
+                if (isMonth == true)
                 {
-                    if (Persons.BirthYear != null)
+                    Month = SMonth;
+                    if (Month > 12)
                     {
-                        date = new DateTime(Persons.BirthYear ?? 0, Persons.BirthMonth ?? 0, 1);
-                        ViewBag.CodeYear = date.ToString("yy");
+                        Persons.BirthMonth = "12";
                     }
-                    else
-                    {
-                        date = new DateTime(2020, Persons.BirthMonth ?? 0, 1);
-
-                    }
-
-
+                    date = new DateTime(2020, Month ?? 0, 1);
                     ViewBag.MonthName = date.ToString("MMM");
                     ViewBag.CodeMonth = date.ToString("MM");
                 }
-                else if (Persons.BirthYear != null)
+                else
                 {
-                    date = new DateTime(Persons.BirthYear ?? 0, 1, 1);
-                    ViewBag.CodeYear = date.ToString("yy");
-
+                    ViewBag.MonthName = Persons.BirthMonth;
+                    ViewBag.CodeMonth = Persons.BirthMonth;
                 }
 
-                if (Persons.BirthDay != null && Persons.BirthDay < 10)
+                if (Persons.BirthYear != null)
                 {
-                    ViewBag.CodeDay = "0" + Persons.BirthDay.ToString();
+                    ViewBag.CodeYear = Persons.BirthYear;
                 }
-                else if (Persons.BirthDay != null)
+
+                if (Persons.BirthDay != null)
                 {
-                    ViewBag.CodeDay = Persons.BirthDay.ToString();
+                    ViewBag.CodeDay = Persons.BirthDay;
                 }
+                //if (Persons.BirthMonth != null)
+                //{
+                //    if (Persons.BirthYear != null)
+                //    {
+                //        date = new DateTime(Persons.BirthYear ?? 0, Persons.BirthMonth ?? 0, 1);
+                //        ViewBag.CodeYear = date.ToString("yy");
+                //    }
+                //    else
+                //    {
+                //        date = new DateTime(2020, Persons.BirthMonth ?? 0, 1);
+
+                //    }
+
+
+                //    ViewBag.MonthName = date.ToString("MMM");
+                //    ViewBag.CodeMonth = date.ToString("MM");
+                //}
+                //else if (Persons.BirthYear != null)
+                //{
+                //    date = new DateTime(Persons.BirthYear ?? 0, 1, 1);
+                //    ViewBag.CodeYear = date.ToString("yy");
+
+                //}
+
+                //if (Persons.BirthDay != null && Persons.BirthDay < 10)
+                //{
+                //    ViewBag.CodeDay = "0" + Persons.BirthDay.ToString();
+                //}
+                //else if (Persons.BirthDay != null)
+                //{
+                //    ViewBag.CodeDay = Persons.BirthDay.ToString();
+                //}
 
 
                 return View(Persons);
@@ -1539,6 +1818,8 @@ namespace WorldServiceOrganization.Controllers
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             try
             {
+
+                ViewBag.FontStyle = DB.tblFontStyles.Where(x => x.isActive == true).ToList();
                 var Person = DB.tblPersons.Where(x=>x.PersonIDNumber==id).FirstOrDefault();
                 ViewBag.TL = DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
 
@@ -1560,10 +1841,11 @@ namespace WorldServiceOrganization.Controllers
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             try
             {
+                ViewBag.FontStyle = DB.tblFontStyles.Where(x => x.isActive == true).ToList();
                 var Person = DB.tblPersons.Where(x=>x.PersonIDNumber==id).FirstOrDefault();
                 ViewBag.TL = DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
                 ViewBag.SecondName = SecondName;
-
+                ViewBag.tid = tid;
                 return View(Person);
             }
             catch (Exception ex)
@@ -1582,6 +1864,7 @@ namespace WorldServiceOrganization.Controllers
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             try
             {
+                ViewBag.FontStyle = DB.tblFontStyles.Where(x => x.isActive == true).ToList();
                 var Person = DB.tblPersons.Where(x=>x.PersonIDNumber==id).FirstOrDefault();
                 ViewBag.TL = DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
 
@@ -1602,54 +1885,84 @@ namespace WorldServiceOrganization.Controllers
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             try
             {
+                ViewBag.FontStyle = DB.tblFontStyles.Where(x => x.isActive == true).ToList();
                 var Persons = DB.tblPersons.Where(x => x.isActive == true && x.PersonIDNumber == id).FirstOrDefault();
                 ViewBag.LabelAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == true).FirstOrDefault();
                 ViewBag.AltAddress = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == false).ToList();
                 ViewBag.Transaction = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).ToList();
                 ViewBag.Sum = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Select(s => s.Quantity).Sum();
                 ViewBag.Count = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Count();
+                
 
-                if (Persons.BirthMonth > 12)
-                {
-                    Persons.BirthMonth = 12;
-                }
+
                 ViewBag.MonthName = "xxx";
                 ViewBag.CodeMonth = "xx";
                 ViewBag.CodeDay = "xx";
                 ViewBag.CodeYear = "xxxx";
                 DateTime date = new DateTime();
-                if (Persons.BirthMonth != null)
+
+                int? Month = 0;
+                int SMonth = 0;
+                bool isMonth = int.TryParse(Persons.BirthMonth, out SMonth);
+                if (isMonth == true)
                 {
-                    if (Persons.BirthYear != null)
+                    Month = SMonth;
+                    if (Month > 12)
                     {
-                        date = new DateTime(Persons.BirthYear ?? 0, Persons.BirthMonth ?? 0, 1);
-                        ViewBag.CodeYear = date.ToString("yy");
+                        Persons.BirthMonth = "12";
                     }
-                    else
-                    {
-                        date = new DateTime(2020, Persons.BirthMonth ?? 0, 1);
-
-                    }
-
-
+                    date = new DateTime(2020, Month ?? 0, 1);
                     ViewBag.MonthName = date.ToString("MMM");
                     ViewBag.CodeMonth = date.ToString("MM");
                 }
-                else if (Persons.BirthYear != null)
+                else
                 {
-                    date = new DateTime(Persons.BirthYear ?? 0, 1, 1);
-                    ViewBag.CodeYear = date.ToString("yy");
-
+                    ViewBag.MonthName = Persons.BirthMonth;
+                    ViewBag.CodeMonth = Persons.BirthMonth;
                 }
 
-                if (Persons.BirthDay != null && Persons.BirthDay < 10)
+                if (Persons.BirthYear != null)
                 {
-                    ViewBag.CodeDay = "0" + Persons.BirthDay.ToString();
+                    ViewBag.CodeYear = Persons.BirthYear;
                 }
-                else if (Persons.BirthDay != null)
+
+                if (Persons.BirthDay != null)
                 {
-                    ViewBag.CodeDay = Persons.BirthDay.ToString();
+                    ViewBag.CodeDay = Persons.BirthDay;
                 }
+
+                //if (Persons.BirthMonth != null)
+                //{
+                //    if (Persons.BirthYear != null)
+                //    {
+                //        date = new DateTime(Persons.BirthYear ?? 0, Month ?? 0, 1);
+                //        ViewBag.CodeYear = date.ToString("yy");
+                //    }
+                //    else
+                //    {
+                //        date = new DateTime(2020, Month ?? 0, 1);
+
+                //    }
+
+                //    ViewBag.MonthName = date.ToString("MMM");
+                //    ViewBag.CodeMonth = date.ToString("MM");
+
+                //}
+                //else if (Persons.BirthYear != null)
+                //{
+                //    date = new DateTime(Persons.BirthYear ?? 0, 1, 1);
+                //    ViewBag.CodeYear = date.ToString("yy");
+
+                //}
+
+                //if (Persons.BirthDay != null && Persons.BirthDay < 10)
+                //{
+                //    ViewBag.CodeDay = "0" + Persons.BirthDay.ToString();
+                //}
+                //else if (Persons.BirthDay != null)
+                //{
+                //    ViewBag.CodeDay = Persons.BirthDay.ToString();
+                //}
 
 
 
@@ -1702,6 +2015,7 @@ namespace WorldServiceOrganization.Controllers
             {
                 HttpCookie cookieObj = Request.Cookies["Settings"];
                 string DateFormat = cookieObj["DateFormat"];
+                ViewBag.FontStyle = DB.tblFontStyles.Where(x => x.isActive == true).ToList();
                 var Persons = DB.tblPersons.Where(x => x.isActive == true && x.PersonIDNumber == id).FirstOrDefault();
                 ViewBag.TL = DB.tblTransactions.Where(x => x.isActive == true && x.TransactionIDNumber == tid).FirstOrDefault();
                 ViewBag.Settings = DB.tblPassportLabelSettings.ToList();
@@ -1857,37 +2171,69 @@ namespace WorldServiceOrganization.Controllers
                 ViewBag.CodeMonth = "xx";
                 ViewBag.CodeDay = "xx";
                 ViewBag.CodeYear = "xxxx";
-                if (Persons.BirthMonth != null)
+
+                int? Month = 0;
+                int SMonth = 0;
+                bool isMonth = int.TryParse(Persons.BirthMonth, out SMonth);
+                if (isMonth == true)
                 {
-                    if (Persons.BirthYear != null)
+                    Month = SMonth;
+                    if (Month > 12)
                     {
-                        date = new DateTime(Persons.BirthYear ?? 0, Persons.BirthMonth ?? 0, 1);
-                        CodeYear = date.ToString("yy");
+                        Persons.BirthMonth = "12";
                     }
-                    else
-                    {
-                        date = new DateTime(2020, Persons.BirthMonth ?? 0, 1);
-                    }
-
-
+                    date = new DateTime(2020, Month ?? 0, 1);
                     ViewBag.MonthName = date.ToString("MMM");
                     ViewBag.CodeMonth = date.ToString("MM");
                 }
-                else if (Persons.BirthYear != null)
+                else
                 {
-                    date = new DateTime(Persons.BirthYear ?? 0, 1, 1);
-                    CodeYear = date.ToString("yy");
+                    ViewBag.MonthName = Persons.BirthMonth;
+                    ViewBag.CodeMonth = Persons.BirthMonth;
+                }
+
+                if (Persons.BirthYear != null)
+                {
                     ViewBag.CodeYear = Persons.BirthYear;
                 }
 
-                if (Persons.BirthDay != null && Persons.BirthDay < 10)
+                if (Persons.BirthDay != null)
                 {
-                    ViewBag.CodeDay = "0" + Persons.BirthDay.ToString();
+                    ViewBag.CodeDay = Persons.BirthDay;
                 }
-                else if (Persons.BirthDay != null)
-                {
-                    ViewBag.CodeDay = Persons.BirthDay.ToString();
-                }
+
+
+                //if (Persons.BirthMonth != null)
+                //{
+                //    if (Persons.BirthYear != null)
+                //    {
+                //        date = new DateTime(Persons.BirthYear ?? 0, Persons.BirthMonth ?? 0, 1);
+                //        CodeYear = date.ToString("yy");
+                //    }
+                //    else
+                //    {
+                //        date = new DateTime(2020, Persons.BirthMonth ?? 0, 1);
+                //    }
+
+
+                //    ViewBag.MonthName = date.ToString("MMM");
+                //    ViewBag.CodeMonth = date.ToString("MM");
+                //}
+                //else if (Persons.BirthYear != null)
+                //{
+                //    date = new DateTime(Persons.BirthYear ?? 0, 1, 1);
+                //    CodeYear = date.ToString("yy");
+                //    ViewBag.CodeYear = Persons.BirthYear;
+                //}
+
+                //if (Persons.BirthDay != null && Persons.BirthDay < 10)
+                //{
+                //    ViewBag.CodeDay = "0" + Persons.BirthDay.ToString();
+                //}
+                //else if (Persons.BirthDay != null)
+                //{
+                //    ViewBag.CodeDay = Persons.BirthDay.ToString();
+                //}
 
 
 
@@ -1926,6 +2272,7 @@ namespace WorldServiceOrganization.Controllers
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             try
             {
+                ViewBag.FontStyle = DB.tblFontStyles.Where(x => x.isActive == true).ToList();
                 var Address = DB.tblAddresses.Where(x => x.isActive == true && x.PersonIDNumber == id && x.Label == true).FirstOrDefault();
                 if (Address != null)
                 {

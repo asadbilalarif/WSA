@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e9663d3bd04c4f22a61fcebb4991345a" Name="Diagram1" ZoomLevel="54">
+      <Diagram DiagramId="e9663d3bd04c4f22a61fcebb4991345a" Name="Diagram1" ZoomLevel="67">
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblUser" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblRole" Width="1.5" PointX="3.375" PointY="0.75" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK__tblUsers__RoleId__1367E606" />
@@ -30,8 +30,23 @@
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_SexAddress" />
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblDocumentImg" Width="1.5" PointX="16.875" PointY="11.875" />
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.SearchField" Width="1.5" PointX="11.375" PointY="11.75" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblChild" Width="1.5" PointX="16.875" PointY="7.625" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_SexChild" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblSetting" Width="1.75" PointX="0.5" PointY="12.25" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblTransaction" Width="1.5" PointX="16.875" PointY="2" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_ProductTransaction" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers1" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblPassportLabelSetting" Width="1.5" PointX="5.375" PointY="15.25" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers1" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblMRZTranslation" Width="1.5" PointX="11.375" PointY="15.25" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblFontStyle" Width="1.5" PointX="3" PointY="15" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblFontStyle_tblUsers" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblFontStyle_tblUsers1" />
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblPerson" Width="1.5" PointX="14.625" PointY="1.625" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonAddress" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonChild" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonCountryAppli" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonCountryBirth" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonCountryStatis" />
@@ -40,22 +55,10 @@
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonOccupation" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonSex" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonStatus" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonTransaction" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserCre" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserDel" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserEdit" />
-        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblChild" Width="1.5" PointX="16.875" PointY="7.625" />
-        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonChild" />
-        <AssociationConnector Association="WorldServiceOrganizationModel.FK_SexChild" />
-        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblSetting" Width="1.75" PointX="0.5" PointY="12.25" />
-        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblTransaction" Width="1.5" PointX="16.875" PointY="2" />
-        <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonTransaction" />
-        <AssociationConnector Association="WorldServiceOrganizationModel.FK_ProductTransaction" />
-        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers" />
-        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers1" />
-        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblPassportLabelSetting" Width="1.5" PointX="5.375" PointY="15.25" />
-        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers" />
-        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers1" />
-        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblMRZTranslation" Width="1.5" PointX="11.375" PointY="15.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

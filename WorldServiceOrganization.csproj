@@ -163,6 +163,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\EyeController.cs" />
+    <Compile Include="Controllers\FontStyleController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\OccupationController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
@@ -180,9 +181,16 @@
     <Compile Include="Models\CountrySummaryList_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CountrySummaryList_Result1.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CountrySummaryList_Result2.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CustomSearchLeftJoin_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\JqueryDatatableParam.cs" />
     <Compile Include="Models\MenuAccess.cs" />
     <Compile Include="Models\Model.Context.cs">
       <AutoGen>True</AutoGen>
@@ -203,6 +211,9 @@
     <Compile Include="Models\PersonExportData_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PersonList_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PersonList_Result1.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -212,6 +223,9 @@
     </Compile>
     <Compile Include="Models\ReportList.cs" />
     <Compile Include="Models\SearchField.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_PersonDataTableData_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblAccessLevel.cs">
@@ -230,6 +244,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblEye.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblFontStyle.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblMenu.cs">
@@ -556,6 +573,7 @@
     <Content Include="Views\Person\BirthCertificate.cshtml" />
     <Content Include="Views\Person\WorldMarriageCertificate.cshtml" />
     <Content Include="Views\Person\WorldCitizenCertificate.cshtml" />
+    <Content Include="Views\FontStyle\FontStyles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

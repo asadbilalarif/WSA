@@ -18,8 +18,8 @@ namespace WorldServiceOrganization.Models
         public tblPerson()
         {
             this.tblAddresses = new HashSet<tblAddress>();
-            this.tblDocumentImgs = new HashSet<tblDocumentImg>();
             this.tblChilds = new HashSet<tblChild>();
+            this.tblDocumentImgs = new HashSet<tblDocumentImg>();
             this.tblTransactions = new HashSet<tblTransaction>();
         }
     
@@ -34,9 +34,9 @@ namespace WorldServiceOrganization.Models
         public string EMail { get; set; }
         public string Website { get; set; }
         public string DateOfBirth { get; set; }
-        public Nullable<int> BirthDay { get; set; }
-        public Nullable<int> BirthMonth { get; set; }
-        public Nullable<int> BirthYear { get; set; }
+        public string BirthDay { get; set; }
+        public string BirthMonth { get; set; }
+        public string BirthYear { get; set; }
         public Nullable<int> Sex { get; set; }
         public Nullable<double> Height { get; set; }
         public Nullable<int> HeightUnit { get; set; }
@@ -68,6 +68,8 @@ namespace WorldServiceOrganization.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblAddress> tblAddresses { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblChild> tblChilds { get; set; }
         public virtual tblCountry tblCountry { get; set; }
         public virtual tblCountry tblCountry1 { get; set; }
         public virtual tblCountry tblCountry2 { get; set; }
@@ -77,12 +79,10 @@ namespace WorldServiceOrganization.Models
         public virtual tblOccupation tblOccupation { get; set; }
         public virtual tblSex tblSex { get; set; }
         public virtual tblStatus tblStatu { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblTransaction> tblTransactions { get; set; }
         public virtual tblUser tblUser { get; set; }
         public virtual tblUser tblUser1 { get; set; }
         public virtual tblUser tblUser2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblChild> tblChilds { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblTransaction> tblTransactions { get; set; }
     }
 }
