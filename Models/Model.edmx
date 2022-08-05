@@ -188,20 +188,28 @@
           <Property Name="Name" Type="nvarchar(max)" />
           <Property Name="XPassportNumber" Type="int" />
           <Property Name="YPassportNumber" Type="int" />
+          <Property Name="PassportNumberSize" Type="int" />
           <Property Name="XName" Type="int" />
           <Property Name="YName" Type="int" />
+          <Property Name="NameSize" Type="int" />
           <Property Name="XGivenName" Type="int" />
           <Property Name="YGivenName" Type="int" />
+          <Property Name="GivenNameSize" Type="int" />
           <Property Name="XPlaceofBirth" Type="int" />
           <Property Name="YPlaceofBirth" Type="int" />
+          <Property Name="PlaceofBirthSize" Type="int" />
           <Property Name="XDateofBirth" Type="int" />
           <Property Name="YDateofBirth" Type="int" />
+          <Property Name="DateofBirthSize" Type="int" />
           <Property Name="XGender" Type="int" />
           <Property Name="YGender" Type="int" />
+          <Property Name="GenderSize" Type="int" />
           <Property Name="XDateofIssue" Type="int" />
           <Property Name="YDateofIssue" Type="int" />
+          <Property Name="DateofIssueSize" Type="int" />
           <Property Name="XDateofExpiry" Type="int" />
           <Property Name="YDateofExpiry" Type="int" />
+          <Property Name="DateofExpirySize" Type="int" />
           <Property Name="XPhoto" Type="int" />
           <Property Name="YPhoto" Type="int" />
           <Property Name="CreatedBy" Type="int" />
@@ -1012,14 +1020,14 @@
           <Property Name="Initials" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblTransactions" Relationship="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers" FromRole="tblUser" ToRole="tblTransaction" />
           <NavigationProperty Name="tblTransactions1" Relationship="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers1" FromRole="tblUser" ToRole="tblTransaction" />
-          <NavigationProperty Name="tblPassportLabelSettings" Relationship="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers" FromRole="tblUser" ToRole="tblPassportLabelSetting" />
-          <NavigationProperty Name="tblPassportLabelSettings1" Relationship="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers1" FromRole="tblUser" ToRole="tblPassportLabelSetting" />
           <NavigationProperty Name="tblFontStyles" Relationship="WorldServiceOrganizationModel.FK_tblFontStyle_tblUsers" FromRole="tblUser" ToRole="tblFontStyle" />
           <NavigationProperty Name="tblFontStyles1" Relationship="WorldServiceOrganizationModel.FK_tblFontStyle_tblUsers1" FromRole="tblUser" ToRole="tblFontStyle" />
           <NavigationProperty Name="tblPersons" Relationship="WorldServiceOrganizationModel.FK_PersonUserCre" FromRole="tblUser" ToRole="tblPerson" />
           <NavigationProperty Name="tblPersons1" Relationship="WorldServiceOrganizationModel.FK_PersonUserDel" FromRole="tblUser" ToRole="tblPerson" />
           <NavigationProperty Name="tblPersons2" Relationship="WorldServiceOrganizationModel.FK_PersonUserEdit" FromRole="tblUser" ToRole="tblPerson" />
           <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tblPassportLabelSettings" Relationship="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers" FromRole="tblUser" ToRole="tblPassportLabelSetting" />
+          <NavigationProperty Name="tblPassportLabelSettings1" Relationship="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers1" FromRole="tblUser" ToRole="tblPassportLabelSetting" />
           </EntityType>
         <EntityContainer Name="WorldServiceOrganizationEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblUsers" EntityType="Self.tblUser" />
@@ -1097,15 +1105,6 @@
           <AssociationSet Name="FK_tblTransaction_tblUsers1" Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers1">
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tblTransaction" EntitySet="tblTransactions" />
-          </AssociationSet>
-          <EntitySet Name="tblPassportLabelSettings" EntityType="WorldServiceOrganizationModel.tblPassportLabelSetting" />
-          <AssociationSet Name="FK_tblPassportLabelSetting_tblUsers" Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers">
-            <End Role="tblUser" EntitySet="tblUsers" />
-            <End Role="tblPassportLabelSetting" EntitySet="tblPassportLabelSettings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPassportLabelSetting_tblUsers1" Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers1">
-            <End Role="tblUser" EntitySet="tblUsers" />
-            <End Role="tblPassportLabelSetting" EntitySet="tblPassportLabelSettings" />
           </AssociationSet>
           <FunctionImport Name="TransactionSummaryList" ReturnType="Collection(WorldServiceOrganizationModel.TransactionSummaryList_Result2)">
           <Parameter Name="SearchValue" Mode="In" Type="String" />
@@ -1190,6 +1189,15 @@
             <Parameter Name="Filter" Mode="In" Type="String" />
             <Parameter Name="RecordType" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="tblPassportLabelSettings" EntityType="WorldServiceOrganizationModel.tblPassportLabelSetting" />
+          <AssociationSet Name="FK_tblPassportLabelSetting_tblUsers" Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblPassportLabelSetting" EntitySet="tblPassportLabelSettings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPassportLabelSetting_tblUsers1" Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers1">
+            <End Role="tblUser" EntitySet="tblUsers" />
+            <End Role="tblPassportLabelSetting" EntitySet="tblPassportLabelSettings" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="tblRole">
           <Key>
@@ -1799,61 +1807,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="tblPassportLabelSetting">
-          <Key>
-            <PropertyRef Name="PassportLabelSettingId" />
-          </Key>
-          <Property Name="PassportLabelSettingId" Type="Int32" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="XPassportNumber" Type="Int32" />
-          <Property Name="YPassportNumber" Type="Int32" />
-          <Property Name="XName" Type="Int32" />
-          <Property Name="YName" Type="Int32" />
-          <Property Name="XGivenName" Type="Int32" />
-          <Property Name="YGivenName" Type="Int32" />
-          <Property Name="XPlaceofBirth" Type="Int32" />
-          <Property Name="YPlaceofBirth" Type="Int32" />
-          <Property Name="XDateofBirth" Type="Int32" />
-          <Property Name="YDateofBirth" Type="Int32" />
-          <Property Name="XGender" Type="Int32" />
-          <Property Name="YGender" Type="Int32" />
-          <Property Name="XDateofIssue" Type="Int32" />
-          <Property Name="YDateofIssue" Type="Int32" />
-          <Property Name="XDateofExpiry" Type="Int32" />
-          <Property Name="YDateofExpiry" Type="Int32" />
-          <Property Name="XPhoto" Type="Int32" />
-          <Property Name="YPhoto" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="EditBy" Type="Int32" />
-          <Property Name="EditDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="tblUser" Relationship="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers" FromRole="tblPassportLabelSetting" ToRole="tblUser" />
-          <NavigationProperty Name="tblUser1" Relationship="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers1" FromRole="tblPassportLabelSetting" ToRole="tblUser" />
-        </EntityType>
-        <Association Name="FK_tblPassportLabelSetting_tblUsers">
-          <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
-          <End Type="WorldServiceOrganizationModel.tblPassportLabelSetting" Role="tblPassportLabelSetting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblUser">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="tblPassportLabelSetting">
-              <PropertyRef Name="CreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPassportLabelSetting_tblUsers1">
-          <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
-          <End Type="WorldServiceOrganizationModel.tblPassportLabelSetting" Role="tblPassportLabelSetting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblUser">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="tblPassportLabelSetting">
-              <PropertyRef Name="EditBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="TransactionSummaryList_Result2">
           <Property Type="Int32" Name="TransactionIDNumber" Nullable="false" />
           <Property Type="String" Name="IDCode" Nullable="true" />
@@ -2348,6 +2301,69 @@
           <Property Type="String" Name="DateFormate1" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="DateFormate2" Nullable="false" MaxLength="1" />
         </ComplexType>
+        <EntityType Name="tblPassportLabelSetting">
+          <Key>
+            <PropertyRef Name="PassportLabelSettingId" />
+          </Key>
+          <Property Name="PassportLabelSettingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="XPassportNumber" Type="Int32" />
+          <Property Name="YPassportNumber" Type="Int32" />
+          <Property Name="XName" Type="Int32" />
+          <Property Name="YName" Type="Int32" />
+          <Property Name="XGivenName" Type="Int32" />
+          <Property Name="YGivenName" Type="Int32" />
+          <Property Name="XPlaceofBirth" Type="Int32" />
+          <Property Name="YPlaceofBirth" Type="Int32" />
+          <Property Name="XDateofBirth" Type="Int32" />
+          <Property Name="YDateofBirth" Type="Int32" />
+          <Property Name="XGender" Type="Int32" />
+          <Property Name="YGender" Type="Int32" />
+          <Property Name="XDateofIssue" Type="Int32" />
+          <Property Name="YDateofIssue" Type="Int32" />
+          <Property Name="XDateofExpiry" Type="Int32" />
+          <Property Name="YDateofExpiry" Type="Int32" />
+          <Property Name="XPhoto" Type="Int32" />
+          <Property Name="YPhoto" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="EditBy" Type="Int32" />
+          <Property Name="EditDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblUser" Relationship="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers" FromRole="tblPassportLabelSetting" ToRole="tblUser" />
+          <NavigationProperty Name="tblUser1" Relationship="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers1" FromRole="tblPassportLabelSetting" ToRole="tblUser" />
+          <Property Name="PassportNumberSize" Type="Int32" />
+          <Property Name="NameSize" Type="Int32" />
+          <Property Name="GivenNameSize" Type="Int32" />
+          <Property Name="PlaceofBirthSize" Type="Int32" />
+          <Property Name="DateofBirthSize" Type="Int32" />
+          <Property Name="GenderSize" Type="Int32" />
+          <Property Name="DateofIssueSize" Type="Int32" />
+          <Property Name="DateofExpirySize" Type="Int32" />
+        </EntityType>
+        <Association Name="FK_tblPassportLabelSetting_tblUsers">
+          <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPassportLabelSetting" Role="tblPassportLabelSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPassportLabelSetting">
+              <PropertyRef Name="CreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPassportLabelSetting_tblUsers1">
+          <End Type="WorldServiceOrganizationModel.tblUser" Role="tblUser" Multiplicity="0..1" />
+          <End Type="WorldServiceOrganizationModel.tblPassportLabelSetting" Role="tblPassportLabelSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="tblPassportLabelSetting">
+              <PropertyRef Name="EditBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2740,36 +2756,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblPassportLabelSettings">
-            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblPassportLabelSetting">
-              <MappingFragment StoreEntitySet="tblPassportLabelSetting">
-                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
-                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="YPhoto" ColumnName="YPhoto" />
-                <ScalarProperty Name="XPhoto" ColumnName="XPhoto" />
-                <ScalarProperty Name="YDateofExpiry" ColumnName="YDateofExpiry" />
-                <ScalarProperty Name="XDateofExpiry" ColumnName="XDateofExpiry" />
-                <ScalarProperty Name="YDateofIssue" ColumnName="YDateofIssue" />
-                <ScalarProperty Name="XDateofIssue" ColumnName="XDateofIssue" />
-                <ScalarProperty Name="YGender" ColumnName="YGender" />
-                <ScalarProperty Name="XGender" ColumnName="XGender" />
-                <ScalarProperty Name="YDateofBirth" ColumnName="YDateofBirth" />
-                <ScalarProperty Name="XDateofBirth" ColumnName="XDateofBirth" />
-                <ScalarProperty Name="YPlaceofBirth" ColumnName="YPlaceofBirth" />
-                <ScalarProperty Name="XPlaceofBirth" ColumnName="XPlaceofBirth" />
-                <ScalarProperty Name="YGivenName" ColumnName="YGivenName" />
-                <ScalarProperty Name="XGivenName" ColumnName="XGivenName" />
-                <ScalarProperty Name="YName" ColumnName="YName" />
-                <ScalarProperty Name="XName" ColumnName="XName" />
-                <ScalarProperty Name="YPassportNumber" ColumnName="YPassportNumber" />
-                <ScalarProperty Name="XPassportNumber" ColumnName="XPassportNumber" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="PassportLabelSettingId" ColumnName="PassportLabelSettingId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="TransactionSummaryList" FunctionName="WorldServiceOrganizationModel.Store.TransactionSummaryList">
             <ResultMapping>
               <ComplexTypeMapping TypeName="WorldServiceOrganizationModel.TransactionSummaryList_Result2">
@@ -3035,6 +3021,44 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblPassportLabelSettings">
+            <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblPassportLabelSetting">
+              <MappingFragment StoreEntitySet="tblPassportLabelSetting">
+                <ScalarProperty Name="DateofExpirySize" ColumnName="DateofExpirySize" />
+                <ScalarProperty Name="DateofIssueSize" ColumnName="DateofIssueSize" />
+                <ScalarProperty Name="GenderSize" ColumnName="GenderSize" />
+                <ScalarProperty Name="DateofBirthSize" ColumnName="DateofBirthSize" />
+                <ScalarProperty Name="PlaceofBirthSize" ColumnName="PlaceofBirthSize" />
+                <ScalarProperty Name="GivenNameSize" ColumnName="GivenNameSize" />
+                <ScalarProperty Name="NameSize" ColumnName="NameSize" />
+                <ScalarProperty Name="PassportNumberSize" ColumnName="PassportNumberSize" />
+                <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+                <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="YPhoto" ColumnName="YPhoto" />
+                <ScalarProperty Name="XPhoto" ColumnName="XPhoto" />
+                <ScalarProperty Name="YDateofExpiry" ColumnName="YDateofExpiry" />
+                <ScalarProperty Name="XDateofExpiry" ColumnName="XDateofExpiry" />
+                <ScalarProperty Name="YDateofIssue" ColumnName="YDateofIssue" />
+                <ScalarProperty Name="XDateofIssue" ColumnName="XDateofIssue" />
+                <ScalarProperty Name="YGender" ColumnName="YGender" />
+                <ScalarProperty Name="XGender" ColumnName="XGender" />
+                <ScalarProperty Name="YDateofBirth" ColumnName="YDateofBirth" />
+                <ScalarProperty Name="XDateofBirth" ColumnName="XDateofBirth" />
+                <ScalarProperty Name="YPlaceofBirth" ColumnName="YPlaceofBirth" />
+                <ScalarProperty Name="XPlaceofBirth" ColumnName="XPlaceofBirth" />
+                <ScalarProperty Name="YGivenName" ColumnName="YGivenName" />
+                <ScalarProperty Name="XGivenName" ColumnName="XGivenName" />
+                <ScalarProperty Name="YName" ColumnName="YName" />
+                <ScalarProperty Name="XName" ColumnName="XName" />
+                <ScalarProperty Name="YPassportNumber" ColumnName="YPassportNumber" />
+                <ScalarProperty Name="XPassportNumber" ColumnName="XPassportNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PassportLabelSettingId" ColumnName="PassportLabelSettingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -72,6 +72,7 @@
                                     <th style="display:none;">User ID</th>
                                     <th>Code</th>
                                     <th>Name</th>
+                                    <th>Abbreviation</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -81,6 +82,7 @@
                                     <tr>
                                         <td style="display:none;">@Eye.EyeId</td>
                                         <td>@Eye.Code</td>
+                                        <td>@Eye.Abbreviation</td>
                                         <td>@Eye.Name</td>
 
                                         <td class="text-end">
@@ -130,6 +132,8 @@
                                         <input class="form-control" type="text" id="ECode">
                                         <label>Name <small id="LblEyeNameError" style="display:none; color:red;">Name Must be filled!!!</small></label>
                                         <input class="form-control" type="text" id="EName">
+                                        <label>Abbreviation <small id="LblCountryAbbreviationError" style="display:none; color:red;">Abbreviation Must be filled!!!</small></label>
+                                        <input class="form-control" type="text" id="CAbbreviation">
 
                                     </div>
                                 </div>
@@ -188,6 +192,7 @@
         $("#EyeID").val('');
         $("#ECode").val('');
         $("#EName").val('');
+        $("#CAbbreviation").val('');
         $("#LblEyeCodeError").fadeOut();
         $("#LblEyeNameError").fadeOut();
 
@@ -204,7 +209,8 @@
         $("#CHeading").hide();
         $("#EyeID").val(currentRow.find("td:eq(0)").text());
         $("#ECode").val(currentRow.find("td:eq(1)").text());
-        $("#EName").val(currentRow.find("td:eq(2)").text());
+        $("#CAbbreviation").val(currentRow.find("td:eq(2)").text());
+        $("#EName").val(currentRow.find("td:eq(3)").text());
 
         $("#LblEyeCodeError").fadeOut();
         $("#LblEyeNameError").fadeOut();
@@ -216,7 +222,7 @@
     $("#EyeSubmit").on("click", function () {
 
         var error = $("#Eyeerror");
-        if ($("#ECode").val() != "" && $("#EName").val() != "") {
+        if ($("#ECode").val() != "" && $("#EName").val() != "" && $("#CAbbreviation").val() != "") {
             error.text('');
             $("#EyeSubmit").attr("disabled", true);
             $("#Eyeloading").show();
@@ -226,12 +232,14 @@
             var UId = $("#EyeID").val();
             var UCode = $("#ECode").val();
             var UName = $("#EName").val();
+            var UAbbreviation = $("#CAbbreviation").val();
 
 
             if (UId != 0) {
                 var model = {
                     EyeId: UId,
                     Name: UName,
+                    Abbreviation: UAbbreviation,
                     Code: UCode,
                 };
                 CheckMessage = 1;
@@ -240,6 +248,7 @@
                 var model = {
 
                     Name: UName,
+                    Abbreviation: UAbbreviation,
                     Code: UCode,
                 };
                 CheckMessage = 2;

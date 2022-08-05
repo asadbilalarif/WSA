@@ -43,6 +43,7 @@ namespace WorldServiceOrganization.Controllers
 
                         Data.Name = Eye.Name;
                         Data.Code = Eye.Code;
+                        Data.Abbreviation = Eye.Abbreviation;
                         Data.isActive = true;
                         Data.EditDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                         DB.Entry(Data);

@@ -162,20 +162,24 @@
                         <div class="card" id="ApplyFontStyle">
                             <div class="card-body" id="FNdraggableArea">
                                 @*<div class="row">
-                                        <div class="col-md-8">
+            <div class="col-md-8">
 
-                                        </div>
-                                        <div class="col-md-4">
+            </div>
+            <div class="col-md-4">
 
-                                        </div>
-                                    </div>*@
+            </div>
+        </div>*@
                                 <p class="text-right" id="WSAShowSeparate">@ViewBag.WSA</p>
                                 <p> @ViewBag.FName @ViewBag.LName <span id="WSAShowName" style="display:none; float:right;">@ViewBag.WSA </span></p>
                                 <img src="@ViewBag.QRCode" alt="Alternate Text" id="MRZHide" class="FNdraggable" style="float:right; display: none; z-index: 100;" />
 
                                 @foreach (WorldServiceOrganization.Models.tblAddress Address in Model)
                                 {
-                                    <p>c/o @Address.CareOf </p>
+                                    if (@Address.CareOf != null && @Address.CareOf != "")
+                                    {
+                                        <p>c/o @Address.CareOf </p>
+                                    }
+
                                     <p> @Address.Address1</p>
                                     <p> @Address.City, @Address.State @Address.PostalCode <span id="CountryShow" class="CountryShow">@Address.tblCountry.Name</span> </p>
                                     <br>

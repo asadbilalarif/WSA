@@ -47,6 +47,7 @@ namespace WorldServiceOrganization.Controllers
 
                         Data.Name = Status.Name;
                         Data.Code = Status.Code;
+                        Data.Abbreviation = Status.Abbreviation;
                         Data.isActive = true;
                         Data.EditDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                         DB.Entry(Data);

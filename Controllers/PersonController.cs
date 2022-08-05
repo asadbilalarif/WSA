@@ -21,9 +21,9 @@ using ZXing.QrCode;
 
 namespace WorldServiceOrganization.Controllers
 {
-    //[NoDirectAccess]
-    //[AuthorizeAction1FilterAttribute]
-    //[Authorize]
+    [NoDirectAccess]
+    [AuthorizeAction1FilterAttribute]
+    [Authorize]
     public class PersonController : Controller
     {
         // GET: Person

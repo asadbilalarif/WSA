@@ -162,7 +162,11 @@
                                 <img src="@ViewBag.QRCode" alt="Alternate Text" id="MRZHide" class="FNdraggable" style="float:right; display: none; z-index: 100;" />
                                 @if (Model != null)
                                 {
-                                    <p>c/o @Model.CareOf </p>
+                                    if (@Model.CareOf != null && @Model.CareOf != "")
+                                    {
+                                        <p>c/o @Model.CareOf </p>
+                                    }
+
                                     <p> @Model.Address1</p>
                                     <p> @Model.City, @Model.State @Model.PostalCode <span id="CountryShow" class="CountryShow">@Model.tblCountry.Name</span> </p>
                                 }

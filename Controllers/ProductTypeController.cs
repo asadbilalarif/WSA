@@ -47,6 +47,7 @@ namespace WorldServiceOrganization.Controllers
 
                         Data.Name = ProductType.Name;
                         Data.Code = ProductType.Code;
+                        Data.Abbreviation = ProductType.Abbreviation;
                         Data.isActive = true;
                         Data.EditDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                         DB.Entry(Data);

@@ -37,9 +37,6 @@
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_ProductTransaction" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblTransaction_tblUsers1" />
-        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblPassportLabelSetting" Width="1.5" PointX="5.375" PointY="15.25" />
-        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers" />
-        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers1" />
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblMRZTranslation" Width="1.5" PointX="11.375" PointY="15.25" />
         <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblFontStyle" Width="1.5" PointX="3" PointY="15" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblFontStyle_tblUsers" />
@@ -59,6 +56,9 @@
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserCre" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserDel" />
         <AssociationConnector Association="WorldServiceOrganizationModel.FK_PersonUserEdit" />
+        <EntityTypeShape EntityType="WorldServiceOrganizationModel.tblPassportLabelSetting" Width="1.5" PointX="3" PointY="19.625" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers" />
+        <AssociationConnector Association="WorldServiceOrganizationModel.FK_tblPassportLabelSetting_tblUsers1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

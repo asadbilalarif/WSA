@@ -38,6 +38,14 @@ namespace WorldServiceOrganization.Models
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<int> EditBy { get; set; }
         public Nullable<System.DateTime> EditDate { get; set; }
+        public Nullable<int> PassportNumberSize { get; set; }
+        public Nullable<int> NameSize { get; set; }
+        public Nullable<int> GivenNameSize { get; set; }
+        public Nullable<int> PlaceofBirthSize { get; set; }
+        public Nullable<int> DateofBirthSize { get; set; }
+        public Nullable<int> GenderSize { get; set; }
+        public Nullable<int> DateofIssueSize { get; set; }
+        public Nullable<int> DateofExpirySize { get; set; }
     
         public virtual tblUser tblUser { get; set; }
         public virtual tblUser tblUser1 { get; set; }

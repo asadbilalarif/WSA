@@ -47,6 +47,7 @@ namespace WorldServiceOrganization.Controllers
                         Data.Name = Product.Name;
                         Data.ProductTypeId = Product.ProductTypeId;
                         Data.Code = Product.Code;
+                        Data.Abbreviation = Product.Abbreviation;
                         Data.Price = Product.Price;
                         Data.ValidFor = Product.ValidFor;
                         Data.ProductSerialNum = Product.ProductSerialNum;

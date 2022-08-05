@@ -1,5 +1,5 @@
 ﻿@model  WorldServiceOrganization.Models.tblPerson
-
+@using WorldServiceOrganization.Models;
 @{
     ViewData["Title"] = "Addresss";
 
@@ -9,18 +9,46 @@
     string FontSize = cookieObj["FontSize"];
     string FontFamily = cookieObj["FontStyle"];
 
-    string FontLink = "https://fonts.googleapis.com/css?family=" + @FontFamily;
+    List<tblPassportLabelSetting>PassportLabelSetting = (List<tblPassportLabelSetting>)ViewBag.Settings;
+
+    //string FontLink = "https://fonts.googleapis.com/css?family=" + @FontFamily;
 
     string Error = ViewBag.Error;
 
-}
+
+            }
 
 
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css" integrity="sha384-{hash}" crossorigin="anonymous" />
-    <link rel="stylesheet" href="@FontLink" crossorigin="anonymous" />
+    @*<link rel="stylesheet" href="@FontLink" crossorigin="anonymous" />*@
 
-    <style>
+<style>
+
+/*       body {
+  background: rgb(204,204,204);
+}*/
+page {
+  background: white;
+  display: block;
+ /* margin: 0 auto;
+  margin-bottom: 0.5cm;
+  box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);*/
+}
+    page[size="A4"] {
+        width: 15.24cm;
+        height: 10.16cm;
+    }
+
+/*@@media print {
+  body, page {
+    margin: 0;
+    box-shadow: 0;
+  }
+}*/
+  /* ... the rest of the rules ... */
+
+
         @*body {
             font-family: @FontLink;
             font-size: 48px;
@@ -49,7 +77,7 @@
             text-align: center;
         }
 
-        .words {
+        /*.words {
             width: 100%;
             text-align: center;
             display: flex;
@@ -63,7 +91,7 @@
             display: flex;
             flex-flow: row nowrap;
             justify-content: space-between;
-        }
+        }*/
 
         #PNdraggable {
             width: 200px;
@@ -93,858 +121,1060 @@
         }*/
 
 
-    </style>
+</style>
 
 </head>
 
 
 
 
-<!-- Page Wrapper -->
-<div class="content container-fluid">
-    <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="ErrorAlert" role="alert">
-        <strong>Error!</strong> @ViewBag.Error
-    </div>
-    <!-- Page Header -->
-    <!-- /Page Header -->
+            <!-- Page Wrapper -->
+            <div class="content container-fluid">
+                <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="ErrorAlert" role="alert">
+                    <strong>Error!</strong> @ViewBag.Error
+                </div>
+                <!-- Page Header -->
+                <!-- /Page Header -->
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="breadcrumb-bar">
-                            <div class="container-fluid">
-                                <div class="row align-items-center">
-                                    <div class="col-md-6 col-6">
-                                        <h5 class="breadcrumb-title">Passport Label</h5>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
-                    @if (ViewBag.Success != null)
-                    {
-                        <div class="alert alert-success alert-dismissible fade show" id="SuccessAlert" role="alert">
-                            <strong>Success!</strong> @ViewBag.Success
-                        </div>
-                    }
-                    @if (@ViewBag.Delete != null)
-                    {
-                        <div class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
-                            <strong>Success!</strong> @ViewBag.Delete
-                        </div>
-                    }
-                    @if (@ViewBag.Update != null)
-                    {
-                        <div class="alert alert-info alert-dismissible fade show" id="UpdateAlert" role="alert">
-                            <strong>Success!</strong> @ViewBag.Update
-                        </div>
-                    }
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label><b>MRZ</b></label><br>
+                        <div class="card">
                             <div class="row">
-                                <div class="col-md-4">
-                                    <input type="radio" id="MRZSuppress" name="MRZSuppress" value="1">
-                                    <label for="MRZSuppress">Suppress</label><br />
-                                    <input type="radio" id="MRZUnSuppress" name="MRZSuppress" value="2" checked>
-                                    <label for="MRZUnSuppress">Unsuppress</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="radio" id="MRZStandard" name="MRZStandard" value="1" checked>
-                                    <label for="MRZStandard">Standard</label><br />
-                                    <input type="radio" id="MRZNonStandard" name="MRZStandard" value="2">
-                                    <label for="MRZNonStandard">Non-Standard</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="radio" id="MRZMixed" name="MRZLetterCase" value="1">
-                                    <label for="MRZMixed">Mixed Case</label><br />
-                                    <input type="radio" id="MRZLower" name="MRZLetterCase" value="2">
-                                    <label for="MRZLower">All Lowercase</label><br />
-                                    <input type="radio" id="MRZUpper" name="MRZLetterCase" value="3">
-                                    <label for="MRZUpper">UPPERCASE</label>
+                                <div class="col-sm-12">
+                                    <div class="breadcrumb-bar">
+                                        <div class="container-fluid">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-6 col-6">
+                                                    <h5 class="breadcrumb-title">Passport Label</h5>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-2">
-                            <label><b>Issuer</b></label><br>
-                            <input type="radio" id="IssuerWSA" name="Issuer" value="1" checked>
-                            <label for="IssuerWSA">WSA</label><br />
-                            <input type="radio" id="IssuerICAO" name="Issuer" value="2">
-                            <label for="IssuerICAO">ICAO "XXX"</label>
-                        </div>
-                        <div class="col-md-2">
-                            <label><b>Date Format</b></label><br>
-                            <input type="radio" id="DateFormatName" name="DateFormat" value="1" checked>
-                            <label for="DateFormatName">01 Jan 2000</label><br>
-                            <input type="radio" id="DateFormatNumber" name="DateFormat" value="2">
-                            <label for="DateFormatNumber">01 01 2000</label><br />
-
-                        </div>
-                        <div class="col-md-2">
-                            <label><b>QR Code</b></label><br />
-                            <input type="radio" id="QRSuppress" name="QRSuppress" value="1" checked>
-                            <label for="QRSuppress">Suppress</label><br />
-                            <input type="radio" id="QRUnSuppress" name="QRSuppress" value="2">
-                            <label for="QRUnSuppress">Unsuppress</label>
-                        </div>
-                        <div class="col-md-2">
-                            <label>Font Family</label>
-                            <select class="form-control" id="FontFamily" name="FontStyle">
-                                @foreach (WorldServiceOrganization.Models.tblFontStyle item in @ViewBag.FontStyle)
+                            <div class="card-body">
+                                @if (ViewBag.Success != null)
                                 {
-                                    if (FontFamily == @item.Name)
-                                    {
-                                        <option value="@item.Name" selected>@item.Name</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Name">@item.Name</option>
-                                    }
-
-                                }
-                            </select>
-                            @*<input type="text" class="form-control" name="" id="FontFamily" value="@FontFamily" />*@
-                        </div>
-                        <div class="col-md-1">
-                            <label>Font Size</label>
-                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="@FontSize" />
-                        </div>
-                        <div class="col-md-2">
-                            <label>MRZ Font Family</label>
-                            <input type="text" class="form-control" name="" id="FontFamily1" value="OCR-B" />
-                        </div>
-                        <div class="col-md-1">
-                            <label>Font Size</label>
-                            <input type="number" class="form-control" name="" id="FontSize1" value="14" />
-                        </div>
-
-
-
-                        @*<div class="col-md-2">
-                                <label>MRZ Letter Spacing</label>
-                                <input type="number" class="form-control" name="" id="WordSpacing" value="0" />
-                            </div>*@
-                        <div class="col-md-6 text-right">
-                            <button class="btn btn-primary" data-toggle="modal" data-target="#PassportModal">Add field</button>
-                            <a href="@Url.Action("PassportLabel", "Person",new { id=Model.PersonIDNumber,tid= ViewBag.TL.TransactionIDNumber})"> <input class="btn btn-danger" type="button" value="Cancel"></a>
-                            <a href="@Url.Action("Persons","Person",new { id=Model.PersonIDNumber })" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
-                            <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
-                            <a href="#" id="PDFBtn" class="btn btn-success"><i class="fa fa-print"></i> PDF</a>
-                            <a href="@Url.Action("CreatePerson","Person",new { id=@Model.PersonIDNumber })" class="btn btn-info"><i class="fa fa-arrow-left"></i> Go Back</a>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-md-7" id="" style="">
-                    <section id="section">
-                        <div class="card" id="MRZCase">
-                            <div class="card-body " id="FNdraggableArea" style="position: relative; padding: 5% 5% 5% 5%; z-index: 100 !important; ">
-                                <div class="row" style="margin-bottom:15px">
-                                    @*<div class="col-md-12">
-                                            <img src="@Model.QRCode" class="FNdraggable" alt="Alternate Text" id="QRHide" style="float:left !important; display:none;" />
-                                        </div>*@
-                                    <div class="col-md-12">
-                                        <label class="text-center NotPrint" style="font-size: 14px !important; text-align: center; width: 100% !important;"><b id="LLLBel">WORLD GOVERNMENT OF WORLD CITIZENS</b></label><br />
+                                    <div class="alert alert-success alert-dismissible fade show" id="SuccessAlert" role="alert">
+                                        <strong>Success!</strong> @ViewBag.Success
                                     </div>
-                                    <div class="col-md-3" style="">
-                                        <p style="float:right !important; display:none;" class="FNdraggable NotPrint" id="LabelPassport">Passport/Passeport</p>
+                                }
+                                @if (@ViewBag.Delete != null)
+                                {
+                                    <div class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
+                                        <strong>Success!</strong> @ViewBag.Delete
+                                    </div>
+                                }
+                                @if (@ViewBag.Update != null)
+                                {
+                                    <div class="alert alert-info alert-dismissible fade show" id="UpdateAlert" role="alert">
+                                        <strong>Success!</strong> @ViewBag.Update
+                                    </div>
+                                }
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label><b>MRZ</b></label><br>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <input type="radio" id="MRZSuppress" name="MRZSuppress" value="1">
+                                                <label for="MRZSuppress">Suppress</label><br />
+                                                <input type="radio" id="MRZUnSuppress" name="MRZSuppress" value="2" checked>
+                                                <label for="MRZUnSuppress">Unsuppress</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="radio" id="MRZStandard" name="MRZStandard" value="1" checked>
+                                                <label for="MRZStandard">Standard</label><br />
+                                                <input type="radio" id="MRZNonStandard" name="MRZStandard" value="2">
+                                                <label for="MRZNonStandard">Non-Standard</label>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <input type="radio" id="MRZMixed" name="MRZLetterCase" value="1">
+                                                <label for="MRZMixed">Mixed Case</label><br />
+                                                <input type="radio" id="MRZLower" name="MRZLetterCase" value="2">
+                                                <label for="MRZLower">All Lowercase</label><br />
+                                                <input type="radio" id="MRZUpper" name="MRZLetterCase" value="3">
+                                                <label for="MRZUpper">UPPERCASE</label>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-2">
-                                        <div id="Type" style="display:none;">
-                                            <p class="FNdraggable NotPrint">Type/Type</p>
-                                            <p class="FNdraggable NotPrint">P</p>
+                                        <label><b>Issuer</b></label><br>
+                                        <input type="radio" id="IssuerWSA" name="Issuer" value="1" checked>
+                                        <label for="IssuerWSA">WSA</label><br />
+                                        <input type="radio" id="IssuerICAO" name="Issuer" value="2">
+                                        <label for="IssuerICAO">ICAO "XXX"</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label><b>Date Format</b></label><br>
+                                        <input type="radio" id="DateFormatName" name="DateFormat" value="1" checked>
+                                        <label for="DateFormatName">01 Jan 2000</label><br>
+                                        <input type="radio" id="DateFormatNumber" name="DateFormat" value="2">
+                                        <label for="DateFormatNumber">01 01 2000</label><br />
+
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label><b>QR Code</b></label><br />
+                                        <input type="radio" id="QRSuppress" name="QRSuppress" value="1" checked>
+                                        <label for="QRSuppress">Suppress</label><br />
+                                        <input type="radio" id="QRUnSuppress" name="QRSuppress" value="2">
+                                        <label for="QRUnSuppress">Unsuppress</label>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label>Font Family</label>
+                                        <select class="form-control" id="FontFamily" name="FontStyle">
+                                            @foreach (WorldServiceOrganization.Models.tblFontStyle item in @ViewBag.FontStyle)
+                                            {
+                                                if (FontFamily == @item.Name)
+                                                {
+                                                    <option value="@item.Name" selected>@item.Name</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="@item.Name">@item.Name</option>
+                                                }
+
+                                            }
+                                        </select>
+                                        @*<input type="text" class="form-control" name="" id="FontFamily" value="@FontFamily" />*@
+                                    </div>
+                                    @*<div class="col-md-1">
+                                            <label>Font Size</label>
+                                            <input type="number" class="form-control" name="FontSize" id="FontSize" value="@FontSize" />
+                                        </div>*@
+                                    @*<div class="col-md-2">
+                                        <label>MRZ Font Family</label>
+                                        <input type="text" class="form-control" name="" id="FontFamily1" value="OCR-B" />
+                                    </div>*@
+                                    <div class="col-md-2">
+                                        <label>MRZ Font Size</label>
+                                        <input type="number" class="form-control" name="" id="FontSize1" value="11" />
+                                    </div>
+
+
+
+                                    @*<div class="col-md-2">
+                                            <label>MRZ Letter Spacing</label>
+                                            <input type="number" class="form-control" name="" id="WordSpacing" value="0" />
+                                        </div>*@
+                                    <div class="col-md-8 text-right">
+                                        <button class="btn btn-primary" data-toggle="modal" data-target="#PassportModal">Add field</button>
+                                        <a href="@Url.Action("PassportLabel", "Person",new { id=Model.PersonIDNumber,tid= ViewBag.TL.TransactionIDNumber})"> <input class="btn btn-danger" type="button" value="Cancel"></a>
+                                        <a href="@Url.Action("Persons","Person",new { id=Model.PersonIDNumber })" class="btn btn-secondary"><i class="fa fa-list"></i> List</a>
+                                        <a href="#" id="PrintBtn" class="btn btn-primary"><i class="fa fa-print"></i> Print</a>
+                                        <a href="#" id="PDFBtn" class="btn btn-success"><i class="fa fa-print"></i> PDF</a>
+                                        <a href="@Url.Action("CreatePerson","Person",new { id=@Model.PersonIDNumber })" class="btn btn-info"><i class="fa fa-arrow-left"></i> Go Back</a>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class=" col-md-7" id="" style="display: block; width: 15.24cm; height: 10.16cm;">
+                                <section id="section">
+                                <page size="A4" style="display: block; width: 12.8cm; height: 9cm; ">
+                                    <div class="card" id="MRZCase" style="border: 0px;">
+                                        <div class="card-body " id="FNdraggableArea" style="position: relative; padding: 5% 5% 5% 5%; z-index: 100 !important; ">
+                                            <div class="row" style="margin-bottom:15px">
+                                                @*<div class="col-md-12">
+                                                        <img src="@Model.QRCode" class="FNdraggable" alt="Alternate Text" id="QRHide" style="float:left !important; display:none;" />
+                                                    </div>*@
+                                                <div class="col-md-12">
+                                                    <label class="text-center NotPrint NotPrintMH" style="font-size: 14px !important; text-align: center; width: 100% !important;"><b id="LLLBel">WORLD GOVERNMENT OF WORLD CITIZENS</b></label><br />
+                                                </div>
+
+                                                <div class="" style="width:30%">
+                                                     <p style="display:none; " class="FNdraggable NotPrint text-center" id="LabelPassport">Passport/Passeport</p>
+                                                 </div>
+                                                    <div id="Type" style="display: none; width: 12%">
+                                                        <p class="FNdraggable NotPrint" >Type/Type</p>
+                                                        <p class="FNdraggable NotPrint">P</p>
+                                                    </div>
+                                                    <div style="display:none;" id="AuthorityCode">
+                                                        <p class="FNdraggable NotPrint">Authority code/Code d'authoritie</p>
+                                                        <p id="IssuerDisplay" class="FNdraggable NotPrint">WSA</p>
+                                                     </div>
+
+                                                <p class="FNdraggable NotPrint" style="display:none;" id="LabelPassportNo">Passport No./No de Passeport(8)</p>
+                                                <div class="FNdraggable" style="display:none;" id="PassportNo">
+                                                    <div id="" style="width: 100px; height:30px;">
+                                                            <p style=" position: absolute; z-index: 100;" id="PassportNumber" class="NotLabel ">@ViewBag.TL.IDCode</p>
+                                                    </div>
+                                                </div>
+                                                
+
+                                                @*<div class="col-md-3" style="">
+                                                    <p style="display:none;" class="FNdraggable NotPrint text-center" id="LabelPassport">Passport/Passeport</p>
+                                                </div>
+                                                <div class="col-md-2" >
+                                                    <div id="Type" style="display:none;">
+                                                        <p class="FNdraggable NotPrint">Type/Type</p>
+                                                        <p class="FNdraggable NotPrint">P</p>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-4" >
+                                                    <div style="display:none;" id="AuthorityCode">
+                                                        <p class="FNdraggable NotPrint">Authority code/Code d'authoritie</p>
+                                                        <p id="IssuerDisplay" class="FNdraggable NotPrint">WSA</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3" style="">
+                                                    <p class="FNdraggable NotPrint" style="display:none;" id="LabelPassportNo">Passport No./No de Passeport(8)</p>
+                                                    <div style="display:none;" id="PassportNo">
+                                                        <div id="" style="width: 100px; height:30px;">
+                                                            <div id="" class=" FNdraggable">
+                                                                <p style=" position: absolute; z-index: 100;" id="PassportNumber" class="NotLabel">@ViewBag.TL.IDCode</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+                                                
+                                                <div class="col-md-12">
+                                                    @if (Model.Photograph != null)
+                                                    {
+                                                        <img id="XYPhoto" src="/Person/RetrieveImage/@Model.PersonIDNumber" class=" FNdraggable PrintImg" alt="your image" style="max-width: 120px;height: 160px; padding-left: 0px !important;" />
+                                                    }
+                                                    else
+                                                    {
+
+                                                    }
+
+                                                    <p class="FNdraggable NotPrint PMB" style="display:none;margin-left:27%;" id="LabelLastName">Name/Nom(1)</p>
+                                                    <div id="Name" style=" margin-left:27%;">
+                                                        <p class="FNdraggable NotLabel" style="display: none;" id="LastName">@Model.LastName</p>
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint PMB" style="display: none; margin-left:27%;" id="LabelFirstName">Given Names/Prenoms(2)</p>
+                                                    <div id="GivenName" style=" margin-left:27%;">
+                                                        <p class="FNdraggable NotLabel" style="display: none;" id="FirstName">@Model.FirstName</p>
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint PMB" style="display: none; margin-left:27%;" id="LabelPlaceofBirth">Place ofbirth/Lieu de nalssance(3)</p>
+                                                    <div id="XYPlaceofBirth" style=" margin-left:27%;">
+                                                        @if (@Model.tblCountry != null)
+                                                        {
+                                                            <p class="FNdraggable NotLabel" style="display: none; " id="PlaceofBirth">@Model.CityOfBirth, @Model.tblCountry.Name</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="FNdraggable NotLabel" style="display: none; " id="PlaceofBirth">@Model.CityOfBirth</p>
+                                                        }
+
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint PMB" style="display: none; margin-left:27%;" id="LabelDateofBirth">Date ofbirth/Date de nalssance(4)</p>
+                                                    <div id="DateofBirth" style=" margin-left:27%;">
+                                                        <p id="BDateName" class="FNdraggable NotLabel" style="display: none; ">@ViewBag.CodeDay @ViewBag.MonthName @ViewBag.CodeYear </p>
+                                                        <p id="BDateNumber" class="NotLabel" style="display: none;">@ViewBag.CodeDay @ViewBag.CodeMonth @ViewBag.CodeYear</p>
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint PMB" id="LabelGender" style="display: none; margin-left:27%;">Gender/Sexe(5)</p>
+                                                    <div id="XYGender" style=" margin-left:27%;">
+                                                        <p class="FNdraggable NotLabel" style="display: none; " id="Gender">@Model.tblSex.Name</p>
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint PMB" style="display: none; margin-left:27%;" id="LabelDateofIssue">Date ofissue/Date de deliverance(6)</p>
+                                                    <div id="DateofIssue" style=" margin-left:27%;">
+                                                        @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
+                                                        {
+                                                            <p class="FNdraggable NotLabel" style="display: none; " id="IDateName">NILL</p>
+                                                            <p class="FNdraggable NotLabel" style="display: none; " id="IDateNumber">NILL</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p id="IDateName" class="FNdraggable NotLabel " style="display: none; "> @Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MMM yyyy")</p>
+                                                            <p id="IDateNumber" class="FNdraggable NotLabel" style="display: none;">@Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MM yyyy")</p>
+
+                                                        }
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint DateofExpiry PMB" style="display: none; margin-left:27%;" id="LabelDateofExpiry">Date of expiry/Date de d'expiration(7)</p>
+                                                    <div id="DateofExpiry" style=" margin-left:27%;">
+                                                        @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
+                                                        {
+                                                            <p class="FNdraggable NotLabel" style="display: none; " id="EDateName">NILL</p>
+                                                            <p class="FNdraggable NotLabel" style="display: none; " id="EDateNumber">NILL</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p id="EDateName" class="FNdraggable NotLabel" style="display: none; ">@ViewBag.Exp.ToString("dd MMM yyyy")</p>
+                                                            <p id="EDateNumber" class="FNdraggable NotLabel" style="display: none; ">@ViewBag.Exp.ToString("dd MM yyyy")</p>
+
+                                                        }
+                                                    </div>
+
+                                                    <img src="@Model.QRCode" class="FNdraggable" alt="" id="QRHide" style=" display: none; position: absolute; margin-left: 34%; margin-top: 2%;" />
+                                                    @if (Model.Photograph != null)
+                                                    {
+                                                        <img id="Photo" src="/Person/RetrieveImage/@Model.PersonIDNumber" class="FNdraggable" alt="your image" style="opacity: 0.5; width: 70px; height: 70px; margin-left: 53%; margin-top: -20%; " /><br />
+                                                    }
+                                                    else
+                                                    {
+
+                                                    }
+                                                    @*<img id="Photo" src="@Model.Photo" class="FNdraggable" alt="your image" style="opacity: 0.5;width:40%; height:100%;float:right;" />*@<br />
+                                                    <br><br>
+                                                    <p class="FNdraggable NotPrint PMB" style="color: white; margin-left: 64%; margin-top: -9.9rem !important; margin-bottom: -0.44rem !important; " id="LabelExplanatoryNotes">Explanatory notes/Notes explicatives</p>
+                                                    <p class="FNdraggable NotPrint Size14" style="color: white; font-size: 14px !important; margin-left:64%;" id="ExplanatoryNotes">PAGE 5</p>
+                                                    <p class="FNdraggable NotPrint PMB" style="color: white; font-size: 14px !important; margin-left: 64%; margin-bottom: -0.44rem !important; " id="LabelRenewal">Renewal/Propogation(9)</p>
+                                                    <p class="FNdraggable NotPrint Size14" style="color: white; font-size: 14px !important; margin-left:64%;" id="Renewal">PAGE 3</p>
+                                                    <p class="FNdraggable NotPrint PMB" style="color: white; margin-left: 64%; margin-bottom: -0.44rem !important; " id="LabelAuthority">Authority/Authoritie(10)</p>
+                                                    <label class="FNdraggable NotPrint Size14" style="color: white; font-size: 14px !important; margin-left: 64%; margin-bottom: 1rem;" id="Authority">WORLD SERVICE AUTHORITY</label>
+                                                </div>
+                                                
+                                                <!--<div class="col-md-3 PrintImg" style="padding-left:0px !important;">
+                                                    @if (Model.Photograph != null)
+                                                    {
+                                                        <img id="XYPhoto" src="/Person/RetrieveImage/@Model.PersonIDNumber" class=" FNdraggable" alt="your image" style="width: 170px; height: 195px;" />
+                                                    }
+                                                    else
+                                                    {
+
+                                                    }-->
+                                                    @*<img id="Photo" src="@Model.Photo" class=" FNdraggable" alt="your image" style="width:100%; height:120%;" />*@
+                                                <!--</div>-->
+
+                                                @*<div class="col-md-5">
+
+                                                    <p class="FNdraggable NotPrint" style="display:none;" id="LabelLastName">Name/Nom(1)</p>
+                                                    <div id="Name">
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="LastName">@Model.LastName</p>
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint " style="display:none;" id="LabelFirstName">Given Names/Prenoms(2)</p>
+                                                    <div id="GivenName">
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="FirstName">@Model.FirstName</p>
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint" style="display:none;" id="LabelPlaceofBirth">Place ofbirth/Lieu de nalssance(3)</p>
+                                                    <div id="XYPlaceofBirth">
+                                                        @if (@Model.tblCountry != null)
+                                                        {
+                                                            <p class="FNdraggable NotLabel" style="display:none;" id="PlaceofBirth">@Model.CityOfBirth, @Model.tblCountry.Name</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p class="FNdraggable NotLabel" style="display:none;" id="PlaceofBirth">@Model.CityOfBirth</p>
+                                                        }
+
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint" style="display:none;" id="LabelDateofBirth">Date ofbirth/Date de nalssance(4)</p>
+                                                    <div id="DateofBirth">
+                                                        <p id="BDateName" class="FNdraggable NotLabel" style="display:none;">@ViewBag.CodeDay @ViewBag.MonthName @ViewBag.CodeYear </p>
+                                                        <p id="BDateNumber" class="NotLabel" style="display:none;">@ViewBag.CodeDay @ViewBag.CodeMonth @ViewBag.CodeYear</p>
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint" id="LabelGender" style="display:none;">Gender/Sexe(5)</p>
+                                                    <div id="XYGender">
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="Gender">@Model.tblSex.Name</p>
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint" style="display:none;" id="LabelDateofIssue">Date ofissue/Date de deliverance(6)</p>
+                                                    <div id="DateofIssue">
+                                                        @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
+                                                        {
+                                                            <p class="FNdraggable NotLabel" style="display:none;" id="IDateName">NILL</p>
+                                                            <p class="FNdraggable NotLabel" style="display:none;" id="IDateNumber">NILL</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p id="IDateName" class="FNdraggable NotLabel" style="display:none;"> @Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MMM yyyy")</p>
+                                                            <p id="IDateNumber" class="FNdraggable NotLabel" style="display:none;">@Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MM yyyy")</p>
+
+                                                        }
+                                                    </div>
+                                                    <p class="FNdraggable NotPrint DateofExpiry" style="display:none;" id="LabelDateofExpiry">Date of expiry/Date de d'expiration(7)</p>
+                                                    <div id="DateofExpiry">
+                                                        @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
+                                                        {
+                                                            <p class="FNdraggable NotLabel" style="display:none;" id="EDateName">NILL</p>
+                                                            <p class="FNdraggable NotLabel" style="display:none;" id="EDateNumber">NILL</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p id="EDateName" class="FNdraggable NotLabel" style="display:none;">@ViewBag.Exp.ToString("dd MMM yyyy")</p>
+                                                            <p id="EDateNumber" class="FNdraggable NotLabel" style="display:none;">@ViewBag.Exp.ToString("dd MM yyyy")</p>
+
+                                                        }
+                                                    </div>
+
+                                                </div>*@
+                                                <!--<div class="col-md-4" style="padding: 0px !important;">
+
+                                                    <img src="@Model.QRCode" class="FNdraggable" alt="" id="QRHide" style=" display: none; position: absolute; " />
+                                                    @if (Model.Photograph != null)
+                                                    {
+                                                        <img id="Photo" src="/Person/RetrieveImage/@Model.PersonIDNumber" class="FNdraggable" alt="your image" style="opacity: 0.5; width: 80px; height: 80px;float:right;margin-top:4%; " /><br />
+                                                    }
+                                                    else
+                                                    {
+
+                                                    }-->
+                                                    @*<img id="Photo" src="@Model.Photo" class="FNdraggable" alt="your image" style="opacity: 0.5;width:40%; height:100%;float:right;" />*@<!--<br />
+                                                    <br><br>
+                                                    <p class="FNdraggable NotPrint " style="color:white;" id="LabelExplanatoryNotes">Explanatory notes/Notes explicatives</p>
+                                                    <label class="FNdraggable NotPrint " style="color:white;font-size:14px !important;" id="ExplanatoryNotes">PAGE 5</label>
+                                                    <p class="FNdraggable NotPrint" style="color:white;font-size:14px !important;" id="LabelRenewal">Renewal/Propogation(9)</p>
+                                                    <label class="FNdraggable NotPrint " style="color: white; font-size: 14px !important;" id="Renewal">PAGE 3</label>
+                                                    <p class="FNdraggable NotPrint" style="color:white;" id="LabelAuthority">Authority/Authoritie(10)</p>
+                                                    <label class="FNdraggable NotPrint " style="color: white; font-size: 14px !important;" id="Authority">WORLD SERVICE AUTHORITY</label>
+                                                </div>-->
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <p class="FNdraggable" style="display:none;" id="LabelCountryofApplication">Country Of Application</p>
+                                                    @if (@Model.tblCountry != null)
+                                                    {
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="CountryofApplications">@Model.tblCountry.Name</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="CountryofApplications"> </p>
+                                                    }
+                                                    <p class="FNdraggable" style="display:none;" id="LabelCountryofBirth">Country Of Birth</p>
+                                                    @if (@Model.tblCountry1 != null)
+                                                    {
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirths">@Model.tblCountry1.Name</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirths"> </p>
+                                                    }
+                                                    <p class="FNdraggable" style="display:none;" id="LabelCountryofBirthStatistical">Country Of Birth Statistical</p>
+                                                    @if (@Model.tblCountry2 != null)
+                                                    {
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirthStatisticals">@Model.tblCountry2.Name</p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirthStatisticals"> </p>
+                                                    }
+                                                    <p class="FNdraggable" style="display:none;" id="LabelPhone">Phone</p>
+                                                    <p class="FNdraggable NotLabel" style="display:none;" id="Phone">@Model.Phone</p>
+                                                    <p class="FNdraggable" style="display:none;" id="LabelFax">Fax</p>
+                                                    <p class="FNdraggable NotLabel" style="display:none;" id="Fax">@Model.Fax</p>
+                                                    <p class="FNdraggable" style="display:none;" id="LabelEMail">Email</p>
+                                                    <p class="FNdraggable NotLabel" style="display:none;" id="EMail">@Model.EMail</p>
+                                                    <p class="FNdraggable" style="display:none;" id="LabelWebsite">Website</p>
+                                                    <p class="FNdraggable NotLabel" style="display:none;" id="Website">@Model.Website</p>
+                                                    <p class="FNdraggable" style="display:none;" id="LabelHeight">Height</p>
+                                                    <p class="FNdraggable NotLabel" style="display:none;" id="Height">
+                                                        @Model.Height
+                                                        @{
+                                                            string Unit = "";
+                                                        }
+                                                        @if (Model.HeightUnit == 1)
+                                                        {
+                                                            {
+                                                                Unit = "ft";
+                                                            }
+                                                            @Unit
+                                                        }
+                                                        else
+                                                        {
+                                                            {
+                                                                Unit = "m";
+                                                            }
+                                                            @Unit
+
+                                                        }
+                                                    </p>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    @if (@Model.tblEye != null)
+                                                    {
+                                                        <p class="FNdraggable" style="display:none;" id="LabelEyes">Eyes</p>
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="Eyes">@Model.tblEye.Name</p>
+                                                    }
+                                                    <p class="FNdraggable" style="display:none;" id="LabelMarks">Marks</p>
+                                                    <p class="FNdraggable NotLabel" style="display:none;" id="Marks">@Model.Marks</p>
+                                                    @if (@Model.tblOccupation != null)
+                                                    {
+                                                        <p class="FNdraggable" style="display:none;" id="LabelOccupation">Occupation</p>
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="Occupation">@Model.tblOccupation.Name</p>
+                                                    }
+                                                    <p class="FNdraggable" style="display:none;" id="LabelTitle">Title</p>
+                                                    <p class="FNdraggable NotLabel" style="display:none;" id="Title">@Model.Title</p>
+                                                    <p class="FNdraggable" style="display:none;" id="LabelFatherName">Father Name</p>
+                                                    <p class="FNdraggable NotLabel" style="display:none;" id="FatherName">@Model.FatherName</p>
+                                                    <p class="FNdraggable" style="display:none;" id="LabelMotherName">Mother Name</p>
+                                                    <p class="FNdraggable NotLabel" style="display:none;" id="MotherName">@Model.MotherName</p>
+                                                    <p class="FNdraggable" style="display:none;" id="LabelComments">Comments</p>
+                                                    <p class="FNdraggable NotLabel" style="display:none;" id="Comments">@Model.Comments</p>
+                                                    <p class="FNdraggable" style="display:none;" id="LabelWSANumber">WSA #</p>
+                                                    <p class="FNdraggable NotLabel" style="display:none;" id="WSANumber">@Model.WSANumber</p>
+                                                    @if (@Model.tblStatu != null)
+                                                    {
+                                                        <p class="FNdraggable" style="display:none;" id="LabelStatus">Status</p>
+                                                        <p class="FNdraggable NotLabel" style="display:none;" id="Status">@Model.tblStatu.Name</p>
+                                                    }
+                                                </div>
+
+                                            </div>
+
+                                            @*<div class="row" id="MRZHide" style="position:relative;bottom:0; ">
+                                                <div class="col-md-12">
+
+                                                    <div class="words">WORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITYWORLD</div>
+                                                    <div class="words1" style="white-space: nowrap;">@ViewBag.Line1</div>
+                                                    <div class="words2" style="white-space: nowrap; margin-top: 1%;">@ViewBag.Line2</div>
+                                                </div>
+                                            </div>*@
+
+                                            <div class="row" id="MRZHide" style="position:relative;bottom:0; ">
+                                                
+                                                <div class="col-md-12" >
+                                                    <div class="words">WORLD SERVICE AUTHORITY WORLD SERVICE AUTHORITY WORLD SERVICE AUTHORITY WORLD SERVICE AUTHORITY</div>
+                                                    <div class="words1" style="white-space: nowrap; margin-top: 2%;">@ViewBag.Line1</div>
+                                                    <div class="words2" style="white-space: nowrap; margin-top: 2%;" >@ViewBag.Line2</div>
+                                                </div>
+                                            </div>
+
                                         </div>
 
                                     </div>
-                                    <div class="col-md-4" style="left:-19px;">
-                                        <div style="display:none;" id="AuthorityCode">
-                                            <p class="FNdraggable NotPrint">Authority code/Code d'authoritie</p>
-                                            <p id="IssuerDisplay" class="FNdraggable NotPrint">WSA</p>
+                                    </page>
+                                </section>
+                                <div id="elementH"></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card">
+                                    <div class="card-body" style="padding:1rem">
+                                        @using (Html.BeginForm("CreatePassportLabelSetting", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                        {@Html.AntiForgeryToken()
+                                        <input class="form-control" hidden type="text" name="id" value="@ViewBag.PersonId " required />
+                                        <input class="form-control" hidden type="text" name="tid" value="@ViewBag.tid" required />
+                                        <div class="row">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <b>Setting Name</b>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <input class="form-control" type="text" id="SName" name="Name" value="" required />
+                                                <input class="form-control" hidden type="text" id="PassportLabelSettingId" name="PassportLabelSettingId" value="" />
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-3" style="">
-                                        <p class="FNdraggable NotPrint" style="display:none;" id="LabelPassportNo">Passport No./No de Passeport(8)</p>
-                                        <div style="display:none;" id="PassportNo">
-                                            <div id="" style="width: 100px; height:30px;">
-                                                <div id="" class=" FNdraggable">
-                                                    <p style=" position: absolute; z-index: 100;" class="NotLabel">@ViewBag.TL.IDCode</p>
+                                        <div class="row" style=" margin-bottom: -5%;">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <b>Passport Number</b>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    X&nbsp;
+                                                    <input class="form-control" type="number" id="XPassportNumber" name="XPassportNumber" value="0" />
+
                                                 </div>
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Y&nbsp;
+                                                    <input class="form-control" type="number" id="YPassportNumber" name="YPassportNumber" value="0" />
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Size&nbsp;
+                                                    <input class="form-control" type="number" id="PassportNumberSize" name="PassportNumberSize" value="@FontSize" style="padding: 0;" />
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="row" style=" margin-bottom: -5%;">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <b>Name</b>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    X&nbsp;
+                                                    <input class="form-control" type="number" id="XName" name="XName" value="0" />
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Y&nbsp;
+                                                    <input class="form-control" type="number" id="YName" name="YName" value="0" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Size&nbsp;
+                                                    <input class="form-control" type="number" id="NameSize" name="NameSize" value="@FontSize" style="padding: 0;" />
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="row" style=" margin-bottom: -5%;">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <b>Given Name</b>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    X&nbsp;
+                                                    <input class="form-control" type="number" id="XGivenName" name="XGivenName" value="0" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Y&nbsp;
+                                                    <input class="form-control" type="number" id="YGivenName" name="YGivenName" value="0" />
+
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Size&nbsp;
+                                                    <input class="form-control" type="number" id="GivenNameSize" name="GivenNameSize" value="@FontSize" style="padding: 0;" />
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row" style=" margin-bottom: -5%;">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <b>Place of Birth</b>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    X&nbsp;
+                                                    <input class="form-control" type="number" id="XPlaceofBirth" name="XPlaceofBirth" value="0" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Y&nbsp;
+                                                    <input class="form-control" type="number" id="YPlaceofBirth" name="YPlaceofBirth" value="0" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Size&nbsp;
+                                                    <input class="form-control" type="number" id="PlaceofBirthSize" name="PlaceofBirthSize" value="@FontSize" style="padding: 0;" />
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row" style=" margin-bottom: -5%;">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <b>Date of Birth</b>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    X&nbsp;
+                                                    <input class="form-control" type="number" id="XDateofBirth" name="XDateofBirth" value="0" />
+
+                                                </div>
+
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Y&nbsp;
+                                                    <input class="form-control" type="number" id="YDateofBirth" name="YDateofBirth" value="0" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Size&nbsp;
+                                                    <input class="form-control" type="number" id="DateofBirthSize" name="DateofBirthSize" value="@FontSize" style="padding: 0;" />
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row" style=" margin-bottom: -5%;">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <b>Gender</b>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    X&nbsp;
+                                                    <input class="form-control" type="number" id="XGender" name="XGender" value="0" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Y&nbsp;
+                                                    <input class="form-control" type="number" id="YGender" name="YGender" value="0" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Size&nbsp;
+                                                    <input class="form-control" type="number" id="GenderSize" name="GenderSize" value="@FontSize" style="padding: 0;" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="row" style=" margin-bottom: -5%;">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <b>Date of Issue</b>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    X&nbsp;
+                                                    <input class="form-control" type="number" id="XDateofIssue" name="XDateofIssue" value="0" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Y&nbsp;
+                                                    <input class="form-control" type="number" id="YDateofIssue" name="YDateofIssue" value="0" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Size&nbsp;
+                                                    <input class="form-control" type="number" id="DateofIssueSize" name="DateofIssueSize" value="@FontSize" style="padding: 0;" />
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="row" style=" margin-bottom: -5%;">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <b>Date of Expiry</b>
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    X&nbsp;
+                                                    <input class="form-control" type="number" id="XDateofExpiry" name="XDateofExpiry" value="0" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Y&nbsp;
+                                                    <input class="form-control" type="number" id="YDateofExpiry" name="YDateofExpiry" value="0" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="col-md-4">
+                                                <div class="input-container">
+                                                    Size&nbsp;
+                                                    <input class="form-control" type="number" id="DateofExpirySize" name="DateofExpirySize" value="@FontSize" style="padding: 0;" />
+
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                        <div class="row" style=" margin-bottom: -5%;">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <b>Photo</b>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="input-container">
+                                                    X&nbsp;
+                                                    <input class="form-control" type="number" id="XPhoto" name="XPhoto" value="0" />
+
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-md-6">
+
+                                                <div class="input-container">
+                                                    Y&nbsp;
+                                                    <input class="form-control" type="number" id="YPhoto" name="YPhoto" value="0" />
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        @*<div class="row" >
+                                                <div class="col-md-12" style="text-align:center">
+                                                    <button style="padding:1px;font-size:14px" class="btn-sm btn-secondary" type="button" id="ResetX">Reset X</button>
+                                                    <button style="padding: 1px; font-size: 14px" class="btn-sm btn-secondary" type="button" id="ResetY">Reset Y</button>
+
+                                                </div>
+                                            </div>*@
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <button class="btn-sm btn-secondary" type="button" id="ResetX">Reset X</button>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <button class="btn-sm btn-secondary" type="button" id="ResetY">Reset Y</button>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top:5%">
+                                            <div class="col-md-12" style="text-align:center">
+                                                <button class="btn btn-warning" data-toggle="modal" data-target="#LoadSettingsModal" id="LoadButton" style="color:white" type="button">Load</button>
+                                                <input type="text" id="LoadButtonCheck" value="0"  hidden/>
+                                                <button class="btn btn-primary" type="submit">Save</button>
                                             </div>
                                         </div>
 
-
-                                    </div>
-                                    <div class="col-md-3 PrintImg" style="padding-left:0px !important;">
-                                        @if (Model.Photograph != null)
-                                        {
-                                            <img id="XYPhoto" src="/Person/RetrieveImage/@Model.PersonIDNumber" class=" FNdraggable" alt="your image" style="width: 170px; height: 195px;" />
-                                        }
-                                        else
-                                        {
-
-                                        }
-                                        @*<img id="Photo" src="@Model.Photo" class=" FNdraggable" alt="your image" style="width:100%; height:120%;" />*@
-                                    </div>
-
-                                    <div class="col-md-5">
-
-                                        <p class="FNdraggable NotPrint" style="display:none;" id="LabelLastName">Name/Nom(1)</p>
-                                        <div id="Name">
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="LastName">@Model.LastName</p>
-                                        </div>
-                                        <p class="FNdraggable NotPrint " style="display:none;" id="LabelFirstName">Given Names/Prenoms(2)</p>
-                                        <div id="GivenName">
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="FirstName">@Model.FirstName</p>
-                                        </div>
-                                        <p class="FNdraggable NotPrint" style="display:none;" id="LabelPlaceofBirth">Place ofbirth/Lieu de nalssance(3)</p>
-                                        <div id="XYPlaceofBirth">
-                                            @if (@Model.tblCountry != null)
-                                            {
-                                                <p class="FNdraggable NotLabel" style="display:none;" id="PlaceofBirth">@Model.CityOfBirth, @Model.tblCountry.Name</p>
-                                            }
-                                            else
-                                            {
-                                                <p class="FNdraggable NotLabel" style="display:none;" id="PlaceofBirth">@Model.CityOfBirth</p>
-                                            }
-
-                                        </div>
-                                        <p class="FNdraggable NotPrint" style="display:none;" id="LabelDateofBirth">Date ofbirth/Date de nalssance(4)</p>
-                                        <div id="DateofBirth">
-                                            <p id="BDateName" class="FNdraggable NotLabel" style="display:none;">@ViewBag.CodeDay @ViewBag.MonthName @ViewBag.CodeYear </p>
-                                            <p id="BDateNumber" class="NotLabel" style="display:none;">@ViewBag.CodeDay @ViewBag.CodeMonth @ViewBag.CodeYear</p>
-                                        </div>
-                                        <p class="FNdraggable NotPrint" id="LabelGender" style="display:none;">Gender/Sexe(5)</p>
-                                        <div id="XYGender">
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="Gender">@Model.tblSex.Name</p>
-                                        </div>
-                                        <p class="FNdraggable NotPrint" style="display:none;" id="LabelDateofIssue">Date ofissue/Date de deliverance(6)</p>
-                                        <div id="DateofIssue">
-                                            @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
-                                            {
-                                                <p class="FNdraggable NotLabel" style="display:none;" id="IDateName">NILL</p>
-                                                <p class="FNdraggable NotLabel" style="display:none;" id="IDateNumber">NILL</p>
-                                            }
-                                            else
-                                            {
-                                                <p id="IDateName" class="FNdraggable NotLabel" style="display:none;"> @Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MMM yyyy")</p>
-                                                <p id="IDateNumber" class="FNdraggable NotLabel" style="display:none;">@Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MM yyyy")</p>
-
-                                            }
-                                        </div>
-                                        <p class="FNdraggable NotPrint DateofExpiry" style="display:none;" id="LabelDateofExpiry">Date of expiry/Date de d'expiration(7)</p>
-                                        <div id="DateofExpiry">
-                                            @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
-                                            {
-                                                <p class="FNdraggable NotLabel" style="display:none;" id="EDateName">NILL</p>
-                                                <p class="FNdraggable NotLabel" style="display:none;" id="EDateNumber">NILL</p>
-                                            }
-                                            else
-                                            {
-                                                <p id="EDateName" class="FNdraggable NotLabel" style="display:none;">@ViewBag.Exp.ToString("dd MMM yyyy")</p>
-                                                <p id="EDateNumber" class="FNdraggable NotLabel" style="display:none;">@ViewBag.Exp.ToString("dd MM yyyy")</p>
-
-                                            }
-                                        </div>
-
-                                    </div>
-                                    <div class="col-md-4" style="padding: 0px !important;">
-
-                                        <img src="@Model.QRCode" class="FNdraggable" alt="Alternate Text" id="QRHide" style=" display: none; position: absolute; " />
-                                        @if (Model.Photograph != null)
-                                        {
-                                            <img id="Photo" src="/Person/RetrieveImage/@Model.PersonIDNumber" class="FNdraggable" alt="your image" style="opacity: 0.5; width: 80px; height: 80px;float:right;margin-top:4%; " /><br />
-                                        }
-                                        else
-                                        {
-
-                                        }
-                                        @*<img id="Photo" src="@Model.Photo" class="FNdraggable" alt="your image" style="opacity: 0.5;width:40%; height:100%;float:right;" />*@<br />
-                                        <br><br>
-                                        <p class="FNdraggable NotPrint " style="color:white;" id="LabelExplanatoryNotes">Explanatory notes/Notes explicatives</p>
-                                        <label class="FNdraggable NotPrint " style="color:white;font-size:14px !important;" id="ExplanatoryNotes">PAGE 5</label>
-                                        <p class="FNdraggable NotPrint" style="color:white;font-size:14px !important;" id="LabelRenewal">Renewal/Propogation(9)</p>
-                                        <label class="FNdraggable NotPrint " style="color: white; font-size: 14px !important;" id="Renewal">PAGE 3</label>
-                                        <p class="FNdraggable NotPrint" style="color:white;" id="LabelAuthority">Authority/Authoritie(10)</p>
-                                        <label class="FNdraggable NotPrint " style="color: white; font-size: 14px !important;" id="Authority">WORLD SERVICE AUTHORITY</label>
-                                    </div>
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p class="FNdraggable" style="display:none;" id="LabelCountryofApplication">Country Of Application</p>
-                                        @if (@Model.tblCountry != null)
-                                        {
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofApplications">@Model.tblCountry.Name</p>
-                                        }
-                                        else
-                                        {
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofApplications"> </p>
-                                        }
-                                        <p class="FNdraggable" style="display:none;" id="LabelCountryofBirth">Country Of Birth</p>
-                                        @if (@Model.tblCountry1 != null)
-                                        {
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirths">@Model.tblCountry1.Name</p>
-                                        }
-                                        else
-                                        {
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirths"> </p>
-                                        }
-                                        <p class="FNdraggable" style="display:none;" id="LabelCountryofBirthStatistical">Country Of Birth Statistical</p>
-                                        @if (@Model.tblCountry2 != null)
-                                        {
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirthStatisticals">@Model.tblCountry2.Name</p>
-                                        }
-                                        else
-                                        {
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="CountryofBirthStatisticals"> </p>
-                                        }
-                                        <p class="FNdraggable" style="display:none;" id="LabelPhone">Phone</p>
-                                        <p class="FNdraggable NotLabel" style="display:none;" id="Phone">@Model.Phone</p>
-                                        <p class="FNdraggable" style="display:none;" id="LabelFax">Fax</p>
-                                        <p class="FNdraggable NotLabel" style="display:none;" id="Fax">@Model.Fax</p>
-                                        <p class="FNdraggable" style="display:none;" id="LabelEMail">Email</p>
-                                        <p class="FNdraggable NotLabel" style="display:none;" id="EMail">@Model.EMail</p>
-                                        <p class="FNdraggable" style="display:none;" id="LabelWebsite">Website</p>
-                                        <p class="FNdraggable NotLabel" style="display:none;" id="Website">@Model.Website</p>
-                                        <p class="FNdraggable" style="display:none;" id="LabelHeight">Height</p>
-                                        <p class="FNdraggable NotLabel" style="display:none;" id="Height">
-                                            @Model.Height
-                                            @{
-                                                string Unit = "";
-                                            }
-                                            @if (Model.HeightUnit == 1)
-                                            {
-                                                {
-                                                    Unit = "ft";
-                                                }
-                                                @Unit
-                                            }
-                                            else
-                                            {
-                                                {
-                                                    Unit = "m";
-                                                }
-                                                @Unit
-
-                                            }
-                                        </p>
-
-                                    </div>
-                                    <div class="col-md-6">
-                                        @if (@Model.tblEye != null)
-                                        {
-                                            <p class="FNdraggable" style="display:none;" id="LabelEyes">Eyes</p>
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="Eyes">@Model.tblEye.Name</p>
-                                        }
-                                        <p class="FNdraggable" style="display:none;" id="LabelMarks">Marks</p>
-                                        <p class="FNdraggable NotLabel" style="display:none;" id="Marks">@Model.Marks</p>
-                                        @if (@Model.tblOccupation != null)
-                                        {
-                                            <p class="FNdraggable" style="display:none;" id="LabelOccupation">Occupation</p>
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="Occupation">@Model.tblOccupation.Name</p>
-                                        }
-                                        <p class="FNdraggable" style="display:none;" id="LabelTitle">Title</p>
-                                        <p class="FNdraggable NotLabel" style="display:none;" id="Title">@Model.Title</p>
-                                        <p class="FNdraggable" style="display:none;" id="LabelFatherName">Father Name</p>
-                                        <p class="FNdraggable NotLabel" style="display:none;" id="FatherName">@Model.FatherName</p>
-                                        <p class="FNdraggable" style="display:none;" id="LabelMotherName">Mother Name</p>
-                                        <p class="FNdraggable NotLabel" style="display:none;" id="MotherName">@Model.MotherName</p>
-                                        <p class="FNdraggable" style="display:none;" id="LabelComments">Comments</p>
-                                        <p class="FNdraggable NotLabel" style="display:none;" id="Comments">@Model.Comments</p>
-                                        <p class="FNdraggable" style="display:none;" id="LabelWSANumber">WSA #</p>
-                                        <p class="FNdraggable NotLabel" style="display:none;" id="WSANumber">@Model.WSANumber</p>
-                                        @if (@Model.tblStatu != null)
-                                        {
-                                            <p class="FNdraggable" style="display:none;" id="LabelStatus">Status</p>
-                                            <p class="FNdraggable NotLabel" style="display:none;" id="Status">@Model.tblStatu.Name</p>
-                                        }
-                                    </div>
-
-                                </div>
-                                <div class="row" id="MRZHide" style="position:relative;bottom:0; ">
-                                    @*<div class="col-md-1">
-                                               width:64.32px;height:446.4px;
-                                        </div>*@
-                                    <div class="col-md-12" @*style="font-family:OCR-B !important;"*@>
-                                        <div class="words">WORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITYWORLD</div>
-                                        <div class="words1" style="white-space: nowrap;">@ViewBag.Line1</div>
-                                        <div class="words2" style="white-space: nowrap;">@ViewBag.Line2</div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </section>
-                    <div id="elementH"></div>
-                </div>
-                <div class="col-md-3">
-                    <div class="card">
-                        <div class="card-body" style="padding:1rem">
-                            @using (Html.BeginForm("CreatePassportLabelSetting", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                            {@Html.AntiForgeryToken()
-                            <input class="form-control" hidden type="text" name="id" value="@ViewBag.PersonId " required />
-                            <input class="form-control" hidden type="text" name="tid" value="@ViewBag.tid" required />
-                            <div class="row">
-                                <div class="col-md-12" style="text-align:center">
-                                    <b>Setting Name</b>
-                                </div>
-                                <div class="col-md-12">
-                                    <input class="form-control" type="text" name="Name" value="" required />
-                                    <input class="form-control" hidden type="text" id="PassportLabelSettingId" name="PassportLabelSettingId" value="" />
-                                </div>
-                            </div>
-                            <div class="row" style=" margin-bottom: -5%;">
-                                <div class="col-md-12" style="text-align:center">
-                                    <b>Passport Number</b>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        X&nbsp;
-                                        <input class="form-control" type="number" id="XPassportNumber" name="XPassportNumber" value="0" />
-
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        Y&nbsp;
-                                        <input class="form-control" type="number" id="YPassportNumber" name="YPassportNumber" value="0" />
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div class="row" style=" margin-bottom: -5%;">
-                                <div class="col-md-12" style="text-align:center">
-                                    <b>Name</b>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        X&nbsp;
-                                        <input class="form-control" type="number" id="XName" name="XName" value="0" />
-
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        Y&nbsp;
-                                        <input class="form-control" type="number" id="YName" name="YName" value="0" />
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-                            <div class="row" style=" margin-bottom: -5%;">
-                                <div class="col-md-12" style="text-align:center">
-                                    <b>Given Name</b>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        X&nbsp;
-                                        <input class="form-control" type="number" id="XGivenName" name="XGivenName" value="0" />
-
-                                    </div>
-
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        Y&nbsp;
-                                        <input class="form-control" type="number" id="YGivenName" name="YGivenName" value="0" />
-
-                                    </div>
-
-
-
-                                </div>
-
-                            </div>
-                            <div class="row" style=" margin-bottom: -5%;">
-                                <div class="col-md-12" style="text-align:center">
-                                    <b>Place of Birth</b>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        X&nbsp;
-                                        <input class="form-control" type="number" id="XPlaceofBirth" name="XPlaceofBirth" value="0" />
-
-                                    </div>
-
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        Y&nbsp;
-                                        <input class="form-control" type="number" id="YPlaceofBirth" name="YPlaceofBirth" value="0" />
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-                            <div class="row" style=" margin-bottom: -5%;">
-                                <div class="col-md-12" style="text-align:center">
-                                    <b>Date of Birth</b>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        X&nbsp;
-                                        <input class="form-control" type="number" id="XDateofBirth" name="XDateofBirth" value="0" />
-
-                                    </div>
-
-
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        Y&nbsp;
-                                        <input class="form-control" type="number" id="YDateofBirth" name="YDateofBirth" value="0" />
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-                            <div class="row" style=" margin-bottom: -5%;">
-                                <div class="col-md-12" style="text-align:center">
-                                    <b>Gender</b>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        X&nbsp;
-                                        <input class="form-control" type="number" id="XGender" name="XGender" value="0" />
-
-                                    </div>
-
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        Y&nbsp;
-                                        <input class="form-control" type="number" id="YGender" name="YGender" value="0" />
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-                            <div class="row" style=" margin-bottom: -5%;">
-                                <div class="col-md-12" style="text-align:center">
-                                    <b>Date of Issue</b>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        X&nbsp;
-                                        <input class="form-control" type="number" id="XDateofIssue" name="XDateofIssue" value="0" />
-
-                                    </div>
-
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        Y&nbsp;
-                                        <input class="form-control" type="number" id="YDateofIssue" name="YDateofIssue" value="0" />
-
-                                    </div>
-
-
-                                </div>
-                            </div>
-                            <div class="row" style=" margin-bottom: -5%;">
-                                <div class="col-md-12" style="text-align:center">
-                                    <b>Date of Expiry</b>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        X&nbsp;
-                                        <input class="form-control" type="number" id="XDateofExpiry" name="XDateofExpiry" value="0" />
-
-                                    </div>
-
-
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        Y&nbsp;
-                                        <input class="form-control" type="number" id="YDateofExpiry" name="YDateofExpiry" value="0" />
-
-                                    </div>
-
-
-                                </div>
-
-                            </div>
-                            <div class="row" style=" margin-bottom: -5%;">
-                                <div class="col-md-12" style="text-align:center">
-                                    <b>Photo</b>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="input-container">
-                                        X&nbsp;
-                                        <input class="form-control" type="number" id="XPhoto" name="XPhoto" value="0" />
-
-                                    </div>
-
-                                </div>
-
-                                <div class="col-md-6">
-
-                                    <div class="input-container">
-                                        Y&nbsp;
-                                        <input class="form-control" type="number" id="YPhoto" name="YPhoto" value="0" />
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            @*<div class="row" >
-                                    <div class="col-md-12" style="text-align:center">
-                                        <button style="padding:1px;font-size:14px" class="btn-sm btn-secondary" type="button" id="ResetX">Reset X</button>
-                                        <button style="padding: 1px; font-size: 14px" class="btn-sm btn-secondary" type="button" id="ResetY">Reset Y</button>
-
-                                    </div>
-                                </div>*@
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <button class="btn-sm btn-secondary" type="button" id="ResetX">Reset X</button>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <button class="btn-sm btn-secondary" type="button" id="ResetY">Reset Y</button>
-                                </div>
-                            </div>
-                            <div class="row" style="margin-top:5%">
-                                <div class="col-md-12" style="text-align:center">
-                                    <button class="btn btn-warning" data-toggle="modal" data-target="#LoadSettingsModal" style="color:white" type="button">Load</button>
-                                    <button class="btn btn-primary" type="submit">Save</button>
-                                </div>
-                            </div>
-
-                        }
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-
-<div class="modal fade" id="LoadSettingsModal" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5>Load Settings</h5>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <form>
-                            <span id="Eyeerror"></span>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    @foreach (WorldServiceOrganization.Models.tblPassportLabelSetting item in @ViewBag.Settings)
-                                    {
-                                        <div>
-                                            <p id="LoadId" hidden>@item.PassportLabelSettingId</p>
-                                            <a href="#" id="LoadName"><p>@item.Name</p></a>
-                                            <p hidden>@item.XPassportNumber</p>
-                                            <p hidden>@item.YPassportNumber</p>
-                                            <p hidden>@item.XName</p>
-                                            <p hidden>@item.YName</p>
-                                            <p hidden>@item.XGivenName</p>
-                                            <p hidden>@item.YGivenName</p>
-                                            <p hidden>@item.XPlaceofBirth</p>
-                                            <p hidden>@item.YPlaceofBirth</p>
-                                            <p hidden>@item.XDateofBirth</p>
-                                            <p hidden id="">@item.YDateofBirth</p>
-                                            <p hidden id="">@item.XGender</p>
-                                            <p hidden id="">@item.YGender</p>
-                                            <p hidden id="">@item.XDateofIssue</p>
-                                            <p hidden id="">@item.YDateofIssue</p>
-                                            <p hidden id="">@item.XDateofExpiry</p>
-                                            <p hidden id="">@item.YDateofExpiry</p>
-                                            <p hidden id="">@item.XPhoto</p>
-                                            <p hidden id="">@item.YPhoto</p>
-                                        </div>
-
                                     }
+                                    </div>
                                 </div>
 
-
                             </div>
-                        </form>
+                        </div>
                     </div>
+
                 </div>
             </div>
 
-        </div>
+            <div class="modal fade" id="LoadSettingsModal" role="dialog">
+                <div class="modal-dialog">
 
-    </div>
-</div>
-
-
-<div class="modal fade" id="PassportModal" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="EHeading">Select Fields</h5>
-
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <form>
-                            <span id="Eyeerror"></span>
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5>Load Settings</h5>
+                        </div>
+                        <div class="modal-body">
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>First Name</label>
-                                        <input type="checkbox" value="true" id="MFirstName" checked><br />
-                                        <label>Last Name</label>
-                                        <input type="checkbox" value="true" id="MLastName" checked><br />
-                                        <label>Place of Birth</label>
-                                        <input type="checkbox" value="true" id="MPlaceofBirth" checked><br />
-                                        <label>Date of Birth</label>
-                                        <input type="checkbox" value="true" id="MDateofBirth" checked><br />
-                                        <label>Gender</label>
-                                        <input type="checkbox" value="true" id="MGender" checked><br />
-                                        <label>Date of Issue</label>
-                                        <input type="checkbox" value="true" id="MDateofIssue" checked><br />
-                                        <label>Date of Expiry</label>
-                                        <input type="checkbox" value="true" id="MDateofExpiry" checked><br />
-                                        <label>Explanatory Notes</label>
-                                        <input type="checkbox" value="true" id="MExplanatoryNotes" checked><br />
-                                        <label>Renewal</label>
-                                        <input type="checkbox" value="true" id="MRenewal" checked><br />
-                                        <label>Authority</label>
-                                        <input type="checkbox" value="true" id="MAuthority" checked><br />
-                                        <label>Passport</label>
-                                        <input type="checkbox" value="true" id="MLabelPassport" checked><br />
-                                        <label>Type</label>
-                                        <input type="checkbox" value="true" id="MType" checked><br />
-                                        <label>Authority Code</label>
-                                        <input type="checkbox" value="true" id="MAuthorityCode" checked><br />
-                                        <label>Passport No.</label>
-                                        <input type="checkbox" value="true" id="MPassportNo" checked><br />
-                                        <label>Occupation</label>
-                                        <input type="checkbox" value="true" id="MOccupation"><br />
-                                        <label>Title</label>
-                                        <input type="checkbox" value="true" id="MTitle"><br />
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <label>Country of Application</label>
-                                        <input type="checkbox" value="true" id="MCountryofApplication"><br />
-                                        <label>Country of Birth</label>
-                                        <input type="checkbox" value="true" id="MCountryofBirth"><br />
-                                        <label>Country of Birth Statistical</label>
-                                        <input type="checkbox" value="true" id="MCountryofBirthStatistical"><br />
-                                        <label>Phone</label>
-                                        <input type="checkbox" value="true" id="MPhone"><br />
-                                        <label>Fax</label>
-                                        <input type="checkbox" value="true" id="MFax"><br />
-                                        <label>Email</label>
-                                        <input type="checkbox" value="true" id="MEmail"><br />
-                                        <label>Website</label>
-                                        <input type="checkbox" value="true" id="MWebsite"><br />
-                                        <label>Height</label>
-                                        <input type="checkbox" value="true" id="MHeight"><br />
-                                        <label>Eyes</label>
-                                        <input type="checkbox" value="true" id="MEyes"><br />
-                                        <label>Marks</label>
-                                        <input type="checkbox" value="true" id="MMarks"><br />
-                                        <label>Mother Name</label>
-                                        <input type="checkbox" value="true" id="MMotherName"><br />
-                                        <label>Comments</label>
-                                        <input type="checkbox" value="true" id="MComments"><br />
-                                        <label>WSA #</label>
-                                        <input type="checkbox" value="true" id="MWSANumber"><br />
-                                        <label>Status</label>
-                                        <input type="checkbox" value="true" id="MStatus"><br />
-                                        <label>Father Name</label>
-                                        <input type="checkbox" value="true" id="MFatherName"><br />
-                                    </div>
-                                </div>
+                                <div class="col-sm-12">
+                                    <form>
+                                        <span id="Eyeerror"></span>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                @foreach (WorldServiceOrganization.Models.tblPassportLabelSetting item in PassportLabelSetting)
+                                                {
+                                                    <div>
+                                                        <p id="LoadId" hidden>@item.PassportLabelSettingId</p>
+                                                        @if (item == PassportLabelSetting.Last())
+                                                        {
+                                                            <a href="#" class="SettingLoadReady" id="LoadName"><p>@item.Name</p></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="#" id="LoadName"><p>@item.Name</p></a>
+                                                        }
 
+                                                        <p hidden>@item.XPassportNumber</p>
+                                                        <p hidden>@item.YPassportNumber</p>
+                                                        <p hidden>@item.PassportNumberSize</p>
+                                                        <p hidden>@item.XName</p>
+                                                        <p hidden>@item.YName</p>
+                                                        <p hidden>@item.NameSize</p>
+                                                        <p hidden>@item.XGivenName</p>
+                                                        <p hidden>@item.YGivenName</p>
+                                                        <p hidden>@item.GivenNameSize</p>
+                                                        <p hidden>@item.XPlaceofBirth</p>
+                                                        <p hidden>@item.YPlaceofBirth</p>
+                                                        <p hidden>@item.PlaceofBirthSize</p>
+                                                        <p hidden>@item.XDateofBirth</p>
+                                                        <p hidden id="">@item.YDateofBirth</p>
+                                                        <p hidden id="">@item.DateofBirthSize</p>
+                                                        <p hidden id="">@item.XGender</p>
+                                                        <p hidden id="">@item.YGender</p>
+                                                        <p hidden id="">@item.GenderSize</p>
+                                                        <p hidden id="">@item.XDateofIssue</p>
+                                                        <p hidden id="">@item.YDateofIssue</p>
+                                                        <p hidden id="">@item.DateofIssueSize</p>
+                                                        <p hidden id="">@item.XDateofExpiry</p>
+                                                        <p hidden id="">@item.YDateofExpiry</p>
+                                                        <p hidden id="">@item.DateofExpirySize</p>
+                                                        <p hidden id="">@item.XPhoto</p>
+                                                        <p hidden id="">@item.YPhoto</p>
+                                                    </div>
+
+                                                }
+                                            </div>
+
+
+                                        </div>
+                                    </form>
+                                </div>
                             </div>
-                        </form>
+                        </div>
+
                     </div>
+
                 </div>
             </div>
-            <div class="modal-footer">
-
-                @*<div id="Eyeloading" style="display:none;margin: 0 auto; text-decoration-color:cornflowerblue;">
-                        <div class="spinner-border text-success" id="display_loading" style="margin: 0 auto;"></div>
-                        <div class="spinner-border text-success" id="display_loading" style="display:none;margin: 0 auto;">
-                        </div> Loading...
-                    </div>*@
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="PassportSubmit"><span style="display:none;" class="spinner-border spinner-border-sm mr-2" role="status" id="Eyeloading"></span>Confirm</button>
 
 
+            <div class="modal fade" id="PassportModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="EHeading">Select Fields</h5>
+
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <form>
+                                        <span id="Eyeerror"></span>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>First Name</label>
+                                                    <input type="checkbox" value="true" id="MFirstName" checked><br />
+                                                    <label>Last Name</label>
+                                                    <input type="checkbox" value="true" id="MLastName" checked><br />
+                                                    <label>Place of Birth</label>
+                                                    <input type="checkbox" value="true" id="MPlaceofBirth" checked><br />
+                                                    <label>Date of Birth</label>
+                                                    <input type="checkbox" value="true" id="MDateofBirth" checked><br />
+                                                    <label>Gender</label>
+                                                    <input type="checkbox" value="true" id="MGender" checked><br />
+                                                    <label>Date of Issue</label>
+                                                    <input type="checkbox" value="true" id="MDateofIssue" checked><br />
+                                                    <label>Date of Expiry</label>
+                                                    <input type="checkbox" value="true" id="MDateofExpiry" checked><br />
+                                                    <label>Explanatory Notes</label>
+                                                    <input type="checkbox" value="true" id="MExplanatoryNotes" checked><br />
+                                                    <label>Renewal</label>
+                                                    <input type="checkbox" value="true" id="MRenewal" checked><br />
+                                                    <label>Authority</label>
+                                                    <input type="checkbox" value="true" id="MAuthority" checked><br />
+                                                    <label>Passport</label>
+                                                    <input type="checkbox" value="true" id="MLabelPassport" checked><br />
+                                                    <label>Type</label>
+                                                    <input type="checkbox" value="true" id="MType" checked><br />
+                                                    <label>Authority Code</label>
+                                                    <input type="checkbox" value="true" id="MAuthorityCode" checked><br />
+                                                    <label>Passport No.</label>
+                                                    <input type="checkbox" value="true" id="MPassportNo" checked><br />
+                                                    <label>Occupation</label>
+                                                    <input type="checkbox" value="true" id="MOccupation"><br />
+                                                    <label>Title</label>
+                                                    <input type="checkbox" value="true" id="MTitle"><br />
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Country of Application</label>
+                                                    <input type="checkbox" value="true" id="MCountryofApplication"><br />
+                                                    <label>Country of Birth</label>
+                                                    <input type="checkbox" value="true" id="MCountryofBirth"><br />
+                                                    <label>Country of Birth Statistical</label>
+                                                    <input type="checkbox" value="true" id="MCountryofBirthStatistical"><br />
+                                                    <label>Phone</label>
+                                                    <input type="checkbox" value="true" id="MPhone"><br />
+                                                    <label>Fax</label>
+                                                    <input type="checkbox" value="true" id="MFax"><br />
+                                                    <label>Email</label>
+                                                    <input type="checkbox" value="true" id="MEmail"><br />
+                                                    <label>Website</label>
+                                                    <input type="checkbox" value="true" id="MWebsite"><br />
+                                                    <label>Height</label>
+                                                    <input type="checkbox" value="true" id="MHeight"><br />
+                                                    <label>Eyes</label>
+                                                    <input type="checkbox" value="true" id="MEyes"><br />
+                                                    <label>Marks</label>
+                                                    <input type="checkbox" value="true" id="MMarks"><br />
+                                                    <label>Mother Name</label>
+                                                    <input type="checkbox" value="true" id="MMotherName"><br />
+                                                    <label>Comments</label>
+                                                    <input type="checkbox" value="true" id="MComments"><br />
+                                                    <label>WSA #</label>
+                                                    <input type="checkbox" value="true" id="MWSANumber"><br />
+                                                    <label>Status</label>
+                                                    <input type="checkbox" value="true" id="MStatus"><br />
+                                                    <label>Father Name</label>
+                                                    <input type="checkbox" value="true" id="MFatherName"><br />
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+
+                            @*<div id="Eyeloading" style="display:none;margin: 0 auto; text-decoration-color:cornflowerblue;">
+                                    <div class="spinner-border text-success" id="display_loading" style="margin: 0 auto;"></div>
+                                    <div class="spinner-border text-success" id="display_loading" style="display:none;margin: 0 auto;">
+                                    </div> Loading...
+                                </div>*@
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="PassportSubmit"><span style="display:none;" class="spinner-border spinner-border-sm mr-2" role="status" id="Eyeloading"></span>Confirm</button>
+
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
 
-    </div>
-</div>
-
-<!-- /Page Wrapper -->
-<!-- jQuery -->
-@*<script src="~/Content/assets/js/jquery-3.5.1.js"></script>*@
-@*<script src="~/Content/assets/js/jquery-3.6.0.js"></script>*@
-@*<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
-@*<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>*@
-<script src="~/Content/assets/js/shortcut.js"></script>
-<script src="~/Content/assets/js/jquery-ui.js"></script>
+            <!-- /Page Wrapper -->
+            <!-- jQuery -->
+            @*<script src="~/Content/assets/js/jquery-3.5.1.js"></script>*@
+            @*<script src="~/Content/assets/js/jquery-3.6.0.js"></script>*@
+            @*<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>*@
+            @*<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.min.js"></script>*@
+            <script src="~/Content/assets/js/shortcut.js"></script>
+            <script src="~/Content/assets/js/jquery-ui.js"></script>
 
 
-@*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
-@*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
+            @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
+            @*<script src="~/Theme/template/admin/assets/js/jquery.min.js"></script>*@
 
 
 
@@ -954,8 +1184,14 @@
 
 <script>
 
-    $("body").on("click", "#LoadName", function () {
+                $("body").on("click", "#LoadButton", function () {
 
+                    $("#LoadButtonCheck").val(1);
+
+                });
+
+    $("body").on("click", "#LoadName", function () {
+        //alert();
         var row = $(this).closest('div');
         $("#PassportLabelSettingId").val(row.find("p").eq(0).text());
         $("#SName").val(row.find("p").eq(1).text());
@@ -963,40 +1199,57 @@
         $("#XPassportNumber").trigger("change");
         $("#YPassportNumber").val(row.find("p").eq(3).text());
         $("#YPassportNumber").trigger("change");
-        $("#XName").val(row.find("p").eq(4).text());
+        $("#PassportNumberSize").val(row.find("p").eq(4).text());
+        $("#PassportNumberSize").trigger("change");
+        $("#XName").val(row.find("p").eq(5).text());
         $("#XName").trigger("change");
-        $("#YName").val(row.find("p").eq(5).text());
+        $("#YName").val(row.find("p").eq(6).text());
         $("#YName").trigger("change");
-        $("#XGivenName").val(row.find("p").eq(6).text());
+        $("#NameSize").val(row.find("p").eq(7).text());
+        $("#NameSize").trigger("change");
+        $("#XGivenName").val(row.find("p").eq(8).text());
         $("#XGivenName").trigger("change");
-        $("#YGivenName").val(row.find("p").eq(7).text());
+        $("#YGivenName").val(row.find("p").eq(9).text());
         $("#YGivenName").trigger("change");
-        $("#XPlaceofBirth").val(row.find("p").eq(8).text());
+        $("#GivenNameSize").val(row.find("p").eq(10).text());
+        $("#GivenNameSize").trigger("change");
+        $("#XPlaceofBirth").val(row.find("p").eq(11).text());
         $("#XPlaceofBirth").trigger("change");
-        $("#YPlaceofBirth").val(row.find("p").eq(9).text());
+        $("#YPlaceofBirth").val(row.find("p").eq(12).text());
         $("#YPlaceofBirth").trigger("change");
-        $("#XDateofBirth").val(row.find("p").eq(10).text());
+        $("#PlaceofBirthSize").val(row.find("p").eq(13).text());
+        $("#PlaceofBirthSize").trigger("change");
+        $("#XDateofBirth").val(row.find("p").eq(14).text());
         $("#XDateofBirth").trigger("change");
-        $("#YDateofBirth").val(row.find("p").eq(11).text());
+        $("#YDateofBirth").val(row.find("p").eq(15).text());
         $("#YDateofBirth").trigger("change");
-        $("#XGender").val(row.find("p").eq(12).text());
+        $("#DateofBirthSize").val(row.find("p").eq(16).text());
+        $("#DateofBirthSize").trigger("change");
+        $("#XGender").val(row.find("p").eq(17).text());
         $("#XGender").trigger("change");
-        $("#YGender").val(row.find("p").eq(13).text());
+        $("#YGender").val(row.find("p").eq(18).text());
         $("#YGender").trigger("change");
-        $("#XDateofIssue").val(row.find("p").eq(14).text());
+        $("#GenderSize").val(row.find("p").eq(19).text());
+        $("#GenderSize").trigger("change");
+        $("#XDateofIssue").val(row.find("p").eq(20).text());
         $("#XDateofIssue").trigger("change");
-        $("#YDateofIssue").val(row.find("p").eq(15).text());
+        $("#YDateofIssue").val(row.find("p").eq(21).text());
         $("#YDateofIssue").trigger("change");
-        $("#XDateofExpiry").val(row.find("p").eq(16).text());
+        $("#DateofIssueSize").val(row.find("p").eq(22).text());
+        $("#DateofIssueSize").trigger("change");
+        $("#XDateofExpiry").val(row.find("p").eq(23).text());
         $("#XDateofExpiry").trigger("change");
-        $("#YDateofExpiry").val(row.find("p").eq(17).text());
+        $("#YDateofExpiry").val(row.find("p").eq(24).text());
         $("#YDateofExpiry").trigger("change");
-        $("#XPhoto").val(row.find("p").eq(18).text());
+        $("#DateofExpirySize").val(row.find("p").eq(25).text());
+        $("#DateofExpirySize").trigger("change");
+        $("#XPhoto").val(row.find("p").eq(26).text());
         $("#XPhoto").trigger("change");
-        $("#YPhoto").val(row.find("p").eq(19).text());
+        $("#YPhoto").val(row.find("p").eq(27).text());
         $("#YPhoto").trigger("change");
-        $("#LoadSettingsModal").modal('toggle');
-
+        if ($("#LoadButtonCheck").val()==1) {
+            $("#LoadSettingsModal").modal('toggle');
+        }
     });
 
     $('#ResetX').click(function () {
@@ -1016,33 +1269,34 @@
         $("#XGivenName").val("0");
         $("#Name").css({ left: 13 + 'px', position: 'absolute' });
         $("#XName").val("0");
-        $("#PassportNo").css({ left: 0 + 'px', position: 'absolute' });
+        $("#PassportNo").css({ left: 341 + 'px', position: 'absolute' });
         $("#XPassportNumber").val("0");
     });
 
     $('#ResetY').click(function () {
         $("#XYPhoto").css({ top: 4 + 'px' });
         $("#YPhoto").val("0");
-        $("#DateofExpiry").css({ top: 190 + 'px', position: 'absolute' });
+        $("#DateofExpiry").css({ top: 153 + 'px', position: 'absolute' });
         $("#YDateofExpiry").val("0");
-        $("#DateofIssue").css({ top: 160 +'px', position: 'absolute' });
+        $("#DateofIssue").css({ top: 129 +'px', position: 'absolute' });
         $("#YDateofIssue").val("0");
-        $("#XYGender").css({ top: 130 + 'px', position: 'absolute' });
+        $("#XYGender").css({ top: 105 + 'px', position: 'absolute' });
         $("#YGender").val("0");
-        $("#DateofBirth").css({ top: 100 + 'px', position: 'absolute' });
+        $("#DateofBirth").css({ top: 81 + 'px', position: 'absolute' });
         $("#YDateofBirth").val("0");
-        $("#XYPlaceofBirth").css({ top: 70 + 'px', position: 'absolute' });
+        $("#XYPlaceofBirth").css({ top: 57 + 'px', position: 'absolute' });
         $("#YPlaceofBirth").val("0");
-        $("#GivenName").css({ top: 40 + 'px', position: 'absolute' });
+        $("#GivenName").css({ top: 34 + 'px', position: 'absolute' });
         $("#YGivenName").val("0");
         $("#Name").css({ top: 10 + 'px', position: 'absolute' });
         $("#YName").val("0");
-        $("#PassportNo").css({ top: 10 + 'px', position: 'absolute' });
+        $("#PassportNo").css({ top: 58 + 'px', position: 'absolute' });
         $("#YPassportNumber").val("0");
     });
+
     $("#XPassportNumber,#YPassportNumber").change(function () {
-        var XVal = $("#XPassportNumber").val();
-        var YVal = parseInt($("#YPassportNumber").val())+10;
+        var XVal = $("#XPassportNumber").val()+341;
+        var YVal = parseInt($("#YPassportNumber").val()) + 58;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#PassportNo").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
@@ -1053,52 +1307,76 @@
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#Name").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
+        YVal = parseInt($("#YName").val()) + parseInt(40);
+        $("#XGivenName").val(XVal - 13);
+        $("#YGivenName").val(YVal - 40);
+        $("#GivenName").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
+        YVal = parseInt($("#YName").val()) + parseInt(70);
+        $("#XPlaceofBirth").val(XVal - 13);
+        $("#YPlaceofBirth").val(YVal - 70);
+        $("#XYPlaceofBirth").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
+        YVal = parseInt($("#YName").val()) + parseInt(100);
+        $("#XDateofBirth").val(XVal - 13);
+        $("#YDateofBirth").val(YVal - 100);
+        $("#DateofBirth").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
+        YVal = parseInt($("#YName").val()) + parseInt(130);
+        $("#XGender").val(XVal - 13);
+        $("#YGender").val(YVal - 130);
+        $("#XYGender").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
+        YVal = parseInt($("#YName").val()) + parseInt(160);
+        $("#XDateofIssue").val(XVal - 13);
+        $("#YDateofIssue").val(YVal - 160);
+        $("#DateofIssue").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
+        YVal = parseInt($("#YName").val()) + parseInt(190);
+        $("#XDateofExpiry").val(XVal - 13);
+        $("#YDateofExpiry").val(YVal - 190);
+        $("#DateofExpiry").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XGivenName,#YGivenName").change(function () {
-        var XVal = parseInt($("#XGivenName").val())+13;
-        var YVal = parseInt($("#YGivenName").val())+40;
+        var XVal = parseInt($("#XGivenName").val()) + 13;
+        var YVal = parseInt($("#YGivenName").val()) + 34;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#GivenName").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XPlaceofBirth,#YPlaceofBirth").change(function () {
-        var XVal = parseInt($("#XPlaceofBirth").val())+13;
-        var YVal = parseInt($("#YPlaceofBirth").val())+70;
+        var XVal = parseInt($("#XPlaceofBirth").val()) + 13;
+        var YVal = parseInt($("#YPlaceofBirth").val()) + 57;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#XYPlaceofBirth").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XDateofBirth,#YDateofBirth").change(function () {
-        var XVal = parseInt($("#XDateofBirth").val())+13;
-        var YVal = parseInt($("#YDateofBirth").val())+100;
+        var XVal = parseInt($("#XDateofBirth").val()) + 13;
+        var YVal = parseInt($("#YDateofBirth").val()) + 81;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#DateofBirth").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XGender,#YGender").change(function () {
-        var XVal = parseInt($("#XGender").val())+13;
-        var YVal = parseInt($("#YGender").val())+130;
+        var XVal = parseInt($("#XGender").val()) + 13;
+        var YVal = parseInt($("#YGender").val()) + 105;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#XYGender").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XDateofIssue,#YDateofIssue").change(function () {
-        var XVal = parseInt($("#XDateofIssue").val())+13;
-        var YVal = parseInt($("#YDateofIssue").val())+160;
+        var XVal = parseInt($("#XDateofIssue").val()) + 13;
+        var YVal = parseInt($("#YDateofIssue").val()) + 129;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#DateofIssue").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XDateofExpiry,#YDateofExpiry").change(function () {
-        var XVal = parseInt($("#XDateofExpiry").val())+13;
-        var YVal = parseInt($("#YDateofExpiry").val())+190;
+        var XVal = parseInt($("#XDateofExpiry").val()) + 13;
+        var YVal = parseInt($("#YDateofExpiry").val()) + 153;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#DateofExpiry").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XPhoto,#YPhoto").change(function () {
         var XVal = parseInt($("#XPhoto").val());
-        var YVal = parseInt($("#YPhoto").val())+4;
+        var YVal = parseInt($("#YPhoto").val()) + 4;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#XYPhoto").css({ top: YVal + 'px', left: XVal + 'px' });
@@ -1122,8 +1400,10 @@
 
             $(".NotPrint").css("color", "transparent");
             $(".words").css("color", "transparent");
-            $("#XYPhoto").css({ width: 170 + 'px' });
-            $("#XYPhoto").css({ height: 195 + 'px' });
+            //$("#XYPhoto").css({ width: 170 + 'px' });
+            //$("#XYPhoto").css({ height: 195 + 'px' });
+
+
             //$("#XYPhoto").css({ top: 20 + 'px', left: 0 + 'px' });
             //$(".NotPrint").text(" ");
             //$("#LLLBel").val("o");
@@ -1143,14 +1423,13 @@
     $('#PrintBtn').click(function () {
         $(".NotPrint").css("color", "transparent");
         $(".words").css("color", "transparent");
-        $("#XYPhoto").css({ width: 170 + 'px' });
-        $("#XYPhoto").css({ height: 185 + 'px' });
+
         $("#XYPhoto").css({ top: 10 + 'px', left: 0 + 'px' });
         var myDiv = document.getElementById("section").innerHTML;
 
-            document.body.innerHTML =
-            "<html><head><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title></head><body><div class='row'><div class='col-md-8'>" +
-            myDiv + "</div></div></body>";
+        document.body.innerHTML =
+            "<html><head><link rel='stylesheet' href='~/Content/assets/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title></head><body><div class='row'><div class='col-md-8'>" +
+            myDiv + "</div></div></body></html>";
             window.print();
 
             var url = window.location.origin;
@@ -1162,19 +1441,37 @@
         //$(".NotPrint").css("color", "transparent");
         //$(".words").css("color", "transparent");
         //$("#XYPhoto").css({ width: 150 + 'px' });
-        $("#XYPhoto").css({ width: 170 + 'px' });
-        $("#XYPhoto").css({ height: 195 + 'px' });
+
+
+        //$("#XYPhoto").css({ width: 170 + 'px' });
+        //$("#XYPhoto").css({ height: 195 + 'px' });
+
+
+
         //$("#XYPhoto").css({ top: 20 + 'px', left: 0 + 'px' });
         var myDiv = document.getElementById("section").innerHTML;
 
             document.body.innerHTML =
-                "<html><head><link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title></head><body><div class='row'><div class='col-md-8'>" +
-            myDiv + "</div></div></body>";
-            window.print();
+            "<html><head><link rel='stylesheet' href='~/Content/assets/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title></head><body><div class='row'><div class='col-md-8'>" +
+            myDiv + "</div></div></body></html>";
+       
 
-            var url = window.location.origin;
-        url += '/Person/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + @ViewBag.TL.TransactionIDNumber +'';
+
+
+
+
+        window.setTimeout(function () {
+
+            window.print();
+             var url = window.location.origin;
+            url += '/Person/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + @ViewBag.TL.TransactionIDNumber +'';
             window.location.href = url;
+        }, 500);
+
+        //window.print();
+        @*var url = window.location.origin;
+            url += '/Person/PassportLabel?id=' +@Model.PersonIDNumber+'&&tid=' + @ViewBag.TL.TransactionIDNumber +'';
+            window.location.href = url;*@
     });
 
 
@@ -1481,10 +1778,50 @@
 
     });
 
-    $("#FontSize").change(function () {
-        $(".NotLabel").css("font-size", $("#FontSize").val() + 'px');
-        //var Height = 250 + ($("#FontSize").val() - 12);
-        //$("#XYPhoto").height(Height);
+    //$("#FontSize").change(function () {
+    //    $(".NotLabel").css("font-size", $("#FontSize").val() + 'px');
+    //    //var Height = 250 + ($("#FontSize").val() - 12);
+    //    //$("#XYPhoto").height(Height);
+    //});
+
+    $("#PassportNumberSize").change(function () {
+
+        $("#PassportNumber").css("font-size", $("#PassportNumberSize").val() + 'px');
+    });
+
+    $("#NameSize").change(function () {
+
+        $("#LastName").css("font-size", $("#NameSize").val() + 'px');
+    });
+
+    $("#GivenNameSize").change(function () {
+
+        $("#FirstName").css("font-size", $("#GivenNameSize").val() + 'px');
+    });
+
+    $("#PlaceofBirthSize").change(function () {
+
+        $("#PlaceofBirth").css("font-size", $("#PlaceofBirthSize").val() + 'px');
+    });
+
+    $("#DateofBirthSize").change(function () {
+
+        $("#BDateName").css("font-size", $("#DateofBirthSize").val() + 'px');
+        $("#BDateNumber").css("font-size", $("#DateofBirthSize").val() + 'px');
+    });
+
+    $("#GenderSize").change(function () {
+        $("#Gender").css("font-size", $("#GenderSize").val() + 'px');
+    });
+
+    $("#DateofIssueSize").change(function () {
+        $("#IDateName").css("font-size", $("#DateofIssueSize").val() + 'px');
+        $("#IDateNumber").css("font-size", $("#DateofIssueSize").val() + 'px');
+    });
+
+    $("#DateofExpirySize").change(function () {
+        $("#EDateName").css("font-size", $("#DateofExpirySize").val() + 'px');
+        $("#EDateNumber").css("font-size", $("#DateofExpirySize").val() + 'px');
     });
 
     $("#FontFamily").change(function () {
@@ -1581,28 +1918,28 @@
         }
     });
 
-    $.fn.strech_text = function () {
-        var elmt = $(this),
-            cont_width = elmt.width(),
-            txt = elmt.html(),
-            one_line = $('<span class="stretch_it">' + txt + '</span>'),
-            nb_char = elmt.text().length,
-            spacing = cont_width / nb_char,
-            txt_width;
+    //$.fn.strech_text = function () {
+    //    var elmt = $(this),
+    //        cont_width = elmt.width(),
+    //        txt = elmt.html(),
+    //        one_line = $('<span class="stretch_it">' + txt + '</span>'),
+    //        nb_char = elmt.text().length,
+    //        spacing = cont_width / nb_char,
+    //        txt_width;
 
-        elmt.html(one_line);
-        txt_width = one_line.width();
+    //    elmt.html(one_line);
+    //    txt_width = one_line.width();
 
-        if (txt_width < cont_width) {
-            var char_width = txt_width / nb_char,
-                ltr_spacing = spacing - char_width + (spacing - char_width) / nb_char;
+    //    if (txt_width < cont_width) {
+    //        var char_width = txt_width / nb_char,
+    //            ltr_spacing = spacing - char_width + (spacing - char_width) / nb_char;
 
-            one_line.css({ 'letter-spacing': ltr_spacing });
-        } else {
-            one_line.contents().unwrap();
-            elmt.addClass('justify');
-        }
-    };
+    //        one_line.css({ 'letter-spacing': ltr_spacing });
+    //    } else {
+    //        one_line.contents().unwrap();
+    //        elmt.addClass('justify');
+    //    }
+    //};
 
 
 
@@ -1610,30 +1947,32 @@
 
     $(document).ready(function () {
 
+
+
         $(".alert-dismissible").fadeOut(10000);
         //alert("X:" + $("#DateofExpiry").position().top + "Y: " + $("#DateofExpiry").position().left);
-        $("#LabelDateofExpiry").css({ top: 180 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#DateofExpiry").css({ top: 190 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#LabelDateofIssue").css({ top: 150 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#DateofIssue").css({ top: 160 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#LabelGender").css({ top: 120 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#XYGender").css({ top: 130 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#LabelDateofBirth").css({ top: 90 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#DateofBirth").css({ top: 100 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#LabelPlaceofBirth").css({ top: 60 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#XYPlaceofBirth").css({ top: 70 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#LabelFirstName").css({ top: 30 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#GivenName").css({ top: 40 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelDateofExpiry").css({ top: 144 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#DateofExpiry").css({ top: 153 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelDateofIssue").css({ top: 120 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#DateofIssue").css({ top: 129 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelGender").css({ top: 96 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#XYGender").css({ top: 105 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelDateofBirth").css({ top: 72 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#DateofBirth").css({ top: 81 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelPlaceofBirth").css({ top: 48 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#XYPlaceofBirth").css({ top:57 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#LabelFirstName").css({ top: 24 + 'px', left: 13 + 'px', position: 'absolute' });
+        $("#GivenName").css({ top: 34 + 'px', left: 13 + 'px', position: 'absolute' });
         $("#LabelLastName").css({ top: 0 + 'px', left: 13 + 'px', position: 'absolute' });
         $("#Name").css({ top: 10 + 'px', left: 13 + 'px', position: 'absolute' });
-        $("#LabelPassportNo").css({ top: 0 + 'px', left: 0 + 'px', position: 'absolute' });
-        $("#PassportNo").css({ top: 10 + 'px', left: 0 + 'px', position: 'absolute' });
+        $("#LabelPassportNo").css({ top: 48 + 'px', left:342 + 'px', position: 'absolute' });
+        $("#PassportNo").css({ top: 58 + 'px', left: 341 + 'px', position: 'absolute' });
         //$("#MRZHide").css({ top: 252 + 'px', left: 0 + 'px', position: 'absolute' });
         $("#XYPhoto").css({ top: 4 + 'px', left: 0 + 'px' });
 
-        const words = document.querySelector(".words"),
-            wordsArray = words.innerText.split("").map(e => " " == e ? "<div>&nbsp</div>" : "<div>" + e + "</div>");
-        words.innerHTML = wordsArray.join("");
+        //const words = document.querySelector(".words"),
+        //    wordsArray = words.innerText.split("").map(e => " " == e ? "<div>&nbsp</div>" : "<div>" + e + "</div>");
+        //words.innerHTML = wordsArray.join("");
 
         const words1 = document.querySelector(".words1"),
             wordsArray1 = words1.innerText.split("").map(e => " " == e ? "<div>&nbsp</div>" : "<div>" + e + "</div>");
@@ -1642,23 +1981,28 @@
         const words2 = document.querySelector(".words2"),
             wordsArray2 = words2.innerText.split("").map(e => " " == e ? "<div>&nbsp</div>" : "<div>" + e + "</div>");
         words2.innerHTML = wordsArray2.join("");
+
         $('.letter,.letter1').each(function () {
             $(this).strech_text();
         });
 
         $("#PassportModal").modal('toggle');
         $("p").css("font-size", 8 + 'px');
-        $(".NotLabel").css("font-family", '@FontSize');
+        $(".NotPrint").css("font-size", 9 + 'px');
+        $(".NotPrintMH").css("font-size", 14 + 'px');
+        $(".Size14").css("font-size", 13 + 'px');
+        $(".NotLabel").css("font-family", '@FontFamily');
         $("p").css("font-family", 'sans serif');
         $(".NotLabel").css("font-size", '@FontSize' + 'px');
-        $(".words").css("font-family", 'OCR-B');
+        //$(".words").css("font-family", 'OCR-B');
+        //$(".words").css("font-size", 3.84 + 'px !important');
         $(".words1").css("font-family", 'OCR-B');
+        //$(".words1").css("font-size", 3.84 + 'px !important');
         $(".words2").css("font-family", 'OCR-B');
-        $(".words").css("font-size", 3.84 + 'px !important');
-        $(".words1").css("font-size", 3.84 + 'px !important');
-        $(".words2").css("font-size", 3.84 + 'px !important');
-        $("p").css("margin-top", '0rem');
+        //$(".words2").css("font-size", 3.84 + 'px !important');
+        //$("p").css("margin-top", '0rem');
         $("p").css("margin-bottom", '0rem');
+        $(".PMB").css("margin-bottom", '-0.45rem');
         $("p").css("color", "black");
         //$(".letter").css("letter-spacing", '6.0px');
         //$(".letter1").css("letter-spacing", '6.5px');
@@ -1674,28 +2018,28 @@
         //$(".letter1").css("letter-spacing", '6.4px');
 
 
-        $(".words").css("width", '100%');
-        $(".words").css("text-align", 'center');
+        //$(".words").css("width", '100%');
+        //$(".words").css("text-align", 'center');
         $(".words").css("display", 'flex');
-        $(".words").css("flex-flow", 'row nowrap');
+        //$(".words").css("flex-flow", 'row nowrap');
         $(".words").css("justify-content", 'space-between');
 
-        $(".words1").css("width", '100%');
-        $(".words1").css("text-align", 'center');
+        //$(".words1").css("width", '100%');
+        //$(".words1").css("text-align", 'center');
         $(".words1").css("display", 'flex');
-        $(".words1").css("flex-flow", 'row nowrap');
+        //$(".words1").css("flex-flow", 'row nowrap');
         $(".words1").css("justify-content", 'space-between');
 
-        $(".words2").css("width", '100%');
-        $(".words2").css("text-align", 'center');
+        //$(".words2").css("width", '100%');
+        //$(".words2").css("text-align", 'center');
         $(".words2").css("display", 'flex');
-        $(".words2").css("flex-flow", 'row nowrap');
+        //$(".words2").css("flex-flow", 'row nowrap');
         $(".words2").css("justify-content", 'space-between');
 
 
-        $(".words").css("font-size", '14px');
-        $(".words1").css("font-size", '14px');
-        $(".words2").css("font-size", '14px');
+        $(".words").css("font-size", '9px');
+        $(".words1").css("font-size", '11px');
+        $(".words2").css("font-size", '11px');
 
 @*if (@ViewBag.State== 1) {
         $("#SeparateLine").attr('checked', 'checked');
@@ -1731,7 +2075,9 @@
             }
             else {
                 $('#ErrorAlert').fadeOut();
-            }
+        }
+
+        $(".SettingLoadReady").trigger("click");
 
     });
 

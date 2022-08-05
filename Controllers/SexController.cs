@@ -47,6 +47,7 @@ namespace WorldServiceOrganization.Controllers
 
                         Data.Name = Sex.Name;
                         Data.Code = Sex.Code;
+                        Data.Abbreviation = Sex.Abbreviation;
                         Data.isActive = true;
                         Data.EditDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                         DB.Entry(Data);

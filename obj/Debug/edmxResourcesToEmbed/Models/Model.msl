@@ -387,36 +387,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tblPassportLabelSettings">
-      <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblPassportLabelSetting">
-        <MappingFragment StoreEntitySet="tblPassportLabelSetting">
-          <ScalarProperty Name="EditDate" ColumnName="EditDate" />
-          <ScalarProperty Name="EditBy" ColumnName="EditBy" />
-          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="YPhoto" ColumnName="YPhoto" />
-          <ScalarProperty Name="XPhoto" ColumnName="XPhoto" />
-          <ScalarProperty Name="YDateofExpiry" ColumnName="YDateofExpiry" />
-          <ScalarProperty Name="XDateofExpiry" ColumnName="XDateofExpiry" />
-          <ScalarProperty Name="YDateofIssue" ColumnName="YDateofIssue" />
-          <ScalarProperty Name="XDateofIssue" ColumnName="XDateofIssue" />
-          <ScalarProperty Name="YGender" ColumnName="YGender" />
-          <ScalarProperty Name="XGender" ColumnName="XGender" />
-          <ScalarProperty Name="YDateofBirth" ColumnName="YDateofBirth" />
-          <ScalarProperty Name="XDateofBirth" ColumnName="XDateofBirth" />
-          <ScalarProperty Name="YPlaceofBirth" ColumnName="YPlaceofBirth" />
-          <ScalarProperty Name="XPlaceofBirth" ColumnName="XPlaceofBirth" />
-          <ScalarProperty Name="YGivenName" ColumnName="YGivenName" />
-          <ScalarProperty Name="XGivenName" ColumnName="XGivenName" />
-          <ScalarProperty Name="YName" ColumnName="YName" />
-          <ScalarProperty Name="XName" ColumnName="XName" />
-          <ScalarProperty Name="YPassportNumber" ColumnName="YPassportNumber" />
-          <ScalarProperty Name="XPassportNumber" ColumnName="XPassportNumber" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="PassportLabelSettingId" ColumnName="PassportLabelSettingId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="TransactionSummaryList" FunctionName="WorldServiceOrganizationModel.Store.TransactionSummaryList">
       <ResultMapping>
         <ComplexTypeMapping TypeName="WorldServiceOrganizationModel.TransactionSummaryList_Result2">
@@ -682,5 +652,43 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="tblPassportLabelSettings">
+      <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblPassportLabelSetting">
+        <MappingFragment StoreEntitySet="tblPassportLabelSetting">
+          <ScalarProperty Name="DateofExpirySize" ColumnName="DateofExpirySize" />
+          <ScalarProperty Name="DateofIssueSize" ColumnName="DateofIssueSize" />
+          <ScalarProperty Name="GenderSize" ColumnName="GenderSize" />
+          <ScalarProperty Name="DateofBirthSize" ColumnName="DateofBirthSize" />
+          <ScalarProperty Name="PlaceofBirthSize" ColumnName="PlaceofBirthSize" />
+          <ScalarProperty Name="GivenNameSize" ColumnName="GivenNameSize" />
+          <ScalarProperty Name="NameSize" ColumnName="NameSize" />
+          <ScalarProperty Name="PassportNumberSize" ColumnName="PassportNumberSize" />
+          <ScalarProperty Name="EditDate" ColumnName="EditDate" />
+          <ScalarProperty Name="EditBy" ColumnName="EditBy" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="YPhoto" ColumnName="YPhoto" />
+          <ScalarProperty Name="XPhoto" ColumnName="XPhoto" />
+          <ScalarProperty Name="YDateofExpiry" ColumnName="YDateofExpiry" />
+          <ScalarProperty Name="XDateofExpiry" ColumnName="XDateofExpiry" />
+          <ScalarProperty Name="YDateofIssue" ColumnName="YDateofIssue" />
+          <ScalarProperty Name="XDateofIssue" ColumnName="XDateofIssue" />
+          <ScalarProperty Name="YGender" ColumnName="YGender" />
+          <ScalarProperty Name="XGender" ColumnName="XGender" />
+          <ScalarProperty Name="YDateofBirth" ColumnName="YDateofBirth" />
+          <ScalarProperty Name="XDateofBirth" ColumnName="XDateofBirth" />
+          <ScalarProperty Name="YPlaceofBirth" ColumnName="YPlaceofBirth" />
+          <ScalarProperty Name="XPlaceofBirth" ColumnName="XPlaceofBirth" />
+          <ScalarProperty Name="YGivenName" ColumnName="YGivenName" />
+          <ScalarProperty Name="XGivenName" ColumnName="XGivenName" />
+          <ScalarProperty Name="YName" ColumnName="YName" />
+          <ScalarProperty Name="XName" ColumnName="XName" />
+          <ScalarProperty Name="YPassportNumber" ColumnName="YPassportNumber" />
+          <ScalarProperty Name="XPassportNumber" ColumnName="XPassportNumber" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="PassportLabelSettingId" ColumnName="PassportLabelSettingId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

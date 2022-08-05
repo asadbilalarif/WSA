@@ -47,6 +47,7 @@ namespace WorldServiceOrganization.Controllers
 
                         Data.Name = Occupation.Name;
                         Data.Code = Occupation.Code;
+                        Data.Abbreviation = Occupation.Abbreviation;
                         Data.isActive = true;
                         Data.EditDate = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                         DB.Entry(Data);

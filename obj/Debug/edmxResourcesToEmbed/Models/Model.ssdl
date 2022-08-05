@@ -183,20 +183,28 @@
     <Property Name="Name" Type="nvarchar(max)" />
     <Property Name="XPassportNumber" Type="int" />
     <Property Name="YPassportNumber" Type="int" />
+    <Property Name="PassportNumberSize" Type="int" />
     <Property Name="XName" Type="int" />
     <Property Name="YName" Type="int" />
+    <Property Name="NameSize" Type="int" />
     <Property Name="XGivenName" Type="int" />
     <Property Name="YGivenName" Type="int" />
+    <Property Name="GivenNameSize" Type="int" />
     <Property Name="XPlaceofBirth" Type="int" />
     <Property Name="YPlaceofBirth" Type="int" />
+    <Property Name="PlaceofBirthSize" Type="int" />
     <Property Name="XDateofBirth" Type="int" />
     <Property Name="YDateofBirth" Type="int" />
+    <Property Name="DateofBirthSize" Type="int" />
     <Property Name="XGender" Type="int" />
     <Property Name="YGender" Type="int" />
+    <Property Name="GenderSize" Type="int" />
     <Property Name="XDateofIssue" Type="int" />
     <Property Name="YDateofIssue" Type="int" />
+    <Property Name="DateofIssueSize" Type="int" />
     <Property Name="XDateofExpiry" Type="int" />
     <Property Name="YDateofExpiry" Type="int" />
+    <Property Name="DateofExpirySize" Type="int" />
     <Property Name="XPhoto" Type="int" />
     <Property Name="YPhoto" Type="int" />
     <Property Name="CreatedBy" Type="int" />

@@ -313,6 +313,7 @@
     <Content Include="Content\assets\fonts\fontawesome-webfont3e6e.html" />
     <Content Include="Content\assets\fonts\fontawesome-webfont3e6e.svg" />
     <Content Include="Content\assets\fonts\MaterialIcons-Regular.html" />
+    <Content Include="Content\assets\fonts\ocrb.css" />
     <Content Include="Content\assets\img\blog\blog-01.jpg" />
     <Content Include="Content\assets\img\blog\blog-02.jpg" />
     <Content Include="Content\assets\img\blog\blog-03.jpg" />
