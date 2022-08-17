@@ -418,6 +418,8 @@ namespace WorldServiceOrganization.Controllers
                     vCardText += "" + Person.FirstName + " " + Person.LastName + "\r\n";
                     //vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
                     vCardText += "TEL:" + Person.Phone + "\r\n";
+                    vCardText += "EMAIL:" + Person.EMail + "\r\n";
+                    vCardText += "URL:" + Person.Website + "\r\n";
                     vCardText += "END:VCARD";
                     string QRCodeImagePath = GenerateQRCode(vCardText, ID);
 
@@ -670,6 +672,8 @@ namespace WorldServiceOrganization.Controllers
                     vCardText += "" + Person.FirstName + " " + Person.LastName + "\r\n";
                     //vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
                     vCardText += "TEL:" + Person.Phone + "\r\n";
+                    vCardText += "EMAIL:" + Person.EMail + "\r\n";
+                    vCardText += "URL:" + Person.Website + "\r\n";
                     vCardText += "END:VCARD";
                     string QRCodeImagePath = GenerateQRCode(vCardText, Person.PersonIDNumber);
                     Data.QRCode = QRCodeImagePath;
@@ -2195,6 +2199,8 @@ namespace WorldServiceOrganization.Controllers
                 if (Persons.BirthYear != null)
                 {
                     ViewBag.CodeYear = Persons.BirthYear;
+                   string YearString= Persons.BirthYear.ToString();
+                    CodeYear = YearString[2].ToString() + YearString[3].ToString();
                 }
 
                 if (Persons.BirthDay != null)

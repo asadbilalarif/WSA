@@ -289,9 +289,17 @@
                                                 <p>--</p>
                                             }
 
-                                            @if (Model.OccupationId > 0)
+                                            @if (Model.OccupationId > 0 )
                                             {
-                                                <p>@Model.tblOccupation.Name</p>
+                                                if (@Model.tblOccupation.Name != null&&@Model.tblOccupation.Name != "")
+                                                {
+                                                    <p>@Model.tblOccupation.Name</p>
+                                                }
+                                                else
+                                                {
+                                                    <p>--</p>
+                                                }
+
                                             }
                                             else
                                             {
@@ -313,7 +321,7 @@
                                             {
                                                 <p>--</p>
                                             }
-                                            @if (@Model.EMail != null)
+                                            @if (Model.EMail != null && Model.EMail != "")
                                             {
                                                 <p>@Model.EMail</p>
                                             }
@@ -325,9 +333,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6 ">
+                                <div class="col-md-5">
                                     <div class="row">
-                                        <div class="col-md-6 ">
+                                        <div class="col-md-5">
                                             <p>First Name</p>
                                             <p>Status</p>
                                             <p>Country of Birth</p>
@@ -335,7 +343,7 @@
                                             <p>Fax</p>
                                             <p>Date Modified</p>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
 
                                             @if (@Model.FirstName != null)
                                             {
@@ -355,7 +363,14 @@
                                             }
                                             @if (@Model.tblCountry1 != null)
                                             {
-                                                <p>@Model.tblCountry1.Name</p>
+                                                if (@Model.tblCountry1.Name != null && @Model.tblCountry1.Name != "")
+                                                {
+                                                    <p>@Model.tblCountry1.Name</p>
+                                                }
+                                                else
+                                                {
+                                                    <p>--</p>
+                                                }
                                             }
                                             else
                                             {

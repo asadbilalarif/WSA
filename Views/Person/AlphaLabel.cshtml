@@ -9,6 +9,7 @@
     string FontSize = cookieObj["FontSize"];
     string FontFamily = cookieObj["FontStyle"];
     string Error = ViewBag.Error;
+    string Coma = ",";
 
 }
 
@@ -158,7 +159,7 @@
                         <div class="card ApplyFontStyle" id="ApplyFontStyle">
                             <div class="card-body" id="FNdraggableArea">
                                 <p class="text-right" id="WSAShowSeparate">@ViewBag.WSA</p>
-                                <p> @ViewBag.FName @ViewBag.LName <span id="WSAShowName" style="display: none; float: right;">@ViewBag.WSA </span></p>
+                                <p> @ViewBag.LName, @ViewBag.FName <span id="WSAShowName" style="display: none; float: right;">@ViewBag.WSA </span></p>
                                 <img src="@ViewBag.QRCode" alt="Alternate Text" id="MRZHide" class="FNdraggable" style="float:right; display: none; z-index: 100;" />
                                 @if (Model != null)
                                 {
@@ -168,7 +169,18 @@
                                     }
 
                                     <p> @Model.Address1</p>
-                                    <p> @Model.City, @Model.State @Model.PostalCode <span id="CountryShow" class="CountryShow">@Model.tblCountry.Name</span> </p>
+                                    {
+                                        if ((Model.PostalCode == null || Model.PostalCode == "") && (Model.State == null || Model.State == ""))
+                                        {
+                                            Coma = "";
+                                        }
+
+                                        if (Model.City == null || Model.City == "")
+                                        {
+                                            Coma = "";
+                                        }
+                                    }
+                                    <p> @Model.City@Coma @Model.State @Model.PostalCode <span id="CountryShow" class="CountryShow">@Model.tblCountry.Name</span> </p>
                                 }
                             </div>
 

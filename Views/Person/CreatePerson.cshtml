@@ -2354,11 +2354,29 @@
     $("#HeightUnit").change(function () {
         var type = this.value;
         var firstDropVal = $('#Height').val();
+        var Feet = 0;
+        var Inches = 0;
+        var FinalValue = 0;
+
         if (type == 1) {
-            $('#Height').val((firstDropVal * 3.281).toFixed(2));
+            Inches = (firstDropVal / 2.54) * 100;
+            Feet = Math.floor(Inches / 12);
+            Inches = Math.ceil(Inches) - (Feet * 12);
+            var Concate = Feet + "." + Inches ;
+            $('#Height').val((Concate));
         }
         else if (type == 2) {
-            $('#Height').val((firstDropVal / 3.281).toFixed(2));
+            var SValue = firstDropVal.split(".");
+            Feet = SValue[0];
+            var Inches = 0;
+            var FinalValue = 0;
+            if (SValue[1] != undefined) {
+                var Inches = SValue[1];
+            }
+            FinalValue = Feet * 0.3048;
+            FinalValue += Inches * 0.0254
+
+            $('#Height').val((FinalValue).toFixed(3));
         }
 
     });

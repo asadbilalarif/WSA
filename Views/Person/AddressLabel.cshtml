@@ -11,6 +11,8 @@
 
     string Error = ViewBag.Error;
 
+    string Coma = ",";
+
 }
 
 
@@ -170,7 +172,7 @@
             </div>
         </div>*@
                                 <p class="text-right" id="WSAShowSeparate">@ViewBag.WSA</p>
-                                <p> @ViewBag.FName @ViewBag.LName <span id="WSAShowName" style="display:none; float:right;">@ViewBag.WSA </span></p>
+                                <p> @ViewBag.LName, @ViewBag.FName  <span id="WSAShowName" style="display:none; float:right;">@ViewBag.WSA </span></p>
                                 <img src="@ViewBag.QRCode" alt="Alternate Text" id="MRZHide" class="FNdraggable" style="float:right; display: none; z-index: 100;" />
 
                                 @foreach (WorldServiceOrganization.Models.tblAddress Address in Model)
@@ -181,7 +183,19 @@
                                     }
 
                                     <p> @Address.Address1</p>
-                                    <p> @Address.City, @Address.State @Address.PostalCode <span id="CountryShow" class="CountryShow">@Address.tblCountry.Name</span> </p>
+                                    {
+                                        if ((Address.PostalCode == null || Address.PostalCode == "") && (Address.State == null || Address.State == ""))
+                                        {
+                                            Coma = "";
+                                        }
+
+                                        if (Address.City == null || Address.City == "")
+                                        {
+                                            Coma = "";
+                                        }
+                                    }
+                                    <p> @Address.City@Coma @Address.State @Address.PostalCode <span id="CountryShow" class="CountryShow">@Address.tblCountry.Name</span> </p>
+
                                     <br>
                                 }
 

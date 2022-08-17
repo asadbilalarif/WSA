@@ -290,7 +290,15 @@
 
                                             @if (Model.OccupationId > 0)
                                             {
-                                                <p>@Model.tblOccupation.Name</p>
+                                                if (@Model.tblOccupation.Name != null && @Model.tblOccupation.Name != "")
+                                                {
+                                                    <p>@Model.tblOccupation.Name</p>
+                                                }
+                                                else
+                                                {
+                                                    <p>--</p>
+                                                }
+
                                             }
                                             else
                                             {
@@ -326,7 +334,7 @@
                                 </div>
                                 <div class="col-md-6 ">
                                     <div class="row">
-                                        <div class="col-md-6 ">
+                                        <div class="col-md-5">
                                             <p>First Name</p>
                                             <p>Status</p>
                                             <p>Country of Birth</p>
@@ -334,7 +342,7 @@
                                             <p>Fax</p>
                                             <p>Date Modified</p>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
 
                                             @if (@Model.FirstName != null)
                                             {
@@ -401,13 +409,58 @@
                                     </div>
                                     <div class="col-sm-10 text-left">
                                         <br />
+                                        @if (@ViewBag.LabelAddress.CareOf != "")
+                                        {
+                                            <p>@ViewBag.LabelAddress.CareOf</p>
+                                        }
+                                        else
+                                        {
+                                            <p>--</p>
+                                        }
 
-                                        <p>@ViewBag.LabelAddress.CareOf</p>
-                                        <p>@ViewBag.LabelAddress.Address1</p>
-                                        <p>@ViewBag.LabelAddress.City</p>
-                                        <p>@ViewBag.LabelAddress.State</p>
-                                        <p>@ViewBag.LabelAddress.PostalCode</p>
-                                        <p>@ViewBag.LabelAddress.tblCountry.Name</p>
+                                        @if (@ViewBag.LabelAddress.Address1 != "")
+                                        {
+                                            <p>@ViewBag.LabelAddress.Address1</p>
+                                        }
+                                        else
+                                        {
+                                            <p>--</p>
+                                        }
+
+
+                                        @if (@ViewBag.LabelAddress.City != "")
+                                        {
+                                            <p>@ViewBag.LabelAddress.City</p>
+                                        }
+                                        else
+                                        {
+                                            <p>--</p>
+                                        }
+
+                                        @if (@ViewBag.LabelAddress.State != "")
+                                        {
+                                            <p>@ViewBag.LabelAddress.State</p>
+                                        }
+                                        else
+                                        {
+                                            <p>--</p>
+                                        }
+                                        @if (@ViewBag.LabelAddress.PostalCode != "")
+                                        {
+                                            <p>@ViewBag.LabelAddress.PostalCode</p>
+                                        }
+                                        else
+                                        {
+                                            <p>--</p>
+                                        }
+                                        @if (@ViewBag.LabelAddress.tblCountry.Name != "")
+                                        {
+                                            <p>@ViewBag.LabelAddress.tblCountry.Name</p>
+                                        }
+                                        else
+                                        {
+                                            <p>--</p>
+                                        }
 
                                     </div>
                                 </div>
