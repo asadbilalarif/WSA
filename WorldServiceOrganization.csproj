@@ -575,6 +575,7 @@
     <Content Include="Views\Person\WorldMarriageCertificate.cshtml" />
     <Content Include="Views\Person\WorldCitizenCertificate.cshtml" />
     <Content Include="Views\FontStyle\FontStyles.cshtml" />
+    <Content Include="Views\Person\CreateQRCode.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,100 @@
+﻿
+@{
+    ViewBag.Title = "CreateQRCode";
+}
+<div class="content container-fluid">
+    <div class="card">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="breadcrumb-bar">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 col-6">
+                                <h5 class="breadcrumb-title">Create QR Code</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div style="display:none;" class="alert alert-success alert-dismissible fade show" id="SuccessAlert" role="alert">
+            <strong>Success!</strong> @ViewBag.Success
+        </div>
+        <div style="display:none;" class="alert alert-info alert-dismissible fade show" id="UpdateAlert" role="alert">
+            <strong>Success!</strong> @ViewBag.Update
+        </div>
+        <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="DeleteAlert" role="alert">
+            <strong>Success!</strong> @ViewBag.Delete
+        </div>
+        <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="ErrorAlert" role="alert">
+            <strong>Error!</strong> @ViewBag.Error
+        </div>
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Add Text</label><br />
+                    <textarea class="form-control" id="QRData" >  </textarea><br />
+                    <button class="btn btn-primary" style="float:right;" id="GenerateQRCode">Save</button>
+                </div>
+                <div class="col-md-6">
+                    <label>QRCode</label><br />
+                    <div id="ImgDiv">
+                        <img src="/Uploading/CreateQRCode/QRCode.jpg" alt="" id="QRImg" />
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>
+
+<script>
+
+    $("#GenerateQRCode").on("click", function () {
+        
+        $("#QRImg").attr("src", "#");
+        //$("#CDeleteChild").attr("disabled", true);
+
+        var qrdata = $("#QRData").val();
+
+        var model = {
+            QRData: qrdata,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+
+        $.ajax({
+            type: "POST",
+            url: "/Person/CreateQRCode",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                //document.getElementById("ImgDiv").innerHTML = "<img src='" + r + "'  id='QRImg' />";
+                var url = window.location.origin;
+                url += '/Person/CreateQRCode?Success=QRCode has been Add successfully.&&ID=0';
+                window.location.href = url;
+                //console.log(r);
+                //document.getElementById("ImgDiv").innerHTML="<img src='" +r+"'  id='QRImg' />";
+                ////$("#QRImg").attr("src", "" + r + "");
+            }
+        });
+
+    });
+
+    $(document).ready(function () {
+        $("#QRData").val("");
+        $(".nav li ul li").removeClass("active");
+        $('#CQRCode').addClass('active');
+        $('#Per a').addClass('subdrop');
+        $("#Per  ul").first().css('display', 'block');
+    });
+</script>

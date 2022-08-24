@@ -203,6 +203,9 @@
     <div style="display:none;" class="alert alert-warning alert-dismissible fade show" id="ErrorAlert" role="alert">
         <strong>Error!</strong> @ViewBag.Error
     </div>
+    <div style="display:none;" class="alert alert-success alert-dismissible fade show SuccessAlert" id="SuccessAlert" role="alert">
+        <strong>Success!</strong> @Succ
+    </div>
     <!-- Page Header -->
     <!-- /Page Header -->
     @if (Model.PersonIDNumber == 0)
@@ -3151,7 +3154,7 @@
             });
 
         $('#StatusD').change(function (e) {
-            if ($(this).val()==1) {
+            if ($(this).val()==32) {
                 $('#WSANumber').val("");
             }
             else {
@@ -3275,7 +3278,10 @@
 
 
             });
-
+        $(".nav li ul li").removeClass("active");
+        $('#CPerson').addClass('active');
+        $('#Per a').addClass('subdrop');
+        $("#Per  ul").first().css('display', 'block');
     });
 
 

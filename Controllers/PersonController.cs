@@ -429,7 +429,7 @@ namespace WorldServiceOrganization.Controllers
 
 
 
-                    return RedirectToAction("Persons", new { Success = "Person has been add successfully." });
+                    return RedirectToAction("CreatePerson", new {id=Data.PersonIDNumber, Success = "Person has been add successfully." });
                     //}
                     //else
                     //{
@@ -2377,6 +2377,69 @@ namespace WorldServiceOrganization.Controllers
             }
 
             return RedirectToAction("PassportLabel", new { id = id, tid = tid });
+        }
+        public ActionResult CreateQRCode(string Success,int? ID)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+            try
+            {
+                if(Success==null|| Success=="")
+                {
+                    string imagePath = "/Uploading/CreateQRCode/QRCode.jpg";
+                    string barcodePath = Server.MapPath(imagePath);
+                    FileInfo file = new FileInfo(barcodePath);
+                    if (file.Exists)//check file exsit or not  
+                    {
+                        file.Delete();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ViewBag.Error = ex.Message;
+                Console.WriteLine("Error" + ex.Message);
+            }
+
+            return View();
+        }
+        [HttpPost]
+        public JsonResult CreateQRCode(string QRData)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+
+                string imagePath = "/Uploading/CreateQRCode/QRCode.jpg";
+            var width = 70; // width of the Qr Code
+            var height = 70; // height of the Qr Code
+            var margin = 0;
+            var barcodeWriter = new BarcodeWriter();
+            barcodeWriter.Format = BarcodeFormat.QR_CODE;
+            barcodeWriter.Options = new QrCodeEncodingOptions
+            {
+                Height = height,
+                Width = width,
+                Margin = margin,
+            };
+            var result = barcodeWriter.Write(QRData);
+            string barcodePath = Server.MapPath(imagePath);
+            FileInfo file = new FileInfo(barcodePath);
+            if (file.Exists)//check file exsit or not  
+            {
+                file.Delete();
+            }
+            var barcodeBitmap = new Bitmap(result);
+            using (MemoryStream memory = new MemoryStream())
+            {
+                using (FileStream fs = new FileStream(barcodePath, FileMode.Create, FileAccess.ReadWrite))
+                {
+                    barcodeBitmap.Save(memory, ImageFormat.Jpeg);
+                    byte[] bytes = memory.ToArray();
+                    fs.Write(bytes, 0, bytes.Length);
+                }
+            }
+
+            return Json(imagePath);
         }
     }
 }
