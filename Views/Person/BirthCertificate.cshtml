@@ -23,10 +23,41 @@
 <head>
 
     <style>
-        p {
+       /* p {
             margin-top: 0;
             margin-bottom: 0rem;
+        }*/
+
+
+        body {
+            background: rgb(204,204,204);
         }
+
+        page {
+            background: white;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 0.5cm;
+            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+        }
+
+            page[size='A4'] {
+                width: 22cm;
+                height: 28cm;
+            }
+
+                page[size='A4'][layout='landscape'] {
+                    width: 29.7cm;
+                    height: 21cm;
+                }
+
+        @@media print {
+            body, page {
+                margin: 0;
+                box-shadow: 0;
+            }
+        }
+
     </style>
 
     <script src="http://www.openjs.com/scripts/events/keyboard_shortcuts/shortcut.js"></script>
@@ -35,6 +66,7 @@
 
         shortcut.add("ctrl+p", function () {
             $(".NotPrint").css("color", "transparent");
+            $(".BorderLine").css("border-bottom", "0px");
             var db = document.body.getElementsByTagName('div');
             var myDiv = document.getElementById("section").innerHTML;
 
@@ -166,278 +198,253 @@
                 </div>
 
             </div>
-            <section class="row">
-                <div class="card col-md-10" id="section">
-                    <div class="card-body " id="FNdraggableArea">
+            <section class="" id="section">
+                <page size="A4">
+                    <div class="card ">
+                        <div class="card-body " style="height: 27cm;" id="FNdraggableArea">
 
-                        <div class="row">
-                            <div class="col-md-6 NotPrint">
-                                <p>Series • Serio • Séries •</p>
-                                <p>Serie • Серия • 系列 •سلسلة من</p>
-                            </div>
-
-
-                            <div class="col-md-6 ">
-                                <p class="NotPrint text-right">Number • Nombro • Numéro •</p>
-                                <p class="NotPrint text-right">Numero • Номер • 编号 • رقم</p>
-                                <p class="NoLabel text-right FNdraggable">@ViewBag.TL.IDCode</p>
-                                <img src="@Model.QRCode" id="MRZHide" class="FNdraggable " style="display: none; z-index:100;  position:absolute; " alt="Alternate Text" />
-
-
-                            </div>
-                        </div>
-                        <div class="row NotPrint">
-                            <div class="col-md-12" style="font-size:20px;">
-                                <p>C-3b.05.22</p>
-
-                            </div>
-                        </div>
-                        <div class="row NotPrint" style="font-size:25px;">
-                            <div class="col-md-12 text-center">
-                                <p><b>CERTIFICATE of BIRTH • NASKIĜATESTILO •</b></p>
-                            </div>
-                            <div class="col-md-12 text-center">
-                                <p><b>CERTIFICAT de NAISSANCE • CERTIFICADO de NACIMIENTO •</b></p>
-                            </div>
-                            <div class="col-md-12 text-center">
-                                <p><b>СВИДЕТЕЛЬСТВО o РОЖДЕНИИ • 出生证明 • شهادة ميلاد</b></p>
-                            </div>
-                        </div>
-                        <br />
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6">
-                                <p class="NotPrint">Family name(s) • Familia nomo(j) • Nom(s) de famille •</p>
-                                <p class="NotPrint">Apellido(s) • Фамильные имена • 姓氏 • اسماء العائلة</p>
-                                <p class="NoLabel FNdraggable">@Model.LastName</p>
-                            </div>
-                            <div class="col-md-6">
-                                <p class="NotPrint">Given name(s) • Antaunomo(j) • Prénom(s) •</p>
-                                <p class="NotPrint">Nombre(s) • Второе имя • 姓 • أسماء مسماه</p>
-                                <p class="NoLabel FNdraggable">@Model.FirstName</p>
-                            </div>
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6 ">
-                            </div>
-                            <div class="col-md-6">
-                                <p class="NotPrint">Place of birth • Naskiĝloko • Lieu de naissance •</p>
-                                <p class="NotPrint">Lugar de nacimiento • Место рождения • 出生地 • مكان الميلا</p>
-                                <p class="NoLabel FNdraggable">@Model.CityOfBirth</p>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 ">
-                                <div class="row">
-                                    <div class="col-md-4 NotPrint">
-                                        <br />
-                                        <p>Date of birth</p>
-                                        <p>Naskiĝdato</p>
-                                        <p>Date de naissance</p>
-                                        <p>Fecha de nacimiento</p>
-                                        <p>Дата рождения</p>
-                                        <p>出生日期</p>
-                                        <p>تاريخ الولادة</p>
-
+                            <div class="" style="margin-top: 2cm;font-size:12px;">
+                                <div class=" NotPrint" style="margin-left: 86px;">
+                                    <p>Series • Serio • Séries •</p>
+                                    <p>Serie • Серия • 系列 • سلسلة من</p>
+                                </div>
+                                <div class="">
+                                    <div id="MRZHide" class="FNdraggable" style="display: none; position: absolute; z-index:100;">
+                                        <img src="@Model.QRCode" alt="Alternate Text" />
                                     </div>
-                                    <div class="col-md-2 ">
-                                        @if (@Model.BirthYear == null)
-                                        {
+                                </div>
+                                <div class="" style="margin-top: -36px; margin-left: 535px;">
+                                    <p class="NotPrint">Number • Nombro • Numéro •</p>
+                                    <p class="NotPrint">Numero • Номер • 编号 • رقم</p>
+                                    <p class="NoLabel FNdraggable">@ViewBag.TL.IDCode</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="" style="margin-left: 136px; margin-top: -40px;">
+                                <div class=" NotPrint" style="font-size:15px;">
+                                    <p>
+                                        C-5.05.22
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class=" NotPrint" style="font-size: 24px; text-align: center;">
+                                <div class="">
+                                    <p><b>CERTIFICATE of BIRTH • NASKIĜATESTILO •</b></p>
+                                </div>
+                                <div class="">
+                                    <p><b>CERTIFICAT de NAISSANCE • CERTIFICADO de NACIMIENTO •</b></p>
+                                </div>
+                                <div class="">
+                                    <p><b>СВИДЕТЕЛЬСТВО o РОЖДЕНИИ • 出生证明 • شهادة ميلاد</b></p>
+                                </div>
+                            </div>
+                            <div class="" style=" font-size: 12px; margin-top: 18px;">
+                                <div class="" style="margin-left: 86px; width: 268px;">
+                                    <p class="NotPrint" style="font-weight: bold;">Family name(s) • Familia nomo(j) • Nom(s) de famille •</p>
+                                    <p class="NotPrint" style="font-weight: bold;">Apellido(s) • Фамильные имена • 姓氏 • اسماء العائلة</p>
+                                    <p class="NoLabel FNdraggable">@Model.LastName</p>
+                                </div>
+                                <div class="" style="margin-left: 438px; margin-top: -58px;">
+                                    <p class="NotPrint" style="font-weight: bold;">Given name(s) • Antaunomo(j) • Prénom(s) •</p>
+                                    <p class="NotPrint" style="font-weight: bold;">Nombre(s) • Второе имя • 姓 • أسماء مسماه</p>
+                                    <p class="NoLabel FNdraggable">@Model.FirstName</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="" style="margin-top:18px;">
+                                <div class=" ">
+                                </div>
+                                <div class="" style="margin-left: 438px; font-size: 12px;">
+                                    <p class="NotPrint" style="font-weight: bold;">Place of birth • Naskiĝloko • Lieu de naissance •</p>
+                                    <p class="NotPrint" style="font-weight: bold;">Lugar de nacimiento • Место рождения • 出生地 • مكان الميلا</p>
+                                    @if (@Model.tblCountry1 != null && @Model.tblCountry1.Name != null && @Model.tblCountry1.Name != "")
+                                    {
+                                        <p class="NoLabel FNdraggable">
+                                            @Model.CityOfBirth, @Model.tblCountry1.Name
+                                            
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="NoLabel FNdraggable">@Model.CityOfBirth</p>
+                                    }
+                                        
+                                    </div>
+                            </div>
+
+                            <div class="">
+                                <div class="" style="width: 500px; font-size: 10px; ">
+                                    <div class="">
+                                        <div class=" NotPrint" style="font-weight: bold; margin-left: 86px; margin-top: -46px; ">
                                             <br />
-                                        }
-                                        else
-                                        {
-                                            <p class="NoLabel FNdraggable">@Model.BirthYear</p>
-                                        }
-                                        <p class="NotPrint">year</p>
-                                        <p class="NotPrint">jaro</p>
-                                        <p class="NotPrint">année</p>
-                                        <p class="NotPrint">año</p>
-                                        <p class="NotPrint">год</p>
-                                        <p class="NotPrint">年</p>
-                                        <p class="NotPrint">عام</p>
+                                            <p class="MMremB">Date of birth</p>
+                                            <p class="MMremB">Naskiĝdato</p>
+                                            <p class="MMremB">Date de naissance</p>
+                                            <p class="MMremB">Fecha de nacimiento</p>
+                                            <p class="MMremB">Дата рождения</p>
+                                            <p class="MMremB">出生日期</p>
+                                            <p>تاريخ الولادة</p>
 
-                                    </div>
-                                    <div class="col-md-2 ">
-                                        @if (@Model.BirthMonth == null)
-                                        {
-                                            <br />
-                                        }
-                                        else
-                                        {
-                                            <p class="NoLabel FNdraggable">@Model.BirthMonth</p>
-                                        }
-                                        <p class="NotPrint">month</p>
-                                        <p class="NotPrint">monato</p>
-                                        <p class="NotPrint">mois</p>
-                                        <p class="NotPrint">mes</p>
-                                        <p class="NotPrint">месяц</p>
-                                        <p class="NotPrint">月</p>
-                                        <p class="NotPrint">شهر</p>
+                                        </div>
+                                        <div class=" " style="margin-top: -108px; margin-left: 196px; ">
+                                            @if (@Model.BirthYear == null)
+                                            {
+                                                <br />
+                                            }
+                                            else
+                                            {
+                                                <p class="NoLabel FNdraggable">@Model.BirthYear</p>
+                                            }
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">year</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">jaro</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">année</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">año</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">год</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">年</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">عام</p>
 
-                                    </div>
-                                    <div class="col-md-2 ">
-                                        @if (@Model.BirthDay == null)
-                                        {
-                                            <br />
-                                        }
-                                        else
-                                        {
-                                            <p class="NoLabel FNdraggable">@Model.BirthDay</p>
-                                        }
-                                        <p class="NotPrint">day</p>
-                                        <p class="NotPrint">tago</p>
-                                        <p class="NotPrint">jour</p>
-                                        <p class="NotPrint">día</p>
-                                        <p class="NotPrint">день</p>
-                                        <p class="NotPrint">天</p>
-                                        <p class="NotPrint">يوم</p>
+                                        </div>
+                                        <div class=" " style="margin-top: -106px; margin-left: 256px;">
+                                            @if (@Model.BirthMonth == null)
+                                            {
+                                                <br />
+                                            }
+                                            else
+                                            {
+                                                <p class="NoLabel FNdraggable">@Model.BirthMonth</p>
+                                            }
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">month</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">monato</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">mois</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">mes</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">месяц</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">月</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">شهر</p>
 
+                                        </div>
+                                        <div class=" " style="margin-top: -106px; margin-left: 316px;">
+                                            @if (@Model.BirthDay == null)
+                                            {
+                                                <br />
+                                            }
+                                            else
+                                            {
+                                                <p class="NoLabel FNdraggable">@Model.BirthDay</p>
+                                            }
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">day</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">tago</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">jour</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">día</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">день</p>
+                                            <p class="NotPrint MMremB" style="font-weight: bold;">天</p>
+                                            <p class="NotPrint" style="font-weight: bold;">يوم</p>
+
+                                        </div>
                                     </div>
+
                                 </div>
-
-                            </div>
-                            <div class="col-md-6">
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <br />
-                                <p class="NotPrint">Mother’s name • Nomo de patrino • Nom de la mère •</p>
-                                <p class="NotPrint">Nombre de la madre • Имя матери • 母亲的名字 • اسم الأ</p>
-                                <p class="NoLabel FNdraggable">@Model.MotherName</p>
-                            </div>
-                        </div>
-                        <br />
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6 ">
-                                <div class="row">
-                                    <div class="col-md-2 ">
-
-                                    </div>
-                                    <div class="col-md-2 NotPrint">
-                                        <p>Sekso</p>
-                                        <p>Sex</p>
-                                        <p>Sexe</p>
-                                        <p>Sexo</p>
-                                        <p>性</p>
-                                        <p>Секс</p>
-                                        <p>سكس</p>
-                                    </div>
-                                    <div class="col-md-2 ">
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <p class="NoLabel FNdraggable">@Model.tblSex.Name</p>
-
-                                    </div>
-                                    <div class="col-md-2 ">
-
-
-                                    </div>
+                                <div class="" style="font-size: 12px; margin-top: -34px; margin-left: 438px;">
+                                    <p class="NotPrint" style="font-weight: bold;">Mother’s name • Nomo de patrino • Nom de la mère •</p>
+                                    <p class="NotPrint" style="font-weight: bold;">Nombre de la madre • Имя матери • 母亲的名字 • اسم الأ</p>
+                                    <p class="NoLabel FNdraggable">@Model.MotherName</p>
                                 </div>
-
                             </div>
-                            <div class="col-md-6">
-                                <br />
-                                <br />
-                                <p class="NotPrint">Father’s name • Nomo de patro • Nom du père •</p>
-                                <p class="NotPrint">Nombre del padre • Имя отца • 父亲的名字 • اسم الأب</p>
-                                <p class="NoLabel FNdraggable">@Model.FatherName</p>
-                            </div>
-                        </div>
-                        <br />
-                        <br />
-                        <div class="row">
-                            <div class="col-md-6 ">
-                                <div class="row NotPrint">
-                                    <div class="col-md-4 ">
+                            <br />
+                            <div class="" style="font-size:10px;">
+                                <div class=" ">
+                                    <div class="">
+                                        <div class=" NotPrint" style="font-weight: bold; margin-left: 130px;">
+                                            <p class="MremB">Sekso</p>
+                                            <p class="MremB">Sex</p>
+                                            <p class="MremB">Sexe</p>
+                                            <p class="MMremB">Sexo</p>
+                                            <p class="MMremB">性</p>
+                                            <p class="MremB">Секс</p>
+                                            <p class="MremB">سكس</p>
+                                        </div>
+                                        <div class=" " style="margin-left: 190px; margin-top: -58px;">
 
-                                    </div>
-                                    <div class="col-md-3 ">
-                                        <p>Issued at:</p>
-                                        <p>Eldonita ĉe:</p>
-                                        <p>Émis à:</p>
-                                        <p>Emitido en:</p>
-                                        <p>Выпущено в:</p>
-                                        <p>发布于:</p>
-                                        <p>:تم إصداره في</p>
+                                            <p class="NoLabel FNdraggable">@Model.tblSex.Name</p>
 
+                                        </div>
                                     </div>
-                                    <div class="col-md-4 ">
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <br />
-                                        <p><b>Washington, DC</b></p>
-                                    </div>
-                                    <div class="col-md-1 ">
 
-                                    </div>
                                 </div>
-
-                            </div>
-                            <div class="col-md-1 NotPrint">
-                                <p>the</p>
-                                <p>la</p>
-                                <p>le</p>
-                                <p>la</p>
-                                <p>в</p>
-                                <p>这个</p>
-                                <p>ال</p>
-                            </div>
-                            <div class="col-md-3">
-                                <br />
-                                <br />
-                                <br />
-                                <p class="NoLabel FNdraggable">@ViewBag.TL.IssueDate</p>
-                            </div>
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <div class="row NotPrint">
-                            <div class="col-md-12 text-center">
-                                <div class="row">
-                                    <div class="col-md-4 ">
-
-                                    </div>
-                                    <div class="col-md-4 " style="border-bottom:solid">
-
-                                    </div>
-                                    <div class="col-md-4 ">
-
-                                    </div>
+                                <div class="" style="margin-left: 438px; margin-top: -14px;">
+                                    <p class="NotPrint" style="font-weight: bold;">Father’s name • Nomo de patro • Nom du père •</p>
+                                    <p class="NotPrint" style="font-weight: bold;">Nombre del padre • Имя отца • 父亲的名字 • اسم الأب</p>
+                                    <p class="NoLabel FNdraggable">@Model.FatherName</p>
                                 </div>
-                                <p>WSA-Officer • WSA-Oficiro • WSA-Officier • WSA-Oficial •</p>
-                                <p>WSA-Офицер • WSA-官 • ضابط -WSA</p>
                             </div>
-                        </div>
-                        <br />
-                        <div class="row NotPrint">
-                            <div class="col-md-12 text-center">
-                                <p>This document is issued in accordance with Article 1, Universal Declaration of Human Rights.</p>
-                                <p>Tiu-ĉi documento estas eldonita konforme el la Artikolo 1 de la Universala Deklaracio de Homaj Rajtoj.</p>
-                                <p>Ce document est émis en vertu de l’Article 1 de la Déclaration Universelle des Droits de l’Homme.</p>
-                                <p>Este documento se emite de conformidad con el Artículo 1, Declaración Universal de los Derechos Humanos.</p>
-                                <p>Этот документ выдан в соответствии со Cтатьей 1 Всеобщей декларации прав человека.</p>
-                                <p>本文件根据《世界人权宣言》第 1 条发布。</p>
-                                <p>صدرت هذه الوثيقة وفقا للمادة 1 من الإعلان العالمي لحقوق الإنسان.</p>
+                            <br />
+                            <br />
+                            <div class="" style="font-size:10px;">
+                                <div class=" ">
+                                    <div class=" NotPrint">
+                                        <div class=" " style="margin-left: 196px; font-weight: bold;">
+                                            <p>Issued at:</p>
+                                            <p>Eldonita ĉe:</p>
+                                            <p>Émis à:</p>
+                                            <p>Emitido en:</p>
+                                            <p>Выпущено в:</p>
+                                            <p>发布于:</p>
+                                            <p>:تم إصداره في</p>
+
+                                        </div>
+                                        <div class=" " style="margin-top: -72px; margin-left: 288px; font-weight: bold;">
+                                            <p><b>Washington, DC</b></p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class=" NotPrint" style="margin-top: -50px; margin-left: 438px; font-weight: bold;">
+                                    <p>the</p>
+                                    <p>la</p>
+                                    <p>le</p>
+                                    <p>la</p>
+                                    <p>в</p>
+                                    <p>这个</p>
+                                    <p>ال</p>
+                                </div>
+                                <div class="" style="margin-top: -72px; margin-left: 518px;">
+                                    <p class="NoLabel FNdraggable">@ViewBag.TL.IssueDate</p>
+                                </div>
                             </div>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <div class=" NotPrint" style="margin-bottom: 0.5rem;">
+                                <div class=" " style=" font-size:10px;text-align:center;">
+                                    <div class="">
+
+                                        <div class="BorderLine " style="border-bottom: 1px solid black; width: 270px; margin-left: 7cm;">
+
+                                        </div>
+
+                                    </div>
+                                    <p style="font-weight: bold;">WSA-Officer • WSA-Oficiro • WSA-Officier • WSA-Oficial •</p>
+                                    <p style="font-weight: bold;">WSA-Офицер • WSA-官 • ضابط -WSA</p>
+                                </div>
+                            </div>
+                            <div class=" NotPrint">
+                                <div class=" " style="font-size: 10px; font-weight: bold; text-align: center;">
+                                    <p>This document is issued in accordance with Article 1, Universal Declaration of Human Rights.</p>
+                                    <p>Tiu-ĉi documento estas eldonita konforme el la Artikolo 1 de la Universala Deklaracio de Homaj Rajtoj.</p>
+                                    <p>Ce document est émis en vertu de l’Article 1 de la Déclaration Universelle des Droits de l’Homme.</p>
+                                    <p>Este documento se emite de conformidad con el Artículo 1, Declaración Universal de los Derechos Humanos.</p>
+                                    <p>Этот документ выдан в соответствии со Cтатьей 1 Всеобщей декларации прав человека.</p>
+                                    <p>本文件根据《世界人权宣言》第 1 条发布。</p>
+                                    <p>صدرت هذه الوثيقة وفقا للمادة 1 من الإعلان العالمي لحقوق الإنسان.</p>
+                                </div>
+                            </div>
+                            <!-- /Page Header -->
+
                         </div>
-
-                        <!-- /Page Header -->
-
                     </div>
-                </div>
-
-
+                    
+                </page>
             </section>
         </div>
     </div>
@@ -481,6 +488,11 @@
 
         $("p").css("margin-top", '0rem');
         $("p").css("margin-bottom", '0rem');
+
+        $(".MremT").css("margin-top", '-0.4rem');
+        $(".MremB").css("margin-bottom", '-0.4rem');
+        $(".MMremB").css("margin-bottom", '-0.2rem');
+        $("p").css("font-family", 'Calibri');
     });
     $("#FontStyle").change(function () {
         $(".NoLabel").css("font-family", $("#FontStyle").val());
@@ -538,30 +550,39 @@
 
     $('#PrintBtn').click(function () {
         $(".NotPrint").css("color", "transparent");
+        $(".BorderLine").css("border-bottom", "0px");
         var myDiv = document.getElementById("section").innerHTML;
 
-            document.body.innerHTML =
-                "<html><head><title></title></head><body>" +
+             document.getElementById("HT").innerHTML =
+                "<html><head><link rel='stylesheet' href='/Content/assets/css/style.css'><title></title><style>page {background: white;display: block;margin: 0 auto;margin-bottom: 0.5cm;box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);}page[size='A4'] {width: 22cm;height: 28cm;}page[size='A4'][layout='landscape'] {width: 29.7cm;height: 21cm;}@@media print {body, page {margin: 0;box-shadow: 0;}}</style></head><body>" +
             myDiv + "</body></html>";
-            window.print();
 
-            var url = window.location.origin;
-        url += '/Person/BirthCertificate?id='+@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
+
+        window.setTimeout(function () {
+
+            window.print();
+             var url = window.location.origin;
+            url += '/Person/BirthCertificate?id='+@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
             window.location.href = url;
+        }, 500);
     });
 
     $('#PDFBtn').click(function () {
         var myDiv = document.getElementById("section").innerHTML;
 
         //$("#MRZHide").css('paddingLeft', 15);
-            document.body.innerHTML =
-                "<html><head><title></title></head><body>" +
+            document.getElementById("HT").innerHTML =
+                "<html><head><link rel='stylesheet' href='/Content/assets/css/style.css'><title></title><style>page {background: white;display: block;margin: 0 auto;margin-bottom: 0.5cm;box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);}page[size='A4'] {width: 22cm;height: 28cm;}page[size='A4'][layout='landscape'] {width: 29.7cm;height: 21cm;}@@media print {body, page {margin: 0;box-shadow: 0;}}</style></head><body>" +
             myDiv + "</body></html>";
-            window.print();
 
-            var url = window.location.origin;
-        url += '/Person/BirthCertificate?id='+@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
+
+        window.setTimeout(function () {
+
+            window.print();
+             var url = window.location.origin;
+            url += '/Person/BirthCertificate?id='+@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
             window.location.href = url;
+        }, 500);
     });
 
 

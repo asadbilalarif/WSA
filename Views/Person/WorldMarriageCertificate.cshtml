@@ -24,9 +24,33 @@
 <head>
 
     <style>
-        p {
-            margin-top: 0;
-            margin-bottom: 0rem;
+        body {
+            background: rgb(204,204,204);
+        }
+
+        page {
+            background: white;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 0.5cm;
+            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+        }
+
+            page[size='A4'] {
+                width: 22cm;
+                height: 28cm;
+            }
+
+                page[size='A4'][layout='landscape'] {
+                    width: 29.7cm;
+                    height: 21cm;
+                }
+
+        @@media print {
+            body, page {
+                margin: 0;
+                box-shadow: 0;
+            }
         }
     </style>
 
@@ -36,17 +60,21 @@
 
         shortcut.add("ctrl+p", function () {
             $(".NotPrint").css("color", "transparent");
-            var db = document.body.getElementsByTagName('div');
-            var myDiv = document.getElementById("section").innerHTML;
+            $(".BorderLine").css("border-bottom", "0px");
+        var myDiv = document.getElementById("section").innerHTML;
 
-            document.body.innerHTML =
-                "<html><head><title></title></head><body>" +
-                myDiv + "</body>";
+             document.getElementById("HT").innerHTML =
+                "<html><head><link rel='stylesheet' href='/Content/assets/css/style.css'><title></title><style>page {background: white;display: block;margin: 0 auto;margin-bottom: 0.5cm;box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);}page[size='A4'] {width: 22cm;height: 28cm;}page[size='A4'][layout='landscape'] {width: 29.7cm;height: 21cm;}@@media print {body, page {margin: 0;box-shadow: 0;}}</style></head><body>" +
+            myDiv + "</body></html>";
+
+
+        window.setTimeout(function () {
+
             window.print();
-
-            var url = window.location.origin;
-             url += "/Person/WorldMarriageCertificate?SecondName=@ViewBag.SecondName&&id=" +@Model.PersonIDNumber+"&&tid=" +@ViewBag.TL.TransactionIDNumber;
+             var url = window.location.origin;
+             url += '/Person/WorldMarriageCertificate?SecondName=@ViewBag.SecondName&&id=' +@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
             window.location.href = url;
+        }, 500);
         });
 
     </script>
@@ -167,141 +195,132 @@
                 </div>
 
             </div>
-            <section class="row">
-                <div class="card col-md-10" id="section">
-                    <div class="card-body" id="FNdraggableArea">
+            <section class="" id="section">
+                <page size="A4">
+                    <div class="card ">
+                        <div class="card-body" style="height: 27cm;" id="FNdraggableArea">
 
-                        <div class="row">
-                            <div class="col-md-6 NotPrint">
-                                <p>Issued at • Eldonita ĉe • Émis à •</p>
-                                <p>Emitido en • Выпущено в • 发布于 • تم إصداره</p>
-                            </div>
-                            <div class="col-md-3 text-right">
-                                <div id="MRZHide" class="FNdraggable" style="display: none; position: absolute; z-index:100;">
-                                    <img src="@Model.QRCode" alt="Alternate Text" />
+                            <div class="" style="margin-top: 2cm; font-size: 12px; margin-left: 80px;">
+                                <div class=" NotPrint">
+                                    <p class="MremB" >Issued at • Eldonita ĉe • Émis à •</p>
+                                    <p>Emitido en • Выпущено в • 发布于 • تم إصداره</p>
                                 </div>
-                            </div>
-                            <div class="col-md-3 text-right">
-                                <p class="NotPrint">Number • Nombro • Numéro •</p>
-                                <p class="NotPrint">Numero • Номер • 编号 • رقم</p>
-
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row " style="margin-left:4%;">
-                            <div class="col-md-6 NotPrint" style="font-size:15px;">
-                                <p>
-                                    WSA World Office
-                                </p>
-                                <p>
-                                    Washington, DC
-                                </p>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                <p class="NoLabel FNdraggable">@ViewBag.TL.IDCode</p>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row NotPrint" style="font-size:20px;">
-                            <div class="col-md-12 text-center">
-                                <p><b>WORLD MARRIAGE CERTIFICATE • MONDA GEEDZIĜA ATESTILO</b></p>
-                            </div>
-                            <div class="col-md-12 text-center">
-                                <p><b>CERTIFICAT DE MARIAGE MONDIAL • CERTIFICADO MUNDIAL DE MATRIMONIO</b></p>
-                            </div>
-                            <div class="col-md-12 text-center">
-                                <p><b>МИРОВОЕ СЕРТИФИКАТ О БРАКЕ • 世界结婚证书 • شهادة زواج عالمي</b></p>
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row" style="font-size:20px;">
-                            <div class="col-md-6 NotPrint">
-                                <p><b>This certifies that</b></p>
-                                <p><b>Ĉi tio atestas</b></p>
-                                <p><b>Ceci certifie que</b></p>
-                                <p><b>Esto certifica que</b></p>
-                                <p><b>Это подтверждает, что</b></p>
-                                <p><b>这证明了</b></p>
-                                <p><b>هذا يثبت ذلك</b></p>
-                            </div>
-                            <div class="col-md-6">
-                                <br />
-                                <p class="NoLabel FNdraggable">@Model.FirstName</p>
-                                <p class="NotPrint"><b>and • kaj • et • y • и • 和 • و</b></p>
-                                <p class="NoLabel FNdraggable">@ViewBag.SecondName</p>
-                            </div>
-                        </div>
-                        <div class="row NotPrint">
-                            <div class="col-md-12">
-                                <p>have declared their mutual consent as partners in marriage in accordance with Article 16, Sections 1 and 2, of the Universal Declaration of Human Rights. The named individuals are registered citizens of the World Citizen Government of which WSA is the administrative agency. This certificate has been issued on the basis of an application by the above-named individuals and whose signatures have been certified and recorded with the World Service Authority, Washington, DC.</p>
-                                <p>deklaris sian reciprokan konsenton kiel geedzecojn konforme al Artikolo 16, Sekcioj 1 kaj 2, de la Universala Deklaracio de Homaj Rajtoj. La nomitaj individuoj estas registritaj civitanoj de la Mondcivitana Registaro de kiu WSA estas la administra agentejo. Ĉi tiu atestilo estis eldonita surbaze de peto de la supre nomitaj individuoj kaj kies subskriboj estis atestitaj kaj registritaj ĉe la Monda Serva Aŭtoritato, Vaŝingtono.</p>
-                                <p>ont déclaré leur consentement mutuel en tant que partenaires dans le mariage conformément à l'article 16, sections 1 et 2, de la Déclaration universelle des droits de l'homme. Les personnes nommées sont des citoyens enregistrés du Gouvernement Mondial des Citoyen(ne)s du Monde dont WSA est l'agence administrative. Ce certificat a été délivré sur la base d'une demande des personnes susmentionnées et dont les signatures ont été certifiées et enregistrées auprès de la World Service Authority, Washington, DC.</p>
-                                <p>han declarado su mutuo consentimiento como cónyuges de conformidad con el artículo 16, apartados 1 y 2, de la Declaración Universal de los Derechos Humanos. Las personas nombradas son ciudadanos registrados del Gobierno Mundial de Ciudadano(a)s del Mundo del cual la WSA es la agencia administrativa. Este certificado ha sido emitido sobre la base de una solicitud de las personas mencionadas anteriormente y cuyas firmas han sido certificadas y registradas con la Autoridad de Servicio Mundial, Washington, DC.</p>
-                                <p>заявили о своем взаимном согласии в качестве партнеров в браке в соответствии со статьей 16, разделами 1 и 2, Всеобщей декларации прав человека. Названные лица являются зарегистрированными гражданами Мировое Правительство Граждан Мира, административным органом которого является WSA. Этот сертификат был выдан на основании заявления вышеназванных лиц, чьи подписи были заверены и зарегистрированы Управлением Всемирной службы, Вашингтон, округ Колумбия.</p>
-                                <p>已根据《世界人权宣言》第 16 条第 1 和第 2 节宣布他们作为婚姻伴侣相互同意。 所指名的个人是世界公民政府的注册公民，世界公民政府是 WSA 的行政机构。 此证书是根据上述个人的申请签发的，其签名已在华盛顿特区世界服务管理局认证和记录。</p>
-                                <p>أعلنوا موافقتهم المتبادلة كشركاء في الزواج وفقًا للمادة 16 ، القسمين 1 و 2 ، من الإعلان العالمي لحقوق الإنسان. الأفراد المذكورون هم مواطنون مسجلون في حكومة المواطن العالمية التي تمثل WSA الوكالة الإدارية لها. تم إصدار</p>
-                                <p>هذه الشهادة بناءً على طلب من الأفراد المذكورين أعلاه والذين تم التصديق على توقيعاتهم وتسجيلها لدى هيئة الخدمة العالمية بواشنطن العاصمة.</p>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4 ">
-
-                            </div>
-
-                            <div class="col-md-2 NotPrint">
-                                <p>On the date:</p>
-                                <p>En la dato:</p>
-                                <p>À la date:</p>
-                                <p>En la cita:</p>
-                                <p>На дату:</p>
-                                <p>日期:</p>
-                                <p>:في التاريخ المحدد</p>
-                            </div>
-                            <div class="col-md-2 ">
-                                <br />
-                                <br />
-                                <br />
-                                <p class="NoLabel FNdraggable">@ViewBag.TL.IssueDate</p>
-                            </div>
-                        </div>
-                        <div class="row NotPrint">
-                            <div class="col-md-12 text-center">
-                                <div class="row">
-                                    <div class="col-md-4 ">
-
-                                    </div>
-                                    <div class="col-md-4 " style="border-bottom:solid">
-
-                                    </div>
-                                    <div class="col-md-4 ">
-
+                                <div class=" ">
+                                    <div id="MRZHide" class="FNdraggable" style="display: none; position: absolute; z-index:100;">
+                                        <img src="@Model.QRCode" alt="Alternate Text" />
                                     </div>
                                 </div>
-                                <p>WSA-Officer • WSA-Oficiro • WSA-Officier • WSA-Oficial •</p>
-                                <p>WSA-Офицер • WSA-官 • ضابط -WSA</p>
-                            </div>
-                        </div>
-                        <div class="row NotPrint">
-                            <div class="col-md-12 text-center">
-                                <p>This document is issued in accordance with Article 16 (1) and (2), Universal Declaration of Human Rights.</p>
-                                <p>Tiu-ĉi dokumento estas eldonita konforme el la Artikolo 16 (1) kaj (2) de la Universala Deklaracio de Homaj Rajtoj.</p>
-                                <p>Ce document est émis en vertu de l’Article 16 (1) et (2) de la Déclaration Universelle des Droits de l’Homme.</p>
-                                <p>Este documento se emite de conformidad con el Artículo 16 (1) y (2), Declaración Universal de los Derechos Humanos.</p>
-                                <p>Этот документ выдан в соответствии со Cтатьей 16 (1) и (2) Всеобщей декларации прав человека.</p>
-                                <p>本文件根据《世界人权宣言》第 16 (1) 和 (2) 条发布。</p>
-                                <p>صدرت هذه الوثيقة وفقا للمادة 16 (1) و (2) من الإعلان العالمي لحقوق الإنسان.</p>
-                            </div>
-                        </div>
+                                <div class=" " style="margin-top: -36px;margin-left: 470px;">
+                                    <p class="NotPrint MremB">Number • Nombro • Numéro •</p>
+                                    <p class="NotPrint">Numero • Номер • 编号 • رقم</p>
 
-                        <!-- /Page Header -->
+                                </div>
+                            </div>
+                            <br />
+                            <div class=" " style="margin-top: -10px; margin-left: 130px;">
+                                <div class=" NotPrint" style="font-size:12px;">
+                                    <p class="MremB">
+                                        WSA World Office
+                                    </p>
+                                    <p>
+                                        Washington, DC
+                                    </p>
+                                </div>
+                                <div class="" style="margin-top: -30px; margin-left: 420px;">
+                                    <p class="NoLabel FNdraggable">@ViewBag.TL.IDCode</p>
+                                </div>
+                            </div>
+                            <br />
+                            <div class=" NotPrint" style="font-size: 18px; text-align: center;">
+                                <div class=" ">
+                                    <p><b>WORLD MARRIAGE CERTIFICATE • MONDA GEEDZIĜA ATESTILO</b></p>
+                                </div>
+                                <div class=" ">
+                                    <p><b>CERTIFICAT DE MARIAGE MONDIAL • CERTIFICADO MUNDIAL DE MATRIMONIO</b></p>
+                                </div>
+                                <div class=" ">
+                                    <p><b>МИРОВОЕ СЕРТИФИКАТ О БРАКЕ • 世界结婚证书 • شهادة زواج عالمي</b></p>
+                                </div>
+                            </div>
+                            <div class="" style="font-size: 16px; margin-top: 16px;">
+                                <div class=" NotPrint" style="margin-left: 80px;">
+                                    <p class="MremB"><b>This certifies that</b></p>
+                                    <p class="MremB"><b>Ĉi tio atestas</b></p>
+                                    <p class="MremB"><b>Ceci certifie que</b></p>
+                                    <p class="MremB"><b>Esto certifica que</b></p>
+                                    <p class="MremB"><b>Это подтверждает, что</b></p>
+                                    <p class="MremB"><b>这证明了</b></p>
+                                    <p><b>هذا يثبت ذلك</b></p>
+                                </div>
+                                <div class="" style="margin-top: -102px; margin-left: 420px;">
+                                    <p class="NoLabel FNdraggable">@Model.LastName , @Model.FirstName</p>
 
+                                    <p class="NotPrint"><b>and • kaj • et • y • и • 和 • و</b></p>
+                                    <p class="NoLabel FNdraggable">@ViewBag.SecondName</p>
+                                </div>
+                            </div>
+                            <div class=" NotPrint">
+                                <div class="" style=" font-size: 8px; margin-left: 80px; margin-top: 44px; margin-right: 70px; font-weight: bold;">
+                                    <label style="line-height: 1.3;display:inline-block;">have declared their mutual consent as partners in marriage in accordance with Article 16, Sections 1 and 2, of the Universal Declaration of Human Rights. The named individuals are registered citizens of the World Citizen Government of which WSA is the administrative agency. This certificate has been issued on the basis of an application by the above-named individuals and whose signatures have been certified and recorded with the World Service Authority, Washington, DC.</label>
+                                    <label style="margin-top: 6px; line-height: 1.2; display: inline-block; ">deklaris sian reciprokan konsenton kiel geedzecojn konforme al Artikolo 16, Sekcioj 1 kaj 2, de la Universala Deklaracio de Homaj Rajtoj. La nomitaj individuoj estas registritaj civitanoj de la Mondcivitana Registaro de kiu WSA estas la administra agentejo. Ĉi tiu atestilo estis eldonita surbaze de peto de la supre nomitaj individuoj kaj kies subskriboj estis atestitaj kaj registritaj ĉe la Monda Serva Aŭtoritato, Vaŝingtono.</label>
+                                    <label style="margin-top: 6px; line-height: 1.2; display: inline-block; ">ont déclaré leur consentement mutuel en tant que partenaires dans le mariage conformément à l'article 16, sections 1 et 2, de la Déclaration universelle des droits de l'homme. Les personnes nommées sont des citoyens enregistrés du Gouvernement Mondial des Citoyen(ne)s du Monde dont WSA est l'agence administrative. Ce certificat a été délivré sur la base d'une demande des personnes susmentionnées et dont les signatures ont été certifiées et enregistrées auprès de la World Service Authority, Washington, DC.</label>
+                                    <label style="margin-top: 6px; line-height: 1.2; display: inline-block; ">han declarado su mutuo consentimiento como cónyuges de conformidad con el artículo 16, apartados 1 y 2, de la Declaración Universal de los Derechos Humanos. Las personas nombradas son ciudadanos registrados del Gobierno Mundial de Ciudadano(a)s del Mundo del cual la WSA es la agencia administrativa. Este certificado ha sido emitido sobre la base de una solicitud de las personas mencionadas anteriormente y cuyas firmas han sido certificadas y registradas con la Autoridad de Servicio Mundial, Washington, DC.</label>
+                                    <label style="margin-top: 6px; line-height: 1.2; display: inline-block; ">заявили о своем взаимном согласии в качестве партнеров в браке в соответствии со статьей 16, разделами 1 и 2, Всеобщей декларации прав человека. Названные лица являются зарегистрированными гражданами Мировое Правительство Граждан Мира, административным органом которого является WSA. Этот сертификат был выдан на основании заявления вышеназванных лиц, чьи подписи были заверены и зарегистрированы Управлением Всемирной службы, Вашингтон, округ Колумбия.</label>
+                                    <label style="margin-top: 6px; line-height: 1.2; display: inline-block; ">已根据《世界人权宣言》第 16 条第 1 和第 2 节宣布他们作为婚姻伴侣相互同意。 所指名的个人是世界公民政府的注册公民，世界公民政府是 WSA 的行政机构。 此证书是根据上述个人的申请签发的，其签名已在华盛顿特区世界服务管理局认证和记录。</label>
+                                    <label style="margin-top: 6px; line-height: 1.2; display: inline-block; ">أعلنوا موافقتهم المتبادلة كشركاء في الزواج وفقًا للمادة 16 ، القسمين 1 و 2 ، من الإعلان العالمي لحقوق الإنسان. الأفراد المذكورون هم مواطنون مسجلون في حكومة المواطن العالمية التي تمثل WSA الوكالة الإدارية لها. تم إصدار</label>
+                                    <label style="margin-top: 0px; line-height: 1.2; display: inline-block; ">هذه الشهادة بناءً على طلب من الأفراد المذكورين أعلاه والذين تم التصديق على توقيعاتهم وتسجيلها لدى هيئة الخدمة العالمية بواشنطن العاصمة.</label>
+
+                                </div>
+                            </div>
+                            <div class="" style="font-size:10px;">
+
+                                <div class=" NotPrint" style="margin-top: 12px; margin-left: 310px; font-weight: bold;">
+                                    <p class="MremB">On the date:</p>
+                                    <p class="MremB">En la dato:</p>
+                                    <p class="MremB">À la date:</p>
+                                    <p class="MremB">En la cita:</p>
+                                    <p class="MMremB">На дату:</p>
+                                    <p class="MremB">日期:</p>
+                                    <p >:في التاريخ المحدد</p>
+                                </div>
+                                <div class=" " style="margin-top: -46px; margin-left: 418px;">
+                                    <p class="NoLabel FNdraggable">@ViewBag.TL.IssueDate</p>
+                                </div>
+                            </div>
+                            <div class=" NotPrint" style="margin-bottom: 0.5rem; margin-top: 70px;">
+                                <div class=" " style=" font-size:10px;text-align:center;">
+                                    <div class="">
+
+                                        <div class="BorderLine " style="border-bottom: 1px solid black; width: 270px; margin-left: 7cm;">
+
+                                        </div>
+
+                                    </div>
+                                    <p>WSA-Officer • WSA-Oficiro • WSA-Officier • WSA-Oficial •</p>
+                                    <p>WSA-Офицер • WSA-官 • ضابط -WSA</p>
+                                </div>
+                            </div>
+                            <div class=" NotPrint">
+                                <div class=" " style="font-size: 10px; font-weight: bold; text-align: center;">
+                                    <p>This document is issued in accordance with Article 16 (1) and (2), Universal Declaration of Human Rights.</p>
+                                    <p>Tiu-ĉi dokumento estas eldonita konforme el la Artikolo 16 (1) kaj (2) de la Universala Deklaracio de Homaj Rajtoj.</p>
+                                    <p>Ce document est émis en vertu de l’Article 16 (1) et (2) de la Déclaration Universelle des Droits de l’Homme.</p>
+                                    <p>Este documento se emite de conformidad con el Artículo 16 (1) y (2), Declaración Universal de los Derechos Humanos.</p>
+                                    <p>Этот документ выдан в соответствии со Cтатьей 16 (1) и (2) Всеобщей декларации прав человека.</p>
+                                    <p>本文件根据《世界人权宣言》第 16 (1) 和 (2) 条发布。</p>
+                                    <p>صدرت هذه الوثيقة وفقا للمادة 16 (1) و (2) من الإعلان العالمي لحقوق الإنسان.</p>
+                                </div>
+                            </div>
+
+
+                            <!-- /Page Header -->
+
+                        </div>
                     </div>
-                </div>
 
 
-
-            </section>
+                </page>
+</section>
         </div>
     </div>
 </div>
@@ -345,6 +364,11 @@
 
         $("p").css("margin-top", '0rem');
         $("p").css("margin-bottom", '0rem');
+        $(".MremT").css("margin-top", '-0.4rem');
+        $(".MremB").css("margin-bottom", '-0.4rem');
+        $(".MMremB").css("margin-bottom", '-0.2rem');
+        $("p").css("font-family", 'Calibri');
+        $("label").css("font-family", 'Calibri');
     });
     $("#FontStyle").change(function () {
         $(".NoLabel").css("font-family", $("#FontStyle").val());
@@ -402,29 +426,38 @@
 
     $('#PrintBtn').click(function () {
         $(".NotPrint").css("color", "transparent");
+        $(".BorderLine").css("border-bottom", "0px");
         var myDiv = document.getElementById("section").innerHTML;
 
-            document.body.innerHTML =
-                "<html><head><title></title></head><body>" +
-                myDiv + "</body>";
-            window.print();
+             document.getElementById("HT").innerHTML =
+                "<html><head><link rel='stylesheet' href='/Content/assets/css/style.css'><title></title><style>page {background: white;display: block;margin: 0 auto;margin-bottom: 0.5cm;box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);}page[size='A4'] {width: 22cm;height: 28cm;}page[size='A4'][layout='landscape'] {width: 29.7cm;height: 21cm;}@@media print {body, page {margin: 0;box-shadow: 0;}}</style></head><body>" +
+            myDiv + "</body></html>";
 
-            var url = window.location.origin;
-        url += '/Person/WorldMarriageCertificate?SecondName=@ViewBag.SecondName&&id=' +@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
+
+        window.setTimeout(function () {
+
+            window.print();
+             var url = window.location.origin;
+             url += '/Person/WorldMarriageCertificate?SecondName=@ViewBag.SecondName&&id=' +@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
             window.location.href = url;
+        }, 500);
     });
 
     $('#PDFBtn').click(function () {
         var myDiv = document.getElementById("section").innerHTML;
 
-            document.body.innerHTML =
-                "<html><head><title></title></head><body>" +
-                myDiv + "</body>";
-            window.print();
+           document.getElementById("HT").innerHTML =
+                "<html><head><link rel='stylesheet' href='/Content/assets/css/style.css'><title></title><style>page {background: white;display: block;margin: 0 auto;margin-bottom: 0.5cm;box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);}page[size='A4'] {width: 22cm;height: 28cm;}page[size='A4'][layout='landscape'] {width: 29.7cm;height: 21cm;}@@media print {body, page {margin: 0;box-shadow: 0;}}</style></head><body>" +
+            myDiv + "</body></html>";
 
-            var url = window.location.origin;
-        url += '/Person/WorldMarriageCertificate?SecondName=@ViewBag.SecondName&&id=' +@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
+
+        window.setTimeout(function () {
+
+            window.print();
+             var url = window.location.origin;
+             url += '/Person/WorldMarriageCertificate?SecondName=@ViewBag.SecondName&&id=' +@Model.PersonIDNumber+'&&tid=' +@ViewBag.TL.TransactionIDNumber +'';
             window.location.href = url;
+        }, 500);
     });
 
 

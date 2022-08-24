@@ -48,8 +48,8 @@ namespace WorldServiceOrganization.Models
         public virtual DbSet<tblTransaction> tblTransactions { get; set; }
         public virtual DbSet<tblMRZTranslation> tblMRZTranslations { get; set; }
         public virtual DbSet<tblFontStyle> tblFontStyles { get; set; }
-        public virtual DbSet<tblPerson> tblPersons { get; set; }
         public virtual DbSet<tblPassportLabelSetting> tblPassportLabelSettings { get; set; }
+        public virtual DbSet<tblPerson> tblPersons { get; set; }
     
         public virtual ObjectResult<ProductUnionPackage_Result> ProductUnionPackage()
         {

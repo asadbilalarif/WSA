@@ -38,7 +38,7 @@ namespace WorldServiceOrganization.Models
         public string BirthMonth { get; set; }
         public string BirthYear { get; set; }
         public Nullable<int> Sex { get; set; }
-        public Nullable<double> Height { get; set; }
+        public string Height { get; set; }
         public Nullable<int> HeightUnit { get; set; }
         public Nullable<int> Eyes { get; set; }
         public string Marks { get; set; }

@@ -491,54 +491,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tblPersons">
-      <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblPerson">
-        <MappingFragment StoreEntitySet="tblPerson">
-          <ScalarProperty Name="isActive" ColumnName="isActive" />
-          <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
-          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
-          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
-          <ScalarProperty Name="LastEditedBy" ColumnName="LastEditedBy" />
-          <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="QRCode" ColumnName="QRCode" />
-          <ScalarProperty Name="CountryOfBirthStatistical" ColumnName="CountryOfBirthStatistical" />
-          <ScalarProperty Name="Certification" ColumnName="Certification" />
-          <ScalarProperty Name="Signature" ColumnName="Signature" />
-          <ScalarProperty Name="Photograph" ColumnName="Photograph" />
-          <ScalarProperty Name="Photo" ColumnName="Photo" />
-          <ScalarProperty Name="SignaturePath" ColumnName="SignaturePath" />
-          <ScalarProperty Name="TransactionCount" ColumnName="TransactionCount" />
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="Comments" ColumnName="Comments" />
-          <ScalarProperty Name="WSANumber" ColumnName="WSANumber" />
-          <ScalarProperty Name="MotherName" ColumnName="MotherName" />
-          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
-          <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="OccupationCode" ColumnName="OccupationCode" />
-          <ScalarProperty Name="OccupationId" ColumnName="OccupationId" />
-          <ScalarProperty Name="Marks" ColumnName="Marks" />
-          <ScalarProperty Name="Eyes" ColumnName="Eyes" />
-          <ScalarProperty Name="HeightUnit" ColumnName="HeightUnit" />
-          <ScalarProperty Name="Height" ColumnName="Height" />
-          <ScalarProperty Name="Sex" ColumnName="Sex" />
-          <ScalarProperty Name="BirthYear" ColumnName="BirthYear" />
-          <ScalarProperty Name="BirthMonth" ColumnName="BirthMonth" />
-          <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
-          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-          <ScalarProperty Name="Website" ColumnName="Website" />
-          <ScalarProperty Name="EMail" ColumnName="EMail" />
-          <ScalarProperty Name="Fax" ColumnName="Fax" />
-          <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="CountryOfBirth" ColumnName="CountryOfBirth" />
-          <ScalarProperty Name="CityOfBirth" ColumnName="CityOfBirth" />
-          <ScalarProperty Name="CountryOfApplication" ColumnName="CountryOfApplication" />
-          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="LastName" ColumnName="LastName" />
-          <ScalarProperty Name="PersonIDNumber" ColumnName="PersonIDNumber" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="CountrySummaryList" FunctionName="WorldServiceOrganizationModel.Store.CountrySummaryList">
       <ResultMapping>
         <ComplexTypeMapping TypeName="WorldServiceOrganizationModel.CountrySummaryList_Result2">
@@ -687,6 +639,54 @@
           <ScalarProperty Name="XPassportNumber" ColumnName="XPassportNumber" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="PassportLabelSettingId" ColumnName="PassportLabelSettingId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tblPersons">
+      <EntityTypeMapping TypeName="WorldServiceOrganizationModel.tblPerson">
+        <MappingFragment StoreEntitySet="tblPerson">
+          <ScalarProperty Name="isActive" ColumnName="isActive" />
+          <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+          <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+          <ScalarProperty Name="LastModifiedDate" ColumnName="LastModifiedDate" />
+          <ScalarProperty Name="LastEditedBy" ColumnName="LastEditedBy" />
+          <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="QRCode" ColumnName="QRCode" />
+          <ScalarProperty Name="CountryOfBirthStatistical" ColumnName="CountryOfBirthStatistical" />
+          <ScalarProperty Name="Certification" ColumnName="Certification" />
+          <ScalarProperty Name="Signature" ColumnName="Signature" />
+          <ScalarProperty Name="Photograph" ColumnName="Photograph" />
+          <ScalarProperty Name="Photo" ColumnName="Photo" />
+          <ScalarProperty Name="SignaturePath" ColumnName="SignaturePath" />
+          <ScalarProperty Name="TransactionCount" ColumnName="TransactionCount" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Comments" ColumnName="Comments" />
+          <ScalarProperty Name="WSANumber" ColumnName="WSANumber" />
+          <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+          <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="OccupationCode" ColumnName="OccupationCode" />
+          <ScalarProperty Name="OccupationId" ColumnName="OccupationId" />
+          <ScalarProperty Name="Marks" ColumnName="Marks" />
+          <ScalarProperty Name="Eyes" ColumnName="Eyes" />
+          <ScalarProperty Name="HeightUnit" ColumnName="HeightUnit" />
+          <ScalarProperty Name="Height" ColumnName="Height" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="BirthYear" ColumnName="BirthYear" />
+          <ScalarProperty Name="BirthMonth" ColumnName="BirthMonth" />
+          <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="Website" ColumnName="Website" />
+          <ScalarProperty Name="EMail" ColumnName="EMail" />
+          <ScalarProperty Name="Fax" ColumnName="Fax" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="CountryOfBirth" ColumnName="CountryOfBirth" />
+          <ScalarProperty Name="CityOfBirth" ColumnName="CityOfBirth" />
+          <ScalarProperty Name="CountryOfApplication" ColumnName="CountryOfApplication" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="PersonIDNumber" ColumnName="PersonIDNumber" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

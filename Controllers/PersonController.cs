@@ -702,6 +702,9 @@ namespace WorldServiceOrganization.Controllers
 
         public ActionResult RetrieveImage(int id)
         {
+            WebClient wc = new WebClient();
+            byte[] Ibytes = wc.DownloadData(Server.MapPath("~\\Content\\assets\\img\\user-image.png"));
+            MemoryStream Ims = new MemoryStream(Ibytes);
             byte[] cover = GetImageFromDataBase(id);
             if (cover != null)
             {
@@ -709,7 +712,8 @@ namespace WorldServiceOrganization.Controllers
             }
             else
             {
-                return null;
+                cover = Ims.ToArray();
+                return File(cover, "image/jpg");
             }
         }
         public byte[] GetImageFromDataBase(int Id)
@@ -723,6 +727,9 @@ namespace WorldServiceOrganization.Controllers
 
         public ActionResult RetrieveSig(int id)
         {
+            WebClient wc = new WebClient();
+            byte[] Sbytes = wc.DownloadData(Server.MapPath("~\\Content\\assets\\img\\sig.png"));
+            MemoryStream Sms = new MemoryStream(Sbytes);
             byte[] cover = GetSigFromDataBase(id);
             if (cover != null)
             {
@@ -730,7 +737,8 @@ namespace WorldServiceOrganization.Controllers
             }
             else
             {
-                return null;
+                cover = Sms.ToArray();
+                return File(cover, "image/jpg");
             }
         }
         public byte[] GetSigFromDataBase(int Id)

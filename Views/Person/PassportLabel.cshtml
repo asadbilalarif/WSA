@@ -38,7 +38,9 @@ page {
     page[size="A4"] {
         width: 15.24cm;
         height: 10.16cm;
+        
     }
+    
 
 /*@@media print {
   body, page {
@@ -274,14 +276,14 @@ page {
                         <div class="row">
                             <div class=" col-md-7" id="" style="display: block;">
                                 <section id="section">
-                                    <div style="width: 15.3cm !important; height: 10.2cm !important; background-color: white;">
-                                        <page size="A4" style="display: block; width: 12.1cm !important; height: 8.4cm !important; margin: 0.9cm 1.6cm 0.9cm 1.6cm !important; position: absolute; ">
+                                    <div id="OutterDiv" style="width: 15.3cm !important; height: 10.2cm !important; background-color: black; ">
+                                        <div style="display: block; width: 12.1cm !important; height: 8.4cm !important; margin: 0.9cm 1.6cm 0.9cm 1.6cm !important; position: absolute; ">
                                             <div class="card" id="MRZCase" style="border: 0px; height: 8.4cm !important; ">
                                                 <div class="card-body " id="FNdraggableArea" style="position: relative; padding: 3% 5% 5% 3%; z-index: 100 !important; ">
                                                     <div class="row" style="margin-bottom:15px">
                                                         @*<div class="col-md-12">
-                            <img src="@Model.QRCode" class="FNdraggable" alt="Alternate Text" id="QRHide" style="float:left !important; display:none;" />
-                        </div>*@
+                                <img src="@Model.QRCode" class="FNdraggable" alt="Alternate Text" id="QRHide" style="float:left !important; display:none;" />
+                            </div>*@
                                                         <div class="col-md-12">
                                                             <label class="text-center NotPrint NotPrintMH" style="font-size: 14px !important; text-align: center; width: 100% !important;"><b id="LLLBel">WORLD GOVERNMENT OF WORLD CITIZENS</b></label><br />
                                                         </div>
@@ -307,31 +309,31 @@ page {
 
 
                                                         @*<div class="col-md-3" style="">
-                            <p style="display:none;" class="FNdraggable NotPrint text-center" id="LabelPassport">Passport/Passeport</p>
-                        </div>
-                        <div class="col-md-2" >
-                            <div id="Type" style="display:none;">
-                                <p class="FNdraggable NotPrint">Type/Type</p>
-                                <p class="FNdraggable NotPrint">P</p>
+                                <p style="display:none;" class="FNdraggable NotPrint text-center" id="LabelPassport">Passport/Passeport</p>
                             </div>
+                            <div class="col-md-2" >
+                                <div id="Type" style="display:none;">
+                                    <p class="FNdraggable NotPrint">Type/Type</p>
+                                    <p class="FNdraggable NotPrint">P</p>
+                                </div>
 
-                        </div>
-                        <div class="col-md-4" >
-                            <div style="display:none;" id="AuthorityCode">
-                                <p class="FNdraggable NotPrint">Authority code/Code d'authoritie</p>
-                                <p id="IssuerDisplay" class="FNdraggable NotPrint">WSA</p>
                             </div>
-                        </div>
-                        <div class="col-md-3" style="">
-                            <p class="FNdraggable NotPrint" style="display:none;" id="LabelPassportNo">Passport No./No de Passeport(8)</p>
-                            <div style="display:none;" id="PassportNo">
-                                <div id="" style="width: 100px; height:30px;">
-                                    <div id="" class=" FNdraggable">
-                                        <p style=" position: absolute; z-index: 100;" id="PassportNumber" class="NotLabel">@ViewBag.TL.IDCode</p>
-                                    </div>
+                            <div class="col-md-4" >
+                                <div style="display:none;" id="AuthorityCode">
+                                    <p class="FNdraggable NotPrint">Authority code/Code d'authoritie</p>
+                                    <p id="IssuerDisplay" class="FNdraggable NotPrint">WSA</p>
                                 </div>
                             </div>
-                        </div>*@
+                            <div class="col-md-3" style="">
+                                <p class="FNdraggable NotPrint" style="display:none;" id="LabelPassportNo">Passport No./No de Passeport(8)</p>
+                                <div style="display:none;" id="PassportNo">
+                                    <div id="" style="width: 100px; height:30px;">
+                                        <div id="" class=" FNdraggable">
+                                            <p style=" position: absolute; z-index: 100;" id="PassportNumber" class="NotLabel">@ViewBag.TL.IDCode</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
 
                                                         <div class="col-md-12">
                                                             @if (Model.Photograph != null)
@@ -353,7 +355,7 @@ page {
                                                             </div>
                                                             <p class="FNdraggable NotPrint PMB" style="display: none; margin-left:29%;" id="LabelPlaceofBirth">Place ofbirth/Lieu de nalssance(3)</p>
                                                             <div id="XYPlaceofBirth" style=" margin-left:29%;">
-                                                                @if (@Model.tblCountry1 != null&& @Model.tblCountry1.Name!=null&& @Model.tblCountry1.Name != "")
+                                                                @if (@Model.tblCountry1 != null && @Model.tblCountry1.Name != null && @Model.tblCountry1.Name != "")
                                                                 {
                                                                     <p class="FNdraggable NotLabel" style="display: none; " id="PlaceofBirth">@Model.CityOfBirth, @Model.tblCountry1.Name</p>
                                                                 }
@@ -433,65 +435,65 @@ page {
                                                         <!--</div>-->
                                                         @*<div class="col-md-5">
 
-                            <p class="FNdraggable NotPrint" style="display:none;" id="LabelLastName">Name/Nom(1)</p>
-                            <div id="Name">
-                                <p class="FNdraggable NotLabel" style="display:none;" id="LastName">@Model.LastName</p>
-                            </div>
-                            <p class="FNdraggable NotPrint " style="display:none;" id="LabelFirstName">Given Names/Prenoms(2)</p>
-                            <div id="GivenName">
-                                <p class="FNdraggable NotLabel" style="display:none;" id="FirstName">@Model.FirstName</p>
-                            </div>
-                            <p class="FNdraggable NotPrint" style="display:none;" id="LabelPlaceofBirth">Place ofbirth/Lieu de nalssance(3)</p>
-                            <div id="XYPlaceofBirth">
-                                @if (@Model.tblCountry != null)
-                                {
-                                    <p class="FNdraggable NotLabel" style="display:none;" id="PlaceofBirth">@Model.CityOfBirth, @Model.tblCountry.Name</p>
-                                }
-                                else
-                                {
-                                    <p class="FNdraggable NotLabel" style="display:none;" id="PlaceofBirth">@Model.CityOfBirth</p>
-                                }
+                                <p class="FNdraggable NotPrint" style="display:none;" id="LabelLastName">Name/Nom(1)</p>
+                                <div id="Name">
+                                    <p class="FNdraggable NotLabel" style="display:none;" id="LastName">@Model.LastName</p>
+                                </div>
+                                <p class="FNdraggable NotPrint " style="display:none;" id="LabelFirstName">Given Names/Prenoms(2)</p>
+                                <div id="GivenName">
+                                    <p class="FNdraggable NotLabel" style="display:none;" id="FirstName">@Model.FirstName</p>
+                                </div>
+                                <p class="FNdraggable NotPrint" style="display:none;" id="LabelPlaceofBirth">Place ofbirth/Lieu de nalssance(3)</p>
+                                <div id="XYPlaceofBirth">
+                                    @if (@Model.tblCountry != null)
+                                    {
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="PlaceofBirth">@Model.CityOfBirth, @Model.tblCountry.Name</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="PlaceofBirth">@Model.CityOfBirth</p>
+                                    }
 
-                            </div>
-                            <p class="FNdraggable NotPrint" style="display:none;" id="LabelDateofBirth">Date ofbirth/Date de nalssance(4)</p>
-                            <div id="DateofBirth">
-                                <p id="BDateName" class="FNdraggable NotLabel" style="display:none;">@ViewBag.CodeDay @ViewBag.MonthName @ViewBag.CodeYear </p>
-                                <p id="BDateNumber" class="NotLabel" style="display:none;">@ViewBag.CodeDay @ViewBag.CodeMonth @ViewBag.CodeYear</p>
-                            </div>
-                            <p class="FNdraggable NotPrint" id="LabelGender" style="display:none;">Gender/Sexe(5)</p>
-                            <div id="XYGender">
-                                <p class="FNdraggable NotLabel" style="display:none;" id="Gender">@Model.tblSex.Name</p>
-                            </div>
-                            <p class="FNdraggable NotPrint" style="display:none;" id="LabelDateofIssue">Date ofissue/Date de deliverance(6)</p>
-                            <div id="DateofIssue">
-                                @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
-                                {
-                                    <p class="FNdraggable NotLabel" style="display:none;" id="IDateName">NILL</p>
-                                    <p class="FNdraggable NotLabel" style="display:none;" id="IDateNumber">NILL</p>
-                                }
-                                else
-                                {
-                                    <p id="IDateName" class="FNdraggable NotLabel" style="display:none;"> @Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MMM yyyy")</p>
-                                    <p id="IDateNumber" class="FNdraggable NotLabel" style="display:none;">@Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MM yyyy")</p>
+                                </div>
+                                <p class="FNdraggable NotPrint" style="display:none;" id="LabelDateofBirth">Date ofbirth/Date de nalssance(4)</p>
+                                <div id="DateofBirth">
+                                    <p id="BDateName" class="FNdraggable NotLabel" style="display:none;">@ViewBag.CodeDay @ViewBag.MonthName @ViewBag.CodeYear </p>
+                                    <p id="BDateNumber" class="NotLabel" style="display:none;">@ViewBag.CodeDay @ViewBag.CodeMonth @ViewBag.CodeYear</p>
+                                </div>
+                                <p class="FNdraggable NotPrint" id="LabelGender" style="display:none;">Gender/Sexe(5)</p>
+                                <div id="XYGender">
+                                    <p class="FNdraggable NotLabel" style="display:none;" id="Gender">@Model.tblSex.Name</p>
+                                </div>
+                                <p class="FNdraggable NotPrint" style="display:none;" id="LabelDateofIssue">Date ofissue/Date de deliverance(6)</p>
+                                <div id="DateofIssue">
+                                    @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
+                                    {
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="IDateName">NILL</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="IDateNumber">NILL</p>
+                                    }
+                                    else
+                                    {
+                                        <p id="IDateName" class="FNdraggable NotLabel" style="display:none;"> @Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MMM yyyy")</p>
+                                        <p id="IDateNumber" class="FNdraggable NotLabel" style="display:none;">@Convert.ToDateTime(ViewBag.TL.IssueDate).ToString("dd MM yyyy")</p>
 
-                                }
-                            </div>
-                            <p class="FNdraggable NotPrint DateofExpiry" style="display:none;" id="LabelDateofExpiry">Date of expiry/Date de d'expiration(7)</p>
-                            <div id="DateofExpiry">
-                                @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
-                                {
-                                    <p class="FNdraggable NotLabel" style="display:none;" id="EDateName">NILL</p>
-                                    <p class="FNdraggable NotLabel" style="display:none;" id="EDateNumber">NILL</p>
-                                }
-                                else
-                                {
-                                    <p id="EDateName" class="FNdraggable NotLabel" style="display:none;">@ViewBag.Exp.ToString("dd MMM yyyy")</p>
-                                    <p id="EDateNumber" class="FNdraggable NotLabel" style="display:none;">@ViewBag.Exp.ToString("dd MM yyyy")</p>
+                                    }
+                                </div>
+                                <p class="FNdraggable NotPrint DateofExpiry" style="display:none;" id="LabelDateofExpiry">Date of expiry/Date de d'expiration(7)</p>
+                                <div id="DateofExpiry">
+                                    @if (@ViewBag.TL.IssueDate == null || @ViewBag.TL.IssueDate == "")
+                                    {
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="EDateName">NILL</p>
+                                        <p class="FNdraggable NotLabel" style="display:none;" id="EDateNumber">NILL</p>
+                                    }
+                                    else
+                                    {
+                                        <p id="EDateName" class="FNdraggable NotLabel" style="display:none;">@ViewBag.Exp.ToString("dd MMM yyyy")</p>
+                                        <p id="EDateNumber" class="FNdraggable NotLabel" style="display:none;">@ViewBag.Exp.ToString("dd MM yyyy")</p>
 
-                                }
-                            </div>
+                                    }
+                                </div>
 
-                        </div>*@
+                            </div>*@
                                                         <!--<div class="col-md-4" style="padding: 0px !important;">
 
                         <img src="@Model.QRCode" class="FNdraggable" alt="" id="QRHide" style=" display: none; position: absolute; " />
@@ -505,14 +507,14 @@ page {
                         }-->
                                                         @*<img id="Photo" src="@Model.Photo" class="FNdraggable" alt="your image" style="opacity: 0.5;width:40%; height:100%;float:right;" />*@
                                                         <!--<br />
-                        <br><br>
-                        <p class="FNdraggable NotPrint " style="color:white;" id="LabelExplanatoryNotes">Explanatory notes/Notes explicatives</p>
-                        <label class="FNdraggable NotPrint " style="color:white;font-size:14px !important;" id="ExplanatoryNotes">PAGE 5</label>
-                        <p class="FNdraggable NotPrint" style="color:white;font-size:14px !important;" id="LabelRenewal">Renewal/Propogation(9)</p>
-                        <label class="FNdraggable NotPrint " style="color: white; font-size: 14px !important;" id="Renewal">PAGE 3</label>
-                        <p class="FNdraggable NotPrint" style="color:white;" id="LabelAuthority">Authority/Authoritie(10)</p>
-                        <label class="FNdraggable NotPrint " style="color: white; font-size: 14px !important;" id="Authority">WORLD SERVICE AUTHORITY</label>
-                    </div>-->
+                            <br><br>
+                            <p class="FNdraggable NotPrint " style="color:white;" id="LabelExplanatoryNotes">Explanatory notes/Notes explicatives</p>
+                            <label class="FNdraggable NotPrint " style="color:white;font-size:14px !important;" id="ExplanatoryNotes">PAGE 5</label>
+                            <p class="FNdraggable NotPrint" style="color:white;font-size:14px !important;" id="LabelRenewal">Renewal/Propogation(9)</p>
+                            <label class="FNdraggable NotPrint " style="color: white; font-size: 14px !important;" id="Renewal">PAGE 3</label>
+                            <p class="FNdraggable NotPrint" style="color:white;" id="LabelAuthority">Authority/Authoritie(10)</p>
+                            <label class="FNdraggable NotPrint " style="color: white; font-size: 14px !important;" id="Authority">WORLD SERVICE AUTHORITY</label>
+                        </div>-->
 
                                                     </div>
                                                     <div class="row">
@@ -609,13 +611,13 @@ page {
                                                     </div>
 
                                                     @*<div class="row" id="MRZHide" style="position:relative;bottom:0; ">
-                        <div class="col-md-12">
+                            <div class="col-md-12">
 
-                            <div class="words">WORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITYWORLD</div>
-                            <div class="words1" style="white-space: nowrap;">@ViewBag.Line1</div>
-                            <div class="words2" style="white-space: nowrap; margin-top: 1%;">@ViewBag.Line2</div>
-                        </div>
-                    </div>*@
+                                <div class="words">WORLD SERVICE AUTHORITYWORLD SERVICE AUTHORITYWORLD</div>
+                                <div class="words1" style="white-space: nowrap;">@ViewBag.Line1</div>
+                                <div class="words2" style="white-space: nowrap; margin-top: 1%;">@ViewBag.Line2</div>
+                            </div>
+                        </div>*@
 
                                                     <div class="row" id="MRZHide" style="position:relative;bottom:0; ">
 
@@ -629,14 +631,14 @@ page {
                                                 </div>
 
                                             </div>
-                                        </page>
+                                        </div>
                                     </div>
 
-                                
+
                                 </section>
                                 <div id="elementH"></div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-5">
                                 <div class="card">
                                     <div class="card-body" style="padding:1rem">
                                         @using (Html.BeginForm("CreatePassportLabelSetting", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -644,53 +646,60 @@ page {
                                         <input class="form-control" hidden type="text" name="id" value="@ViewBag.PersonId " required />
                                         <input class="form-control" hidden type="text" name="tid" value="@ViewBag.tid" required />
                                         <div class="row">
-                                            <div class="col-md-12" style="text-align:center">
+                                            <div class="col-md-4" style="text-align:center">
                                                 <b>Setting Name</b>
-                                            </div>
-                                            <div class="col-md-12">
-                                                <input class="form-control" type="text" id="SName" name="Name" value="" required />
-                                                <input class="form-control" hidden type="text" id="PassportLabelSettingId" name="PassportLabelSettingId" value="" />
-                                            </div>
-                                        </div>
-                                        <div class="row" style=" margin-bottom: -5%;">
-                                            <div class="col-md-12" style="text-align:center">
-                                                <b>Passport Number</b>
                                             </div>
 
                                             <div class="col-md-4">
+                                                <input class="form-control" type="text" id="SName" name="Name" value="" required />
+                                                <input class="form-control" hidden type="text" id="PassportLabelSettingId" name="PassportLabelSettingId" value="" />
+                                            </div>
+                                            <div class="col-md-4" style="text-align:right">
+                                                <button class="btn btn-warning" data-toggle="modal" data-target="#LoadSettingsModal" id="LoadButton" style="color:white" type="button">Load</button>
+                                                <input type="text" id="LoadButtonCheck" value="0" hidden />
+                                                <button class="btn btn-primary" type="submit">Save</button>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="row" style="margin-top:2% ;margin-bottom: -6%;">
+                                            <div class="col-md-3" >
+                                                <b>Passport#</b>
+                                            </div>
+
+                                            <div class="col-md-3">
                                                 <div class="input-container">
-                                                    X&nbsp;
+                                                    X &nbsp;
                                                     <input class="form-control" type="number" id="XPassportNumber" name="XPassportNumber" value="0" />
 
                                                 </div>
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Y&nbsp;
-                                                    <input class="form-control" type="number" id="YPassportNumber" name="YPassportNumber" value="0" />
+                                                    <input class="form-control" type="number" id="YPassportNumber" name="YPassportNumber" value="0"  />
 
                                                 </div>
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Size&nbsp;
-                                                    <input class="form-control" type="number" id="PassportNumberSize" name="PassportNumberSize" value="@FontSize" style="padding: 0;" />
+                                                    <input class="form-control" type="number" id="PassportNumberSize" name="PassportNumberSize" value="@FontSize"  />
 
                                                 </div>
 
                                             </div>
 
                                         </div>
-                                        <div class="row" style=" margin-bottom: -5%;">
-                                            <div class="col-md-12" style="text-align:center">
+                                        <div class="row"  style=" margin-bottom: -2%;">
+                                            <div class="col-md-3" >
                                                 <b>Name</b>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     X&nbsp;
                                                     <input class="form-control" type="number" id="XName" name="XName" value="0" />
@@ -699,7 +708,7 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Y&nbsp;
                                                     <input class="form-control" type="number" id="YName" name="YName" value="0" />
@@ -709,22 +718,22 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Size&nbsp;
-                                                    <input class="form-control" type="number" id="NameSize" name="NameSize" value="@FontSize" style="padding: 0;" />
+                                                    <input class="form-control" type="number" id="NameSize" name="NameSize" value="@FontSize"  />
                                                 </div>
 
 
                                             </div>
 
                                         </div>
-                                        <div class="row" style=" margin-bottom: -5%;">
-                                            <div class="col-md-12" style="text-align:center">
+                                        <div class="row" style=" margin-bottom: -2%;">
+                                            <div class="col-md-3" >
                                                 <b>Given Name</b>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     X&nbsp;
                                                     <input class="form-control" type="number" id="XGivenName" name="XGivenName" value="0" />
@@ -734,7 +743,7 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Y&nbsp;
                                                     <input class="form-control" type="number" id="YGivenName" name="YGivenName" value="0" />
@@ -742,21 +751,21 @@ page {
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Size&nbsp;
-                                                    <input class="form-control" type="number" id="GivenNameSize" name="GivenNameSize" value="@FontSize" style="padding: 0;" />
+                                                    <input class="form-control" type="number" id="GivenNameSize" name="GivenNameSize" value="@FontSize"  />
 
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <div class="row" style=" margin-bottom: -5%;">
-                                            <div class="col-md-12" style="text-align:center">
-                                                <b>Place of Birth</b>
+                                        <div class="row" style=" margin-bottom: -2%;">
+                                            <div class="col-md-3">
+                                                <b>Place Birth</b>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     X&nbsp;
                                                     <input class="form-control" type="number" id="XPlaceofBirth" name="XPlaceofBirth" value="0" />
@@ -766,7 +775,7 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Y&nbsp;
                                                     <input class="form-control" type="number" id="YPlaceofBirth" name="YPlaceofBirth" value="0" />
@@ -776,21 +785,21 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Size&nbsp;
-                                                    <input class="form-control" type="number" id="PlaceofBirthSize" name="PlaceofBirthSize" value="@FontSize" style="padding: 0;" />
+                                                    <input class="form-control" type="number" id="PlaceofBirthSize" name="PlaceofBirthSize" value="@FontSize"  />
 
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <div class="row" style=" margin-bottom: -5%;">
-                                            <div class="col-md-12" style="text-align:center">
+                                        <div class="row" style=" margin-bottom: -2%;">
+                                            <div class="col-md-3" >
                                                 <b>Date of Birth</b>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     X&nbsp;
                                                     <input class="form-control" type="number" id="XDateofBirth" name="XDateofBirth" value="0" />
@@ -801,7 +810,7 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Y&nbsp;
                                                     <input class="form-control" type="number" id="YDateofBirth" name="YDateofBirth" value="0" />
@@ -811,21 +820,21 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Size&nbsp;
-                                                    <input class="form-control" type="number" id="DateofBirthSize" name="DateofBirthSize" value="@FontSize" style="padding: 0;" />
+                                                    <input class="form-control" type="number" id="DateofBirthSize" name="DateofBirthSize" value="@FontSize"  />
 
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <div class="row" style=" margin-bottom: -5%;">
-                                            <div class="col-md-12" style="text-align:center">
+                                        <div class="row" style=" margin-bottom: -2%;">
+                                            <div class="col-md-3" >
                                                 <b>Gender</b>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     X&nbsp;
                                                     <input class="form-control" type="number" id="XGender" name="XGender" value="0" />
@@ -835,7 +844,7 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Y&nbsp;
                                                     <input class="form-control" type="number" id="YGender" name="YGender" value="0" />
@@ -845,10 +854,10 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Size&nbsp;
-                                                    <input class="form-control" type="number" id="GenderSize" name="GenderSize" value="@FontSize" style="padding: 0;" />
+                                                    <input class="form-control" type="number" id="GenderSize" name="GenderSize" value="@FontSize" />
 
                                                 </div>
 
@@ -856,12 +865,12 @@ page {
                                             </div>
 
                                         </div>
-                                        <div class="row" style=" margin-bottom: -5%;">
-                                            <div class="col-md-12" style="text-align:center">
+                                        <div class="row" style=" margin-bottom: -2%;">
+                                            <div class="col-md-3" >
                                                 <b>Date of Issue</b>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     X&nbsp;
                                                     <input class="form-control" type="number" id="XDateofIssue" name="XDateofIssue" value="0" />
@@ -871,7 +880,7 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Y&nbsp;
                                                     <input class="form-control" type="number" id="YDateofIssue" name="YDateofIssue" value="0" />
@@ -881,21 +890,21 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Size&nbsp;
-                                                    <input class="form-control" type="number" id="DateofIssueSize" name="DateofIssueSize" value="@FontSize" style="padding: 0;" />
+                                                    <input class="form-control" type="number" id="DateofIssueSize" name="DateofIssueSize" value="@FontSize" />
                                                 </div>
 
 
                                             </div>
                                         </div>
-                                        <div class="row" style=" margin-bottom: -5%;">
-                                            <div class="col-md-12" style="text-align:center">
-                                                <b>Date of Expiry</b>
+                                        <div class="row" style=" margin-bottom: -2%;">
+                                            <div class="col-md-3">
+                                                <b>Date Expiry</b>
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     X&nbsp;
                                                     <input class="form-control" type="number" id="XDateofExpiry" name="XDateofExpiry" value="0" />
@@ -905,7 +914,7 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Y&nbsp;
                                                     <input class="form-control" type="number" id="YDateofExpiry" name="YDateofExpiry" value="0" />
@@ -915,10 +924,10 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     Size&nbsp;
-                                                    <input class="form-control" type="number" id="DateofExpirySize" name="DateofExpirySize" value="@FontSize" style="padding: 0;" />
+                                                    <input class="form-control" type="number" id="DateofExpirySize" name="DateofExpirySize" value="@FontSize"  />
 
                                                 </div>
 
@@ -926,12 +935,12 @@ page {
                                             </div>
 
                                         </div>
-                                        <div class="row" style=" margin-bottom: -5%;">
-                                            <div class="col-md-12" style="text-align:center">
+                                        <div class="row" style=" margin-bottom: -2%;">
+                                            <div class="col-md-3" >
                                                 <b>Photo</b>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
                                                 <div class="input-container">
                                                     X&nbsp;
                                                     <input class="form-control" type="number" id="XPhoto" name="XPhoto" value="0" />
@@ -940,7 +949,7 @@ page {
 
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-3">
 
                                                 <div class="input-container">
                                                     Y&nbsp;
@@ -958,21 +967,21 @@ page {
 
                                                 </div>
                                             </div>*@
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <button class="btn-sm btn-secondary" type="button" id="ResetX">Reset X</button>
-                                            </div>
+                                    <div class="row" style="margin-top:1%">
+                                        <div class="col-md-3">
 
-                                            <div class="col-md-6">
-                                                <button class="btn-sm btn-secondary" type="button" id="ResetY">Reset Y</button>
-                                            </div>
                                         </div>
+                                        <div class="col-md-3" style="text-align:center">
+                                            <button class="btn-sm btn-secondary" type="button" id="ResetX" style="text-align:center">Reset X</button>
+                                        </div>
+
+                                        <div class="col-md-3" style="text-align:center">
+                                            <button class="btn-sm btn-secondary" type="button" id="ResetY">Reset Y</button>
+                                        </div>
+                                       
+                                    </div>
                                         <div class="row" style="margin-top:5%">
-                                            <div class="col-md-12" style="text-align:center">
-                                                <button class="btn btn-warning" data-toggle="modal" data-target="#LoadSettingsModal" id="LoadButton" style="color:white" type="button">Load</button>
-                                                <input type="text" id="LoadButtonCheck" value="0"  hidden/>
-                                                <button class="btn btn-primary" type="submit">Save</button>
-                                            </div>
+                                          
                                         </div>
 
                                     }
@@ -1007,11 +1016,11 @@ page {
                                                         <p id="LoadId" hidden>@item.PassportLabelSettingId</p>
                                                         @if (item == PassportLabelSetting.Last())
                                                         {
-                                                            <a href="#" class="SettingLoadReady" id="LoadName"><p>@item.Name</p></a>
+                                                            <a href="#" class="SettingLoadReady" id="LoadName"><p style="font-size:14px !important">@item.Name</p></a>
                                                         }
                                                         else
                                                         {
-                                                            <a href="#" id="LoadName"><p>@item.Name</p></a>
+                                                            <a href="#" id="LoadName"><p style="font-size:14px !important">@item.Name</p></a>
                                                         }
 
                                                         <p hidden>@item.XPassportNumber</p>
@@ -1299,7 +1308,7 @@ page {
     });
 
     $("#XPassportNumber,#YPassportNumber").change(function () {
-        var XVal = $("#XPassportNumber").val()+325;
+        var XVal = parseInt($("#XPassportNumber").val())+325;
         var YVal = parseInt($("#YPassportNumber").val()) + 48;
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
@@ -1311,29 +1320,29 @@ page {
         //alert("X: "+XVal+" Y: "+YVal);
         //alert(YVal);
         $("#Name").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
-        YVal = parseInt($("#YName").val()) + parseInt(40);
+        YVal = parseInt($("#YName").val()) + parseInt(34);
         $("#XGivenName").val(XVal - 13);
-        $("#YGivenName").val(YVal - 40);
+        $("#YGivenName").val(YVal - 34);
         $("#GivenName").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
-        YVal = parseInt($("#YName").val()) + parseInt(70);
+        YVal = parseInt($("#YName").val()) + parseInt(57);
         $("#XPlaceofBirth").val(XVal - 13);
-        $("#YPlaceofBirth").val(YVal - 70);
+        $("#YPlaceofBirth").val(YVal - 57);
         $("#XYPlaceofBirth").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
-        YVal = parseInt($("#YName").val()) + parseInt(100);
+        YVal = parseInt($("#YName").val()) + parseInt(81);
         $("#XDateofBirth").val(XVal - 13);
-        $("#YDateofBirth").val(YVal - 100);
+        $("#YDateofBirth").val(YVal - 81);
         $("#DateofBirth").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
-        YVal = parseInt($("#YName").val()) + parseInt(130);
+        YVal = parseInt($("#YName").val()) + parseInt(105);
         $("#XGender").val(XVal - 13);
-        $("#YGender").val(YVal - 130);
+        $("#YGender").val(YVal - 105);
         $("#XYGender").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
-        YVal = parseInt($("#YName").val()) + parseInt(160);
+        YVal = parseInt($("#YName").val()) + parseInt(129);
         $("#XDateofIssue").val(XVal - 13);
-        $("#YDateofIssue").val(YVal - 160);
+        $("#YDateofIssue").val(YVal - 129);
         $("#DateofIssue").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
-        YVal = parseInt($("#YName").val()) + parseInt(190);
+        YVal = parseInt($("#YName").val()) + parseInt(153);
         $("#XDateofExpiry").val(XVal - 13);
-        $("#YDateofExpiry").val(YVal - 190);
+        $("#YDateofExpiry").val(YVal - 153);
         $("#DateofExpiry").css({ top: YVal + 'px', left: XVal + 'px', position: 'absolute' });
     });
     $("#XGivenName,#YGivenName").change(function () {
@@ -1408,9 +1417,9 @@ page {
         //$("#XYPhoto").css({ top: 10 + 'px', left: 0 + 'px' });
         var myDiv = document.getElementById("section").innerHTML;
 
-        document.body.innerHTML =
-            "<html><head><link rel='stylesheet' href='~/Content/assets/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title></head><body><div class='row'><div class='col-md-8'>" +
-            myDiv + "</div></div></body></html>";
+            document.getElementById("HT").innerHTML =
+                "<html><head><link rel='stylesheet' href='/Content/assets/css/bootstrap.min.css'><link rel='stylesheet' href='/Content/assets/css/style.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title><style>body {background: rgb(204,204,204);}page {background: white;display: block;margin: 0 auto;margin-bottom: 0.5cm;box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);}page[size='A4'] {width: 15.3cm;margin-top: 5.2%; margin-left: 8%; transform: scale(1.27);}page[size='A4'][layout='landscape'] {width: 29.7cm;height: 21cm;}@@media print {body, page {margin: 0;box-shadow: 0;}}</style></head><body><page size='A4'>" +
+                myDiv + "</page></body></html>";
            window.setTimeout(function () {
 
             window.print();
@@ -1427,9 +1436,9 @@ page {
         //$("#XYPhoto").css({ top: 10 + 'px', left: 0 + 'px' });
         var myDiv = document.getElementById("section").innerHTML;
 
-        document.body.innerHTML =
-            "<html><head><link rel='stylesheet' href='~/Content/assets/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title></head><body><div class='row'><div class='col-md-8'>" +
-            myDiv + "</div></div></body></html>";
+        document.getElementById("HT").innerHTML =
+            "<html><head><link rel='stylesheet' href='/Content/assets/css/bootstrap.min.css'><link rel='stylesheet' href='/Content/assets/css/style.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title><style>body {background: rgb(204,204,204);}page {background: white;display: block;margin: 0 auto;margin-bottom: 0.5cm;box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);}page[size='A4'] {width: 15.3cm;margin-top: 5.2%; margin-left: 8%; transform: scale(1.27);}page[size='A4'][layout='landscape'] {width: 29.7cm;height: 21cm;}@@media print {body, page {margin: 0;box-shadow: 0;}}</style></head><body><page size='A4'>" +
+            myDiv + "</page></body></html>";
            window.setTimeout(function () {
 
             window.print();
@@ -1439,7 +1448,7 @@ page {
         }, 500);
     });
 
-    $('#PDFBtn').click(function () {
+     $('#PDFBtn').click(function () {
         //$(".NotPrint").css("color", "transparent");
         //$(".words").css("color", "transparent");
         //$("#XYPhoto").css({ width: 150 + 'px' });
@@ -1452,10 +1461,10 @@ page {
 
         //$("#XYPhoto").css({ top: 20 + 'px', left: 0 + 'px' });
         var myDiv = document.getElementById("section").innerHTML;
-
-            document.body.innerHTML =
-            "<html><head><link rel='stylesheet' href='~/Content/assets/css/bootstrap.min.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title></head><body><div class='row'><div class='col-md-8'>" +
-            myDiv + "</div></div></body></html>";
+        //console.log(myDiv);
+         document.getElementById("HT").innerHTML =
+             "<html><head><link rel='stylesheet' href='/Content/assets/css/bootstrap.min.css'><link rel='stylesheet' href='/Content/assets/css/style.css'><link rel='stylesheet' href='https://cdn.jsdelivr.net/gh/raisty/OCR-B@1.1/dist/ocrb.css' integrity='sha384-{hash}' crossorigin='anonymous' /><title></title><style>body {background: rgb(204,204,204);}page {background: white;display: block;margin: 0 auto;margin-bottom: 0.5cm;box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);}page[size='A4'] {width: 15.3cm;margin-top: 5.2%; margin-left: 8%; transform: scale(1.27);}page[size='A4'][layout='landscape'] {width: 29.7cm;height: 21cm;}@@media print {body, page {margin: 0;box-shadow: 0;}}</style></head><body><page size='A4'>" +
+            myDiv + "</page></body></html>";
 
 
 
@@ -1989,10 +1998,10 @@ page {
         });
 
         $("#PassportModal").modal('toggle');
-        $("p").css("font-size", 8 + 'px');
+        $("p").css("font-size", 12 + 'px');
         $(".NotPrint").css("font-size", 9 + 'px');
         $(".NotPrintMH").css("font-size", 14 + 'px');
-        $(".Size14").css("font-size", 12 + 'px');
+       
         $(".NotLabel").css("font-family", '@FontFamily');
         $("p").css("font-family", 'sans serif');
         $(".NotLabel").css("font-size", '@FontSize' + 'px');
@@ -2038,7 +2047,7 @@ page {
         //$(".words2").css("flex-flow", 'row nowrap');
         $(".words2").css("justify-content", 'space-between');
 
-
+        $(".Size14").css("font-size", 12 + 'px');
         $(".words").css("font-size", '9px');
         $(".words1").css("font-size", '11px');
         $(".words2").css("font-size", '11px');

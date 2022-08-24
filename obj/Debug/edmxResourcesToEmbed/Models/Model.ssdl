@@ -231,7 +231,7 @@
     <Property Name="BirthMonth" Type="nvarchar" MaxLength="100" />
     <Property Name="BirthYear" Type="nvarchar" MaxLength="100" />
     <Property Name="Sex" Type="int" />
-    <Property Name="Height" Type="float" />
+    <Property Name="Height" Type="nvarchar" MaxLength="50" />
     <Property Name="HeightUnit" Type="int" />
     <Property Name="Eyes" Type="int" />
     <Property Name="Marks" Type="nvarchar(max)" />
