@@ -151,6 +151,9 @@ namespace WorldServiceOrganization.Controllers
                 }
                 ViewBag.Year = Years;
                 ViewBag.WSA = DB.tblSettings.Select(s => s.NextWSA).FirstOrDefault();
+                int WSA =Convert.ToInt32(ViewBag.WSA);
+                ViewBag.WSA=CheckNumber(WSA,"WSANumber");
+                
 
                 if (id != null && id != 0)
                 {
@@ -170,20 +173,21 @@ namespace WorldServiceOrganization.Controllers
 
                     ViewBag.TransCount = DB.tblTransactions.Where(x => x.isActive == true && x.PersonIDNumber == id).Count();
                     Person = DB.tblPersons.Where(x => x.PersonIDNumber == id).FirstOrDefault();
-                    if (DB.tblPersons.Max(s => s.WSANumber) != null)
-                    {
-                        ViewBag.WAS = DB.tblPersons.Max(s => s.WSANumber) + 1;
-                    }
+                    //if (DB.tblPersons.Max(s => s.WSANumber) != null)
+                    //{
+                    //    ViewBag.WAS = DB.tblPersons.Max(s => s.WSANumber) + 1;
+                    //}
                     return View(Person);
                 }
                 else
                 {
-                    ViewBag.WAS = null;
+                    //ViewBag.WAS = null;
+                    //if (DB.tblPersons.Max(s => s.WSANumber) != null)
+                    //{
+                    //    ViewBag.WAS = DB.tblPersons.Max(s => s.WSANumber) + 1;
+                    //}
                     Person.PersonIDNumber = 0;
-                    if (DB.tblPersons.Max(s => s.WSANumber) != null)
-                    {
-                        ViewBag.WAS = DB.tblPersons.Max(s => s.WSANumber) + 1;
-                    }
+                    Person.WSANumber = 0;
 
                     return View(Person);
                 }
@@ -197,8 +201,29 @@ namespace WorldServiceOrganization.Controllers
             return View(Person);
         }
 
-        [HttpPost]
-        public ActionResult CreatePerson(tblPerson Person, HttpPostedFileBase Image, HttpPostedFileBase CImage, HttpPostedFileBase SigImage, HttpPostedFileBase CertificationFile,string BirthDayText,string BirthMonthText,string BirthYearText)
+        public int CheckNumber(int? Number, string Type)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            int ID = 0;
+            int Num = (int)Number;
+            do
+            {
+                if(Type=="WSANumber")
+                {
+                    ID = DB.tblPersons.Where(x => x.WSANumber == Num).Select(s => s.PersonIDNumber).FirstOrDefault();
+                }
+                
+                if (ID > 0)
+                {
+                    Num += 1;
+                }
+            } while (ID!=0);
+
+            return Num;
+        }
+
+            [HttpPost]
+        public ActionResult CreatePerson(tblPerson Person, HttpPostedFileBase Image, HttpPostedFileBase CImage, HttpPostedFileBase SigImage, HttpPostedFileBase CertificationFile, HttpPostedFileBase QRCode, string BirthDayText,string BirthMonthText,string BirthYearText,bool WSANumberCheck=false)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             tblPerson Data = new tblPerson();
@@ -391,39 +416,66 @@ namespace WorldServiceOrganization.Controllers
                     Data.LastEditedBy = ViewBag.User.UserId;
                     Data.isActive = true;
                     int? WSANum = 0;
-                    if (Person.WSANumber != null)
+                    if (Person.WSANumber > 0)
                     {
-                        var nextWSA = DB.tblPersons.Max(s => s.WSANumber);
-                        if (nextWSA != null)
-                        {
-                            Person.WSANumber = DB.tblPersons.Max(s => s.WSANumber) + 1;
-                            WSANum = DB.tblPersons.Max(s => s.WSANumber) + 2;
-                        }
-                        else
-                        {
-                            Person.WSANumber = Person.WSANumber;
-                            WSANum = Person.WSANumber + 1;
-                        }
 
-                        var Data1 = DB.tblSettings.FirstOrDefault();
-                        Data1.NextWSA = WSANum.ToString();
-                        DB.Entry(Data1);
-                        DB.SaveChanges();
+                        Person.WSANumber = CheckNumber(Person.WSANumber, "WSANumber");
+                        WSANum = Person.WSANumber+1;
+                        //var nextWSA = DB.tblPersons.Max(s => s.WSANumber);
+                        //if (nextWSA != null)
+                        //{
+                        //    Person.WSANumber = DB.tblPersons.Max(s => s.WSANumber) + 1;
+                        //    WSANum = DB.tblPersons.Max(s => s.WSANumber) + 2;
+                        //}
+                        //else
+                        //{
+                        //    Person.WSANumber = Person.WSANumber;
+                        //    WSANum = Person.WSANumber + 1;
+                        //}
+                        if(WSANumberCheck==false)
+                        {
+                            var Data1 = DB.tblSettings.FirstOrDefault();
+                            Data1.NextWSA = WSANum.ToString();
+                            DB.Entry(Data1);
+                            DB.SaveChanges();
+                        }
+                        
                     }
                     DB.tblPersons.Add(Data);
                     DB.SaveChanges();
-                    var ID = Data.PersonIDNumber;
-                    Data = DB.tblPersons.Where(x => x.PersonIDNumber == ID).FirstOrDefault();
-                    string vCardText = "BEGIN:VCARD\r\nN:";
-                    vCardText += "" + Person.FirstName + " " + Person.LastName + "\r\n";
-                    //vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
-                    vCardText += "TEL:" + Person.Phone + "\r\n";
-                    vCardText += "EMAIL:" + Person.EMail + "\r\n";
-                    vCardText += "URL:" + Person.Website + "\r\n";
-                    vCardText += "END:VCARD";
-                    string QRCodeImagePath = GenerateQRCode(vCardText, ID);
 
-                    Data.QRCode = QRCodeImagePath;
+                    string folderPath = "~/Uploading/QRCode/";
+                    string imagePath = Server.MapPath("~/Uploading/QRCode/")  + Data.PersonIDNumber + ".jpg";
+                    // If the directory doesn't exist then create it.
+                    if (!Directory.Exists(Server.MapPath(folderPath)))
+                    {
+                        Directory.CreateDirectory(Server.MapPath(folderPath));
+                    }
+
+                    if (QRCode != null)
+                    {
+                        QRCode.SaveAs(imagePath);
+                        //path = Path.Combine("\\Uploading", Path.GetFileName(Image.FileName));
+                        Data.QRCode = imagePath;
+                        Data.isQRCodeUpload = true;
+                    }
+                    else
+                    {
+                        var ID = Data.PersonIDNumber;
+                        Data = DB.tblPersons.Where(x => x.PersonIDNumber == ID).FirstOrDefault();
+                        string vCardText = "BEGIN:VCARD\r\nN:";
+                        vCardText += "" + Person.FirstName + " " + Person.LastName + "\r\n";
+                        //vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
+                        vCardText += "TEL:" + Person.Phone + "\r\n";
+                        vCardText += "EMAIL:" + Person.EMail + "\r\n";
+                        vCardText += "URL:" + Person.Website + "\r\n";
+                        vCardText += "END:VCARD";
+                        string QRCodeImagePath = GenerateQRCode(vCardText, ID);
+
+                        Data.QRCode = QRCodeImagePath;
+                    }
+
+
                     DB.Entry(Data);
                     DB.SaveChanges();
 
@@ -442,6 +494,7 @@ namespace WorldServiceOrganization.Controllers
                     //if (check == null || check.PersonIDNumber == Person.PersonIDNumber)
                     //{
                     Data = DB.tblPersons.Select(r => r).Where(x => x.PersonIDNumber == Person.PersonIDNumber).FirstOrDefault();
+                    int? PStatus = Data.Status;
                     bool SCheck = false;
                     if (Data.Status == Person.Status)
                     {
@@ -580,7 +633,16 @@ namespace WorldServiceOrganization.Controllers
                     Data.Marks = Person.Marks;
                     Data.FatherName = Person.FatherName;
                     Data.MotherName = Person.MotherName;
-                    Data.WSANumber = Person.WSANumber;
+                    if (PStatus==32)
+                    {
+                        Data.WSANumber =CheckNumber(Person.WSANumber,"WSANumber");
+                    }
+                    else
+                    {
+                        Data.WSANumber = Person.WSANumber;
+                    }
+
+                    
                     Data.Comments = Person.Comments;
                     Data.Title = Person.Title;
                     Data.Height = Person.Height;
@@ -668,15 +730,49 @@ namespace WorldServiceOrganization.Controllers
                     DB.Entry(Data);
                     DB.SaveChanges();
                     Data = DB.tblPersons.Where(x => x.PersonIDNumber == Person.PersonIDNumber).FirstOrDefault();
-                    string vCardText = "BEGIN:VCARD\r\nN:";
-                    vCardText += "" + Person.FirstName + " " + Person.LastName + "\r\n";
-                    //vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
-                    vCardText += "TEL:" + Person.Phone + "\r\n";
-                    vCardText += "EMAIL:" + Person.EMail + "\r\n";
-                    vCardText += "URL:" + Person.Website + "\r\n";
-                    vCardText += "END:VCARD";
-                    string QRCodeImagePath = GenerateQRCode(vCardText, Person.PersonIDNumber);
-                    Data.QRCode = QRCodeImagePath;
+
+
+                    string folderPath = "~/Uploading/QRCode/";
+                    string imagePath = Server.MapPath("~/Uploading/QRCode/") + Data.PersonIDNumber + ".jpg";
+                    // If the directory doesn't exist then create it.
+                    if (!Directory.Exists(Server.MapPath(folderPath)))
+                    {
+                        Directory.CreateDirectory(Server.MapPath(folderPath));
+                    }
+
+                    if (QRCode != null)
+                    {
+                        QRCode.SaveAs(imagePath);
+                        //path = Path.Combine("\\Uploading", Path.GetFileName(Image.FileName));
+                        Data.QRCode = imagePath;
+                        Data.isQRCodeUpload = true;
+                    }
+                    else if (Data.isQRCodeUpload == false)
+                    {
+                        var ID = Data.PersonIDNumber;
+                        Data = DB.tblPersons.Where(x => x.PersonIDNumber == ID).FirstOrDefault();
+                        string vCardText = "BEGIN:VCARD\r\nN:";
+                        vCardText += "" + Person.FirstName + " " + Person.LastName + "\r\n";
+                        //vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
+                        vCardText += "TEL:" + Person.Phone + "\r\n";
+                        vCardText += "EMAIL:" + Person.EMail + "\r\n";
+                        vCardText += "URL:" + Person.Website + "\r\n";
+                        vCardText += "END:VCARD";
+                        string QRCodeImagePath = GenerateQRCode(vCardText, ID);
+
+                        Data.QRCode = QRCodeImagePath;
+                    }
+
+                    //string vCardText = "BEGIN:VCARD\r\nN:";
+                    //vCardText += "" + Person.FirstName + " " + Person.LastName + "\r\n";
+                    ////vCardText += "TITLE:" + Data.tblOccupation.Name + "\r\n";
+                    //vCardText += "TEL:" + Person.Phone + "\r\n";
+                    //vCardText += "EMAIL:" + Person.EMail + "\r\n";
+                    //vCardText += "URL:" + Person.Website + "\r\n";
+                    //vCardText += "END:VCARD";
+                    //string QRCodeImagePath = GenerateQRCode(vCardText, Person.PersonIDNumber);
+                    //Data.QRCode = QRCodeImagePath;
+
                     DB.Entry(Data);
                     DB.SaveChanges();
 
@@ -856,6 +952,16 @@ namespace WorldServiceOrganization.Controllers
             }
 
             return Json(0);
+        }
+
+        [HttpPost]
+        public ActionResult CheckWSANumber(int WSANumber)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            int ID = 0;
+            
+            ID = DB.tblPersons.Select(r => r).Where(x => x.WSANumber == WSANumber).Select(s=>s.PersonIDNumber).FirstOrDefault();
+            return Json(ID);
         }
 
 
@@ -2409,7 +2515,13 @@ namespace WorldServiceOrganization.Controllers
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
-                string imagePath = "/Uploading/CreateQRCode/QRCode.jpg";
+            string imagePath = "/Uploading/CreateQRCode/QRCode.jpg";
+            string folderPath = "~/Uploading/CreateQRCode/";
+            // If the directory doesn't exist then create it.
+            if (!Directory.Exists(Server.MapPath(folderPath)))
+            {
+                Directory.CreateDirectory(Server.MapPath(folderPath));
+            }
             var width = 70; // width of the Qr Code
             var height = 70; // height of the Qr Code
             var margin = 0;

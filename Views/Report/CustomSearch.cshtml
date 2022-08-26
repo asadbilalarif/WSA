@@ -188,9 +188,9 @@
                                             {
                                                 <tr>
                                                     <td>@List.Name</td>
-                                                    <td>@List.WSANumber</td>
-                                                    <td>@List.LastName</td>
-                                                    <td>@List.FirstName</td>
+                                                    <td><a href="@Url.Action("CreatePerson","Person",new {id=List.PersonIDNumber })">@List.WSANumber</a></td>
+                                                    <td><a href="@Url.Action("CreatePerson","Person",new {id=List.PersonIDNumber })">@List.LastName</a></td>
+                                                    <td><a href="@Url.Action("CreatePerson","Person",new {id=List.PersonIDNumber })">@List.FirstName</a></td>
                                                 </tr>
                                             }
                                         }

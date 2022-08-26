@@ -258,6 +258,7 @@
     <Property Name="DeletedBy" Type="int" />
     <Property Name="DeletedDate" Type="datetime" />
     <Property Name="isActive" Type="bit" />
+    <Property Name="isQRCodeUpload" Type="bit" />
   </EntityType>
   <EntityType Name="tblProduct">
     <Key>

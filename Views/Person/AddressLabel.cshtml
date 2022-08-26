@@ -172,7 +172,7 @@
             </div>
         </div>*@
                                 <p class="text-right" id="WSAShowSeparate">@ViewBag.WSA</p>
-                                <p> @ViewBag.LName, @ViewBag.FName  <span id="WSAShowName" style="display:none; float:right;">@ViewBag.WSA </span></p>
+                                <p> @ViewBag.FName, @ViewBag.LName  <span id="WSAShowName" style="display:none; float:right;">@ViewBag.WSA </span></p>
                                 <img src="@ViewBag.QRCode" alt="Alternate Text" id="MRZHide" class="FNdraggable" style="float:right; display: none; z-index: 100;" />
 
                                 @foreach (WorldServiceOrganization.Models.tblAddress Address in Model)

@@ -38,8 +38,8 @@
     int? WSANumber = 0;
     int? WSANumberC = 0;
 
-    WSANumber = Int32.Parse(ViewBag.WSA);
-    WSANumberC = Int32.Parse(ViewBag.WSA);
+    WSANumber = ViewBag.WSA;
+    WSANumberC = ViewBag.WSA;
     //if (ViewBag.WAS == null)
     //{
     //    WSANumber = Int16.Parse(WSA) + 1;
@@ -74,13 +74,13 @@
     if (Model.PersonIDNumber > 0)
     {
 
-        if (Model.WSANumber != null)
+        if (Model.WSANumber != 0)
         {
             WSANumberC = Model.WSANumber;
         }
         else
         {
-            WSANumberC = Int32.Parse(ViewBag.WSA);
+            WSANumberC = ViewBag.WSA;
         }
         PersonId = Model.PersonIDNumber;
         FirstName = Model.FatherName;
@@ -248,9 +248,10 @@
                                 <div class="form-row">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label>WSA#</label>&nbsp;&nbsp;
+                                            <label>WSA#<a href="#" id="WSAExsist" style="display:none;color:red;">  <small style="font-size: 65% !important;">Change the WSA Number or edit the Person</small></a></label>&nbsp;&nbsp;
                                             <input type="text" class="form-control" style="display:none;" id="WSANumberCopy" value="@WSANumberC">
-                                            <input type="text" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" readonly>
+                                            <input type="number" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" >
+                                            <input type="checkbox" class="form-control" id="WSANumberCheck" name="WSANumberCheck" value="true" hidden>
                                         </div>
                                     </div>
                                     <div class="col-md-8">
@@ -619,6 +620,13 @@
                                             <input type="text" class="form-control" id="MotherName" name="MotherName" value="@MotherName">
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Upload QR Code</label>
+                                            &nbsp;&nbsp;
+                                            <input type="file" class="form-control" id="QRCode" name="QRCode" value="">
+                                        </div>
+                                    </div>
 
 
 
@@ -748,7 +756,7 @@
                             <div class="col-md-12 text-right">
                                 <div class="form-group">
                                     <label></label>
-                                    <button class="btn btn-primary" type="submit">Save</button>
+                                    <button class="btn btn-primary" type="submit" id="SaveForm">Save</button>
                                     <a href="@Url.Action("CreatePerson","Person")"><input class="btn btn-danger" type="button" value="Cancel"></a>
                                     <a href="@Url.Action("Persons","Person")" class="btn btn-secondary"><i class="fa fa-list"></i>List</a>
                                 </div>
@@ -1028,19 +1036,19 @@
                                                                     }
                                                                 </datalist>
                                                                 @*<select class="form-control" style="padding:0px !important" name="BirthDay">
-                                                                        <option value="">xx</option>
-                                                                        @for (int i = 1; i <= 31; i++)
-                                                                        {
-                                                                            if (Model.BirthDay == i)
-                                                                            {
-                                                                                <option selected value="@i">@i</option>
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <option value="@i">@i</option>
-                                                                            }
-                                                                        }
-                                                                    </select>*@
+                                <option value="">xx</option>
+                                @for (int i = 1; i <= 31; i++)
+                                {
+                                    if (Model.BirthDay == i)
+                                    {
+                                        <option selected value="@i">@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                }
+                            </select>*@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
@@ -1055,19 +1063,19 @@
                                                                     }
                                                                 </datalist>
                                                                 @*<select class="form-control" style="padding:0px !important" name="BirthMonth">
-                                                                        <option value="">xxx</option>
-                                                                        @for (int i = 1; i <= 12; i++)
-                                                                        {
-                                                                            if (Model.BirthMonth == i)
-                                                                            {
-                                                                                <option selected value="@i">@i</option>
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <option value="@i">@i</option>
-                                                                            }
-                                                                        }
-                                                                    </select>*@
+                                <option value="">xxx</option>
+                                @for (int i = 1; i <= 12; i++)
+                                {
+                                    if (Model.BirthMonth == i)
+                                    {
+                                        <option selected value="@i">@i</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                }
+                            </select>*@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
@@ -1083,20 +1091,20 @@
                                                                     }
                                                                 </datalist>
                                                                 @*<select class="form-control" style="padding:0px !important" name="BirthYear" id="CdropdownYear">
-                                                                        <option value="">xxxx</option>
-                                                                        @foreach (var item in @ViewBag.Year)
-                                                                        {
-                                                                            if (Model.BirthYear == Convert.ToInt32(@item))
-                                                                            {
-                                                                                <option selected value="@item">@item</option>
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                <option value="@item">@item</option>
-                                                                            }
+                                <option value="">xxxx</option>
+                                @foreach (var item in @ViewBag.Year)
+                                {
+                                    if (Model.BirthYear == Convert.ToInt32(@item))
+                                    {
+                                        <option selected value="@item">@item</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item">@item</option>
+                                    }
 
-                                                                        }
-                                                                    </select>*@
+                                }
+                            </select>*@
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1223,6 +1231,13 @@
                                                     <label>Mother</label>
                                                     &nbsp;&nbsp;
                                                     <input type="text" class="form-control" id="MotherName" name="MotherName" value="@MotherName">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Upload QR Code</label>
+                                                    &nbsp;&nbsp;
+                                                    <input type="file" class="form-control" id="QRCode" name="QRCode" value="">
                                                 </div>
                                             </div>
 
@@ -2295,6 +2310,25 @@
     </div>
 </div>
 
+<div id="WSANumberModal" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            @*@using (Html.BeginForm("CreatePerson", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {@Html.AntiForgeryToken()*@
+            <div class="modal-body text-center">
+                <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
+                <h5>Person already exsist Are you want to Edit this Person?</h5>
+                <div class="m-t-20">
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <a href="#" id="EditPersonID" class="btn btn-primary">Ok</a>
+                    @*<button type="submit" class="btn btn-primary">Ok</button>*@
+                </div>
+            </div>
+            @*}*@
+        </div>
+    </div>
+</div>
+
 <!-- /Page Wrapper -->
 @*<script src="~/Content/assets/js/jquery-3.5.1.js"></script>*@
 @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
@@ -2457,7 +2491,7 @@
     //    bindDatePicker();
     //});
 
-   
+
 
 
 
@@ -3013,6 +3047,54 @@
         window.open(Src, '_blank');
         //alert($('img').attr('src'));
     });
+    $("body").on("change", "#WSANumber", function () {
+
+
+        $("#WSANumberCheck").prop("checked", true);
+        var WSANumber = 0;
+        if ($(this).val() == "") {
+            $("#WSANumber").val($("#WSANumberCopy").val());
+            WSANumber = $("#WSANumber").val();
+            $("#WSANumberCheck").prop("checked", false);
+        }
+        else {
+            WSANumber = $("#WSANumber").val();
+        }
+
+        var model = {
+            WSANumber: WSANumber,
+        };
+        console.log(model);
+
+
+        //Send the JSON array to Controller using AJAX.
+        $.ajax({
+            type: "POST",
+            url: "/Person/CheckWSANumber",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                if (r > 0) {
+                    //alert(r);
+                    var url = window.location.origin;
+                    url += '/Person/CreatePerson?id='+r+'';
+                    $("#EditPersonID").attr("href", url);
+                    $("#WSAExsist").attr("href", url);
+                    $("#WSAExsist").show();
+                    $("#WSANumberModal").modal('toggle');
+                    $("#SaveForm").attr("disabled", true);
+
+                }
+                else {
+                    $("#WSAExsist").hide();
+                    $("#SaveForm").attr("disabled", false);
+
+                }
+
+            }
+        });
+    });
 
 
 
@@ -3106,7 +3188,7 @@
 
     $(document).ready(function () {
 
-        
+
         $('#CountryOfApplication')
             .find('option').each(function () {
                 $(this).data('text', $(this).text());
@@ -3124,7 +3206,7 @@
                 //alert($('#select2-CountryOfApplication-container').text());
                 //$('#select2-CountryOfApplication-container').text($selOpt.attr('data-abbr')).change();
                 //alert($('#select2-CountryOfApplication-container').text());
-               
+
             });
         $('#CountryOfBirth')
             .find('option').each(function () {
@@ -3155,10 +3237,23 @@
 
         $('#StatusD').change(function (e) {
             if ($(this).val()==32) {
-                $('#WSANumber').val("");
+                $('#WSANumber').val("0");
+                $("#WSANumberCheck").prop("checked", false);
             }
             else {
-                $('#WSANumber').val($('#WSANumberCopy').val());
+                if ($('#WSANumberCheck').is(':checked')) {
+
+                }
+                else {
+                    @*if (@Model.WSANumber> 0) {
+                        $('#WSANumber').val(@Model.WSANumber);
+                    }
+                    else {
+                        
+                    }*@
+                    $('#WSANumber').val($('#WSANumberCopy').val());
+                }
+
             }
         });
 

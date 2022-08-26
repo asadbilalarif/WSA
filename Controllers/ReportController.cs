@@ -63,7 +63,7 @@ namespace WorldServiceOrganization.Controllers
                 }
                 else if (ReportList == 4)
                 {
-                    RL = (from o in DB.tblProductTypes
+                    RL = (from o in DB.tblSex
                           where o.isActive == true
                           select new ReportList
                           {
@@ -94,9 +94,9 @@ namespace WorldServiceOrganization.Controllers
 
                           }).ToList();
                 }
-                else
+                else if (ReportList == 7)
                 {
-                    RL = (from o in DB.tblSex
+                    RL = (from o in DB.tblProductTypes
                           where o.isActive == true
                           select new ReportList
                           {
@@ -200,7 +200,7 @@ namespace WorldServiceOrganization.Controllers
             ViewBag.BDate = DateTime.Now.ToString("MM-dd-yyyy");
             ViewBag.EDate = DateTime.Now.ToString("MM-dd-yyyy");
             string Query = "where P.isActive = 1 ";
-            var PL = DB.CountrySummaryList (Query).ToList();
+            var PL = DB.CountrySummaryList(Query).ToList();
             ViewBag.Status = DB.tblStatus.Where(x => x.isActive == true).ToList();
             ViewBag.Country = DB.tblCountries.Where(x => x.isActive == true).ToList();
             

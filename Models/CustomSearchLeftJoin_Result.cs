@@ -13,6 +13,7 @@ namespace WorldServiceOrganization.Models
     
     public partial class CustomSearchLeftJoin_Result
     {
+        public int PersonIDNumber { get; set; }
         public string Name { get; set; }
         public Nullable<int> WSANumber { get; set; }
         public string LastName { get; set; }

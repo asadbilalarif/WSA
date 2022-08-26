@@ -56,19 +56,6 @@ namespace WorldServiceOrganization.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductUnionPackage_Result>("ProductUnionPackage");
         }
     
-        public virtual ObjectResult<CustomSearchLeftJoin_Result> CustomSearchLeftJoin(string fieldtoSearch, string searchValue)
-        {
-            var fieldtoSearchParameter = fieldtoSearch != null ?
-                new ObjectParameter("FieldtoSearch", fieldtoSearch) :
-                new ObjectParameter("FieldtoSearch", typeof(string));
-    
-            var searchValueParameter = searchValue != null ?
-                new ObjectParameter("SearchValue", searchValue) :
-                new ObjectParameter("SearchValue", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CustomSearchLeftJoin_Result>("CustomSearchLeftJoin", fieldtoSearchParameter, searchValueParameter);
-        }
-    
         public virtual ObjectResult<TransactionSummaryList_Result2> TransactionSummaryList(string searchValue)
         {
             var searchValueParameter = searchValue != null ?
@@ -81,15 +68,6 @@ namespace WorldServiceOrganization.Models
         public virtual ObjectResult<PersonExportData_Result> PersonExportData()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PersonExportData_Result>("PersonExportData");
-        }
-    
-        public virtual ObjectResult<CountrySummaryList_Result2> CountrySummaryList(string searchValue)
-        {
-            var searchValueParameter = searchValue != null ?
-                new ObjectParameter("SearchValue", searchValue) :
-                new ObjectParameter("SearchValue", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CountrySummaryList_Result2>("CountrySummaryList", searchValueParameter);
         }
     
         public virtual ObjectResult<PersonList_Result> PersonList(string searchValue)
@@ -120,6 +98,28 @@ namespace WorldServiceOrganization.Models
                 new ObjectParameter("RecordType", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_PersonDataTableData_Result>("sp_PersonDataTableData", pageIndexParameter, pageSizeParameter, filterParameter, recordTypeParameter);
+        }
+    
+        public virtual ObjectResult<CustomSearchLeftJoin_Result> CustomSearchLeftJoin(string fieldtoSearch, string searchValue)
+        {
+            var fieldtoSearchParameter = fieldtoSearch != null ?
+                new ObjectParameter("FieldtoSearch", fieldtoSearch) :
+                new ObjectParameter("FieldtoSearch", typeof(string));
+    
+            var searchValueParameter = searchValue != null ?
+                new ObjectParameter("SearchValue", searchValue) :
+                new ObjectParameter("SearchValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CustomSearchLeftJoin_Result>("CustomSearchLeftJoin", fieldtoSearchParameter, searchValueParameter);
+        }
+    
+        public virtual ObjectResult<CountrySummaryList_Result2> CountrySummaryList(string searchValue)
+        {
+            var searchValueParameter = searchValue != null ?
+                new ObjectParameter("SearchValue", searchValue) :
+                new ObjectParameter("SearchValue", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CountrySummaryList_Result2>("CountrySummaryList", searchValueParameter);
         }
     }
 }

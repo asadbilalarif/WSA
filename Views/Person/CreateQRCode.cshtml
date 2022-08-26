@@ -41,7 +41,9 @@
                 <div class="col-md-6">
                     <label>QRCode</label><br />
                     <div id="ImgDiv">
-                        <img src="/Uploading/CreateQRCode/QRCode.jpg" alt="" id="QRImg" />
+                        <img src="/Uploading/CreateQRCode/QRCode.jpg" alt="" id="QRImg" /><br />
+                        <a href="/Uploading/CreateQRCode/QRCode.jpg" download class="btn btn-success" style="margin-top: 3%;">Download Qr Code</a>
+                        
                     </div>
                     
                 </div>
@@ -58,7 +60,7 @@
 
     $("#GenerateQRCode").on("click", function () {
         
-        $("#QRImg").attr("src", "#");
+        /*$("#QRImg").attr("src", "#");*/
         //$("#CDeleteChild").attr("disabled", true);
 
         var qrdata = $("#QRData").val();
