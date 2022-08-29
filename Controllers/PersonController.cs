@@ -206,11 +206,53 @@ namespace WorldServiceOrganization.Controllers
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             int ID = 0;
             int Num = (int)Number;
+            int SerialNumber = 0;
+            int PID = 0;
             do
             {
                 if(Type=="WSANumber")
                 {
                     ID = DB.tblPersons.Where(x => x.WSANumber == Num).Select(s => s.PersonIDNumber).FirstOrDefault();
+                }
+                else if(Type=="MC")
+                {
+                    ID =(int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.PersonIDNumber).FirstOrDefault();
+                    PID= (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
+                    SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
+                    if(SerialNumber!=3)
+                    {
+                        ID = 0;
+                    }
+                }
+                else if(Type=="BC")
+                {
+                    ID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.PersonIDNumber).FirstOrDefault();
+                    PID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
+                    SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
+                    if (SerialNumber != 4)
+                    {
+                        ID = 0;
+                    }
+                }
+                else if(Type=="CC")
+                {
+                    ID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.PersonIDNumber).FirstOrDefault();
+                    PID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
+                    SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
+                    if (SerialNumber != 5)
+                    {
+                        ID = 0;
+                    }
+                }
+                else if(Type=="P")
+                {
+                    ID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.PersonIDNumber).FirstOrDefault();
+                    PID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
+                    SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
+                    if (SerialNumber != 2)
+                    {
+                        ID = 0;
+                    }
                 }
                 
                 if (ID > 0)
@@ -1215,7 +1257,7 @@ namespace WorldServiceOrganization.Controllers
 
 
         [HttpPost]
-        public ActionResult CreateTransaction(tblTransaction Transaction)
+        public ActionResult CreateTransaction(tblTransaction Transaction, bool Previous=false,bool Change=false)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
@@ -1237,6 +1279,24 @@ namespace WorldServiceOrganization.Controllers
                 if (Transaction.TransactionIDNumber == 0)
                 {
                     Data = Transaction;
+                    var ID = DB.tblProducts.Where(x => x.ProductId == Transaction.ProductIDNumber).FirstOrDefault();
+                    int IdCode = Convert.ToInt32(Transaction.IDCode);
+                    if(ID.ProductSerialNum==2)
+                    {
+                        Data.IDCode = CheckNumber(IdCode, "P").ToString();
+                    }
+                    else if(ID.ProductSerialNum == 3)
+                    {
+                        Data.IDCode = CheckNumber(IdCode, "MC").ToString();
+                    }
+                    else if(ID.ProductSerialNum == 4)
+                    {
+                        Data.IDCode = CheckNumber(IdCode, "BC").ToString();
+                    }
+                    else if(ID.ProductSerialNum == 5)
+                    {
+                        Data.IDCode = CheckNumber(IdCode, "CC").ToString();
+                    }
                     //Data.ApplicationDate =Convert.ToDateTime(Transaction.ApplicationDate);
                     //Data.IssueDate = Convert.ToDateTime(Transaction.IssueDate);
                     //Data.SentDate = Convert.ToDateTime(Transaction.SentDate);
@@ -1274,7 +1334,38 @@ namespace WorldServiceOrganization.Controllers
                     Data.EditBy = ViewBag.User.UserId;
                     Data.isActive = true;
                     PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
-                    var ID = DB.tblProducts.Where(x => x.ProductId == Transaction.ProductIDNumber).FirstOrDefault();
+
+
+                    if (ID.ProductSerialNum == 2&&Change==false&&Previous==false)
+                    {
+
+                        var Data1 = DB.tblSettings.FirstOrDefault();
+                        Data1.NextPassport = (Convert.ToInt32(Data.IDCode)+1).ToString();
+                        DB.Entry(Data1);
+                        DB.SaveChanges();
+                    }
+                    else if (ID.ProductSerialNum == 3 && Change == false && Previous == false)
+                    {
+                        var Data1 = DB.tblSettings.FirstOrDefault();
+                        Data1.NextMC = (Int32.Parse(Data.IDCode) + 1).ToString();
+                        DB.Entry(Data1);
+                        DB.SaveChanges();
+                    }
+                    else if (ID.ProductSerialNum == 4 && Change == false && Previous == false)
+                    {
+                        var Data1 = DB.tblSettings.FirstOrDefault();
+                        Data1.NextBC = (Int32.Parse(Data.IDCode) + 1).ToString();
+                        DB.Entry(Data1);
+                        DB.SaveChanges();
+                    }
+                    else if (ID.ProductSerialNum == 5 && Change == false && Previous == false)
+                    {
+                        var Data1 = DB.tblSettings.FirstOrDefault();
+                        Data1.NextCC = (Int32.Parse(Data.IDCode) + 1).ToString();
+                        DB.Entry(Data1);
+                        DB.SaveChanges();
+                    }
+
                     if (ID.ProductTypeId == 1 && PassportNum != null && Already == false)
                     {
                         //PassportNum = DB.tblTransactions.Where(x => x.tblProduct.tblProductType.ProductTypeId == 1).OrderByDescending(o => o.IDCode).Select(s => s.IDCode).FirstOrDefault();
@@ -1296,34 +1387,34 @@ namespace WorldServiceOrganization.Controllers
                         DB.Entry(Data1);
                         DB.SaveChanges();
                     }
-                    var NextNum = "";
-                    if (ID.ProductTypeId == 1005 && Already == false)
-                    {
-                        var Data1 = DB.tblSettings.FirstOrDefault();
-                        if (ID.ProductId == 1005)
-                        {
-                            NextNum = DB.tblSettings.Select(x => x.NextMC).FirstOrDefault();
-                            Data1.NextMC = (Int32.Parse(NextNum) + 1).ToString();
-                            DB.Entry(Data1);
-                            DB.SaveChanges();
-                        }
-                        else if (ID.ProductId == 1006)
-                        {
-                            NextNum = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
-                            NextNum = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
-                            Data1.NextCC = (Int32.Parse(NextNum) + 1).ToString();
-                            DB.Entry(Data1);
-                            DB.SaveChanges();
-                        }
-                        else
-                        {
-                            NextNum = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
-                            NextNum = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
-                            Data1.NextBC = (Int32.Parse(NextNum) + 1).ToString();
-                            DB.Entry(Data1);
-                            DB.SaveChanges();
-                        }
-                    }
+                    //var NextNum = "";
+                    //if (ID.ProductTypeId == 1005 && Already == false)
+                    //{
+                    //    var Data1 = DB.tblSettings.FirstOrDefault();
+                    //    if (ID.ProductId == 1005)
+                    //    {
+                    //        NextNum = DB.tblSettings.Select(x => x.NextMC).FirstOrDefault();
+                    //        Data1.NextMC = (Int32.Parse(NextNum) + 1).ToString();
+                    //        DB.Entry(Data1);
+                    //        DB.SaveChanges();
+                    //    }
+                    //    else if (ID.ProductId == 1006)
+                    //    {
+                    //        NextNum = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
+                    //        NextNum = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
+                    //        Data1.NextCC = (Int32.Parse(NextNum) + 1).ToString();
+                    //        DB.Entry(Data1);
+                    //        DB.SaveChanges();
+                    //    }
+                    //    else
+                    //    {
+                    //        NextNum = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
+                    //        NextNum = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
+                    //        Data1.NextBC = (Int32.Parse(NextNum) + 1).ToString();
+                    //        DB.Entry(Data1);
+                    //        DB.SaveChanges();
+                    //    }
+                    //}
 
                     DB.tblTransactions.Add(Data);
                     DB.SaveChanges();
@@ -1485,28 +1576,28 @@ namespace WorldServiceOrganization.Controllers
         }
 
 
-        [HttpPost]
-        public ActionResult CheckIDCode(string IDCode)
-        {
-            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+        //[HttpPost]
+        //public ActionResult CheckIDCode(string IDCode)
+        //{
+        //    WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
 
-            try
-            {
-                if (DB.tblTransactions.Where(x => x.IDCode == IDCode).FirstOrDefault() == null)
-                {
-                    return Json(1);
+        //    try
+        //    {
+        //        if (DB.tblTransactions.Where(x => x.IDCode == IDCode).FirstOrDefault() == null)
+        //        {
+        //            return Json(1);
 
-                }
-                else
-                {
-                    return Json(0);
-                }
-            }
-            catch (Exception ex)
-            {
-                return Json("Error occurred.Error details: " + ex.Message);
-            }
-        }
+        //        }
+        //        else
+        //        {
+        //            return Json(0);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return Json("Error occurred.Error details: " + ex.Message);
+        //    }
+        //}
 
         [HttpPost]
         public ActionResult UploadImages(int? PersonIDNumber = 0)
@@ -1608,30 +1699,55 @@ namespace WorldServiceOrganization.Controllers
         }
 
         [HttpPost]
+        public JsonResult CheckIdCode(int id,string IdCode,int ProductId)
+        {
+            WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
+            ////Searching records from list using LINQ query  
+            int Result = 0;
+            var Trans = DB.tblTransactions.Where(q => q.IDCode==IdCode ).FirstOrDefault();
+            if(Trans!=null&&(Trans.IDCode== IdCode&& Trans.PersonIDNumber== id&&Trans.ProductIDNumber== ProductId))
+            {
+                Result = 1;
+            }
+            else if(Trans != null && Trans.IDCode==IdCode)
+                    {
+                Result = 2;
+            }
+            
+            return Json(Result, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public JsonResult GetProduct(int id)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
             ////Searching records from list using LINQ query  
             string IdCode = "";
-            var ProductList = DB.tblProducts.Where(q => q.ProductId == id).Select(s => s.Price).FirstOrDefault();
             var Product = DB.tblProducts.Where(q => q.ProductId == id).FirstOrDefault();
+            var ProductList = Product.Price;
+            if(Product.ProductSerialNum!=null)
+            {
+                var ProductSerialNum = Product.ProductSerialNum;
+                if (Product.ProductSerialNum == 2)
+                {
+                    IdCode = DB.tblSettings.Select(x => x.NextPassport).FirstOrDefault();
+                }
+                if (Product.ProductSerialNum == 3)
+                {
+                    IdCode = DB.tblSettings.Select(x => x.NextMC).FirstOrDefault();
+                }
+                if (Product.ProductSerialNum == 4)
+                {
+                    IdCode = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
+                }
+                if (Product.ProductSerialNum == 5)
+                {
+                    IdCode = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
+                }
+            }
+            
 
-            if(Product.ProductSerialNum==2)
-            {
-                IdCode = DB.tblSettings.Select(x => x.NextPassport).FirstOrDefault();
-            }
-            if (Product.ProductSerialNum == 3)
-            {
-                IdCode = DB.tblSettings.Select(x => x.NextMC).FirstOrDefault();
-            }
-            if (Product.ProductSerialNum == 4)
-            {
-                IdCode = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
-            }
-            if (Product.ProductSerialNum == 5)
-            {
-                IdCode = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
-            }
+            
             //if (Product.tblProductType.ProductTypeId == 1)
             //{
             //    IdCode = DB.tblSettings.Select(x => x.NextPassport).FirstOrDefault();

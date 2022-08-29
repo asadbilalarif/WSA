@@ -1640,10 +1640,12 @@
 
                                                     <div class="col-md-4">
                                                         <div class="form-group">
-                                                            <input style="display:none;" type="text" class="form-control" id="PersonIDNumber" name="PersonIDNumber" value="@Model.PersonIDNumber">
+                                                            <input style="display:none;" type="text" class="form-control" id="PersonIDNumberTransaction" name="PersonIDNumber" value="@Model.PersonIDNumber">
                                                             <input style="display:none;" type="text" class="form-control" id="TransactionIDNumber" name="TransactionIDNumber" value="@TransactionIDNumber">
                                                             <label>ID Code <small style="display:none;color:red;" id="IDCodeError">Exist</small></label>
                                                             <input type="text" class="form-control" id="IDCode" name="IDCode" value="">
+                                                            <input type="checkbox" id="Change" name="Change" value="true" hidden/>
+                                                            <input type="checkbox" id="Previous" name="Previous" value="true" hidden/>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -2329,6 +2331,25 @@
     </div>
 </div>
 
+<div id="TransactionModal" class="modal fade delete-modal" role="dialog">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            @*@using (Html.BeginForm("CreatePerson", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {@Html.AntiForgeryToken()*@
+            <div class="modal-body text-center">
+                <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
+                <h5>You want to mearg Id Code?</h5>
+                <div class="m-t-20">
+                    <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
+                    <a href="#" id="MergeIDCode" class="btn btn-primary">Ok</a>
+                    @*<button type="submit" class="btn btn-primary">Ok</button>*@
+                </div>
+            </div>
+            @*}*@
+        </div>
+    </div>
+</div>
+
 <!-- /Page Wrapper -->
 @*<script src="~/Content/assets/js/jquery-3.5.1.js"></script>*@
 @*<script src="~/Content/assets/js/jquery-3.2.1.min.js"></script>*@
@@ -2941,7 +2962,58 @@
 
     });
 
+    $("#IDCode").on("change", function () {
+        $("#Change").prop("checked", true);
+        $("#IDCodeError").hide();
+        $("#SaveB").attr("disabled", false);
+        var ID = $("#PersonIDNumberTransaction").val();
+            var IdCode = $(this).val();
+        var ProductId = $('#ProductD').val();
+
+            var model = {
+                id: ID,
+                IdCode: IdCode,
+                ProductId: ProductId,
+            };
+            console.log(model);
+
+            $.ajax({
+                type: "POST",
+                url: "/Person/CheckIdCode",
+                data: JSON.stringify(model),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (ProductList) {
+
+                    if (ProductList == 1) {
+                        $("#IDCodeError").show();
+                        $("#SaveB").attr("disabled", true);
+                        $("#TransactionModal").modal('toggle');
+                    }
+                    else if (ProductList == 2) {
+                        $("#IDCodeError").show();
+                        $("#SaveB").attr("disabled", true);
+                    }
+
+                },
+            });
+
+
+    });
+
+    $("#MergeIDCode").on("click", function () {
+
+        $("#IDCodeError").hide();
+        $("#SaveB").attr("disabled", false);
+        $("#TransactionModal").modal('toggle');
+        $("#Previous").prop("checked", true);
+        
+    });
+    
+
     $("#ProductD").on("change", function () {
+        $("#Previous").prop("checked", false);
+        $("#Change").prop("checked", false);
         if ($("#CheckEdit").val() == 1) {
             $("#CheckEdit").val(0);
         }
