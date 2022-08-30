@@ -204,62 +204,64 @@ namespace WorldServiceOrganization.Controllers
         public int CheckNumber(int? Number, string Type)
         {
             WorldServiceOrganizationEntities DB = new WorldServiceOrganizationEntities();
-            int ID = 0;
+                tblPerson ID = null;
+                tblTransaction ID1 = null;
+            
             int Num = (int)Number;
-            int SerialNumber = 0;
-            int PID = 0;
+            //int SerialNumber = 0;
+            //int PID = 0;
             do
             {
                 if(Type=="WSANumber")
                 {
-                    ID = DB.tblPersons.Where(x => x.WSANumber == Num).Select(s => s.PersonIDNumber).FirstOrDefault();
+                    ID = DB.tblPersons.Where(x => x.WSANumber == Num).FirstOrDefault();
                 }
                 else if(Type=="MC")
                 {
-                    ID =(int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.PersonIDNumber).FirstOrDefault();
-                    PID= (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
-                    SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
-                    if(SerialNumber!=3)
-                    {
-                        ID = 0;
-                    }
+                    ID1 =DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).FirstOrDefault();
+                    //PID= (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
+                    //SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
+                    //if(SerialNumber!=3)
+                    //{
+                    //    ID = 0;
+                    //}
                 }
                 else if(Type=="BC")
                 {
-                    ID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.PersonIDNumber).FirstOrDefault();
-                    PID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
-                    SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
-                    if (SerialNumber != 4)
-                    {
-                        ID = 0;
-                    }
+                    ID1 = DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).FirstOrDefault();
+                    //PID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
+                    //SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
+                    //if (SerialNumber != 4)
+                    //{
+                    //    ID = 0;
+                    //}
                 }
                 else if(Type=="CC")
                 {
-                    ID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.PersonIDNumber).FirstOrDefault();
-                    PID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
-                    SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
-                    if (SerialNumber != 5)
-                    {
-                        ID = 0;
-                    }
+                    ID1 = DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).FirstOrDefault();
+                    //PID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
+                    //SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
+                    //if (SerialNumber != 5)
+                    //{
+                    //    ID = 0;
+                    //}
                 }
                 else if(Type=="P")
                 {
-                    ID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.PersonIDNumber).FirstOrDefault();
-                    PID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
-                    SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
-                    if (SerialNumber != 2)
-                    {
-                        ID = 0;
-                    }
+                    ID1 = DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).FirstOrDefault();
+                    //PID = (int)DB.tblTransactions.Where(x => x.IDCode == Num.ToString()).Select(s => s.ProductIDNumber).FirstOrDefault();
+                    //SerialNumber = (int)DB.tblProducts.Where(x => x.ProductId == PID).Select(s => s.ProductSerialNum).FirstOrDefault();
+                    //if (SerialNumber != 2)
+                    //{
+                    //    ID = 0;
+                    //}
                 }
                 
-                if (ID > 0)
+                if (ID !=null||ID1!=null)
                 {
                     Num += 1;
                 }
-            } while (ID!=0);
+            } while (ID!=null || ID1 != null);
 
             return Num;
         }
@@ -1705,7 +1707,8 @@ namespace WorldServiceOrganization.Controllers
             ////Searching records from list using LINQ query  
             int Result = 0;
             var Trans = DB.tblTransactions.Where(q => q.IDCode==IdCode ).FirstOrDefault();
-            if(Trans!=null&&(Trans.IDCode== IdCode&& Trans.PersonIDNumber== id&&Trans.ProductIDNumber== ProductId))
+            var ProductSerialNum = DB.tblProducts.Where(q => q.ProductId== ProductId).Select(s=>s.ProductSerialNum).FirstOrDefault();
+            if(Trans!=null&&(Trans.IDCode== IdCode&& Trans.PersonIDNumber== id&&Trans.tblProduct.ProductSerialNum== ProductSerialNum))
             {
                 Result = 1;
             }
@@ -1731,18 +1734,22 @@ namespace WorldServiceOrganization.Controllers
                 if (Product.ProductSerialNum == 2)
                 {
                     IdCode = DB.tblSettings.Select(x => x.NextPassport).FirstOrDefault();
+                    IdCode = CheckNumber(Convert.ToInt32(IdCode), "P").ToString();
                 }
                 if (Product.ProductSerialNum == 3)
                 {
                     IdCode = DB.tblSettings.Select(x => x.NextMC).FirstOrDefault();
+                    IdCode = CheckNumber(Convert.ToInt32(IdCode), "MC").ToString();
                 }
                 if (Product.ProductSerialNum == 4)
                 {
                     IdCode = DB.tblSettings.Select(x => x.NextBC).FirstOrDefault();
+                    IdCode = CheckNumber(Convert.ToInt32(IdCode), "BC").ToString();
                 }
                 if (Product.ProductSerialNum == 5)
                 {
                     IdCode = DB.tblSettings.Select(x => x.NextCC).FirstOrDefault();
+                    IdCode = CheckNumber(Convert.ToInt32(IdCode), "CC").ToString();
                 }
             }
             

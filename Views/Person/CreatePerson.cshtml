@@ -53,7 +53,7 @@
 
     string Comments = "";
     string Title = "";
-    string Height = "0.0";
+    string Height = "0'0";
     int? HeightUnit = 1;
     int? CountryApplicationId = 0;
     int? CountryBirthId = 0;
@@ -250,7 +250,7 @@
                                         <div class="form-group">
                                             <label>WSA#<a href="#" id="WSAExsist" style="display:none;color:red;">  <small style="font-size: 65% !important;">Change the WSA Number or edit the Person</small></a></label>&nbsp;&nbsp;
                                             <input type="text" class="form-control" style="display:none;" id="WSANumberCopy" value="@WSANumberC">
-                                            <input type="number" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber" >
+                                            <input type="number" class="form-control" id="WSANumber" name="WSANumber" value="@WSANumber">
                                             <input type="checkbox" class="form-control" id="WSANumberCheck" name="WSANumberCheck" value="true" hidden>
                                         </div>
                                     </div>
@@ -522,8 +522,9 @@
                                         <div class="form-group">
                                             <div class="row">
                                                 <div class="col-md-7">
-                                                    <label>Height</label><br />
-                                                    <input type="text" class="form-control" id="Height" name="Height" value="@Height">
+                                                    <label>Height<small style="color:darkred"> (ft'in)</small></label><br />
+                                                    <input type="text" class="form-control" id="Height" name="Height" @*pattern="[0-9]+'+[0-9]?[0-9]"*@ placeholder="" value="@Height">
+                                                    <small style="color:red; display:none;font-size:10px;" id="HeightError"> Input not valid</small>
                                                 </div>
                                                 <div class="col-md-5">
                                                     <br />
@@ -1036,19 +1037,19 @@
                                                                     }
                                                                 </datalist>
                                                                 @*<select class="form-control" style="padding:0px !important" name="BirthDay">
-                                <option value="">xx</option>
-                                @for (int i = 1; i <= 31; i++)
-                                {
-                                    if (Model.BirthDay == i)
-                                    {
-                                        <option selected value="@i">@i</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@i">@i</option>
-                                    }
-                                }
-                            </select>*@
+                                                                        <option value="">xx</option>
+                                                                        @for (int i = 1; i <= 31; i++)
+                                                                        {
+                                                                            if (Model.BirthDay == i)
+                                                                            {
+                                                                                <option selected value="@i">@i</option>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <option value="@i">@i</option>
+                                                                            }
+                                                                        }
+                                                                    </select>*@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
@@ -1063,19 +1064,19 @@
                                                                     }
                                                                 </datalist>
                                                                 @*<select class="form-control" style="padding:0px !important" name="BirthMonth">
-                                <option value="">xxx</option>
-                                @for (int i = 1; i <= 12; i++)
-                                {
-                                    if (Model.BirthMonth == i)
-                                    {
-                                        <option selected value="@i">@i</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@i">@i</option>
-                                    }
-                                }
-                            </select>*@
+                                                                        <option value="">xxx</option>
+                                                                        @for (int i = 1; i <= 12; i++)
+                                                                        {
+                                                                            if (Model.BirthMonth == i)
+                                                                            {
+                                                                                <option selected value="@i">@i</option>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <option value="@i">@i</option>
+                                                                            }
+                                                                        }
+                                                                    </select>*@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-4">
@@ -1091,20 +1092,20 @@
                                                                     }
                                                                 </datalist>
                                                                 @*<select class="form-control" style="padding:0px !important" name="BirthYear" id="CdropdownYear">
-                                <option value="">xxxx</option>
-                                @foreach (var item in @ViewBag.Year)
-                                {
-                                    if (Model.BirthYear == Convert.ToInt32(@item))
-                                    {
-                                        <option selected value="@item">@item</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item">@item</option>
-                                    }
+                                                                        <option value="">xxxx</option>
+                                                                        @foreach (var item in @ViewBag.Year)
+                                                                        {
+                                                                            if (Model.BirthYear == Convert.ToInt32(@item))
+                                                                            {
+                                                                                <option selected value="@item">@item</option>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <option value="@item">@item</option>
+                                                                            }
 
-                                }
-                            </select>*@
+                                                                        }
+                                                                    </select>*@
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1138,7 +1139,7 @@
                                                     <div class="row">
                                                         <div class="col-md-7">
                                                             <label>Height</label><br />
-                                                            <input type="text" class="form-control" id="Height" name="Height" value="@Height">
+                                                            <input type="text" class="form-control" id="Height" name="Height" pattern="[0-9]+'+[0-9]?[0-9]" value="@Height">
                                                         </div>
                                                         <div class="col-md-5">
                                                             <br />
@@ -1644,8 +1645,8 @@
                                                             <input style="display:none;" type="text" class="form-control" id="TransactionIDNumber" name="TransactionIDNumber" value="@TransactionIDNumber">
                                                             <label>ID Code <small style="display:none;color:red;" id="IDCodeError">Exist</small></label>
                                                             <input type="text" class="form-control" id="IDCode" name="IDCode" value="">
-                                                            <input type="checkbox" id="Change" name="Change" value="true" hidden/>
-                                                            <input type="checkbox" id="Previous" name="Previous" value="true" hidden/>
+                                                            <input type="checkbox" id="Change" name="Change" value="true" hidden />
+                                                            <input type="checkbox" id="Previous" name="Previous" value="true" hidden />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-4">
@@ -2246,7 +2247,7 @@
         <div class="modal-content">
             <div class="modal-body text-center">
                 <label>Second Name</label>
-                <input class="form-control" type="text" id="SecondName" >
+                <input class="form-control" type="text" id="SecondName">
                 <div class="m-t-20">
                     <p id="ConfigDerror" style="color:red;"></p>
                     <a href="#" class="btn btn-white" data-dismiss="modal">Close</a>
@@ -2316,7 +2317,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             @*@using (Html.BeginForm("CreatePerson", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {@Html.AntiForgeryToken()*@
+                {@Html.AntiForgeryToken()*@
             <div class="modal-body text-center">
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
                 <h5>Person already exsist Are you want to Edit this Person?</h5>
@@ -2335,7 +2336,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             @*@using (Html.BeginForm("CreatePerson", "Person", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {@Html.AntiForgeryToken()*@
+                {@Html.AntiForgeryToken()*@
             <div class="modal-body text-center">
                 <img src="~/Content/assets/img/sent.png" alt="" width="50" height="46">
                 <h5>You want to mearg Id Code?</h5>
@@ -2366,6 +2367,8 @@
 @*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
     <link rel="Stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.4/themes/start/jquery-ui.css" />
     <script type="text/javascript" src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>*@
+
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3/jquery.inputmask.bundle.js"></script>
 
 
 
@@ -2409,6 +2412,9 @@
         }
     });
 
+
+
+
     $("#HeightUnit").change(function () {
         var type = this.value;
         var firstDropVal = $('#Height').val();
@@ -2420,11 +2426,11 @@
             Inches = (firstDropVal / 2.54) * 100;
             Feet = Math.floor(Inches / 12);
             Inches = Math.ceil(Inches) - (Feet * 12);
-            var Concate = Feet + "." + Inches ;
+            var Concate = Feet + "'" + Inches ;
             $('#Height').val((Concate));
         }
         else if (type == 2) {
-            var SValue = firstDropVal.split(".");
+            var SValue = firstDropVal.split("'");
             Feet = SValue[0];
             var Inches = 0;
             var FinalValue = 0;
@@ -2437,6 +2443,22 @@
             $('#Height').val((FinalValue).toFixed(3));
         }
 
+    });
+
+    $("#Height").change(function () {
+        const paragraph = $(this).val();
+        const regex = /[0-9]+'+[0-9]?[0-9]/g;
+        const found = paragraph.match(regex);
+        if (found==null) {
+            $("#HeightError").show();
+            $("#HeightUnit").attr("disabled", true);
+        }
+        else
+        {
+            $("#HeightError").hide();
+            $("#HeightUnit").attr("disabled", false);
+        }
+        console.log(found);
     });
     $(function () {
         var Formate = "@DateFormat"
@@ -3001,15 +3023,54 @@
 
     });
 
+    $("#IDCode").on("blur", function () {
+        $("#Change").prop("checked", true);
+        $("#IDCodeError").hide();
+        $("#SaveB").attr("disabled", false);
+        var ID = $("#PersonIDNumberTransaction").val();
+        var IdCode = $(this).val();
+        var ProductId = $('#ProductD').val();
+
+        var model = {
+            id: ID,
+            IdCode: IdCode,
+            ProductId: ProductId,
+        };
+        console.log(model);
+
+        $.ajax({
+            type: "POST",
+            url: "/Person/CheckIdCode",
+            data: JSON.stringify(model),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (ProductList) {
+
+                if (ProductList == 1) {
+                    $("#IDCodeError").show();
+                    $("#SaveB").attr("disabled", true);
+                    $("#TransactionModal").modal('toggle');
+                }
+                else if (ProductList == 2) {
+                    $("#IDCodeError").show();
+                    $("#SaveB").attr("disabled", true);
+                }
+
+            },
+        });
+
+
+    });
+
     $("#MergeIDCode").on("click", function () {
 
         $("#IDCodeError").hide();
         $("#SaveB").attr("disabled", false);
         $("#TransactionModal").modal('toggle');
         $("#Previous").prop("checked", true);
-        
+
     });
-    
+
 
     $("#ProductD").on("change", function () {
         $("#Previous").prop("checked", false);
@@ -3259,7 +3320,8 @@
 
 
     $(document).ready(function () {
-
+        /*$(":input").inputmask();*/
+        //$("#Height").inputmask({ "mask": "9'99" });
 
         $('#CountryOfApplication')
             .find('option').each(function () {
@@ -3321,7 +3383,7 @@
                         $('#WSANumber').val(@Model.WSANumber);
                     }
                     else {
-                        
+
                     }*@
                     $('#WSANumber').val($('#WSANumberCopy').val());
                 }
